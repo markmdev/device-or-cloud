@@ -97,7 +97,8 @@ function BottomLine({ verdicts, allowed }: { verdicts: Verdict[]; allowed: numbe
   const [requests, setRequests] = useState(100_000);
   const [share, setShare] = useState(30);
   const onDevice = verdicts.filter((v) => v.kind === "device");
-  const seconds = onDevice.map((v) => v.deviceSeconds ?? 0).sort((a, b) => a - b)[Math.floor(onDevice.length / 2)];
+  const seconds = onDevice.map((v) => v.deviceSeconds ?? 0).sort((a, b) => a - b);
+  const fastest = seconds[0]?.toFixed(1), slowest = seconds.at(-1)?.toFixed(1);
   const saved = onDevice.reduce((sum, v) => sum + dollarsPerRequest(v), 0) * requests * (share / 100);
   return (
     <section className="bottom">
@@ -106,7 +107,7 @@ function BottomLine({ verdicts, allowed }: { verdicts: Verdict[]; allowed: numbe
       </h2>
       {onDevice.length > 0 && (
         <p className="gains">
-          Those requests <b>never leave the device</b>, <b>work offline</b> and <b>answer in {seconds.toFixed(1)} s</b>.
+          Those requests <b>never leave the device</b>, <b>work offline</b> and <b>answer in {fastest === slowest ? fastest : `${fastest} to ${slowest}`} s</b>.
         </p>
       )}
       <p className="money">
