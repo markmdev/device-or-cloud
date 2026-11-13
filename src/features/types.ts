@@ -18,6 +18,8 @@ export type Feature = {
   /** The JSON shape the app asks for; none means plain text. */
   schema?: Record<string, unknown>;
   cases: Case[];
+  /** Inputs kept out of the check, used only to prove a change to the instruction on inputs it wasn't written from. */
+  heldBack?: Case[];
   /** What code can decide about an answer. */
   check(answer: string, c: Case): Check;
   /** Set when code can't decide everything: what the cloud grader is asked to judge. */

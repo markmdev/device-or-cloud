@@ -10,12 +10,26 @@ export type Grades = Record<string, Check>;
 
 export type CaseRecord = { device: Run[]; cloud?: CloudRun; grades?: Grades };
 
+/** One line added to a feature's instruction, and how both sets of inputs went with it. */
+export type FixRecord = {
+  line: string;
+  /** Who wrote it: the cloud model from the failures, or us after reading them. */
+  by: "cloud" | "us";
+  /** The check's own inputs with the line, on the device. */
+  cases: Record<string, CaseRecord>;
+  /** The held-back inputs with the line, on the device and in the cloud. */
+  held: Record<string, CaseRecord>;
+};
+
 export type CheckRecord = {
   machine: string;
   chrome: string;
   date: string;
   cloudModel: string;
   features: Record<string, Record<string, CaseRecord>>;
+  /** The held-back inputs as the instruction stands, by feature. */
+  held?: Record<string, Record<string, CaseRecord>>;
+  fixes?: Record<string, FixRecord[]>;
 };
 
 /** Code decides first; the grader's word counts only where code found nothing wrong. */
@@ -47,6 +61,32 @@ export type Verdict = {
   tokensOut?: number;
 };
 
+/** Right answers among those given so far, for each model. */
+export type Tally = { runs: number; runsRight: number; cloud: number; cloudRight: number };
+
+export function tally(feature: Feature, cases: Record<string, CaseRecord> = {}, inputs = feature.cases): Tally {
+  const t: Tally = { runs: 0, runsRight: 0, cloud: 0, cloudRight: 0 };
+  for (const c of inputs) {
+    const r = cases[c.id];
+    for (const run of r?.device ?? []) {
+      const check = judge(feature, c, run, r.grades);
+      if (check) { t.runs++; if (check.ok) t.runsRight++; }
+    }
+    const cloud = judge(feature, c, r?.cloud, r?.grades);
+    if (cloud) { t.cloud++; if (cloud.ok) t.cloudRight++; }
+  }
+  return t;
+}
+
+export const within = (right: number, of: number, allowed: number) => (of - right) * 100 <= allowed * of;
+
+/** A line moves a feature when, on the held-back inputs, Chrome's model and the cloud both stay within the bar with it. */
+export function moves(feature: Feature, fix: FixRecord, allowed: number): boolean {
+  const held = feature.heldBack ?? [];
+  const t = tally(feature, fix.held, held);
+  return t.runs === held.length * RUNS && t.cloud === held.length && within(t.runsRight, t.runs, allowed) && within(t.cloudRight, t.cloud, allowed);
+}
+
 export const ENOUGH_INPUTS = 20;
 /** Wrong answers allowed in 100 before a model is not good enough for a feature. */
 export const DEFAULT_ALLOWED = 10;
@@ -72,11 +112,10 @@ export function verdictFor(feature: Feature, cases: Record<string, CaseRecord> =
   }
   const inputs = feature.cases.length;
   const runs = inputs * RUNS;
-  const within = (right: number, of: number) => (of - right) * 100 <= allowed * of;
   const kinds = new Set(failures.filter((f) => f.side !== "cloud").map((f) => f.c.kind));
   return {
     feature,
-    kind: pending ? "pending" : inputs < ENOUGH_INPUTS ? "more" : within(runsRight, runs) ? "device" : within(cloudRight, inputs) ? "cloud" : "fix",
+    kind: pending ? "pending" : inputs < ENOUGH_INPUTS ? "more" : within(runsRight, runs, allowed) ? "device" : within(cloudRight, inputs, allowed) ? "cloud" : "fix",
     inputs,
     runs,
     runsRight,

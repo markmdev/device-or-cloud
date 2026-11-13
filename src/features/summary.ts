@@ -36,6 +36,19 @@ const rows: Row[] = [
   [SHORTHAND, "COLL FROM SENDER 1105 - IN TRANSIT TO HUB - DEL DUE 16/11", [["16"]]],
 ];
 
+const heldBack: [note: string, keep: string[][]][] = [
+  ["Your order left our warehouse at 16:20 and is with the courier. It should reach you on Wednesday. You will get a text with a one-hour slot on the morning of delivery.", [["wednesday"]]],
+  ["Delivered at 09:48 and signed for by R. Evans at reception. The parcel was left at the front desk of your building.", [["reception", "front desk"]]],
+  ["We planned to deliver on Friday 20 November, but the lorry bringing your wardrobe to our depot is delayed at the port. Your new delivery day is Tuesday 24 November.", [["tuesday", "24 november", "24th"]]],
+  ["The driver could not get into your building because the entry code on the order did not work. Please send us the right code today so the parcel can go out again tomorrow.", [["code"], ["tomorrow"]]],
+  ["DEL ATT 1410 - GATE LOCKED - NO ACCESS - PCL HELD AT DEPOT 5 DAYS - CUST TO ARRANGE REDEL", [["5 days", "five days"], ["arrange", "book", "schedule", "choose", "pick", "contact"]]],
+  ["Your parcel has been handed to the local post office because we do not deliver to your area ourselves. They will bring it with your normal post within two working days.", [["post"], ["two working days", "2 working days", "two business days", "2 business days", "two days", "2 days"]]],
+  ["The second of your three boxes has been found at our hub after going missing on Monday. All three boxes will now be delivered together on Thursday.", [["thursday"]]],
+  ["Your collection is booked. The courier will pick up the faulty mower on Monday between 9 am and 1 pm. Please have it boxed and ready by the front door.", [["monday"], ["box"]]],
+  ["OUT FOR DEL - 2 MAN CREW - CALL 30 MIN BEFORE ARR - ROOM OF CHOICE", [["call", "phone", "ring"], ["30"]]],
+  ["The weather has stopped all deliveries in your postcode today. Nothing is wrong with your order. We will send a new date by email as soon as the roads reopen.", [["email"]]],
+];
+
 export const summary: Feature = {
   id: "delivery_summary",
   name: "Summarise a delivery note",
@@ -53,4 +66,5 @@ export const summary: Feature = {
     return OK;
   },
   cases: rows.map(([kind, input, keep], i): Case => ({ id: `summary-${i + 1}`, input, expect: { keep }, kind })),
+  heldBack: heldBack.map(([input, keep], i): Case => ({ id: `summary-held-${i + 1}`, input, expect: { keep }, kind: "held back" })),
 };
