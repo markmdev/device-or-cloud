@@ -15,11 +15,11 @@ Open both in Chrome on a computer to see the device side run.
 
 **The sample shop** (`shop/`, `src/shop/`) is a small made-up shop, Larkfield, with eight AI features: routing a support ticket, reading a review's mood, pulling fields from a receipt, rewriting a product title, summarising a delivery note, working out an invoice total, pulling an address from an email and answering a returns question. Each feature reads its inference mode from Firebase Remote Config and calls Firebase AI Logic in that mode. Every answer carries a badge that says where the SDK reports it ran.
 
-**The check** (`index.html`, `src/check/`) sends each feature 25 inputs through Firebase AI Logic: three times to Chrome's model in device-only mode, once to Gemini in cloud-only mode. It gives each feature one verdict:
+**The check** (`index.html`, `src/check/`) sends each feature 25 inputs through Firebase AI Logic: three times to Chrome's model in device-only mode, once to Gemini in cloud-only mode. It gives each feature one verdict, against a bar the reader sets with a slider: how many wrong answers in 100 the feature can live with. The default is 10.
 
-- **Runs on the device:** every answer right on every run. Sets `prefer_on_device`.
-- **Keep in the cloud:** the device got some wrong and the cloud got none wrong. Sets `only_in_cloud`.
-- **Fix the prompt first:** the cloud gets some wrong too.
+- **Runs on the device:** Chrome's model stays within the bar. Sets `prefer_on_device`.
+- **Keep in the cloud:** only the cloud model stays within it. Sets `only_in_cloud`.
+- **Fix the prompt first:** neither model does.
 - **Not enough inputs to tell:** fewer than 20 inputs.
 
 The page shows the check as recorded on our laptop, with every wrong answer side by side with the input and the other model's answer. "Run it on your own computer" runs the device side again on yours.
