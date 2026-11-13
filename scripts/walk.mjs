@@ -49,7 +49,9 @@ for (const [id, mode] of modes) {
   await card.locator(".actions button").first().click();
   await card.locator('.badge[data-ran="true"]').waitFor({ timeout: 90_000 }).catch(() => {});
   const want = mode === "prefer_on_device" ? "on_device" : "in_cloud";
-  expect((await card.locator(".badge").getAttribute("data-source")) === want && (await card.locator(".badge").getAttribute("data-ran")) === "true", `shop: ${id} ran ${want === "on_device" ? "on this computer" : "in the cloud"}`);
+  const ran = (await card.locator(".badge").getAttribute("data-source")) === want && (await card.locator(".badge").getAttribute("data-ran")) === "true";
+  expect(ran, `shop: ${id} ran ${want === "on_device" ? "on this computer" : "in the cloud"}`);
+  if (!ran) console.log("     the card says:", (await card.locator(".result").innerText()).replace(/\s+/g, " ").slice(0, 300));
 }
 await shot("shop");
 
