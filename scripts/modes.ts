@@ -1,4 +1,4 @@
-// Turns the recorded check's verdicts into the shop's Remote Config template: one mode for each feature.
+// Turns the recorded check's verdicts, at the default bar, into the shop's Remote Config template: one mode for each feature.
 import { readFileSync, writeFileSync } from "node:fs";
 import { modeFor, VERDICT_NAME, verdictFor, verdictLine, type CheckRecord } from "../src/check/record";
 import { FEATURES } from "../src/features";

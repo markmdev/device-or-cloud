@@ -29,6 +29,8 @@ p.answer { margin: 0 0 8px; white-space: pre-wrap; }
 .check header p { margin: 0; }
 .check header .quiet { margin-left: auto; }
 .lede { max-width: 820px; }
+.bar { display: flex; gap: 12px; align-items: center; margin: 12px 0; font-weight: 600; }
+.bar input { flex: 0 1 320px; padding: 0; }
 .sides { display: grid; grid-template-columns: 1fr 1fr; }
 .sides .side { padding: 20px; }
 .sides .device { background: var(--device); border-right: 2px solid #10130f; }

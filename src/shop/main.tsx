@@ -72,12 +72,13 @@ function Card({ feature, mode }: { feature: Feature; mode: Mode }) {
 }
 
 function Shop() {
-  const [mode, setMode] = useState(modes);
+  // Empty until Remote Config has answered, so no feature runs on a setting older than the published one.
+  const [mode, setMode] = useState<Record<string, Mode>>();
   const [device, setDevice] = useState<DeviceState>();
 
   useEffect(() => {
     deviceState().then(setDevice);
-    fetchAndActivate(remoteConfig).then(() => setMode(modes()), () => {});
+    fetchAndActivate(remoteConfig).catch(() => {}).then(() => setMode(modes()));
     return onConfigUpdate(remoteConfig, {
       next: () => void activate(remoteConfig).then(() => setMode(modes())),
       error: () => {},
@@ -100,9 +101,7 @@ function Shop() {
       </header>
       {device && <DownloadPanel state={device} onState={setDevice} meanwhile="every feature here runs in the cloud" />}
       <div className="cards">
-        {FEATURES.map((f) => (
-          <Card key={f.id} feature={f} mode={mode[f.id]} />
-        ))}
+        {mode && FEATURES.map((f) => <Card key={f.id} feature={f} mode={mode[f.id]} />)}
       </div>
     </main>
   );

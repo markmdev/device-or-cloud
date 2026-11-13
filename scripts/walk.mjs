@@ -22,7 +22,11 @@ expect(/Recorded on a .+, Chrome \d+, \d+ \w+ 20\d\d/.test(await page.locator("h
 expect((await page.locator(".feature").count()) === modes.length, `all ${modes.length} features have a verdict`);
 const onDevice = modes.filter(([, mode]) => mode === "prefer_on_device").length;
 expect((await page.locator(".sides .device .feature").count()) === onDevice, `${onDevice} features are on the device side, as published`);
-expect((await page.locator(".bottom h2").innerText()).startsWith(`${onDevice} of ${modes.length} features`), "the bottom line counts the same");
+expect((await page.locator(".bottom h2").innerText()).includes(`${onDevice} of ${modes.length} features`), "the bottom line counts the same");
+await page.getByLabel("Wrong answers allowed in 100").press("Home");
+expect((await page.locator(".bottom h2").innerText()).startsWith("With no wrong answers allowed"), "the bar moves the verdicts and the headline names it");
+for (let i = 0; i < 10; i++) await page.getByLabel("Wrong answers allowed in 100").press("ArrowRight");
+expect((await page.locator(".sides .device .feature").count()) === onDevice, "back at the default bar, the published split shows again");
 expect((await page.locator(".proof pre").count()) === 1, "a failure is shown with its input and both answers");
 const money = () => page.locator(".money b").innerText();
 const before = await money();
@@ -45,7 +49,9 @@ for (const [id, mode] of modes) {
   await card.locator(".actions button").first().click();
   await card.locator('.badge[data-ran="true"]').waitFor({ timeout: 90_000 }).catch(() => {});
   const want = mode === "prefer_on_device" ? "on_device" : "in_cloud";
-  expect((await card.locator(".badge").getAttribute("data-source")) === want && (await card.locator(".badge").getAttribute("data-ran")) === "true", `shop: ${id} ran ${want === "on_device" ? "on this computer" : "in the cloud"}`);
+  const ran = (await card.locator(".badge").getAttribute("data-source")) === want && (await card.locator(".badge").getAttribute("data-ran")) === "true";
+  expect(ran, `shop: ${id} ran ${want === "on_device" ? "on this computer" : "in the cloud"}`);
+  if (!ran) console.log("     the card says:", (await card.locator(".result").innerText()).replace(/\s+/g, " ").slice(0, 300));
 }
 await shot("shop");
 

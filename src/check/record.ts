@@ -31,10 +31,12 @@ export type Failure = { c: Case; side: "device" | "cloud" | "both"; device: Chec
 
 export type Verdict = {
   feature: Feature;
-  /** device: move it. cloud: keep it. fix: the cloud is wrong too. more: too few inputs. pending: not all answers are in. */
+  /** device: move it. cloud: keep it. fix: neither model is good enough. more: too few inputs. pending: not all answers are in. */
   kind: "device" | "cloud" | "fix" | "more" | "pending";
   inputs: number;
-  deviceRight: number;
+  /** Device answers given, and how many were right. */
+  runs: number;
+  runsRight: number;
   cloudRight: number;
   failures: Failure[];
   /** What the failing inputs have in common, when they all share it. */
@@ -46,12 +48,14 @@ export type Verdict = {
 };
 
 export const ENOUGH_INPUTS = 20;
+/** Wrong answers allowed in 100 before a model is not good enough for a feature. */
+export const DEFAULT_ALLOWED = 10;
 
 const median = (values: number[]) => [...values].sort((a, b) => a - b)[Math.floor(values.length / 2)];
 const mean = (values: number[]) => values.reduce((a, b) => a + b, 0) / values.length;
 
-export function verdictFor(feature: Feature, cases: Record<string, CaseRecord> = {}): Verdict {
-  let deviceRight = 0, cloudRight = 0, pending = false;
+export function verdictFor(feature: Feature, cases: Record<string, CaseRecord> = {}, allowed = DEFAULT_ALLOWED): Verdict {
+  let runsRight = 0, cloudRight = 0, pending = false;
   const failures: Failure[] = [];
   const seconds: number[] = [], tokensIn: number[] = [], tokensOut: number[] = [];
   for (const c of feature.cases) {
@@ -60,19 +64,22 @@ export function verdictFor(feature: Feature, cases: Record<string, CaseRecord> =
     const cloud = judge(feature, c, r?.cloud, r?.grades);
     if (device.includes(undefined) || !cloud) { pending = true; continue; }
     const deviceOk = (device as Check[]).every((d) => d.ok);
-    if (deviceOk) deviceRight++;
+    runsRight += (device as Check[]).filter((d) => d.ok).length;
     if (cloud.ok) cloudRight++;
     if (!deviceOk || !cloud.ok) failures.push({ c, side: deviceOk ? "cloud" : cloud.ok ? "device" : "both", device: device as Check[], cloud });
     for (const run of r.device) if ("seconds" in run) seconds.push(run.seconds);
     if (r.cloud?.tokensIn != null) { tokensIn.push(r.cloud.tokensIn); tokensOut.push(r.cloud.tokensOut ?? 0); }
   }
   const inputs = feature.cases.length;
+  const runs = inputs * RUNS;
+  const within = (right: number, of: number) => (of - right) * 100 <= allowed * of;
   const kinds = new Set(failures.filter((f) => f.side !== "cloud").map((f) => f.c.kind));
   return {
     feature,
-    kind: pending ? "pending" : inputs < ENOUGH_INPUTS ? "more" : cloudRight < inputs ? "fix" : deviceRight === inputs ? "device" : "cloud",
+    kind: pending ? "pending" : inputs < ENOUGH_INPUTS ? "more" : within(runsRight, runs) ? "device" : within(cloudRight, inputs) ? "cloud" : "fix",
     inputs,
-    deviceRight,
+    runs,
+    runsRight,
     cloudRight,
     failures,
     pattern: kinds.size === 1 ? [...kinds][0] : undefined,
@@ -82,15 +89,22 @@ export function verdictFor(feature: Feature, cases: Record<string, CaseRecord> =
   };
 }
 
+/** The bar as a developer would say it. */
+export function barInWords(allowed: number): string {
+  if (allowed === 0) return "With no wrong answers allowed";
+  const [count, per] = allowed % 10 === 0 ? [allowed / 10, 10] : [allowed, 100];
+  return `At up to ${count} wrong answer${count === 1 ? "" : "s"} in ${per}`;
+}
+
 /** The Remote Config value each verdict sets. */
 export const modeFor = (v: Verdict) => (v.kind === "device" ? "prefer_on_device" : "only_in_cloud");
 
 export function verdictLine(v: Verdict): string {
-  const wrong = v.inputs - v.deviceRight;
+  const device = `${v.runsRight} of ${v.runs} runs`, cloud = `${v.cloudRight} of ${v.inputs}`;
   switch (v.kind) {
-    case "device": return `Right on ${v.deviceRight} of ${v.inputs}, every run.`;
-    case "cloud": return `Wrong on ${wrong} of ${v.inputs}${v.pattern ? `, ${wrong === 1 ? "one of the" : "all"} ${v.pattern}` : ""}.`;
-    case "fix": return `The cloud gets ${v.inputs - v.cloudRight} of ${v.inputs} wrong too; the device, ${wrong}.`;
+    case "device": return `Chrome's model was right on ${device}; the cloud, on ${cloud}.`;
+    case "cloud": return `Chrome's model was right on ${device}; the cloud, on ${cloud}.${v.pattern ? ` Its misses: ${v.pattern}.` : ""}`;
+    case "fix": return `The cloud was right on ${cloud}; Chrome's model, on ${device}.`;
     case "more": return `Add ${ENOUGH_INPUTS - v.inputs} more.`;
     case "pending": return "Not run yet.";
   }

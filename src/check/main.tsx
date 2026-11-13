@@ -7,7 +7,7 @@ import { DownloadPanel } from "../download";
 import { CLOUD_MODEL, deviceState, type DeviceState } from "../firebase";
 import { OutOfRequests } from "./ask";
 import recorded from "./recorded.json";
-import { dollarsPerRequest, RUNS, VERDICT_NAME, verdictFor, verdictLine, type CheckRecord, type Failure, type Run, type Verdict } from "./record";
+import { barInWords, DEFAULT_ALLOWED, dollarsPerRequest, RUNS, VERDICT_NAME, verdictFor, verdictLine, type CheckRecord, type Failure, type Run, type Verdict } from "./record";
 import { gradeFeature, runCloud, runDevice, type Cases } from "./run";
 
 const RECORD = recorded as CheckRecord;
@@ -93,7 +93,7 @@ function Proof({ v, cases }: { v: Verdict; cases: Cases }) {
   );
 }
 
-function BottomLine({ verdicts }: { verdicts: Verdict[] }) {
+function BottomLine({ verdicts, allowed }: { verdicts: Verdict[]; allowed: number }) {
   const [requests, setRequests] = useState(100_000);
   const [share, setShare] = useState(30);
   const onDevice = verdicts.filter((v) => v.kind === "device");
@@ -102,7 +102,7 @@ function BottomLine({ verdicts }: { verdicts: Verdict[] }) {
   return (
     <section className="bottom">
       <h2>
-        {onDevice.length} of {verdicts.length} features can run on your users' own devices.
+        {barInWords(allowed)}, {onDevice.length} of {verdicts.length} features can run on your users' own devices.
       </h2>
       {onDevice.length > 0 && (
         <p className="gains">
@@ -128,6 +128,7 @@ function App() {
   const [device, setDevice] = useState<DeviceState>();
   const [notice, setNotice] = useState<string>();
   const [selected, setSelected] = useState<string>();
+  const [allowed, setAllowed] = useState(DEFAULT_ALLOWED);
   const stop = useRef(false);
 
   useEffect(() => {
@@ -135,7 +136,7 @@ function App() {
   }, []);
 
   const put = (id: string) => (cases: Cases) => setFeatures((all) => ({ ...all, [id]: cases }));
-  const verdicts = FEATURES.map((f) => verdictFor(f, features[f.id]));
+  const verdicts = FEATURES.map((f) => verdictFor(f, features[f.id], allowed));
   const shown = verdicts.find((v) => v.feature.id === selected) ?? verdicts.find((v) => v.failures.length) ?? verdicts[0];
 
   async function gradeOrSay(f: Feature, cases: Cases): Promise<Cases> {
@@ -223,9 +224,16 @@ function App() {
 
       <p className="lede">
         Which of an app's AI features can run on its users' own devices? Each of the shop's eight features was sent {FEATURES[0].cases.length} inputs
-        through Firebase AI Logic: {RUNS} times to the model built into Chrome, once to {RECORD.cloudModel || CLOUD_MODEL} in the cloud. A feature moves to
-        the device only when every answer is right on every run.
+        through Firebase AI Logic: {RUNS} times to the model built into Chrome, once to {RECORD.cloudModel || CLOUD_MODEL} in the cloud. A feature runs on
+        the device when Chrome's model stays within the bar you set. It stays in the cloud when only the cloud does, and its prompt needs fixing when
+        neither does.
       </p>
+
+      <label className="bar">
+        Wrong answers allowed in 100
+        <input type="range" min={0} max={30} value={allowed} onChange={(e) => setAllowed(Number(e.target.value))} />
+        <output>{allowed}</output>
+      </label>
 
       <div className="sides">
         <section className="side device">
@@ -251,7 +259,7 @@ function App() {
       </div>
 
       <Proof v={shown} cases={features[shown.feature.id] ?? {}} />
-      <BottomLine verdicts={verdicts} />
+      <BottomLine verdicts={verdicts} allowed={allowed} />
 
       <footer>
         <p>
