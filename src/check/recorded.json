@@ -1,0 +1,4952 @@
+{
+ "machine": "MacBook Pro (M5, 32 GB)",
+ "chrome": "157",
+ "date": "2026-11-13",
+ "cloudModel": "gemini-3.5-flash-lite",
+ "features": {
+  "ticket_route": {
+   "ticket-1": {
+    "device": [
+     {
+      "text": "{\"label\": \"billing\"}",
+      "seconds": 10.599399999976159
+     },
+     {
+      "text": "{\"label\": \"billing\"}",
+      "seconds": 0.7582000000476837
+     },
+     {
+      "text": "{\"label\": \"billing\"}",
+      "seconds": 0.7641999999880791
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"label\": \"billing\"\n}",
+     "seconds": 1.1215999999642372,
+     "tokensIn": 124,
+     "tokensOut": 11
+    }
+   },
+   "ticket-2": {
+    "device": [
+     {
+      "text": "{\"label\": \"delivery\"}",
+      "seconds": 0.731199999988079
+     },
+     {
+      "text": "{\"label\": \"delivery\"}",
+      "seconds": 0.713199999988079
+     },
+     {
+      "text": "{\"label\": \"delivery\"}",
+      "seconds": 0.7179000000357628
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"label\": \"delivery\"\n}",
+     "seconds": 1.135899999976158,
+     "tokensIn": 111,
+     "tokensOut": 11
+    }
+   },
+   "ticket-3": {
+    "device": [
+     {
+      "text": "{\"label\": \"returns\"}",
+      "seconds": 0.7416999999880791
+     },
+     {
+      "text": "{\"label\": \"returns\"}",
+      "seconds": 0.7188999999761582
+     },
+     {
+      "text": "{\"label\": \"returns\"}",
+      "seconds": 0.708300000011921
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"label\": \"returns\"\n}",
+     "seconds": 0.865300000011921,
+     "tokensIn": 109,
+     "tokensOut": 11
+    }
+   },
+   "ticket-4": {
+    "device": [
+     {
+      "text": "{\"label\": \"account\"}",
+      "seconds": 0.7163999999761581
+     },
+     {
+      "text": "{\"label\": \"account\"}",
+      "seconds": 0.717
+     },
+     {
+      "text": "{\"label\": \"account\"}",
+      "seconds": 0.7058000000119209
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"label\": \"account\"\n}",
+     "seconds": 1.1105,
+     "tokensIn": 105,
+     "tokensOut": 11
+    }
+   },
+   "ticket-5": {
+    "device": [
+     {
+      "text": "{\"label\": \"other\"}",
+      "seconds": 0.6935
+     },
+     {
+      "text": "{\"label\":\"other\"}",
+      "seconds": 0.6565999999642372
+     },
+     {
+      "text": "{\"label\": \"other\"}",
+      "seconds": 0.6881999999880791
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"label\": \"other\"\n}",
+     "seconds": 0.9293999999761582,
+     "tokensIn": 97,
+     "tokensOut": 11
+    }
+   },
+   "ticket-6": {
+    "device": [
+     {
+      "text": "{\"label\": \"billing\"}",
+      "seconds": 0.7255
+     },
+     {
+      "text": "{\"label\":\"billing\"}",
+      "seconds": 0.6845
+     },
+     {
+      "text": "{\"label\":\"billing\"}",
+      "seconds": 0.6844000000357627
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"label\": \"billing\"\n}",
+     "seconds": 1.0628999999761581,
+     "tokensIn": 112,
+     "tokensOut": 11
+    }
+   },
+   "ticket-7": {
+    "device": [
+     {
+      "text": "{\"label\": \"delivery\"}",
+      "seconds": 0.7138999999761582
+     },
+     {
+      "text": "{\"label\": \"delivery\"}",
+      "seconds": 0.709199999988079
+     },
+     {
+      "text": "{\"label\":\"delivery\"}",
+      "seconds": 0.669
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"label\": \"delivery\"\n}",
+     "seconds": 1.048,
+     "tokensIn": 104,
+     "tokensOut": 11
+    }
+   },
+   "ticket-8": {
+    "device": [
+     {
+      "text": "{\"label\": \"returns\"}",
+      "seconds": 0.7206000000238418
+     },
+     {
+      "text": "{\"label\":\"returns\"}",
+      "seconds": 0.672
+     },
+     {
+      "text": "{\"label\":\"returns\"}",
+      "seconds": 0.6751999999880791
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"label\": \"returns\"\n}",
+     "seconds": 1.017800000011921,
+     "tokensIn": 106,
+     "tokensOut": 11
+    }
+   },
+   "ticket-9": {
+    "device": [
+     {
+      "text": "{\"label\": \"account\"}",
+      "seconds": 0.6904000000357627
+     },
+     {
+      "text": "{\"label\": \"account\"}",
+      "seconds": 0.7032999999523163
+     },
+     {
+      "text": "{\"label\": \"account\"}",
+      "seconds": 0.6909000000357628
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"label\": \"account\"\n}",
+     "seconds": 1.8680999999642371,
+     "tokensIn": 104,
+     "tokensOut": 11
+    }
+   },
+   "ticket-10": {
+    "device": [
+     {
+      "text": "{\"label\": \"billing\"}",
+      "seconds": 0.7143999999761581
+     },
+     {
+      "text": "{\"label\": \"billing\"}",
+      "seconds": 0.715199999988079
+     },
+     {
+      "text": "{\"label\": \"billing\"}",
+      "seconds": 0.7176000000238418
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"label\": \"billing\"\n}",
+     "seconds": 1.567699999988079,
+     "tokensIn": 106,
+     "tokensOut": 11
+    }
+   },
+   "ticket-11": {
+    "device": [
+     {
+      "text": "{\"label\": \"delivery\"}",
+      "seconds": 0.752699999988079
+     },
+     {
+      "text": "{\"label\": \"delivery\"}",
+      "seconds": 0.7325
+     },
+     {
+      "text": "{\"label\": \"delivery\"}",
+      "seconds": 0.729199999988079
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"label\": \"delivery\"\n}",
+     "seconds": 1.296300000011921,
+     "tokensIn": 116,
+     "tokensOut": 11
+    }
+   },
+   "ticket-12": {
+    "device": [
+     {
+      "text": "{\"label\":\"account\"}",
+      "seconds": 0.6776000000238419
+     },
+     {
+      "text": "{\"label\": \"account\"}",
+      "seconds": 0.704199999988079
+     },
+     {
+      "text": "{\"label\": \"account\"}",
+      "seconds": 0.7098000000119209
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"label\": \"account\"\n}",
+     "seconds": 0.7985,
+     "tokensIn": 106,
+     "tokensOut": 11
+    }
+   },
+   "ticket-13": {
+    "device": [
+     {
+      "text": "{\"label\": \"other\"}",
+      "seconds": 0.7060999999642372
+     },
+     {
+      "text": "{\"label\": \"other\"}",
+      "seconds": 0.7059000000357628
+     },
+     {
+      "text": "{\"label\": \"other\"}",
+      "seconds": 0.7023999999761581
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"label\": \"other\"\n}",
+     "seconds": 1.029399999976158,
+     "tokensIn": 108,
+     "tokensOut": 11
+    }
+   },
+   "ticket-14": {
+    "device": [
+     {
+      "text": "{\"label\":\"other\"}",
+      "seconds": 0.684
+     },
+     {
+      "text": "{\"label\":\"other\"}",
+      "seconds": 0.6791999999880791
+     },
+     {
+      "text": "{\"label\": \"other\"}",
+      "seconds": 0.6861999999880791
+     }
+    ],
+    "cloud": {
+     "text": "{\"label\": \"other\"}",
+     "seconds": 0.9742000000476837,
+     "tokensIn": 101,
+     "tokensOut": 6
+    }
+   },
+   "ticket-15": {
+    "device": [
+     {
+      "text": "{\"label\": \"returns\"}",
+      "seconds": 0.7158999999761582
+     },
+     {
+      "text": "{\"label\":\"returns\"}",
+      "seconds": 0.6813999999761582
+     },
+     {
+      "text": "{\"label\": \"returns\"}",
+      "seconds": 0.7252000000476837
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"label\": \"returns\"\n}",
+     "seconds": 1.1262999999523162,
+     "tokensIn": 111,
+     "tokensOut": 11
+    }
+   },
+   "ticket-16": {
+    "device": [
+     {
+      "text": "{\"label\": \"billing\"}",
+      "seconds": 0.7314000000357628
+     },
+     {
+      "text": "{\"label\": \"billing\"}",
+      "seconds": 0.7493999999761581
+     },
+     {
+      "text": "{\"label\": \"billing\"}",
+      "seconds": 0.726
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"label\": \"billing\"\n}",
+     "seconds": 1.5735,
+     "tokensIn": 113,
+     "tokensOut": 11
+    }
+   },
+   "ticket-17": {
+    "device": [
+     {
+      "text": "{\"label\": \"returns\"}",
+      "seconds": 0.721300000011921
+     },
+     {
+      "text": "{\"label\": \"returns\"}",
+      "seconds": 0.703
+     },
+     {
+      "text": "{\"label\": \"returns\"}",
+      "seconds": 0.7048000000119209
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"label\": \"returns\"\n}",
+     "seconds": 1.1073999999761581,
+     "tokensIn": 111,
+     "tokensOut": 11
+    }
+   },
+   "ticket-18": {
+    "device": [
+     {
+      "text": "{\"label\": \"delivery\"}",
+      "seconds": 0.7651999999880791
+     },
+     {
+      "text": "{\"label\": \"delivery\"}",
+      "seconds": 0.7513999999761581
+     },
+     {
+      "text": "{\"label\": \"delivery\"}",
+      "seconds": 0.7504000000357628
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"label\": \"delivery\"\n}",
+     "seconds": 1.175300000011921,
+     "tokensIn": 124,
+     "tokensOut": 11
+    }
+   },
+   "ticket-19": {
+    "device": [
+     {
+      "text": "{\"label\": \"returns\"}",
+      "seconds": 0.7130999999642372
+     },
+     {
+      "text": "{\"label\": \"returns\"}",
+      "seconds": 0.7062000000476837
+     },
+     {
+      "text": "{\"label\": \"returns\"}",
+      "seconds": 0.7085999999642372
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"label\": \"billing\"\n}",
+     "seconds": 1.5845,
+     "tokensIn": 108,
+     "tokensOut": 11
+    }
+   },
+   "ticket-20": {
+    "device": [
+     {
+      "text": "{\"label\":\"account\"}",
+      "seconds": 0.6796999999880791
+     },
+     {
+      "text": "{\"label\": \"account\"}",
+      "seconds": 0.7
+     },
+     {
+      "text": "{\"label\":\"account\"}",
+      "seconds": 0.6769000000357628
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"label\": \"account\"\n}",
+     "seconds": 0.9560999999642372,
+     "tokensIn": 112,
+     "tokensOut": 11
+    }
+   },
+   "ticket-21": {
+    "device": [
+     {
+      "text": "{\"label\": \"billing\"}",
+      "seconds": 0.7312000000476837
+     },
+     {
+      "text": "{\n  \"label\": \"billing\"\n}",
+      "seconds": 0.8676999999880791
+     },
+     {
+      "text": "{\"label\": \"billing\"}",
+      "seconds": 0.7330999999642372
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"label\": \"billing\"\n}",
+     "seconds": 1.224199999988079,
+     "tokensIn": 119,
+     "tokensOut": 11
+    }
+   },
+   "ticket-22": {
+    "device": [
+     {
+      "text": "{\"label\": \"billing\"}",
+      "seconds": 0.7164000000357628
+     },
+     {
+      "text": "{\"label\": \"billing\"}",
+      "seconds": 0.7055999999642372
+     },
+     {
+      "text": "{\"label\": \"billing\"}",
+      "seconds": 0.7003000000119209
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"label\": \"billing\"\n}",
+     "seconds": 0.8505,
+     "tokensIn": 112,
+     "tokensOut": 11
+    }
+   },
+   "ticket-23": {
+    "device": [
+     {
+      "text": "{\"label\": \"returns\"}",
+      "seconds": 0.7251000000238419
+     },
+     {
+      "text": "{\"label\": \"returns\"}",
+      "seconds": 0.716199999988079
+     },
+     {
+      "text": "{\"label\": \"returns\"}",
+      "seconds": 0.7348999999761582
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"label\": \"billing\"\n}",
+     "seconds": 0.7638999999761581,
+     "tokensIn": 115,
+     "tokensOut": 11
+    }
+   },
+   "ticket-24": {
+    "device": [
+     {
+      "text": "{\"label\": \"account\"}",
+      "seconds": 0.6893000000119209
+     },
+     {
+      "text": "{\"label\": \"account\"}",
+      "seconds": 0.6885999999642373
+     },
+     {
+      "text": "{\"label\": \"account\"}",
+      "seconds": 0.6993000000119209
+     }
+    ],
+    "cloud": {
+     "text": "{\"label\": \"account\"}",
+     "seconds": 0.9815,
+     "tokensIn": 104,
+     "tokensOut": 6
+    }
+   },
+   "ticket-25": {
+    "device": [
+     {
+      "text": "{\"label\": \"account\"}",
+      "seconds": 0.7045999999642372
+     },
+     {
+      "text": "{\"label\": \"account\"}",
+      "seconds": 0.7009000000357628
+     },
+     {
+      "text": "{\"label\": \"account\"}",
+      "seconds": 0.7055999999642372
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"label\": \"account\"\n}",
+     "seconds": 0.9463999999761581,
+     "tokensIn": 107,
+     "tokensOut": 11
+    }
+   }
+  },
+  "review_mood": {
+   "mood-1": {
+    "device": [
+     {
+      "text": "{\"label\": \"positive\"}",
+      "seconds": 0.772699999988079
+     },
+     {
+      "text": "{\"label\": \"positive\"}",
+      "seconds": 0.6215
+     },
+     {
+      "text": "{\"label\":\"positive\"}",
+      "seconds": 0.595
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"label\": \"positive\"\n}",
+     "seconds": 1.4275,
+     "tokensIn": 80,
+     "tokensOut": 11
+    }
+   },
+   "mood-2": {
+    "device": [
+     {
+      "text": "{\"label\": \"positive\"}",
+      "seconds": 0.631699999988079
+     },
+     {
+      "text": "{\"label\": \"positive\"}",
+      "seconds": 0.6336000000238419
+     },
+     {
+      "text": "{\"label\": \"positive\"}",
+      "seconds": 0.627699999988079
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"label\": \"positive\"\n}",
+     "seconds": 0.8865,
+     "tokensIn": 83,
+     "tokensOut": 11
+    }
+   },
+   "mood-3": {
+    "device": [
+     {
+      "text": "{\"label\":\"positive\"}",
+      "seconds": 0.5896999999880791
+     },
+     {
+      "text": "{\"label\":\"positive\"}",
+      "seconds": 0.5785
+     },
+     {
+      "text": "{\"label\":\"positive\"}",
+      "seconds": 0.579
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"label\": \"positive\"\n}",
+     "seconds": 0.9345,
+     "tokensIn": 72,
+     "tokensOut": 11
+    }
+   },
+   "mood-4": {
+    "device": [
+     {
+      "text": "{\"label\": \"positive\"}",
+      "seconds": 0.6333999999761581
+     },
+     {
+      "text": "{\"label\": \"positive\"}",
+      "seconds": 0.619
+     },
+     {
+      "text": "{\"label\":\"positive\"}",
+      "seconds": 0.5821000000238419
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"label\": \"positive\"\n}",
+     "seconds": 0.7604000000357628,
+     "tokensIn": 75,
+     "tokensOut": 11
+    }
+   },
+   "mood-5": {
+    "device": [
+     {
+      "text": "{\"label\": \"positive\"}",
+      "seconds": 0.6293000000119209
+     },
+     {
+      "text": "{\"label\": \"positive\"}",
+      "seconds": 0.6123999999761581
+     },
+     {
+      "text": "{\"label\": \"positive\"}",
+      "seconds": 0.6122000000476837
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"label\": \"positive\"\n}",
+     "seconds": 0.8415,
+     "tokensIn": 73,
+     "tokensOut": 11
+    }
+   },
+   "mood-6": {
+    "device": [
+     {
+      "text": "{\"label\": \"negative\"}",
+      "seconds": 0.6155
+     },
+     {
+      "text": "{\"label\": \"negative\"}",
+      "seconds": 0.6080999999642372
+     },
+     {
+      "text": "{\"label\": \"negative\"}",
+      "seconds": 0.6551000000238418
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"label\": \"negative\"\n}",
+     "seconds": 1.089800000011921,
+     "tokensIn": 69,
+     "tokensOut": 11
+    }
+   },
+   "mood-7": {
+    "device": [
+     {
+      "text": "{\"label\":\"negative\"}",
+      "seconds": 0.623
+     },
+     {
+      "text": "{\"label\": \"negative\"}",
+      "seconds": 0.6485
+     },
+     {
+      "text": "{\"label\": \"negative\"}",
+      "seconds": 0.6174000000357628
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"label\": \"negative\"\n}",
+     "seconds": 0.7081000000238419,
+     "tokensIn": 72,
+     "tokensOut": 11
+    }
+   },
+   "mood-8": {
+    "device": [
+     {
+      "text": "{\"label\": \"negative\"}",
+      "seconds": 0.6348000000119209
+     },
+     {
+      "text": "{\"label\": \"negative\"}",
+      "seconds": 0.6774000000357628
+     },
+     {
+      "text": "{\"label\": \"negative\"}",
+      "seconds": 0.674
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"label\": \"negative\"\n}",
+     "seconds": 0.9911000000238419,
+     "tokensIn": 72,
+     "tokensOut": 11
+    }
+   },
+   "mood-9": {
+    "device": [
+     {
+      "text": "{\"label\":\"negative\"}",
+      "seconds": 0.6216999999880791
+     },
+     {
+      "text": "{\"label\":\"negative\"}",
+      "seconds": 0.6268000000119209
+     },
+     {
+      "text": "{\"label\":\"negative\"}",
+      "seconds": 0.5962999999523163
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"label\": \"negative\"\n}",
+     "seconds": 1.1261999999880792,
+     "tokensIn": 75,
+     "tokensOut": 11
+    }
+   },
+   "mood-10": {
+    "device": [
+     {
+      "text": "{\"label\": \"negative\"}",
+      "seconds": 0.6432000000476837
+     },
+     {
+      "text": "{\"label\": \"negative\"}",
+      "seconds": 0.6365999999642372
+     },
+     {
+      "text": "{\"label\":\"negative\"}",
+      "seconds": 0.5988000000119209
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"label\": \"negative\"\n}",
+     "seconds": 0.9217000000476837,
+     "tokensIn": 78,
+     "tokensOut": 11
+    }
+   },
+   "mood-11": {
+    "device": [
+     {
+      "text": "{\"label\": \"mixed\"}",
+      "seconds": 0.6597999999523163
+     },
+     {
+      "text": "{\"label\": \"mixed\"}",
+      "seconds": 0.644
+     },
+     {
+      "text": "{\"label\":\"mixed\"}",
+      "seconds": 0.616
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"label\": \"mixed\"\n}",
+     "seconds": 1.253800000011921,
+     "tokensIn": 87,
+     "tokensOut": 11
+    }
+   },
+   "mood-12": {
+    "device": [
+     {
+      "text": "{\"label\":\"mixed\"}",
+      "seconds": 0.6206000000238419
+     },
+     {
+      "text": "{\"label\":\"mixed\"}",
+      "seconds": 0.6350999999642372
+     },
+     {
+      "text": "{\"label\": \"mixed\"}",
+      "seconds": 0.6454000000357628
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"label\": \"mixed\"\n}",
+     "seconds": 0.8955999999642372,
+     "tokensIn": 85,
+     "tokensOut": 11
+    }
+   },
+   "mood-13": {
+    "device": [
+     {
+      "text": "{\"label\": \"mixed\"}",
+      "seconds": 0.6522999999523162
+     },
+     {
+      "text": "{\"label\": \"mixed\"}",
+      "seconds": 0.6278000000119209
+     },
+     {
+      "text": "{\"label\": \"mixed\"}",
+      "seconds": 0.628
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"label\": \"mixed\"\n}",
+     "seconds": 0.8198000000119209,
+     "tokensIn": 78,
+     "tokensOut": 11
+    }
+   },
+   "mood-14": {
+    "device": [
+     {
+      "text": "{\"label\": \"mixed\"}",
+      "seconds": 0.6603000000119209
+     },
+     {
+      "text": "{\"label\": \"mixed\"}",
+      "seconds": 0.6345999999642372
+     },
+     {
+      "text": "{\"label\": \"mixed\"}",
+      "seconds": 0.6285
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"label\": \"mixed\"\n}",
+     "seconds": 1.135,
+     "tokensIn": 83,
+     "tokensOut": 11
+    }
+   },
+   "mood-15": {
+    "device": [
+     {
+      "text": "{\"label\": \"mixed\"}",
+      "seconds": 0.649
+     },
+     {
+      "text": "{\"label\": \"mixed\"}",
+      "seconds": 0.626
+     },
+     {
+      "text": "{\"label\":\"mixed\"}",
+      "seconds": 0.600300000011921
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"label\": \"mixed\"\n}",
+     "seconds": 0.9065,
+     "tokensIn": 80,
+     "tokensOut": 11
+    }
+   },
+   "mood-16": {
+    "device": [
+     {
+      "text": "{\"label\": \"negative\"}",
+      "seconds": 0.669699999988079
+     },
+     {
+      "text": "{\"label\": \"negative\"}",
+      "seconds": 0.6313999999761581
+     },
+     {
+      "text": "{\"label\":\"negative\"}",
+      "seconds": 0.6159000000357628
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"label\": \"negative\"\n}",
+     "seconds": 1.2323000000119209,
+     "tokensIn": 78,
+     "tokensOut": 11
+    }
+   },
+   "mood-17": {
+    "device": [
+     {
+      "text": "{\"label\":\"negative\"}",
+      "seconds": 0.6235999999642372
+     },
+     {
+      "text": "{\"label\":\"negative\"}",
+      "seconds": 0.6016000000238418
+     },
+     {
+      "text": "{\"label\": \"negative\"}",
+      "seconds": 0.6310999999642373
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"label\": \"negative\"\n}",
+     "seconds": 0.9276000000238419,
+     "tokensIn": 83,
+     "tokensOut": 11
+    }
+   },
+   "mood-18": {
+    "device": [
+     {
+      "text": "{\"label\": \"positive\"}",
+      "seconds": 0.64
+     },
+     {
+      "text": "{\"label\":\"positive\"}",
+      "seconds": 0.596199999988079
+     },
+     {
+      "text": "{\"label\":\"positive\"}",
+      "seconds": 0.6046999999880791
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"label\": \"positive\"\n}",
+     "seconds": 1.0208000000119208,
+     "tokensIn": 79,
+     "tokensOut": 11
+    }
+   },
+   "mood-19": {
+    "device": [
+     {
+      "text": "{\"label\": \"mixed\"}",
+      "seconds": 0.6338999999761581
+     },
+     {
+      "text": "{\"label\":\"mixed\"}",
+      "seconds": 0.601300000011921
+     },
+     {
+      "text": "{\"label\": \"mixed\"}",
+      "seconds": 0.6254000000357628
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"label\": \"mixed\"\n}",
+     "seconds": 1.0236999999880791,
+     "tokensIn": 83,
+     "tokensOut": 11
+    }
+   },
+   "mood-20": {
+    "device": [
+     {
+      "text": "{\"label\": \"mixed\"}",
+      "seconds": 0.648800000011921
+     },
+     {
+      "text": "{\"label\": \"mixed\"}",
+      "seconds": 0.6276000000238419
+     },
+     {
+      "text": "{\"label\": \"mixed\"}",
+      "seconds": 0.6292999999523163
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"label\": \"negative\"\n}",
+     "seconds": 0.904800000011921,
+     "tokensIn": 78,
+     "tokensOut": 11
+    }
+   },
+   "mood-21": {
+    "device": [
+     {
+      "text": "{\"label\": \"mixed\"}",
+      "seconds": 0.6916000000238418
+     },
+     {
+      "text": "{\"label\": \"mixed\"}",
+      "seconds": 0.6701999999880791
+     },
+     {
+      "text": "{\"label\":\"mixed\"}",
+      "seconds": 0.6164000000357628
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"label\": \"negative\"\n}",
+     "seconds": 1.0050999999642372,
+     "tokensIn": 82,
+     "tokensOut": 11
+    }
+   },
+   "mood-22": {
+    "device": [
+     {
+      "text": "{\"label\":\"positive\"}",
+      "seconds": 0.6081000000238419
+     },
+     {
+      "text": "{\"label\": \"positive\"}",
+      "seconds": 0.6293999999761581
+     },
+     {
+      "text": "{\"label\": \"positive\"}",
+      "seconds": 0.662699999988079
+     }
+    ],
+    "cloud": {
+     "text": "{\"label\": \"positive\"}",
+     "seconds": 1.024,
+     "tokensIn": 80,
+     "tokensOut": 6
+    }
+   },
+   "mood-23": {
+    "device": [
+     {
+      "text": "{\"label\": \"mixed\"}",
+      "seconds": 0.682800000011921
+     },
+     {
+      "text": "{\"label\": \"mixed\"}",
+      "seconds": 0.6281999999880791
+     },
+     {
+      "text": "{\"label\":\"mixed\"}",
+      "seconds": 0.617300000011921
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"label\": \"positive\"\n}",
+     "seconds": 0.7881999999880791,
+     "tokensIn": 78,
+     "tokensOut": 11
+    }
+   },
+   "mood-24": {
+    "device": [
+     {
+      "text": "{\"label\":\"mixed\"}",
+      "seconds": 0.6161999999880791
+     },
+     {
+      "text": "{\"label\":\"mixed\"}",
+      "seconds": 0.6033999999761581
+     },
+     {
+      "text": "{\"label\":\"mixed\"}",
+      "seconds": 0.6041000000238419
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"label\": \"mixed\"\n}",
+     "seconds": 0.8397999999523162,
+     "tokensIn": 82,
+     "tokensOut": 11
+    }
+   },
+   "mood-25": {
+    "device": [
+     {
+      "text": "{\"label\":\"negative\"}",
+      "seconds": 0.5910999999642372
+     },
+     {
+      "text": "{\"label\": \"negative\"}",
+      "seconds": 0.6005
+     },
+     {
+      "text": "{\"label\": \"negative\"}",
+      "seconds": 0.5946000000238418
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"label\": \"negative\"\n}",
+     "seconds": 0.9286999999880791,
+     "tokensIn": 65,
+     "tokensOut": 11
+    }
+   }
+  },
+  "receipt_fields": {
+   "receipt-1": {
+    "device": [
+     {
+      "text": "{\n  \"merchant\": \"THE COPPER KETTLE\",\n  \"date\": \"2026-11-12\",\n  \"total\": 12.38\n}",
+      "seconds": 1.809300000011921
+     },
+     {
+      "text": "{\n  \"merchant\": \"THE COPPER KETTLE\",\n  \"date\": \"2026-11-12\",\n  \"total\": 12.38\n}",
+      "seconds": 1.7590999999642372
+     },
+     {
+      "text": "{\"merchant\": \"THE COPPER KETTLE\", \"date\": \"2026-11-12\", \"total\": 12.38}",
+      "seconds": 1.540699999988079
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"merchant\": \"THE COPPER KETTLE\",\n  \"date\": \"2026-11-12\",\n  \"total\": 12.38\n}",
+     "seconds": 1.273100000023842,
+     "tokensIn": 127,
+     "tokensOut": 44
+    }
+   },
+   "receipt-2": {
+    "device": [
+     {
+      "text": "{\n  \"merchant\": \"GREENLEAF MARKET\",\n  \"date\": \"2026-11-07\",\n  \"total\": 5.24\n}",
+      "seconds": 1.6611000000238418
+     },
+     {
+      "text": "{\n  \"merchant\": \"GREENLEAF MARKET\",\n  \"date\": \"2026-07-11\",\n  \"total\": 5.24\n}",
+      "seconds": 1.659
+     },
+     {
+      "text": "{\n  \"merchant\": \"GREENLEAF MARKET\",\n  \"date\": \"2026-11-07\",\n  \"total\": 5.24\n}",
+      "seconds": 1.648
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"merchant\": \"GREENLEAF MARKET\",\n  \"date\": \"2026-11-07\",\n  \"total\": 5.24\n}",
+     "seconds": 1.085,
+     "tokensIn": 107,
+     "tokensOut": 41
+    }
+   },
+   "receipt-3": {
+    "device": [
+     {
+      "text": "{\n  \"merchant\": \"Northgate Hardware\",\n  \"date\": \"2026-11-03\",\n  \"total\": 10.60\n}",
+      "seconds": 1.672300000011921
+     },
+     {
+      "text": "{\n  \"merchant\": \"Northgate Hardware\",\n  \"date\": \"2026-11-03\",\n  \"total\": 10.60\n}",
+      "seconds": 1.648800000011921
+     },
+     {
+      "text": "{\"merchant\": \"Northgate Hardware\", \"date\": \"2026-11-03\", \"total\": 10.60}",
+      "seconds": 1.4253999999761582
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"merchant\": \"Northgate Hardware\",\n  \"date\": \"2026-11-03\",\n  \"total\": 10.60\n}",
+     "seconds": 0.843300000011921,
+     "tokensIn": 111,
+     "tokensOut": 41
+    }
+   },
+   "receipt-4": {
+    "device": [
+     {
+      "text": "{\n  \"merchant\": \"Mill Lane Bakery\",\n  \"date\": \"2026-10-05\",\n  \"total\": 9.20\n}",
+      "seconds": 1.6453999999761582
+     },
+     {
+      "text": "{\n  \"merchant\": \"Mill Lane Bakery\",\n  \"date\": \"2026-10-05\",\n  \"total\": 9.20\n}",
+      "seconds": 1.620300000011921
+     },
+     {
+      "text": "{\n  \"merchant\": \"Mill Lane Bakery\",\n  \"date\": \"2026-10-05\",\n  \"total\": 9.20\n}",
+      "seconds": 1.6226000000238419
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"merchant\": \"Mill Lane Bakery\",\n  \"date\": \"2026-10-05\",\n  \"total\": 9.20\n}",
+     "seconds": 1.0795,
+     "tokensIn": 117,
+     "tokensOut": 40
+    }
+   },
+   "receipt-5": {
+    "device": [
+     {
+      "text": "{\"merchant\": \"FERNHILL GARDEN CENTRE\", \"date\": \"2026-10-09\", \"total\": 23.48}",
+      "seconds": 1.5442000000476837
+     },
+     {
+      "text": "{\n  \"merchant\": \"FERNHILL GARDEN CENTRE\",\n  \"date\": \"2026-10-09\",\n  \"total\": 23.48\n}",
+      "seconds": 1.7467999999523163
+     },
+     {
+      "text": "{\n  \"merchant\": \"FERNHILL GARDEN CENTRE\",\n  \"date\": \"2026-10-09\",\n  \"total\": 23.48\n}",
+      "seconds": 1.7265
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"merchant\": \"FERNHILL GARDEN CENTRE\",\n  \"date\": \"2026-10-09\",\n  \"total\": 23.48\n}",
+     "seconds": 0.8092999999523163,
+     "tokensIn": 118,
+     "tokensOut": 44
+    }
+   },
+   "receipt-6": {
+    "device": [
+     {
+      "text": "{\n  \"merchant\": \"Saltmarsh Deli\",\n  \"date\": \"2026-11-04\",\n  \"total\": 12.15\n}",
+      "seconds": 1.670300000011921
+     },
+     {
+      "text": "{\n  \"merchant\": \"Saltmarsh Deli\",\n  \"date\": \"2026-11-04\",\n  \"total\": 12.15\n}",
+      "seconds": 1.654
+     },
+     {
+      "text": "{\n  \"merchant\": \"Saltmarsh Deli\",\n  \"date\": \"2026-11-04\",\n  \"total\": 12.15\n}",
+      "seconds": 1.650199999988079
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"merchant\": \"Saltmarsh Deli\",\n  \"date\": \"2026-11-04\",\n  \"total\": 12.15\n}",
+     "seconds": 1.097899999976158,
+     "tokensIn": 113,
+     "tokensOut": 41
+    }
+   },
+   "receipt-7": {
+    "device": [
+     {
+      "text": "{\n  \"merchant\": \"Ivy House Books\",\n  \"date\": \"2026-10-08\",\n  \"total\": 13.24\n}",
+      "seconds": 1.663699999988079
+     },
+     {
+      "text": "{\"merchant\": \"Ivy House Books\", \"date\": \"2026-10-08\", \"total\": 13.24}",
+      "seconds": 1.4291999999880791
+     },
+     {
+      "text": "{\n  \"merchant\": \"Ivy House Books\",\n  \"date\": \"2026-10-08\",\n  \"total\": 13.24\n}",
+      "seconds": 1.657
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"merchant\": \"Ivy House Books\",\n  \"date\": \"2026-10-08\",\n  \"total\": 13.24\n}",
+     "seconds": 0.9215,
+     "tokensIn": 94,
+     "tokensOut": 41
+    }
+   },
+   "receipt-8": {
+    "device": [
+     {
+      "text": "{\n  \"merchant\": \"THE BLUE DOOR TEA ROOM\",\n  \"date\": \"2026-11-02\",\n  \"total\": 22.99\n}",
+      "seconds": 1.7516000000238419
+     },
+     {
+      "text": "{\n  \"merchant\": \"THE BLUE DOOR TEA ROOM\",\n  \"date\": \"2026-11-02\",\n  \"total\": 22.99\n}",
+      "seconds": 1.7161000000238418
+     },
+     {
+      "text": "{\n  \"merchant\": \"THE BLUE DOOR TEA ROOM\",\n  \"date\": \"2026-11-02\",\n  \"total\": 22.99\n}",
+      "seconds": 1.724199999988079
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"merchant\": \"THE BLUE DOOR TEA ROOM\",\n  \"date\": \"2026-11-02\",\n  \"total\": 22.99\n}",
+     "seconds": 0.8646999999880791,
+     "tokensIn": 123,
+     "tokensOut": 43
+    }
+   },
+   "receipt-9": {
+    "device": [
+     {
+      "text": "{\n  \"merchant\": \"Castle Street Cycles\",\n  \"date\": \"2026-10-25\",\n  \"total\": 19.49\n}",
+      "seconds": 1.6716000000238418
+     },
+     {
+      "text": "{\n  \"merchant\": \"Castle Street Cycles\",\n  \"date\": \"2026-10-25\",\n  \"total\": 19.49\n}",
+      "seconds": 1.646199999988079
+     },
+     {
+      "text": "{\n  \"merchant\": \"Castle Street Cycles\",\n  \"date\": \"2026-10-25\",\n  \"total\": 19.49\n}",
+      "seconds": 1.646199999988079
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"merchant\": \"Castle Street Cycles\",\n  \"date\": \"2026-10-25\",\n  \"total\": 19.49\n}",
+     "seconds": 1.1831999999880791,
+     "tokensIn": 104,
+     "tokensOut": 41
+    }
+   },
+   "receipt-10": {
+    "device": [
+     {
+      "text": "{\n  \"merchant\": \"HOLLINS FARM SHOP\",\n  \"date\": \"2026-11-13\",\n  \"total\": 10.50\n}",
+      "seconds": 1.748
+     },
+     {
+      "text": "{\n  \"merchant\": \"HOLLINS FARM SHOP\",\n  \"date\": \"2026-11-13\",\n  \"total\": 10.50\n}",
+      "seconds": 1.7342000000476838
+     },
+     {
+      "text": "{\n  \"merchant\": \"HOLLINS FARM SHOP\",\n  \"date\": \"2026-11-13\",\n  \"total\": 10.50\n}",
+      "seconds": 1.7380999999642373
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"merchant\": \"HOLLINS FARM SHOP\",\n  \"date\": \"2026-11-13\",\n  \"total\": 10.50\n}",
+     "seconds": 0.7883000000119209,
+     "tokensIn": 134,
+     "tokensOut": 43
+    }
+   },
+   "receipt-11": {
+    "device": [
+     {
+      "text": "{\n  \"merchant\": \"Willow Row Florist\",\n  \"date\": \"2026-10-28\",\n  \"total\": 33.50\n}",
+      "seconds": 1.688
+     },
+     {
+      "text": "{\n  \"merchant\": \"Willow Row Florist\",\n  \"date\": \"2026-10-28\",\n  \"total\": 33.50\n}",
+      "seconds": 1.671699999988079
+     },
+     {
+      "text": "{\n  \"merchant\": \"Willow Row Florist\",\n  \"date\": \"2026-10-28\",\n  \"total\": 33.50\n}",
+      "seconds": 1.6836000000238418
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"merchant\": \"Willow Row Florist\",\n  \"date\": \"2026-10-28\",\n  \"total\": 33.50\n}",
+     "seconds": 0.8841999999880791,
+     "tokensIn": 104,
+     "tokensOut": 42
+    }
+   },
+   "receipt-12": {
+    "device": [
+     {
+      "text": "{\n  \"merchant\": \"Quayside Fishmongers\",\n  \"date\": \"2026-10-19\",\n  \"total\": 12.05\n}",
+      "seconds": 1.7285
+     },
+     {
+      "text": "{\n  \"merchant\": \"Quayside Fishmongers\",\n  \"date\": \"2026-10-19\",\n  \"total\": 12.05\n}",
+      "seconds": 1.7038999999761582
+     },
+     {
+      "text": "{\n  \"merchant\": \"Quayside Fishmongers\",\n  \"date\": \"2026-10-19\",\n  \"total\": 12.05\n}",
+      "seconds": 1.700600000023842
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"merchant\": \"Quayside Fishmongers\",\n  \"date\": \"2026-10-19\",\n  \"total\": 12.05\n}",
+     "seconds": 0.848300000011921,
+     "tokensIn": 115,
+     "tokensOut": 43
+    }
+   },
+   "receipt-13": {
+    "device": [
+     {
+      "text": "{\n  \"merchant\": \"OLD FORGE IRONMONGERS\",\n  \"date\": \"2026-10-31\",\n  \"total\": 15.49\n}",
+      "seconds": 1.7548000000119208
+     },
+     {
+      "text": "{\n  \"merchant\": \"OLD FORGE IRONMONGERS\",\n  \"date\": \"2026-10-31\",\n  \"total\": 15.49\n}",
+      "seconds": 1.7221000000238418
+     },
+     {
+      "text": "{\n  \"merchant\": \"OLD FORGE IRONMONGERS\",\n  \"date\": \"2026-10-31\",\n  \"total\": 15.49\n}",
+      "seconds": 1.7355999999642373
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"merchant\": \"OLD FORGE IRONMONGERS\",\n  \"date\": \"2026-10-31\",\n  \"total\": 15.49\n}",
+     "seconds": 0.9512000000476837,
+     "tokensIn": 112,
+     "tokensOut": 44
+    }
+   },
+   "receipt-14": {
+    "device": [
+     {
+      "text": "{\n  \"merchant\": \"Harbour Pharmacy\",\n  \"date\": \"2026-11-02\",\n  \"total\": 5.64\n}",
+      "seconds": 1.645
+     },
+     {
+      "text": "{\n  \"merchant\": \"Harbour Pharmacy\",\n  \"date\": \"2026-11-02\",\n  \"total\": 5.64\n}",
+      "seconds": 1.6314000000357627
+     },
+     {
+      "text": "{\n  \"merchant\": \"Harbour Pharmacy\",\n  \"date\": \"2026-11-02\",\n  \"total\": 5.64\n}",
+      "seconds": 1.619699999988079
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"merchant\": \"Harbour Pharmacy\",\n  \"date\": \"2026-11-02\",\n  \"total\": 5.64\n}",
+     "seconds": 0.6805999999642373,
+     "tokensIn": 108,
+     "tokensOut": 40
+    }
+   },
+   "receipt-15": {
+    "device": [
+     {
+      "text": "{\n  \"merchant\": \"Brook & Barley\",\n  \"date\": \"2026-10-14\",\n  \"total\": 30.94\n}",
+      "seconds": 1.650800000011921
+     },
+     {
+      "text": "{\n  \"merchant\": \"Brook & Barley\",\n  \"date\": \"2026-10-14\",\n  \"total\": 30.94\n}",
+      "seconds": 1.6438000000119208
+     },
+     {
+      "text": "{\n  \"merchant\": \"Brook & Barley\",\n  \"date\": \"2026-10-14\",\n  \"total\": 30.94\n}",
+      "seconds": 1.646100000023842
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"merchant\": \"Brook & Barley\",\n  \"date\": \"2026-10-14\",\n  \"total\": 30.94\n}",
+     "seconds": 1.0435999999642371,
+     "tokensIn": 118,
+     "tokensOut": 41
+    }
+   },
+   "receipt-16": {
+    "device": [
+     {
+      "text": "{\n  \"merchant\": \"LARCH & PINE\",\n  \"date\": \"2026-11-06\",\n  \"total\": 25.49\n}",
+      "seconds": 1.7095
+     },
+     {
+      "text": "{\n  \"merchant\": \"LARCH & PINE\",\n  \"date\": \"2026-11-06\",\n  \"total\": 25.49\n}",
+      "seconds": 1.698800000011921
+     },
+     {
+      "text": "{\n  \"merchant\": \"LARCH & PINE\",\n  \"date\": \"2026-11-06\",\n  \"total\": 25.49\n}",
+      "seconds": 1.698
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"merchant\": \"LARCH & PINE\",\n  \"date\": \"2026-11-06\",\n  \"total\": 25.49\n}",
+     "seconds": 1.025800000011921,
+     "tokensIn": 104,
+     "tokensOut": 43
+    }
+   },
+   "receipt-17": {
+    "device": [
+     {
+      "text": "{\n  \"merchant\": \"Beacon Hill Pet Supplies\",\n  \"date\": \"2026-11-07\",\n  \"total\": 16.34\n}",
+      "seconds": 1.6955
+     },
+     {
+      "text": "{\n  \"merchant\": \"Beacon Hill Pet Supplies\",\n  \"date\": \"2026-11-07\",\n  \"total\": 16.34\n}",
+      "seconds": 1.668800000011921
+     },
+     {
+      "text": "{\n  \"merchant\": \"Beacon Hill Pet Supplies\",\n  \"date\": \"2026-11-07\",\n  \"total\": 16.34\n}",
+      "seconds": 1.6731999999880791
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"merchant\": \"Beacon Hill Pet Supplies\",\n  \"date\": \"2026-11-07\",\n  \"total\": 16.34\n}",
+     "seconds": 0.8457000000476838,
+     "tokensIn": 108,
+     "tokensOut": 42
+    }
+   },
+   "receipt-18": {
+    "device": [
+     {
+      "text": "{\n  \"merchant\": \"Tanner's Yard Cafe\",\n  \"date\": \"2026-10-23\",\n  \"total\": 19.50\n}",
+      "seconds": 1.765800000011921
+     },
+     {
+      "text": "{\n  \"merchant\": \"Tanner's Yard Cafe\",\n  \"date\": \"2026-10-23\",\n  \"total\": 19.50\n}",
+      "seconds": 1.739300000011921
+     },
+     {
+      "text": "{\n  \"merchant\": \"Tanner's Yard Cafe\",\n  \"date\": \"2026-10-23\",\n  \"total\": 19.50\n}",
+      "seconds": 1.750199999988079
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"merchant\": \"Tanner's Yard Cafe\",\n  \"date\": \"2026-10-23\",\n  \"total\": 19.50\n}",
+     "seconds": 0.8712999999523163,
+     "tokensIn": 126,
+     "tokensOut": 44
+    }
+   },
+   "receipt-19": {
+    "device": [
+     {
+      "text": "{\n  \"merchant\": \"WINDMILL STORES\",\n  \"date\": \"2026-11-01\",\n  \"total\": 10.65\n}",
+      "seconds": 1.719300000011921
+     },
+     {
+      "text": "{\n  \"merchant\": \"WINDMILL STORES\",\n  \"date\": \"2026-11-01\",\n  \"total\": 10.65\n}",
+      "seconds": 1.694
+     },
+     {
+      "text": "{\"merchant\": \"WINDMILL STORES\", \"date\": \"2026-11-01\", \"total\": 10.65}",
+      "seconds": 1.474600000023842
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"merchant\": \"WINDMILL STORES\",\n  \"date\": \"2026-11-01\",\n  \"total\": 10.65\n}",
+     "seconds": 0.867,
+     "tokensIn": 104,
+     "tokensOut": 43
+    }
+   },
+   "receipt-20": {
+    "device": [
+     {
+      "text": "{\"merchant\": \"Foxglove Nurseries\", \"date\": \"2026-11-02\", \"total\": 21.49}",
+      "seconds": 1.4925
+     },
+     {
+      "text": "{\n  \"merchant\": \"Foxglove Nurseries\",\n  \"date\": \"2026-11-02\",\n  \"total\": 21.49\n}",
+      "seconds": 1.718899999976158
+     },
+     {
+      "text": "{\"merchant\": \"Foxglove Nurseries\", \"date\": \"2026-11-02\", \"total\": 21.49}",
+      "seconds": 1.477
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"merchant\": \"Foxglove Nurseries\",\n  \"date\": \"2026-11-02\",\n  \"total\": 21.49\n}",
+     "seconds": 1.127699999988079,
+     "tokensIn": 110,
+     "tokensOut": 43
+    }
+   },
+   "receipt-21": {
+    "device": [
+     {
+      "text": "{\n  \"merchant\": \"Seven Stars Kitchenware\",\n  \"date\": \"2026-10-17\",\n  \"total\": 43.45\n}",
+      "seconds": 1.6875
+     },
+     {
+      "text": "{\n  \"merchant\": \"Seven Stars Kitchenware\",\n  \"date\": \"2026-10-17\",\n  \"total\": 43.45\n}",
+      "seconds": 1.667
+     },
+     {
+      "text": "{\n  \"merchant\": \"Seven Stars Kitchenware\",\n  \"date\": \"2026-10-17\",\n  \"total\": 43.45\n}",
+      "seconds": 1.6693999999761582
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"merchant\": \"Seven Stars Kitchenware\",\n  \"date\": \"2026-10-17\",\n  \"total\": 43.45\n}",
+     "seconds": 1.0820999999642371,
+     "tokensIn": 105,
+     "tokensOut": 42
+    }
+   },
+   "receipt-22": {
+    "device": [
+     {
+      "text": "{\n  \"merchant\": \"THE PAPER LANTERN\",\n  \"date\": \"2026-11-10\",\n  \"total\": 45.10\n}",
+      "seconds": 1.698600000023842
+     },
+     {
+      "text": "{\n  \"merchant\": \"THE PAPER LANTERN\",\n  \"date\": \"2026-11-10\",\n  \"total\": 45.10\n}",
+      "seconds": 1.6848999999761582
+     },
+     {
+      "text": "{\n  \"merchant\": \"THE PAPER LANTERN\",\n  \"date\": \"2026-11-10\",\n  \"total\": 45.10\n}",
+      "seconds": 1.687699999988079
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"merchant\": \"THE PAPER LANTERN\",\n  \"date\": \"2026-11-10\",\n  \"total\": 45.10\n}",
+     "seconds": 0.9555,
+     "tokensIn": 124,
+     "tokensOut": 42
+    }
+   },
+   "receipt-23": {
+    "device": [
+     {
+      "text": "{\n  \"merchant\": \"Marlow's Greengrocer\",\n  \"date\": \"2026-10-06\",\n  \"total\": 5.25\n}",
+      "seconds": 1.7992000000476838
+     },
+     {
+      "text": "{\n  \"merchant\": \"Marlow's Greengrocer\",\n  \"date\": \"2026-10-06\",\n  \"total\": 5.25\n}",
+      "seconds": 1.7976999999880792
+     },
+     {
+      "text": "{\n  \"merchant\": \"Marlow's Greengrocer\",\n  \"date\": \"2026-10-06\",\n  \"total\": 5.25\n}",
+      "seconds": 1.8035
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"merchant\": \"Marlow's Greengrocer\",\n  \"date\": \"2026-10-06\",\n  \"total\": 5.25\n}",
+     "seconds": 0.8276999999880791,
+     "tokensIn": 127,
+     "tokensOut": 45
+    }
+   },
+   "receipt-24": {
+    "device": [
+     {
+      "text": "{\"merchant\": \"Ashby Road Dry Cleaners\", \"date\": \"2026-10-20\", \"total\": 22.00}",
+      "seconds": 1.5268000000119208
+     },
+     {
+      "text": "{\n  \"merchant\": \"Ashby Road Dry Cleaners\",\n  \"date\": \"2026-10-20\",\n  \"total\": 22.00\n}",
+      "seconds": 1.7222999999523163
+     },
+     {
+      "text": "{\n  \"merchant\": \"Ashby Road Dry Cleaners\",\n  \"date\": \"2026-10-20\",\n  \"total\": 22.00\n}",
+      "seconds": 1.7292000000476837
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"merchant\": \"Ashby Road Dry Cleaners\",\n  \"date\": \"2026-10-20\",\n  \"total\": 22.00\n}",
+     "seconds": 0.9246999999880791,
+     "tokensIn": 106,
+     "tokensOut": 44
+    }
+   },
+   "receipt-25": {
+    "device": [
+     {
+      "text": "{\n  \"merchant\": \"Orchard Lane Toys\",\n  \"date\": \"2026-11-09\",\n  \"total\": 35.98\n}",
+      "seconds": 1.6777999999523163
+     },
+     {
+      "text": "{\"merchant\": \"Orchard Lane Toys\", \"date\": \"2026-11-09\", \"total\": 35.98}",
+      "seconds": 1.4501000000238418
+     },
+     {
+      "text": "{\n  \"merchant\": \"Orchard Lane Toys\",\n  \"date\": \"2026-11-09\",\n  \"total\": 35.98\n}",
+      "seconds": 1.8648999999761582
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"merchant\": \"Orchard Lane Toys\",\n  \"date\": \"2026-11-09\",\n  \"total\": 35.98\n}",
+     "seconds": 0.9203999999761582,
+     "tokensIn": 101,
+     "tokensOut": 42
+    }
+   }
+  },
+  "delivery_summary": {
+   "summary-1": {
+    "device": [
+     {
+      "text": "Your Larkfield order is en route to Leeds and will be delivered Thursday between 8 am and 6 pm; no signature required.",
+      "seconds": 1.1893999999761582
+     },
+     {
+      "text": "Your Larkfield order is en route to Leeds and will be delivered Thursday between 8 am and 6 pm; no signature required.",
+      "seconds": 1.1456000000238418
+     },
+     {
+      "text": "Your Larkfield order is on its way to Leeds and will be delivered Thursday between 8 am - 6 pm; no signature required.",
+      "seconds": 1.1726999999880792
+     }
+    ],
+    "cloud": {
+     "text": "Your parcel is on its way to the Leeds depot and will be delivered on Thursday between 8 am and 6 pm; no signature is needed.",
+     "seconds": 1.042300000011921,
+     "tokensIn": 114,
+     "tokensOut": 30
+    },
+    "grades": {
+     "Your Larkfield order is en route to Leeds and will be delivered Thursday between 8 am and 6 pm; no signature required.": {
+      "ok": true
+     },
+     "Your Larkfield order is on its way to Leeds and will be delivered Thursday between 8 am - 6 pm; no signature required.": {
+      "ok": true
+     }
+    }
+   },
+   "summary-2": {
+    "device": [
+     {
+      "text": "Order delivered today at 2:12 PM; please see attached photo confirmation.",
+      "seconds": 0.8625999999642372
+     },
+     {
+      "text": "Delivered today at 2:12 PM to your porch; photo attached for confirmation.",
+      "seconds": 0.9079000000357628
+     },
+     {
+      "text": "Order delivered today at 2:12 PM; photo of porch drop-off attached, per your instructions.",
+      "seconds": 0.991
+     }
+    ],
+    "cloud": {
+     "text": "Your parcel was delivered to your porch today at 14:12, and a photo has been attached to your order.",
+     "seconds": 1.009199999988079,
+     "tokensIn": 107,
+     "tokensOut": 26
+    },
+    "grades": {
+     "Delivered today at 2:12 PM to your porch; photo attached for confirmation.": {
+      "ok": true
+     },
+     "Order delivered today at 2:12 PM; photo of porch drop-off attached, per your instructions.": {
+      "ok": true
+     },
+     "Your parcel was delivered to your porch today at 14:12, and a photo has been attached to your order.": {
+      "ok": true
+     }
+    }
+   },
+   "summary-3": {
+    "device": [
+     {
+      "text": "Your Larkfield order is splitting: armchairs ship Monday; the footstool will arrive separately, with no extra cost.",
+      "seconds": 1.0167000000476838
+     },
+     {
+      "text": "Your order is split: armchairs ship Monday, footstool follows in a separate, complimentary delivery.",
+      "seconds": 0.9213999999761582
+     },
+     {
+      "text": "Your order is split: armchairs ship Monday, footstool will arrive in a separate parcel—no extra charge.",
+      "seconds": 0.9868000000119209
+     }
+    ],
+    "cloud": {
+     "text": "Your armchairs ship today and arrive Monday, while your out-of-stock footstool will follow in a second parcel at no extra charge.",
+     "seconds": 1.1425999999642371,
+     "tokensIn": 111,
+     "tokensOut": 29
+    },
+    "grades": {
+     "Your Larkfield order is splitting: armchairs ship Monday; the footstool will arrive separately, with no extra cost.": {
+      "ok": true
+     },
+     "Your order is split: armchairs ship Monday, footstool follows in a separate, complimentary delivery.": {
+      "ok": true
+     },
+     "Your order is split: armchairs ship Monday, footstool will arrive in a separate parcel—no extra charge.": {
+      "ok": true
+     },
+     "Your armchairs ship today and arrive Monday, while your out-of-stock footstool will follow in a second parcel at no extra charge.": {
+      "ok": true
+     }
+    }
+   },
+   "summary-4": {
+    "device": [
+     {
+      "text": "Your parcel was delivered to your neighbor (14) at 11:40 AM; a card was left explaining.",
+      "seconds": 1.1024000000357628
+     },
+     {
+      "text": "Your parcel was delivered to the wrong address (14) - a card was left explaining where it is and what to do.",
+      "seconds": 1.091199999988079
+     },
+     {
+      "text": "Your parcel was delivered to the neighbour at 14. A card explaining the delivery was left for you; please check it.",
+      "seconds": 1.0688000000119209
+     }
+    ],
+    "cloud": {
+     "text": "Your parcel was delivered to your neighbour at number 14 at 11:40 today; please collect it from them.",
+     "seconds": 0.9083999999761582,
+     "tokensIn": 109,
+     "tokensOut": 27
+    },
+    "grades": {
+     "Your parcel was delivered to your neighbor (14) at 11:40 AM; a card was left explaining.": {
+      "ok": true
+     },
+     "Your parcel was delivered to your neighbour at number 14 at 11:40 today; please collect it from them.": {
+      "ok": true
+     }
+    }
+   },
+   "summary-5": {
+    "device": [
+     {
+      "text": "Your Larkfield order is out for delivery today (1-3 pm); you don't need to do anything!",
+      "seconds": 0.9944000000357628
+     },
+     {
+      "text": "Your parcel from Larkfield is out for delivery today between 1 pm and 3 pm; no action needed.",
+      "seconds": 0.9908999999761582
+     },
+     {
+      "text": "Your Larkfield order is out for delivery today between 1-3 pm; no action needed.",
+      "seconds": 0.9329000000357628
+     }
+    ],
+    "cloud": {
+     "text": "Your parcel is out for delivery today and is expected to arrive between 1 pm and 3 pm; no action is needed.",
+     "seconds": 1.1226999999880791,
+     "tokensIn": 110,
+     "tokensOut": 26
+    },
+    "grades": {
+     "Your Larkfield order is out for delivery today (1-3 pm); you don't need to do anything!": {
+      "ok": true
+     },
+     "Your parcel from Larkfield is out for delivery today between 1 pm and 3 pm; no action needed.": {
+      "ok": true
+     },
+     "Your Larkfield order is out for delivery today between 1-3 pm; no action needed.": {
+      "ok": true
+     },
+     "Your parcel is out for delivery today and is expected to arrive between 1 pm and 3 pm; no action is needed.": {
+      "ok": true
+     }
+    }
+   },
+   "summary-6": {
+    "device": [
+     {
+      "text": "Table delivered and assembled! Packaging recycled, legs fitted. Enjoy your new furniture.",
+      "seconds": 0.7967999999523163
+     },
+     {
+      "text": "Your table was delivered, set up, and packaging recycled – no action needed!",
+      "seconds": 0.8005
+     },
+     {
+      "text": "Your table is delivered and assembled! Packaging was recycled, and legs fitted. No action required on your part.",
+      "seconds": 0.9534000000357628
+     }
+    ],
+    "cloud": {
+     "text": "Your table was delivered, assembled in your dining room, and packaging was recycled; no further action is needed.",
+     "seconds": 0.7000999999642372,
+     "tokensIn": 110,
+     "tokensOut": 22
+    },
+    "grades": {
+     "Your table was delivered, set up, and packaging recycled – no action needed!": {
+      "ok": true
+     },
+     "Your table was delivered, assembled in your dining room, and packaging was recycled; no further action is needed.": {
+      "ok": true
+     }
+    }
+   },
+   "summary-7": {
+    "device": [
+     {
+      "text": "Your returned item has been processed; a refund has been issued and will arrive in 3-5 business days.",
+      "seconds": 0.9949000000357627
+     },
+     {
+      "text": "Refund issued for your returned Larkfield order; please allow 3-5 business days for processing.",
+      "seconds": 0.904699999988079
+     },
+     {
+      "text": "Your return has been processed; a refund of 3-5 business days will be issued to your original payment method.",
+      "seconds": 1.0323999999761582
+     }
+    ],
+    "cloud": {
+     "text": "Your returned item passed inspection and your refund has been issued, which will reach your card in 3 to 5 working days.",
+     "seconds": 0.9448000000119209,
+     "tokensIn": 110,
+     "tokensOut": 26
+    },
+    "grades": {
+     "Your returned item has been processed; a refund has been issued and will arrive in 3-5 business days.": {
+      "ok": true
+     },
+     "Refund issued for your returned Larkfield order; please allow 3-5 business days for processing.": {
+      "ok": true
+     },
+     "Your return has been processed; a refund of 3-5 business days will be issued to your original payment method.": {
+      "ok": false,
+      "reason": "Nonsensical phrasing regarding a refund 'of 3-5 business days'."
+     },
+     "Your returned item passed inspection and your refund has been issued, which will reach your card in 3 to 5 working days.": {
+      "ok": true
+     }
+    }
+   },
+   "summary-8": {
+    "device": [
+     {
+      "text": "Delivery to Larkfield is rescheduled for Thursday, November 19th, 8 AM - 12 PM due to a vehicle breakdown.",
+      "seconds": 1.1917000000476836
+     },
+     {
+      "text": "Your delivery is rescheduled to Thursday, November 19th, 8 AM - 12 PM due to a vehicle issue. No action needed.",
+      "seconds": 1.2467999999523163
+     },
+     {
+      "text": "Your delivery is rescheduled for Thursday, November 19th, 8 am - 12 noon due to a vehicle issue.",
+      "seconds": 1.1259000000357628
+     }
+    ],
+    "cloud": {
+     "text": "Your delivery has been rescheduled to Thursday 19 November from 8 am to 12 noon due to a van breakdown, and no action is needed.",
+     "seconds": 1.327600000023842,
+     "tokensIn": 117,
+     "tokensOut": 32
+    },
+    "grades": {
+     "Delivery to Larkfield is rescheduled for Thursday, November 19th, 8 AM - 12 PM due to a vehicle breakdown.": {
+      "ok": true
+     },
+     "Your delivery is rescheduled for Thursday, November 19th, 8 am - 12 noon due to a vehicle issue.": {
+      "ok": true
+     },
+     "Your delivery has been rescheduled to Thursday 19 November from 8 am to 12 noon due to a van breakdown, and no action is needed.": {
+      "ok": true
+     }
+    }
+   },
+   "summary-9": {
+    "device": [
+     {
+      "text": "Your order from Larkfield is delayed; expect delivery on Monday due to a sorting issue.",
+      "seconds": 0.8685
+     },
+     {
+      "text": "Your Larkfield order is delayed; expect delivery Monday due to a sorting issue.",
+      "seconds": 0.8126999999880791
+     },
+     {
+      "text": "Your Larkfield order will now arrive on Monday due to a sorting delay; no action needed.",
+      "seconds": 0.8664000000357628
+     }
+    ],
+    "cloud": {
+     "text": "Your Larkfield order missed last night's sorting cut-off and is now due to arrive on Monday; no action is needed.",
+     "seconds": 0.720300000011921,
+     "tokensIn": 103,
+     "tokensOut": 27
+    },
+    "grades": {
+     "Your order from Larkfield is delayed; expect delivery on Monday due to a sorting issue.": {
+      "ok": true
+     },
+     "Your Larkfield order is delayed; expect delivery Monday due to a sorting issue.": {
+      "ok": true
+     },
+     "Your Larkfield order will now arrive on Monday due to a sorting delay; no action needed.": {
+      "ok": true
+     },
+     "Your Larkfield order missed last night's sorting cut-off and is now due to arrive on Monday; no action is needed.": {
+      "ok": true
+     }
+    }
+   },
+   "summary-10": {
+    "device": [
+     {
+      "text": "Your Larkfield order for Wednesday is delayed; it will ship on Friday, weather permitting.",
+      "seconds": 0.8488000000119209
+     },
+     {
+      "text": "Your Larkfield order from Wednesday is delayed due to storm warnings; it will ship on Friday, weather permitting.",
+      "seconds": 0.94
+     },
+     {
+      "text": "Delivery to Larkfield (island) is delayed to Friday due to ferry closures; check back then for updated delivery information.",
+      "seconds": 1.029199999988079
+     }
+    ],
+    "cloud": {
+     "text": "Island deliveries planned for Wednesday are delayed due to storms and will resume on Friday's first sailing, weather permitting. No action needed.",
+     "seconds": 0.8186999999880791,
+     "tokensIn": 99,
+     "tokensOut": 27
+    },
+    "grades": {
+     "Your Larkfield order for Wednesday is delayed; it will ship on Friday, weather permitting.": {
+      "ok": true
+     },
+     "Your Larkfield order from Wednesday is delayed due to storm warnings; it will ship on Friday, weather permitting.": {
+      "ok": true
+     },
+     "Delivery to Larkfield (island) is delayed to Friday due to ferry closures; check back then for updated delivery information.": {
+      "ok": true
+     }
+    }
+   },
+   "summary-11": {
+    "device": [
+     {
+      "text": "Your mattress delivery has been delayed; it will arrive November 23rd due to a production setback.",
+      "seconds": 0.9926999999880791
+     },
+     {
+      "text": "Your mattress delivery will be delayed; awaiting maker shipment, arriving Nov 20th with a delivery date of Nov 23rd.",
+      "seconds": 1.190199999988079
+     },
+     {
+      "text": "Your mattress delivery is delayed; arriving at our warehouse Nov 20th, with delivery scheduled for Nov 23rd.",
+      "seconds": 1.152
+     }
+    ],
+    "cloud": {
+     "text": "Your mattress will arrive at our warehouse on November 20 and we will deliver it to you on November 23; no action needed.",
+     "seconds": 0.8037000000476837,
+     "tokensIn": 112,
+     "tokensOut": 29
+    },
+    "grades": {
+     "Your mattress delivery has been delayed; it will arrive November 23rd due to a production setback.": {
+      "ok": true
+     },
+     "Your mattress delivery will be delayed; awaiting maker shipment, arriving Nov 20th with a delivery date of Nov 23rd.": {
+      "ok": true
+     },
+     "Your mattress delivery is delayed; arriving at our warehouse Nov 20th, with delivery scheduled for Nov 23rd.": {
+      "ok": true
+     },
+     "Your mattress will arrive at our warehouse on November 20 and we will deliver it to you on November 23; no action needed.": {
+      "ok": true
+     }
+    }
+   },
+   "summary-12": {
+    "device": [
+     {
+      "text": "Your order from Larkfield is arriving Saturday morning; please expect delivery then.",
+      "seconds": 0.7718999999761581
+     },
+     {
+      "text": "Your order from Larkfield will arrive Saturday morning – sorry for the incorrect date!",
+      "seconds": 0.8285
+     },
+     {
+      "text": "Your order from Larkfield will arrive Saturday morning; the delivery date has been updated.",
+      "seconds": 0.8316999999880791
+     }
+    ],
+    "cloud": {
+     "text": "Your delivery date has changed to Saturday morning, and no further action is needed on your part.",
+     "seconds": 1.2083000000119208,
+     "tokensIn": 108,
+     "tokensOut": 19
+    },
+    "grades": {
+     "Your order from Larkfield is arriving Saturday morning; please expect delivery then.": {
+      "ok": true
+     },
+     "Your order from Larkfield will arrive Saturday morning – sorry for the incorrect date!": {
+      "ok": true
+     },
+     "Your order from Larkfield will arrive Saturday morning; the delivery date has been updated.": {
+      "ok": true
+     },
+     "Your delivery date has changed to Saturday morning, and no further action is needed on your part.": {
+      "ok": true
+     }
+    }
+   },
+   "summary-13": {
+    "device": [
+     {
+      "text": "Your Larkfield order was briefly held by customs but is now cleared; expect delivery Wednesday.",
+      "seconds": 0.8772000000476837
+     },
+     {
+      "text": "Your Larkfield order is delayed due to customs. Expect delivery Wednesday; no action needed.",
+      "seconds": 0.844
+     },
+     {
+      "text": "Your Larkfield order was held for customs, but is now moving to delivery on Wednesday.",
+      "seconds": 0.8375
+     }
+    ],
+    "cloud": {
+     "text": "Your parcel was delayed by customs for a routine check, but it has been released and will now be delivered on Wednesday.",
+     "seconds": 0.7995,
+     "tokensIn": 96,
+     "tokensOut": 24
+    },
+    "grades": {
+     "Your Larkfield order was briefly held by customs but is now cleared; expect delivery Wednesday.": {
+      "ok": true
+     },
+     "Your Larkfield order was held for customs, but is now moving to delivery on Wednesday.": {
+      "ok": true
+     },
+     "Your parcel was delayed by customs for a routine check, but it has been released and will now be delivered on Wednesday.": {
+      "ok": true
+     }
+    }
+   },
+   "summary-14": {
+    "device": [
+     {
+      "text": "Your parcel was returned to the depot. Please book a new delivery within 5 days on the tracking page or it will be returned to Larkfield.",
+      "seconds": 1.222899999976158
+     },
+     {
+      "text": "Your parcel from Larkfield was returned to depot due to a missed delivery; please reschedule within 5 days on the tracking page.",
+      "seconds": 1.129899999976158
+     },
+     {
+      "text": "Your parcel was returned to depot due to a missed delivery attempt; please reschedule within 5 days via the tracking page.",
+      "seconds": 1.0679000000357628
+     }
+    ],
+    "cloud": {
+     "text": "We missed you today, so your parcel is back at the depot; please book a new delivery day via the tracking page within 5 days.",
+     "seconds": 0.816199999988079,
+     "tokensIn": 119,
+     "tokensOut": 29
+    },
+    "grades": {
+     "Your parcel from Larkfield was returned to depot due to a missed delivery; please reschedule within 5 days on the tracking page.": {
+      "ok": true
+     },
+     "Your parcel was returned to depot due to a missed delivery attempt; please reschedule within 5 days via the tracking page.": {
+      "ok": true
+     },
+     "We missed you today, so your parcel is back at the depot; please book a new delivery day via the tracking page within 5 days.": {
+      "ok": true
+     }
+    }
+   },
+   "summary-15": {
+    "device": [
+     {
+      "text": "Pick up your Larkfield order at Corner Stores (Mill Lane) with your collection code (email) and photo ID by Friday, November 20th.",
+      "seconds": 1.232800000011921
+     },
+     {
+      "text": "Collect your Larkfield order at Corner Stores on Mill Lane with your collection code (email) and ID by Friday, November 20th.",
+      "seconds": 1.170300000011921
+     },
+     {
+      "text": "Pick up your Larkfield order at Corner Stores on Mill Lane with your collection code (email) and photo ID by Friday, November 20th.",
+      "seconds": 1.1943000000119208
+     }
+    ],
+    "cloud": {
+     "text": "Your parcel is waiting at the Corner Stores on Mill Lane until Friday 20 November; please bring your collection code and photo ID.",
+     "seconds": 0.8775999999642372,
+     "tokensIn": 106,
+     "tokensOut": 27
+    },
+    "grades": {
+     "Pick up your Larkfield order at Corner Stores (Mill Lane) with your collection code (email) and photo ID by Friday, November 20th.": {
+      "ok": true
+     },
+     "Collect your Larkfield order at Corner Stores on Mill Lane with your collection code (email) and ID by Friday, November 20th.": {
+      "ok": true
+     },
+     "Pick up your Larkfield order at Corner Stores on Mill Lane with your collection code (email) and photo ID by Friday, November 20th.": {
+      "ok": true
+     },
+     "Your parcel is waiting at the Corner Stores on Mill Lane until Friday 20 November; please bring your collection code and photo ID.": {
+      "ok": true
+     }
+    }
+   },
+   "summary-16": {
+    "device": [
+     {
+      "text": "Unable to deliver due to address issue (12 Meadow Way). Please confirm your correct address or provide nearby landmark.",
+      "seconds": 1.0597000000476837
+     },
+     {
+      "text": "Unable to deliver; please confirm your address (12 Meadow Way) or provide a nearby landmark for redelivery.",
+      "seconds": 1.075
+     },
+     {
+      "text": "Unable to deliver; please confirm your address (12 Meadow Way or nearby landmark) so we can resend your order.",
+      "seconds": 1.0907999999523164
+     }
+    ],
+    "cloud": {
+     "text": "We couldn't find your address, so please reply with your correct house number or a nearby landmark so we can try again.",
+     "seconds": 0.8196000000238418,
+     "tokensIn": 115,
+     "tokensOut": 26
+    },
+    "grades": {
+     "Unable to deliver; please confirm your address (12 Meadow Way) or provide a nearby landmark for redelivery.": {
+      "ok": true
+     },
+     "Unable to deliver; please confirm your address (12 Meadow Way or nearby landmark) so we can resend your order.": {
+      "ok": true
+     },
+     "We couldn't find your address, so please reply with your correct house number or a nearby landmark so we can try again.": {
+      "ok": true
+     }
+    }
+   },
+   "summary-17": {
+    "device": [
+     {
+      "text": "Your sofa delivery requires a larger van and a signature upon arrival – please call the delivery team to schedule a suitable day.",
+      "seconds": 1.0801000000238419
+     },
+     {
+      "text": "Delivery requires a larger vehicle and a home presence; please call the delivery team (see order email) to schedule a suitable day.",
+      "seconds": 1.1485999999642371
+     },
+     {
+      "text": "Delivery requires a larger van and a homeowner to guide the team; please call the number in your email to schedule.",
+      "seconds": 1.0436999999880792
+     }
+    ],
+    "cloud": {
+     "text": "Your sofa requires a larger delivery vehicle; please call our team using the number in your email to reschedule and ensure someone is home.",
+     "seconds": 0.7337000000476838,
+     "tokensIn": 115,
+     "tokensOut": 26
+    },
+    "grades": {
+     "Your sofa delivery requires a larger van and a signature upon arrival – please call the delivery team to schedule a suitable day.": {
+      "ok": true
+     },
+     "Delivery requires a larger vehicle and a home presence; please call the delivery team (see order email) to schedule a suitable day.": {
+      "ok": true
+     },
+     "Delivery requires a larger van and a homeowner to guide the team; please call the number in your email to schedule.": {
+      "ok": true
+     },
+     "Your sofa requires a larger delivery vehicle; please call our team using the number in your email to reschedule and ensure someone is home.": {
+      "ok": true
+     }
+    }
+   },
+   "summary-18": {
+    "device": [
+     {
+      "text": "Your order is partially delayed; one box is damaged, and the other ships tomorrow. Please reply to request a replacement or refund.",
+      "seconds": 1.0685
+     },
+     {
+      "text": "Your order is partially delayed; one box is damaged, and the other ships tomorrow. Please contact us to request a replacement or refund.",
+      "seconds": 1.1092000000476838
+     },
+     {
+      "text": "Your order is partially delayed; one box is damaged, and the other ships tomorrow. Please confirm if you'd like a replacement or refund for the damaged item.",
+      "seconds": 1.2377999999523164
+     }
+    ],
+    "cloud": {
+     "text": "One box will arrive tomorrow, but the damaged second box was held; please tell us whether you want a replacement or refund.",
+     "seconds": 0.977,
+     "tokensIn": 108,
+     "tokensOut": 25
+    },
+    "grades": {
+     "One box will arrive tomorrow, but the damaged second box was held; please tell us whether you want a replacement or refund.": {
+      "ok": true
+     }
+    }
+   },
+   "summary-19": {
+    "device": [
+     {
+      "text": "Signature required: A parcel containing garden tools needs an adult signature on Tuesday between 10 am and 2 pm.",
+      "seconds": 1.071800000011921
+     },
+     {
+      "text": "Signature required for your garden tools (blades); an adult 18+ must be home Tuesday 10 am-2 pm to receive it.",
+      "seconds": 1.2475
+     },
+     {
+      "text": "Signature required from an adult for your garden tools; please ensure someone 18+ is home Tuesday 10 am-2 pm.",
+      "seconds": 1.196699999988079
+     }
+    ],
+    "cloud": {
+     "text": "Your parcel requires an adult signature upon delivery on Tuesday between 10 am and 2 pm, so please ensure someone 18 or older is home.",
+     "seconds": 1.353899999976158,
+     "tokensIn": 112,
+     "tokensOut": 32
+    },
+    "grades": {
+     "Signature required: A parcel containing garden tools needs an adult signature on Tuesday between 10 am and 2 pm.": {
+      "ok": true
+     },
+     "Signature required for your garden tools (blades); an adult 18+ must be home Tuesday 10 am-2 pm to receive it.": {
+      "ok": true
+     },
+     "Signature required from an adult for your garden tools; please ensure someone 18+ is home Tuesday 10 am-2 pm.": {
+      "ok": true
+     },
+     "Your parcel requires an adult signature upon delivery on Tuesday between 10 am and 2 pm, so please ensure someone 18 or older is home.": {
+      "ok": true
+     }
+    }
+   },
+   "summary-20": {
+    "device": [
+     {
+      "text": "Your Larkfield order was left for pickup due to no answer; it will be redelivered next business day.",
+      "seconds": 0.9918999999761582
+     },
+     {
+      "text": "Your order from Larkfield had a delivery attempt today. A card was left; redelivery is scheduled for tomorrow.",
+      "seconds": 0.9518000000119209
+     },
+     {
+      "text": "Courier attempted delivery of your Larkfield order; a card was left. Redelivery will be attempted tomorrow; no action needed.",
+      "seconds": 1.0063000000119209
+     }
+    ],
+    "cloud": {
+     "text": "We attempted delivery at 9:15 AM but received no answer; a card was left and your package will be redelivered the next working day.",
+     "seconds": 0.8183999999761581,
+     "tokensIn": 95,
+     "tokensOut": 32
+    },
+    "grades": {
+     "Your Larkfield order was left for pickup due to no answer; it will be redelivered next business day.": {
+      "ok": true
+     },
+     "We attempted delivery at 9:15 AM but received no answer; a card was left and your package will be redelivered the next working day.": {
+      "ok": true
+     }
+    }
+   },
+   "summary-21": {
+    "device": [
+     {
+      "text": "Your order has been safely delivered to your designated shed. A photo was taken for confirmation.",
+      "seconds": 0.8613999999761581
+     },
+     {
+      "text": "Order delivered to the safe place (shed) as requested. A photo was taken for confirmation.",
+      "seconds": 0.8488000000119209
+     },
+     {
+      "text": "Your order has been safely delivered to your shed. A photo was taken as proof.",
+      "seconds": 0.7973000000119209
+     }
+    ],
+    "cloud": {
+     "text": "Your order was delivered to your shed per your instructions and a photo was taken; no further action is needed.",
+     "seconds": 1.0244000000357627,
+     "tokensIn": 92,
+     "tokensOut": 22
+    },
+    "grades": {
+     "Your order was delivered to your shed per your instructions and a photo was taken; no further action is needed.": {
+      "ok": true
+     }
+    }
+   },
+   "summary-22": {
+    "device": [
+     {
+      "text": "Your Larkfield order is delayed due to transit damage; a replacement is being shipped. No action needed.",
+      "seconds": 0.9089000000357628
+     },
+     {
+      "text": "Your order experienced damage during transit and is being replaced; no action needed.",
+      "seconds": 0.7662999999523162
+     },
+     {
+      "text": "Your Larkfield order is delayed due to transit damage; a replacement will ship soon. No action needed from you.",
+      "seconds": 0.9522000000476837
+     }
+    ],
+    "cloud": {
+     "text": "Your package was damaged in transit and is held at the hub; we have notified the sender and a replacement will be dispatched.",
+     "seconds": 1.322300000011921,
+     "tokensIn": 94,
+     "tokensOut": 25
+    },
+    "grades": {
+     "Your order experienced damage during transit and is being replaced; no action needed.": {
+      "ok": true
+     },
+     "Your package was damaged in transit and is held at the hub; we have notified the sender and a replacement will be dispatched.": {
+      "ok": true
+     }
+    }
+   },
+   "summary-23": {
+    "device": [
+     {
+      "text": "Your order from Larkfield is out for delivery today between 1:00 PM - 3:00 PM; a signature is required.",
+      "seconds": 1.159699999988079
+     },
+     {
+      "text": "Your Larkfield order is out for delivery today, expected 1 PM-3 PM. A signature is required upon arrival.",
+      "seconds": 1.0276000000238419
+     },
+     {
+      "text": "Your Larkfield order is out for delivery today between 1:00 PM and 3:00 PM. Please be available to sign for the package.",
+      "seconds": 1.2033999999761582
+     }
+    ],
+    "cloud": {
+     "text": "Your order is out for delivery today between 13:00 and 15:00 and a signature is required upon receipt.",
+     "seconds": 1.1106999999880791,
+     "tokensIn": 89,
+     "tokensOut": 29
+    },
+    "grades": {
+     "Your order from Larkfield is out for delivery today between 1:00 PM - 3:00 PM; a signature is required.": {
+      "ok": true
+     },
+     "Your order is out for delivery today between 13:00 and 15:00 and a signature is required upon receipt.": {
+      "ok": true
+     }
+    }
+   },
+   "summary-24": {
+    "device": [
+     {
+      "text": "We're waiting for your contact regarding your Larkfield order due to an address issue; please reply within 3 days to avoid a return.",
+      "seconds": 1.1133000000119209
+     },
+     {
+      "text": "We're holding your Larkfield order for 3 days due to an address query; please contact us to confirm your delivery address.",
+      "seconds": 1.052300000011921
+     },
+     {
+      "text": "Delayed: Your order to Larkfield is awaiting customer contact; it will be returned after 3 days. Please contact us ASAP.",
+      "seconds": 1.069
+     }
+    ],
+    "cloud": {
+     "text": "We could not find your street number, so please contact us within 3 days to prevent your order from being returned.",
+     "seconds": 0.9458000000119209,
+     "tokensIn": 94,
+     "tokensOut": 24
+    },
+    "grades": {
+     "We're waiting for your contact regarding your Larkfield order due to an address issue; please reply within 3 days to avoid a return.": {
+      "ok": true
+     },
+     "We're holding your Larkfield order for 3 days due to an address query; please contact us to confirm your delivery address.": {
+      "ok": true
+     },
+     "We could not find your street number, so please contact us within 3 days to prevent your order from being returned.": {
+      "ok": true
+     }
+    }
+   },
+   "summary-25": {
+    "device": [
+     {
+      "text": "Your Larkfield order is in transit to our hub and expected to arrive by November 16th.",
+      "seconds": 0.9238999999761581
+     },
+     {
+      "text": "Your order from Larkfield is in transit to our hub and expected by November 16th.",
+      "seconds": 0.8986000000238419
+     },
+     {
+      "text": "Your order from Larkfield is currently in transit to our hub and expected to arrive by November 16th.",
+      "seconds": 0.973
+     }
+    ],
+    "cloud": {
+     "text": "Your order is in transit to the hub for delivery on 16/11; no action is needed from you.",
+     "seconds": 0.7855,
+     "tokensIn": 94,
+     "tokensOut": 25
+    },
+    "grades": {
+     "Your Larkfield order is in transit to our hub and expected to arrive by November 16th.": {
+      "ok": true
+     },
+     "Your order from Larkfield is in transit to our hub and expected by November 16th.": {
+      "ok": true
+     },
+     "Your order from Larkfield is currently in transit to our hub and expected to arrive by November 16th.": {
+      "ok": true
+     },
+     "Your order is in transit to the hub for delivery on 16/11; no action is needed from you.": {
+      "ok": true
+     }
+    }
+   }
+  },
+  "invoice_total": {
+   "invoice-1": {
+    "device": [
+     {
+      "text": "{\"total\": 258.0}",
+      "seconds": 0.6525
+     },
+     {
+      "text": "{\"total\": 258.0}",
+      "seconds": 0.626
+     },
+     {
+      "text": "{\"total\": 258.0}",
+      "seconds": 0.6253000000119209
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"total\": 258.00\n}",
+     "seconds": 1.4145,
+     "tokensIn": 50,
+     "tokensOut": 15
+    }
+   },
+   "invoice-2": {
+    "device": [
+     {
+      "text": "{\"total\": 232.00}",
+      "seconds": 0.680800000011921
+     },
+     {
+      "text": "{\"total\": 134.00}",
+      "seconds": 0.6816999999880791
+     },
+     {
+      "text": "{\n  \"total\": 430.00\n}",
+      "seconds": 0.791699999988079
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"total\": 163.00\n}",
+     "seconds": 1.1045,
+     "tokensIn": 68,
+     "tokensOut": 15
+    }
+   },
+   "invoice-3": {
+    "device": [
+     {
+      "text": "{\"total\": 79.90}",
+      "seconds": 0.6279000000357627
+     },
+     {
+      "text": "{\"total\": 79.90}",
+      "seconds": 0.6216999999880791
+     },
+     {
+      "text": "{\"total\": 79.90}",
+      "seconds": 0.6258999999761582
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"total\": 79.90\n}",
+     "seconds": 0.8676999999880791,
+     "tokensIn": 54,
+     "tokensOut": 14
+    }
+   },
+   "invoice-4": {
+    "device": [
+     {
+      "text": "{\n  \"total\": 129.08\n}",
+      "seconds": 0.7926000000238419
+     },
+     {
+      "text": "{\n  \"total\": 127.00\n}",
+      "seconds": 0.7872999999523163
+     },
+     {
+      "text": "{\"total\": 114.48}",
+      "seconds": 0.6774000000357628
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"total\": 113.97\n}",
+     "seconds": 1.069899999976158,
+     "tokensIn": 63,
+     "tokensOut": 15
+    }
+   },
+   "invoice-5": {
+    "device": [
+     {
+      "text": "{\"total\": 1050.00}",
+      "seconds": 0.7085
+     },
+     {
+      "text": "{\"total\": 603.00}",
+      "seconds": 0.6753000000119209
+     },
+     {
+      "text": "{\"total\": 1078.0}",
+      "seconds": 0.6797999999523163
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"total\": 506.0\n}",
+     "seconds": 0.8893000000119209,
+     "tokensIn": 63,
+     "tokensOut": 14
+    }
+   },
+   "invoice-6": {
+    "device": [
+     {
+      "text": "{\"total\": 342}",
+      "seconds": 0.5985
+     },
+     {
+      "text": "{\n  \"total\": 341.10\n}",
+      "seconds": 0.7751000000238418
+     },
+     {
+      "text": "{\n  \"total\": 341.10\n}",
+      "seconds": 0.7801999999880791
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"total\": 175.50\n}",
+     "seconds": 1.066699999988079,
+     "tokensIn": 59,
+     "tokensOut": 15
+    }
+   },
+   "invoice-7": {
+    "device": [
+     {
+      "text": "{\n  \"total\": 181.8\n}",
+      "seconds": 0.792699999988079
+     },
+     {
+      "text": "{\n  \"total\": 198.0\n}",
+      "seconds": 0.8243000000119209
+     },
+     {
+      "text": "{\n  \"total\": 185.40\n}",
+      "seconds": 0.8515
+     }
+    ],
+    "cloud": {
+     "text": "{\"total\": 124.44}",
+     "seconds": 1.2995,
+     "tokensIn": 72,
+     "tokensOut": 11
+    }
+   },
+   "invoice-8": {
+    "device": [
+     {
+      "text": "{\n  \"total\": 139.60\n}",
+      "seconds": 0.7853999999761582
+     },
+     {
+      "text": "{\n  \"total\": 149.00\n}",
+      "seconds": 0.779800000011921
+     },
+     {
+      "text": "{\"total\": 139.0}",
+      "seconds": 0.6368000000119209
+     }
+    ],
+    "cloud": {
+     "text": "{\"total\": 119.2}",
+     "seconds": 1.684800000011921,
+     "tokensIn": 59,
+     "tokensOut": 10
+    }
+   },
+   "invoice-9": {
+    "device": [
+     {
+      "text": "{\"total\": 97.83}",
+      "seconds": 0.640800000011921
+     },
+     {
+      "text": "{\n  \"total\": 98.37\n}",
+      "seconds": 0.7493999999761581
+     },
+     {
+      "text": "{\"total\": 96.93}",
+      "seconds": 0.639
+     }
+    ],
+    "cloud": {
+     "text": "{\"total\": 96.9}",
+     "seconds": 0.9395,
+     "tokensIn": 60,
+     "tokensOut": 9
+    }
+   },
+   "invoice-10": {
+    "device": [
+     {
+      "text": "{\n  \"total\": 423.10\n}",
+      "seconds": 0.8125
+     },
+     {
+      "text": "{\n  \"total\": 411.00\n}",
+      "seconds": 0.8111999999880791
+     },
+     {
+      "text": "{\n  \"total\": 444.95\n}",
+      "seconds": 0.8103000000119209
+     }
+    ],
+    "cloud": {
+     "text": "{\"total\": 361.35}",
+     "seconds": 0.9595,
+     "tokensIn": 73,
+     "tokensOut": 11
+    }
+   },
+   "invoice-11": {
+    "device": [
+     {
+      "text": "{\"total\": 170.80}",
+      "seconds": 0.6759000000357628
+     },
+     {
+      "text": "{\n  \"total\": 179.90\n}",
+      "seconds": 0.7865999999642372
+     },
+     {
+      "text": "{\n  \"total\": 179.90\n}",
+      "seconds": 0.7795
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"total\": 214.8\n}",
+     "seconds": 1.4331000000238419,
+     "tokensIn": 60,
+     "tokensOut": 14
+    }
+   },
+   "invoice-12": {
+    "device": [
+     {
+      "text": "{\n  \"total\": 418.80\n}",
+      "seconds": 0.7993000000119209
+     },
+     {
+      "text": "{\n  \"total\": 418.80\n}",
+      "seconds": 0.8092999999523163
+     },
+     {
+      "text": "{\n  \"total\": 419.80\n}",
+      "seconds": 0.8307000000476837
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"total\": 418.80\n}",
+     "seconds": 0.7831999999880791,
+     "tokensIn": 64,
+     "tokensOut": 15
+    }
+   },
+   "invoice-13": {
+    "device": [
+     {
+      "text": "{\"total\": 511.25}",
+      "seconds": 0.7050999999642372
+     },
+     {
+      "text": "{\"total\": 604.50}",
+      "seconds": 0.7065
+     },
+     {
+      "text": "{\n  \"total\": 600.00\n}",
+      "seconds": 0.8143000000119209
+     }
+    ],
+    "cloud": {
+     "text": "{\"total\": 711.0}",
+     "seconds": 1.3661999999880792,
+     "tokensIn": 74,
+     "tokensOut": 10
+    }
+   },
+   "invoice-14": {
+    "device": [
+     {
+      "text": "{\n  \"total\": 162.00\n}",
+      "seconds": 0.7815999999642372
+     },
+     {
+      "text": "{\n  \"total\": 166.08\n}",
+      "seconds": 0.7874000000357628
+     },
+     {
+      "text": "{\n  \"total\": 1662.4\n}",
+      "seconds": 0.7845999999642372
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"total\": 198.24\n}",
+     "seconds": 2.0491999999880792,
+     "tokensIn": 60,
+     "tokensOut": 15
+    }
+   },
+   "invoice-15": {
+    "device": [
+     {
+      "text": "{\n  \"total\": 457.92\n}",
+      "seconds": 0.8263000000119209
+     },
+     {
+      "text": "{\"total\": 492.00}",
+      "seconds": 0.6993999999761581
+     },
+     {
+      "text": "{\"total\": 203.92}",
+      "seconds": 0.6997000000476837
+     }
+    ],
+    "cloud": {
+     "text": "{\"total\": 251.93}",
+     "seconds": 1.3440999999642371,
+     "tokensIn": 71,
+     "tokensOut": 11
+    }
+   },
+   "invoice-16": {
+    "device": [
+     {
+      "text": "{\n  \"total\": 1429.5\n}",
+      "seconds": 0.8575
+     },
+     {
+      "text": "{\n  \"total\": 2749.5\n}",
+      "seconds": 0.8482999999523163
+     },
+     {
+      "text": "{\n  \"total\": 1705.50\n}",
+      "seconds": 0.8757000000476837
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"total\": 1335.79\n}",
+     "seconds": 0.8831000000238418,
+     "tokensIn": 101,
+     "tokensOut": 16
+    }
+   },
+   "invoice-17": {
+    "device": [
+     {
+      "text": "{\n  \"total\": 420.90\n}",
+      "seconds": 0.8525
+     },
+     {
+      "text": "{\n  \"total\": 510.18\n}",
+      "seconds": 0.8547999999523163
+     },
+     {
+      "text": "{\n  \"total\": 455.0\n}",
+      "seconds": 0.8452000000476837
+     }
+    ],
+    "cloud": {
+     "text": "{\"total\": 491.56}",
+     "seconds": 0.9456999999880791,
+     "tokensIn": 91,
+     "tokensOut": 11
+    }
+   },
+   "invoice-18": {
+    "device": [
+     {
+      "text": "{\n  \"total\": 1454.40\n}",
+      "seconds": 0.894
+     },
+     {
+      "text": "{\n  \"total\": 1004.10\n}",
+      "seconds": 0.8775999999642372
+     },
+     {
+      "text": "{\n  \"total\": 1572.00\n}",
+      "seconds": 0.8831000000238418
+     }
+    ],
+    "cloud": {
+     "text": "{\"total\": 523.32}",
+     "seconds": 1.094,
+     "tokensIn": 99,
+     "tokensOut": 11
+    }
+   },
+   "invoice-19": {
+    "device": [
+     {
+      "text": "{\n  \"total\": 1379.20\n}",
+      "seconds": 0.8838000000119209
+     },
+     {
+      "text": "{\n  \"total\": 1013.20\n}",
+      "seconds": 0.878
+     },
+     {
+      "text": "{\n  \"total\": 2667.00\n}",
+      "seconds": 0.8722999999523163
+     }
+    ],
+    "cloud": {
+     "text": "{\"total\": 1170.88}",
+     "seconds": 0.8601000000238419,
+     "tokensIn": 99,
+     "tokensOut": 12
+    }
+   },
+   "invoice-20": {
+    "device": [
+     {
+      "text": "{\n  \"total\": 1240.76\n}",
+      "seconds": 0.8774000000357628
+     },
+     {
+      "text": "{\n  \"total\": 1342.92\n}",
+      "seconds": 0.8699000000357627
+     },
+     {
+      "text": "{\n  \"total\": 1218.37\n}",
+      "seconds": 0.8765
+     }
+    ],
+    "cloud": {
+     "text": "{\"total\": 1279.79}",
+     "seconds": 1.0161000000238418,
+     "tokensIn": 90,
+     "tokensOut": 12
+    }
+   },
+   "invoice-21": {
+    "device": [
+     {
+      "text": "{\"total\": 947.50}",
+      "seconds": 0.708300000011921
+     },
+     {
+      "text": "{\n  \"total\": 962.25\n}",
+      "seconds": 0.8159000000357628
+     },
+     {
+      "text": "{\n  \"total\": 1109.5\n}",
+      "seconds": 0.8133999999761582
+     }
+    ],
+    "cloud": {
+     "text": "{\"total\": 1039.2}",
+     "seconds": 1.1916000000238418,
+     "tokensIn": 74,
+     "tokensOut": 11
+    }
+   },
+   "invoice-22": {
+    "device": [
+     {
+      "text": "{\"total\": 517.10}",
+      "seconds": 0.7458999999761582
+     },
+     {
+      "text": "{\"total\": 450.00}",
+      "seconds": 0.7336999999880791
+     },
+     {
+      "text": "{\"total\": 430.40}",
+      "seconds": 0.7345
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"total\": 666.07\n}",
+     "seconds": 1.044699999988079,
+     "tokensIn": 87,
+     "tokensOut": 15
+    }
+   },
+   "invoice-23": {
+    "device": [
+     {
+      "text": "{\"total\": 1200.0}",
+      "seconds": 0.7069000000357628
+     },
+     {
+      "text": "{\"total\": 803.2}",
+      "seconds": 0.6768999999761581
+     },
+     {
+      "text": "{\"total\": 403.2}",
+      "seconds": 0.6710999999642372
+     }
+    ],
+    "cloud": {
+     "text": "{\"total\": 472.32}",
+     "seconds": 0.697199999988079,
+     "tokensIn": 73,
+     "tokensOut": 11
+    }
+   },
+   "invoice-24": {
+    "device": [
+     {
+      "text": "{\n  \"total\": 1024.10\n}",
+      "seconds": 0.8839000000357627
+     },
+     {
+      "text": "{\n  \"total\": 1073.25\n}",
+      "seconds": 0.8843999999761581
+     },
+     {
+      "text": "{\n  \"total\": 1490.10\n}",
+      "seconds": 0.8726999999880791
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"total\": 792.83\n}",
+     "seconds": 0.856199999988079,
+     "tokensIn": 113,
+     "tokensOut": 15
+    }
+   },
+   "invoice-25": {
+    "device": [
+     {
+      "text": "{\n  \"total\": 497.07\n}",
+      "seconds": 0.8545
+     },
+     {
+      "text": "{\"total\": 446.99}",
+      "seconds": 0.739
+     },
+     {
+      "text": "{\n  \"total\": 409.00\n}",
+      "seconds": 0.8510999999642372
+     }
+    ],
+    "cloud": {
+     "text": "{\"total\": 361.34}",
+     "seconds": 1.0245,
+     "tokensIn": 100,
+     "tokensOut": 11
+    }
+   }
+  },
+  "email_address": {
+   "address-1": {
+    "device": [
+     {
+      "text": "{\n  \"name\": \"Hannah Whitcombe\",\n  \"street\": \"14 Mill Road\",\n  \"city\": \"Leeds\",\n  \"postcode\": \"LS6 4QT\"\n}",
+      "seconds": 1.8048000000119209
+     },
+     {
+      "text": "{\n  \"name\": \"Hannah Whitcombe\",\n  \"street\": \"14 Mill Road\",\n  \"city\": \"Leeds\",\n  \"postcode\": \"LS6 4QT\"\n}",
+      "seconds": 1.782
+     },
+     {
+      "text": "{\n  \"name\": \"Hannah Whitcombe\",\n  \"street\": \"14 Mill Road\",\n  \"city\": \"Leeds\",\n  \"postcode\": \"LS6 4QT\"\n}",
+      "seconds": 1.783800000011921
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"name\": \"Hannah Whitcombe\",\n  \"street\": \"14 Mill Road\",\n  \"city\": \"Leeds\",\n  \"postcode\": \"LS6 4QT\"\n}",
+     "seconds": 1.1013999999761581,
+     "tokensIn": 100,
+     "tokensOut": 45
+    }
+   },
+   "address-2": {
+    "device": [
+     {
+      "text": "{\n  \"name\": \"Daniel Okafor\",\n  \"street\": \"27 Harbour Street, Flat 3\",\n  \"city\": \"Bristol\",\n  \"postcode\": \"BS1 5TX\"\n}",
+      "seconds": 1.9066999999880792
+     },
+     {
+      "text": "{\n  \"name\": \"Daniel Okafor\",\n  \"street\": \"27 Harbour Street\",\n  \"city\": \"Bristol\",\n  \"postcode\": \"BS1 5TX\"\n}",
+      "seconds": 1.793100000023842
+     },
+     {
+      "text": "{\n  \"name\": \"Daniel Okafor\",\n  \"street\": \"27 Harbour Street, Flat 3\",\n  \"city\": \"Bristol\",\n  \"postcode\": \"BS1 5TX\"\n}",
+      "seconds": 1.8986999999880791
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"name\": \"Daniel Okafor\",\n  \"street\": \"Flat 3, 27 Harbour Street\",\n  \"city\": \"Bristol\",\n  \"postcode\": \"BS1 5TX\"\n}",
+     "seconds": 1.1507000000476837,
+     "tokensIn": 101,
+     "tokensOut": 50
+    }
+   },
+   "address-3": {
+    "device": [
+     {
+      "text": "{\n  \"name\": \"Priya Raman\",\n  \"street\": \"8 Orchard Close\",\n  \"city\": \"Reading\",\n  \"postcode\": \"RG4 7HB\"\n}",
+      "seconds": 1.7786000000238418
+     },
+     {
+      "text": "{\n  \"name\": \"Priya Raman\",\n  \"street\": \"8 Orchard Close\",\n  \"city\": \"Reading\",\n  \"postcode\": \"RG4 7HB\"\n}",
+      "seconds": 1.7738999999761582
+     },
+     {
+      "text": "{\n  \"name\": \"Priya Raman\",\n  \"street\": \"8 Orchard Close\",\n  \"city\": \"Reading\",\n  \"postcode\": \"RG4 7HB\"\n}",
+      "seconds": 1.762199999988079
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"name\": \"Priya Raman\",\n  \"street\": \"8 Orchard Close\",\n  \"city\": \"Reading\",\n  \"postcode\": \"RG4 7HB\"\n}",
+     "seconds": 0.9239000000357628,
+     "tokensIn": 99,
+     "tokensOut": 44
+    }
+   },
+   "address-4": {
+    "device": [
+     {
+      "text": "{\"name\": \"Tom Ellery\", \"street\": \"The Old Bakery\", \"city\": \"Ludlow\", \"postcode\": \"SY8 1BN\"}",
+      "seconds": 1.492699999988079
+     },
+     {
+      "text": "{\"name\": \"Tom Ellery\", \"street\": \"The Old Bakery\", \"city\": \"Ludlow\", \"postcode\": \"SY8 1BN\"}",
+      "seconds": 1.4823999999761581
+     },
+     {
+      "text": "{\"name\": \"Tom Ellery\", \"street\": \"The Old Bakery, Church Lane\", \"city\": \"Ludlow\", \"postcode\": \"SY8 1BN\"}",
+      "seconds": 1.5651000000238418
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"name\": \"Tom Ellery\",\n  \"street\": \"The Old Bakery, Church Lane\",\n  \"city\": \"Ludlow\",\n  \"postcode\": \"SY8 1BN\"\n}",
+     "seconds": 1.1486000000238419,
+     "tokensIn": 103,
+     "tokensOut": 48
+    }
+   },
+   "address-5": {
+    "device": [
+     {
+      "text": "{\n  \"name\": \"grace liang\",\n  \"street\": \"61 station parade\",\n  \"city\": \"harrogate\",\n  \"postcode\": \"hg1 1tt\"\n}",
+      "seconds": 1.8315
+     },
+     {
+      "text": "{\n  \"name\": \"grace liang\",\n  \"street\": \"61 station parade\",\n  \"city\": \"harrogate\",\n  \"postcode\": \"hg1 1tt\"\n}",
+      "seconds": 1.8171000000238418
+     },
+     {
+      "text": "{\n  \"name\": \"grace liang\",\n  \"street\": \"61 station parade\",\n  \"city\": \"harrogate\",\n  \"postcode\": \"hg1 1tt\"\n}",
+      "seconds": 1.8148999999761581
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"name\": \"grace liang\",\n  \"street\": \"61 station parade\",\n  \"city\": \"harrogate\",\n  \"postcode\": \"hg1 1tt\"\n}",
+     "seconds": 1.511,
+     "tokensIn": 97,
+     "tokensOut": 46
+    }
+   },
+   "address-6": {
+    "device": [
+     {
+      "text": "{\n  \"name\": \"Marcus Bell\",\n  \"street\": \"Unit 5, Tannery Yard\",\n  \"city\": \"Kendal\",\n  \"postcode\": \"LA9 4RE\"\n}",
+      "seconds": 1.8968999999761582
+     },
+     {
+      "text": "{\n  \"name\": \"Marcus Bell\",\n  \"street\": \"Unit 5, Tannery Yard\",\n  \"city\": \"Kendal\",\n  \"postcode\": \"LA9 4RE\"\n}",
+      "seconds": 1.8741999999880792
+     },
+     {
+      "text": "{\n  \"name\": \"Marcus Bell\",\n  \"street\": \"Unit 5, Tannery Yard\",\n  \"city\": \"Kendal\",\n  \"postcode\": \"LA9 4RE\"\n}",
+      "seconds": 1.8694000000357627
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"name\": \"Marcus Bell\",\n  \"street\": \"Unit 5, Tannery Yard\",\n  \"city\": \"Kendal\",\n  \"postcode\": \"LA9 4RE\"\n}",
+     "seconds": 0.953300000011921,
+     "tokensIn": 111,
+     "tokensOut": 48
+    }
+   },
+   "address-7": {
+    "device": [
+     {
+      "text": "{\"name\": \"Aisha Rahman\", \"street\": \"102 Kingsway\", \"city\": \"Swansea\", \"postcode\": \"SA1 5JE\"}",
+      "seconds": 1.567
+     },
+     {
+      "text": "{\"name\": \"Aisha Rahman\", \"street\": \"102 Kingsway\", \"city\": \"Swansea\", \"postcode\": \"SA1 5JE\"}",
+      "seconds": 1.5362999999523164
+     },
+     {
+      "text": "{\n  \"name\": \"Aisha Rahman\",\n  \"street\": \"102 Kingsway\",\n  \"city\": \"Swansea\",\n  \"postcode\": \"SA1 5JE\"\n}",
+      "seconds": 1.8415
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"name\": \"Aisha Rahman\",\n  \"street\": \"102 Kingsway\",\n  \"city\": \"Swansea\",\n  \"postcode\": \"SA1 5JE\"\n}",
+     "seconds": 1.1175,
+     "tokensIn": 104,
+     "tokensOut": 48
+    }
+   },
+   "address-8": {
+    "device": [
+     {
+      "text": "{\n  \"name\": \"Oliver Stroud\",\n  \"street\": \"3 Beech Avenue\",\n  \"city\": \"Norwich\",\n  \"postcode\": \"NR2 3PL\"\n}",
+      "seconds": 1.8069000000357627
+     },
+     {
+      "text": "{\"name\": \"Oliver Stroud\", \"street\": \"3 Beech Avenue\", \"city\": \"Norwich\", \"postcode\": \"NR2 3PL\"}",
+      "seconds": 1.4795
+     },
+     {
+      "text": "{\n  \"name\": \"Oliver Stroud\",\n  \"street\": \"3 Beech Avenue\",\n  \"city\": \"Norwich\",\n  \"postcode\": \"NR2 3PL\"\n}",
+      "seconds": 1.7880999999642373
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"name\": \"Oliver Stroud\",\n  \"street\": \"2 Beech Avenue\",\n  \"city\": \"Norwich\",\n  \"postcode\": \"NR2 3PL\"\n}",
+     "seconds": 0.898699999988079,
+     "tokensIn": 105,
+     "tokensOut": 45
+    }
+   },
+   "address-9": {
+    "device": [
+     {
+      "text": "{\n  \"name\": \"Rosa Delgado\",\n  \"street\": \"19 Canal Walk\",\n  \"city\": \"Manchester\",\n  \"postcode\": \"M4 6DE\"\n}",
+      "seconds": 1.7823999999761582
+     },
+     {
+      "text": "{\n  \"name\": \"Rosa Delgado\",\n  \"street\": \"19 Canal Walk\",\n  \"city\": \"Manchester\",\n  \"postcode\": \"M4 6DE\"\n}",
+      "seconds": 1.7527000000476838
+     },
+     {
+      "text": "{\n  \"name\": \"Rosa Delgado\",\n  \"street\": \"19 Canal Walk\",\n  \"city\": \"Manchester\",\n  \"postcode\": \"M4 6DE\"\n}",
+      "seconds": 1.756199999988079
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"name\": \"Rosa Delgado\",\n  \"street\": \"19 Canal Walk\",\n  \"city\": \"Manchester\",\n  \"postcode\": \"M4 6DE\"\n}",
+     "seconds": 0.8190999999642372,
+     "tokensIn": 120,
+     "tokensOut": 44
+    }
+   },
+   "address-10": {
+    "device": [
+     {
+      "text": "{\n  \"name\": \"Ian McAllister\",\n  \"street\": \"7 Lochside Terrace\",\n  \"city\": \"Stirling\",\n  \"postcode\": \"FK8 2QR\"\n}",
+      "seconds": 1.854699999988079
+     },
+     {
+      "text": "{\n  \"name\": \"Ian McAllister\",\n  \"street\": \"7 Lochside Terrace\",\n  \"city\": \"Stirling\",\n  \"postcode\": \"FK8 2QR\"\n}",
+      "seconds": 1.827800000011921
+     },
+     {
+      "text": "{\n  \"name\": \"Ian McAllister\",\n  \"street\": \"7 Lochside Terrace\",\n  \"city\": \"Stirling\",\n  \"postcode\": \"FK8 2QR\"\n}",
+      "seconds": 1.811
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"name\": \"Ian McAllister\",\n  \"street\": \"7 Lochside Terrace\",\n  \"city\": \"Stirling\",\n  \"postcode\": \"FK8 2QR\"\n}",
+     "seconds": 1.2284000000357629,
+     "tokensIn": 115,
+     "tokensOut": 46
+    }
+   },
+   "address-11": {
+    "device": [
+     {
+      "text": "{\"name\": \"Sophie Turnbull\", \"street\": \"22 Abbey Gardens\", \"city\": \"Bath\", \"postcode\": \"BA2 6LN\"}",
+      "seconds": 1.476699999988079
+     },
+     {
+      "text": "{\n  \"name\": \"Sophie Turnbull\",\n  \"street\": \"22 Abbey Gardens\",\n  \"city\": \"Bath\",\n  \"postcode\": \"BA2 6LN\"\n}",
+      "seconds": 1.756
+     },
+     {
+      "text": "{\n  \"name\": \"Sophie Turnbull\",\n  \"street\": \"22 Abbey Gardens\",\n  \"city\": \"Bath\",\n  \"postcode\": \"BA2 6LN\"\n}",
+      "seconds": 1.7536000000238419
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"name\": \"Sophie Turnbull\",\n  \"street\": \"22 Abbey Gardens\",\n  \"city\": \"Bath\",\n  \"postcode\": \"BA2 6LN\"\n}",
+     "seconds": 0.8645,
+     "tokensIn": 111,
+     "tokensOut": 44
+    }
+   },
+   "address-12": {
+    "device": [
+     {
+      "text": "{\n  \"name\": \"Kwame Mensah\",\n  \"street\": \"Flat 12, Albion House\",\n  \"city\": \"Liverpool\",\n  \"postcode\": \"L3 4BB\"\n}",
+      "seconds": 1.9374000000357627
+     },
+     {
+      "text": "{\n  \"name\": \"Kwame Mensah\",\n  \"street\": \"Albion House, Dock Road\",\n  \"city\": \"Liverpool\",\n  \"postcode\": \"L3 4BB\"\n}",
+      "seconds": 1.8681999999880792
+     },
+     {
+      "text": "{\n  \"name\": \"Kwame Mensah\",\n  \"street\": \"Albion House, Dock Road\",\n  \"city\": \"Liverpool\",\n  \"postcode\": \"L3 4BB\"\n}",
+      "seconds": 1.8693999999761581
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"name\": \"Kwame Mensah\",\n  \"street\": \"Flat 12, Albion House, Dock Road\",\n  \"city\": \"Liverpool\",\n  \"postcode\": \"L3 4BB\"\n}",
+     "seconds": 0.9519000000357628,
+     "tokensIn": 123,
+     "tokensOut": 52
+    }
+   },
+   "address-13": {
+    "device": [
+     {
+      "text": "{\n  \"name\": \"Elena Petrova\",\n  \"street\": \"Windsor Road\",\n  \"city\": \"Cardiff\",\n  \"postcode\": \"CF24 1DH\"\n}",
+      "seconds": 1.824
+     },
+     {
+      "text": "{\n  \"name\": \"Elena Petrova\",\n  \"street\": \"Windsor Road\",\n  \"city\": \"Cardiff\",\n  \"postcode\": \"CF24 1DH\"\n}",
+      "seconds": 1.8153000000119208
+     },
+     {
+      "text": "{\n  \"name\": \"Elena Petrova\",\n  \"street\": \"Windsor Road\",\n  \"city\": \"Cardiff\",\n  \"postcode\": \"CF24 1DH\"\n}",
+      "seconds": 1.813600000023842
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"name\": \"Elena Petrova\",\n  \"street\": \"45 Windsor Road\",\n  \"city\": \"Cardiff\",\n  \"postcode\": \"CF24 1DH\"\n}",
+     "seconds": 0.8425,
+     "tokensIn": 113,
+     "tokensOut": 48
+    }
+   },
+   "address-14": {
+    "device": [
+     {
+      "text": "{\n  \"name\": \"James Hartley\",\n  \"street\": \"2 The Green\",\n  \"city\": \"Malton\",\n  \"postcode\": \"YO17 7LX\"\n}",
+      "seconds": 1.7985
+     },
+     {
+      "text": "{\"name\": \"James Hartley\", \"street\": \"2 The Green\", \"city\": \"Malton\", \"postcode\": \"YO17 7LX\"}",
+      "seconds": 1.4815
+     },
+     {
+      "text": "{\n  \"name\": \"James Hartley\",\n  \"street\": \"2 The Green\",\n  \"city\": \"Malton\",\n  \"postcode\": \"YO17 7LX\"\n}",
+      "seconds": 1.789
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"name\": \"James Hartley\",\n  \"street\": \"2 The Green\",\n  \"city\": \"Malton\",\n  \"postcode\": \"YO17 7LX\"\n}",
+     "seconds": 1.3920999999642372,
+     "tokensIn": 107,
+     "tokensOut": 45
+    }
+   },
+   "address-15": {
+    "device": [
+     {
+      "text": "{\n  \"name\": \"Nadia Hussain\",\n  \"street\": \"88 Clarence Street\",\n  \"city\": \"Leicester\",\n  \"postcode\": \"LE1 3RW\"\n}",
+      "seconds": 1.824300000011921
+     },
+     {
+      "text": "{\n  \"name\": \"Nadia Hussain\",\n  \"street\": \"Clarence Street\",\n  \"city\": \"Leicester\",\n  \"postcode\": \"LE1 3RW\"\n}",
+      "seconds": 1.7523999999761581
+     },
+     {
+      "text": "{\n  \"name\": \"Nadia Hussain\",\n  \"street\": \"88 Clarence Street\",\n  \"city\": \"Leicester\",\n  \"postcode\": \"LE1 3RW\"\n}",
+      "seconds": 1.783
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"name\": \"Nadia Hussain\",\n  \"street\": \"88 Clarence Street\",\n  \"city\": \"Leicester\",\n  \"postcode\": \"LE1 3RW\"\n}",
+     "seconds": 1.307199999988079,
+     "tokensIn": 110,
+     "tokensOut": 45
+    }
+   },
+   "address-16": {
+    "device": [
+     {
+      "text": "{\"name\": \"Peter Vaughan\", \"street\": \"16 Larch Rise\", \"city\": \"Exeter\", \"postcode\": \"EX4 5AD\"}",
+      "seconds": 1.536199999988079
+     },
+     {
+      "text": "{\"name\": \"Peter Vaughan\", \"street\": \"16 Larch Rise\", \"city\": \"Exeter\", \"postcode\": \"EX4 5AD\"}",
+      "seconds": 1.5308000000119208
+     },
+     {
+      "text": "{\n  \"name\": \"Peter Vaughan\",\n  \"street\": \"16 Larch Rise\",\n  \"city\": \"Exeter\",\n  \"postcode\": \"EX4 5AD\"\n}",
+      "seconds": 1.827800000011921
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"name\": \"Peter Vaughan\",\n  \"street\": \"16 Larch Rise\",\n  \"city\": \"Exeter\",\n  \"postcode\": \"EX4 5AD\"\n}",
+     "seconds": 1.2644000000357627,
+     "tokensIn": 125,
+     "tokensOut": 46
+    }
+   },
+   "address-17": {
+    "device": [
+     {
+      "text": "{\n  \"name\": \"Chloe Bannister\",\n  \"street\": \"5 Rookery Lane\",\n  \"city\": \"Lincoln\",\n  \"postcode\": \"LN6 7PG\"\n}",
+      "seconds": 1.817199999988079
+     },
+     {
+      "text": "{\"name\": \"Chloe Bannister\", \"street\": \"5 Rookery Lane\", \"city\": \"Lincoln\", \"postcode\": \"LN6 7PG\"}",
+      "seconds": 1.481800000011921
+     },
+     {
+      "text": "{\n  \"name\": \"Chloe Bannister\",\n  \"street\": \"5 Rookery Lane\",\n  \"city\": \"Lincoln\",\n  \"postcode\": \"LN6 7PG\"\n}",
+      "seconds": 1.7968999999761581
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"name\": \"Chloe Bannister\",\n  \"street\": \"5 Rookery Lane\",\n  \"city\": \"Lincoln\",\n  \"postcode\": \"LN6 7PG\"\n}",
+     "seconds": 1.4186999999880792,
+     "tokensIn": 117,
+     "tokensOut": 45
+    }
+   },
+   "address-18": {
+    "device": [
+     {
+      "text": "{\n  \"name\": \"Samir Qureshi\",\n  \"street\": \"73 Victoria Road\",\n  \"city\": \"Coventry\",\n  \"postcode\": \"CV1 3FJ\"\n}",
+      "seconds": 1.8643999999761582
+     },
+     {
+      "text": "{\n  \"name\": \"Samir Qureshi\",\n  \"street\": \"73 Victoria Road\",\n  \"city\": \"Coventry\",\n  \"postcode\": \"CV1 3FJ\"\n}",
+      "seconds": 1.846800000011921
+     },
+     {
+      "text": "{\n  \"name\": \"Samir Qureshi\",\n  \"street\": \"73 Victoria Road\",\n  \"city\": \"Coventry\",\n  \"postcode\": \"CV1 3FJ\"\n}",
+      "seconds": 1.842
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"name\": \"Samir Qureshi\",\n  \"street\": \"73 Victoria Road\",\n  \"city\": \"Coventry\",\n  \"postcode\": \"CV1 3FJ\"\n}",
+     "seconds": 0.9210999999642372,
+     "tokensIn": 112,
+     "tokensOut": 48
+    }
+   },
+   "address-19": {
+    "device": [
+     {
+      "text": "{\n  \"name\": \"Margaret Doyle\",\n  \"street\": \"30 Seaview Crescent\",\n  \"city\": \"Whitby\",\n  \"postcode\": \"YO21 3EZ\"\n}",
+      "seconds": 1.8750999999642373
+     },
+     {
+      "text": "{\n  \"name\": \"Margaret Doyle\",\n  \"street\": \"30 Seaview Crescent\",\n  \"city\": \"Whitby\",\n  \"postcode\": \"YO21 3EZ\"\n}",
+      "seconds": 1.8666999999880791
+     },
+     {
+      "text": "{\n  \"name\": \"Margaret Doyle\",\n  \"street\": \"30 Seaview Crescent\",\n  \"city\": \"Whitby\",\n  \"postcode\": \"YO21 3EZ\"\n}",
+      "seconds": 1.8804000000357628
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"name\": \"Margaret Doyle\",\n  \"street\": \"30 Seaview Crescent\",\n  \"city\": \"Whitby\",\n  \"postcode\": \"YO21 3EZ\"\n}",
+     "seconds": 1.1227000000476837,
+     "tokensIn": 117,
+     "tokensOut": 48
+    }
+   },
+   "address-20": {
+    "device": [
+     {
+      "text": "{\n  \"name\": \"Ben Achterberg\",\n  \"street\": \"11 Priory Mews\",\n  \"city\": \"Oxford\",\n  \"postcode\": \"OX2 6HJ\"\n}",
+      "seconds": 1.881
+     },
+     {
+      "text": "{\n  \"name\": \"Ben Achterberg\",\n  \"street\": \"11 Priory Mews\",\n  \"city\": \"Oxford\",\n  \"postcode\": \"OX2 6HJ\"\n}",
+      "seconds": 1.8685
+     },
+     {
+      "text": "{\n  \"name\": \"Ben Achterberg\",\n  \"street\": \"11 Priory Mews\",\n  \"city\": \"Oxford\",\n  \"postcode\": \"OX2 6HJ\"\n}",
+      "seconds": 1.8740999999642372
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"name\": \"Ben Achterberg\",\n  \"street\": \"11 Priory Mews\",\n  \"city\": \"Oxford\",\n  \"postcode\": \"OX2 6HJ\"\n}",
+     "seconds": 0.9245,
+     "tokensIn": 114,
+     "tokensOut": 48
+    }
+   },
+   "address-21": {
+    "device": [
+     {
+      "text": "{\"name\": \"Helen Marsh\", \"street\": \"4 Castle Road\", \"city\": \"Durham\", \"postcode\": \"DH1 4LS\"}",
+      "seconds": 1.4361000000238417
+     },
+     {
+      "text": "{\"name\": \"Helen Marsh\", \"street\": \"4 Castle Road\", \"city\": \"Durham\", \"postcode\": \"DH1 4LS\"}",
+      "seconds": 1.427300000011921
+     },
+     {
+      "text": "{\n  \"name\": \"Helen Marsh\",\n  \"street\": \"4 Castle Road\",\n  \"city\": \"Durham\",\n  \"postcode\": \"DH1 4LS\"\n}",
+      "seconds": 1.733800000011921
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"name\": \"Helen Marsh\",\n  \"street\": \"4 Castle Road\",\n  \"city\": \"Durham\",\n  \"postcode\": \"DH1 4LS\"\n}",
+     "seconds": 0.9083999999761582,
+     "tokensIn": 113,
+     "tokensOut": 43
+    }
+   },
+   "address-22": {
+    "device": [
+     {
+      "text": "{\"name\": \"\", \"street\": \"\", \"city\": \"\", \"postcode\": \"\"}",
+      "seconds": 1.011399999976158
+     },
+     {
+      "text": "{\"name\": \"\", \"street\": \"\", \"city\": \"\", \"postcode\": \"\"}",
+      "seconds": 1.008699999988079
+     },
+     {
+      "text": "{\"name\": \"\", \"street\": \"\", \"city\": \"\", \"postcode\": \"\"}",
+      "seconds": 1.007100000023842
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"name\": \"\",\n  \"street\": \"\",\n  \"city\": \"\",\n  \"postcode\": \"\"\n}",
+     "seconds": 1.4478000000119209,
+     "tokensIn": 87,
+     "tokensOut": 28
+    }
+   },
+   "address-23": {
+    "device": [
+     {
+      "text": "{\"name\": \"Fiona Ashdown\", \"street\": \"\", \"city\": \"\", \"postcode\": \"\"}",
+      "seconds": 1.1471000000238418
+     },
+     {
+      "text": "{\"name\": \"Fiona Ashdown\", \"street\": \"\", \"city\": \"\", \"postcode\": \"\"}",
+      "seconds": 1.145899999976158
+     },
+     {
+      "text": "{\"name\": \"Fiona Ashdown\", \"street\": \"\", \"city\": \"\", \"postcode\": \"\"}",
+      "seconds": 1.1479000000357629
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"name\": \"Fiona Ashdown\",\n  \"street\": \"\",\n  \"city\": \"\",\n  \"postcode\": \"\"\n}",
+     "seconds": 0.921800000011921,
+     "tokensIn": 87,
+     "tokensOut": 33
+    }
+   },
+   "address-24": {
+    "device": [
+     {
+      "text": "{\"name\": \"\", \"street\": \"\", \"city\": \"\", \"postcode\": \"\"}",
+      "seconds": 1.0062000000476836
+     },
+     {
+      "text": "{\"name\": \"\", \"street\": \"\", \"city\": \"\", \"postcode\": \"\"}",
+      "seconds": 1.0140999999642373
+     },
+     {
+      "text": "{\"name\": \"\", \"street\": \"\", \"city\": \"\", \"postcode\": \"\"}",
+      "seconds": 1.0026000000238418
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"name\": \"\",\n  \"street\": \"\",\n  \"city\": \"\",\n  \"postcode\": \"\"\n}",
+     "seconds": 0.7530999999642373,
+     "tokensIn": 93,
+     "tokensOut": 28
+    }
+   },
+   "address-25": {
+    "device": [
+     {
+      "text": "{\n  \"name\": \"\",\n  \"street\": \"\",\n  \"city\": \"CB5\",\n  \"postcode\": \"8DZ\"\n}",
+      "seconds": 1.4835
+     },
+     {
+      "text": "{\n  \"name\": \"George Pym\",\n  \"street\": \"\",\n  \"city\": \"\",\n  \"postcode\": \"CB5 8DZ\"\n}",
+      "seconds": 1.5953000000119208
+     },
+     {
+      "text": "{\n  \"name\": \"George Pym\",\n  \"street\": \"\",\n  \"city\": \"\",\n  \"postcode\": \"CB5 8DZ\"\n}",
+      "seconds": 1.589899999976158
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"name\": \"George Pym\",\n  \"street\": \"\",\n  \"city\": \"\",\n  \"postcode\": \"CB5 8DZ\"\n}",
+     "seconds": 0.9667000000476837,
+     "tokensIn": 109,
+     "tokensOut": 38
+    }
+   }
+  },
+  "returns_answer": {
+   "returns-1": {
+    "device": [
+     {
+      "text": "{\n  \"allowed\": true,\n  \"reply\": \"Absolutely! Since your desk lamp arrived on November 9th, which is within 30 days of delivery, you're eligible for a return. We're happy to help you with this!\"\n}",
+      "seconds": 2.205800000011921
+     },
+     {
+      "text": "{\n  \"allowed\": true,\n  \"reply\": \"Yes, you can absolutely return the desk lamp! Since it arrived on November 9th, and you have 30 days from delivery, you're well within our return window. \"\n}",
+      "seconds": 2.112800000011921
+     },
+     {
+      "text": "{\n  \"allowed\": true,\n  \"reply\": \"Absolutely! Since you're within the 30-day return window and the desk lamp isn't a sale item or a plant/seed, you can definitely send it back to us.\"\n}",
+      "seconds": 2.138100000023842
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"allowed\": true,\n  \"reply\": \"Yes, you can certainly return your desk lamp since it was delivered within the last 30 days and you've simply changed your mind.\"\n}",
+     "seconds": 1.4069000000357628,
+     "tokensIn": 168,
+     "tokensOut": 45
+    }
+   },
+   "returns-2": {
+    "device": [
+     {
+      "text": "{\n  \"allowed\": true,\n  \"reply\": \"Absolutely! You can definitely return the bath towels as they were delivered on November 2nd, which is within our 30-day return window.\"\n}",
+      "seconds": 1.8946999999880791
+     },
+     {
+      "text": "{\"allowed\": true, \"reply\": \"Absolutely! You can return the bath towels as they were delivered within the 30-day return window. We're happy to help you find the perfect colour!\"}",
+      "seconds": 1.8086000000238418
+     },
+     {
+      "text": "{\"allowed\": true, \"reply\": \"Absolutely! You can definitely return the bath towels as your delivery date was on November 2nd, which is within our 30-day return window. We're happy to help you find a better colour!\"}",
+      "seconds": 2.091699999988079
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"allowed\": true,\n  \"reply\": \"Yes, you can definitely return your bath towels as they are well within our 30-day return window!\"\n}",
+     "seconds": 0.937,
+     "tokensIn": 166,
+     "tokensOut": 39
+    }
+   },
+   "returns-3": {
+    "device": [
+     {
+      "text": "{\n  \"allowed\": true,\n  \"reply\": \"Yes, absolutely! Since the doormat was a sale item, it's eligible for return like any other item within our 30-day timeframe. We strive for our customers to be happy with their purchases.\"\n}",
+      "seconds": 2.292099999964237
+     },
+     {
+      "text": "{\"allowed\": true, \"reply\": \"Absolutely! Since it was a sale item, you're welcome to return it within 30 days of delivery – that's definitely within the timeframe. We're happy to help you find a better fit!\"}",
+      "seconds": 2.088600000023842
+     },
+     {
+      "text": "{\"allowed\": true, \"reply\": \"Yes, absolutely! Since it was a sale item, you can definitely return it within 30 days of delivery. We're happy to help you find a better fit!\"}",
+      "seconds": 1.8686000000238419
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"allowed\": true,\n  \"reply\": \"Yes, sale items can be returned just like any other, so you are welcome to send your doormat back to us within 30 days of delivery.\"\n}",
+     "seconds": 1.1040999999642371,
+     "tokensIn": 168,
+     "tokensOut": 49
+    }
+   },
+   "returns-4": {
+    "device": [
+     {
+      "text": "{\n  \"allowed\": true,\n  \"reply\": \"Absolutely! Since you delivered the garden parasol on August 20th, 2026, and it's been less than 30 days, it's eligible for a return - we're happy to help with that!\"\n}",
+      "seconds": 2.4555
+     },
+     {
+      "text": "{\n  \"allowed\": true,\n  \"reply\": \"Absolutely! Since you're returning the garden parasol within 30 days of delivery, and it's not a sale item, we'd be happy to process your return – we appreciate you choosing Larkfield!\"\n}",
+      "seconds": 2.29
+     },
+     {
+      "text": "{\n  \"allowed\": true,\n  \"reply\": \"Absolutely! Since you delivered the garden parasol on 20 August 2026, which is within our 30-day return window, we'd be happy to arrange a return for you.\"\n}",
+      "seconds": 2.2646999999880792
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"allowed\": false,\n  \"reply\": \"I'm sorry, but since your garden parasol was delivered on 20 August, it is past our 30-day return window.\"\n}",
+     "seconds": 1.333800000011921,
+     "tokensIn": 163,
+     "tokensOut": 48
+    }
+   },
+   "returns-5": {
+    "device": [
+     {
+      "text": "{\n  \"allowed\": true,\n  \"reply\": \"Yes, absolutely! As the bookcase was delivered on 1 September 2026, which is within our 30-day return window, you're eligible for a return, and the original packaging isn’t required - we're happy to help!\"\n}",
+      "seconds": 2.564
+     },
+     {
+      "text": "{\n  \"allowed\": true,\n  \"reply\": \"Yes, absolutely! Since the bookcase was delivered on September 1st, 2026, and it's still within the 30-day return window, you're all set to return it – we're happy to help make this easy for you!\"\n}",
+      "seconds": 2.6236999999880792
+     },
+     {
+      "text": "{\"allowed\": true, \"reply\": \"Absolutely! Since the bookcase was delivered on September 1st, 2026, and is within our 30-day return window, you can definitely return it; we're happy to help!\"}",
+      "seconds": 2.089399999976158
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"allowed\": false,\n  \"reply\": \"We are sorry, but since your bookcase was delivered over 30 days ago, it is outside our standard return window.\"\n}",
+     "seconds": 1.0281000000238418,
+     "tokensIn": 160,
+     "tokensOut": 41
+    }
+   },
+   "returns-6": {
+    "device": [
+     {
+      "text": "{\n  \"allowed\": true,\n  \"reply\": \"Yes, you can still return the wall clock! You're within the 30-day return window from the delivery date, and the packaging isn't needed.\"\n}",
+      "seconds": 2.003600000023842
+     },
+     {
+      "text": "{\n  \"allowed\": true,\n  \"reply\": \"Yes, you can still return the wall clock! Even though you threw away the box, you're within the 30-day return window since it arrived on November 6th, 2026. We're happy to help with that!\"\n}",
+      "seconds": 2.543600000023842
+     },
+     {
+      "text": "{\n  \"allowed\": true,\n  \"reply\": \"Yes, absolutely! You can definitely return the wall clock as long as it's within 30 days of delivery, even without the original packaging – we're happy to help!\"\n}",
+      "seconds": 2.0890999999642372
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"allowed\": true,\n  \"reply\": \"Yes, you can certainly return your wall clock, and you don't need to worry about having the original packaging!\"\n}",
+     "seconds": 0.9367999999523163,
+     "tokensIn": 161,
+     "tokensOut": 40
+    }
+   },
+   "returns-7": {
+    "device": [
+     {
+      "text": "{\n  \"allowed\": true,\n  \"reply\": \"Absolutely! You can definitely return the dining chairs as they were delivered on 3 June 2026, which is within our 30-day return window.\"\n}",
+      "seconds": 2.007899999976158
+     },
+     {
+      "text": "{\"allowed\": true, \"reply\": \"Absolutely! You can return the dining chairs as long as they were delivered within the last 30 days, which they were. We're happy to help you make a change if the chairs aren't quite right for your space!\"}",
+      "seconds": 2.203699999988079
+     },
+     {
+      "text": "{\n  \"allowed\": true,\n  \"reply\": \"Absolutely! You can definitely return the dining chairs as they were delivered on June 3rd, which is well within our 30-day return window.\"\n}",
+      "seconds": 1.9336000000238418
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"allowed\": false,\n  \"reply\": \"Unfortunately, since your dining chairs were delivered over 30 days ago, we are no longer able to accept a return for them.\"\n}",
+     "seconds": 0.8198000000119209,
+     "tokensIn": 169,
+     "tokensOut": 43
+    }
+   },
+   "returns-8": {
+    "device": [
+     {
+      "text": "{\n  \"allowed\": true,\n  \"reply\": \"Yes, you are absolutely within the 30-day return window! We're happy to process your return for the rug whenever you're ready.\"\n}",
+      "seconds": 1.9397999999523163
+     },
+     {
+      "text": "{\"allowed\": true, \"reply\": \"Yes, absolutely! Since your rug was delivered on October 15th, you're well within the 30-day return window. We'd be happy to process your return for you.\"}",
+      "seconds": 2.024300000011921
+     },
+     {
+      "text": "{\n  \"allowed\": true,\n  \"reply\": \"Yes, absolutely! Since your rug was delivered on October 15th, you're well within our 30-day return window. We're happy to help with your return!\"\n}",
+      "seconds": 2.153
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"allowed\": true,\n  \"reply\": \"Yes, you are well within the 30-day return window, so you can certainly return your rug to us!\"\n}",
+     "seconds": 0.8738000000119209,
+     "tokensIn": 164,
+     "tokensOut": 41
+    }
+   },
+   "returns-9": {
+    "device": [
+     {
+      "text": "{\"allowed\": true, \"reply\": \"Yes, absolutely! Since your coffee table arrived on October 14th, which is within the 30-day return window, you're all set to return it. We're happy to help you out!\"}",
+      "seconds": 2.1455
+     },
+     {
+      "text": "{\"allowed\": true, \"reply\": \"Yes, absolutely! Since your coffee table arrived on October 14th, you're well within our 30-day return window – we'd be happy to help you with a return.\"}",
+      "seconds": 2.038099999964237
+     },
+     {
+      "text": "{\"allowed\": true, \"reply\": \"Yes, absolutely! Since your coffee table arrived on October 14th, you're well within our 30-day return window. We're happy to help you with this!\"}",
+      "seconds": 1.982
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"allowed\": true,\n  \"reply\": \"Yes, absolutely, you can return your coffee table since it has been within 30 days of delivery.\"\n}",
+     "seconds": 0.7885,
+     "tokensIn": 162,
+     "tokensOut": 38
+    }
+   },
+   "returns-10": {
+    "device": [
+     {
+      "text": "{\n  \"allowed\": true,\n  \"reply\": \"Absolutely! You can definitely return your kettle as it was delivered on 16 October 2026, which is within our 30-day return window.\"\n}",
+      "seconds": 2.006199999988079
+     },
+     {
+      "text": "{\n  \"allowed\": true,\n  \"reply\": \"Yes, absolutely! Since you haven't opened the kettle and it was delivered on October 16th, you're well within our 30-day return window – we'd be happy to process that for you!\"\n}",
+      "seconds": 2.379699999988079
+     },
+     {
+      "text": "{\n  \"allowed\": true,\n  \"reply\": \"Absolutely! Since your kettle was delivered on October 16th, you're well within our 30-day return window, and no original packaging is needed – we're happy to help!\"\n}",
+      "seconds": 2.204800000011921
+     }
+    ],
+    "cloud": {
+     "text": "{\"allowed\": true, \"reply\": \"Yes, you can certainly return your kettle since it has been less than 30 days since it was delivered.\"}",
+     "seconds": 0.779,
+     "tokensIn": 163,
+     "tokensOut": 33
+    }
+   },
+   "returns-11": {
+    "device": [
+     {
+      "text": "{\"allowed\": true, \"reply\": \"Yes, absolutely! Since the mirror was delivered on 13 October 2026, which is within our 30-day return window, you're welcome to return it whenever you're ready.\"}",
+      "seconds": 2.129800000011921
+     },
+     {
+      "text": "{\"allowed\": true, \"reply\": \"Yes, you absolutely can! Since the mirror was delivered on October 13th, which is within our 30-day return window, you're all set to return it. We're happy to help you find something that's a better fit for your hallway!\"}",
+      "seconds": 2.479
+     },
+     {
+      "text": "{\"allowed\": true, \"reply\": \"Yes, you can certainly return the mirror! It's within our 30-day return window since it was delivered on October 13th.\"}",
+      "seconds": 1.7603999999761581
+     }
+    ],
+    "cloud": {
+     "text": "{\"allowed\": true, \"reply\": \"Yes, you can return your mirror as it has been less than 30 days since it was delivered.\"}",
+     "seconds": 1.0407000000476838,
+     "tokensIn": 166,
+     "tokensOut": 32
+    }
+   },
+   "returns-12": {
+    "device": [
+     {
+      "text": "{\"allowed\":true,\"reply\":\"Hello! Absolutely, you can return your cushion covers - you're well within our 30-day return window! We're happy to help you process this return.\"}",
+      "seconds": 1.8325999999642373
+     },
+     {
+      "text": "{\n  \"allowed\": true,\n  \"reply\": \"Absolutely! Since your cushion covers arrived on September 30th, you're well within our 30-day return window – we'd be happy to process a return for you.\"\n}",
+      "seconds": 2.162199999988079
+     },
+     {
+      "text": "{\"allowed\": true, \"reply\": \"Hello! Yes, absolutely you can return the cushion covers; they were delivered on 30 September 2026, which is within our 30-day return window. We're happy to help get that sorted out for you!\"}",
+      "seconds": 2.328
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"allowed\": true,\n  \"reply\": \"Of course, you are well within your 30-day window to return your cushion covers!\"\n}",
+     "seconds": 1.2231999999880792,
+     "tokensIn": 160,
+     "tokensOut": 36
+    }
+   },
+   "returns-13": {
+    "device": [
+     {
+      "text": "{\"allowed\": true, \"reply\": \"Yes, absolutely! Since your curtain pole was delivered on September 30th, you're still well within our 30-day return window.\"}",
+      "seconds": 1.7601000000238418
+     },
+     {
+      "text": "{\"allowed\": true, \"reply\": \"Absolutely! Since the curtain pole was delivered on September 30th, you're well within our 30-day return window – we'd be happy to help you process that return.\"}",
+      "seconds": 2.034800000011921
+     },
+     {
+      "text": "{\"allowed\": true, \"reply\": \"Yes, absolutely! Since the curtain pole was delivered on September 30th, 2026, and you're within the 30-day return window, we'd be happy to process your return.\"}",
+      "seconds": 2.2375
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"allowed\": true,\n  \"reply\": \"Yes, you can certainly return your curtain pole since it is within 30 days of delivery.\"\n}",
+     "seconds": 1.472800000011921,
+     "tokensIn": 160,
+     "tokensOut": 36
+    }
+   },
+   "returns-14": {
+    "device": [
+     {
+      "text": "{\n  \"allowed\": true,\n  \"reply\": \"Absolutely! You can definitely return the personalized doormat as long as it was delivered on 10 November 2026 – you're well within our 30-day return window, and no packaging is required.\"\n}",
+      "seconds": 2.431300000011921
+     },
+     {
+      "text": "{\"allowed\": true, \"reply\": \"Absolutely! You can definitely return the personalized doormat within the 30-day return window, even though it's a custom order – we want you to be completely happy with your purchase!\"}",
+      "seconds": 2.0698999999761583
+     },
+     {
+      "text": "{\n  \"allowed\": true,\n  \"reply\": \"Absolutely! Since you received the doormat on November 10th, you're well within our 30-day return window, and the original packaging isn't required – we're happy to help with that!\"\n}",
+      "seconds": 2.436399999976158
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"allowed\": false,\n  \"reply\": \"Unfortunately, items that are made to order or personalised cannot be returned, but please let us know if there is anything else we can help you with!\"\n}",
+     "seconds": 0.6974000000357627,
+     "tokensIn": 171,
+     "tokensOut": 46
+    }
+   },
+   "returns-15": {
+    "device": [
+     {
+      "text": "{\n  \"allowed\": false,\n  \"reply\": \"Unfortunately, as these curtains were made to your specific measurements, they can't be returned since they're a made-to-order item.  We appreciate you shopping with Larkfield!\"\n}",
+      "seconds": 2.157300000011921
+     },
+     {
+      "text": "{\n  \"allowed\": false,\n  \"reply\": \"Unfortunately, because the curtains were made to order and personalised, we're unable to accept a return on them. We're sorry for any disappointment this may cause!\"\n}",
+      "seconds": 1.996199999988079
+     },
+     {
+      "text": "{\n  \"allowed\": false,\n  \"reply\": \"I'm so sorry to hear you've changed your mind about the colour! Unfortunately, items made to order or personalised, like your custom curtains, aren't eligible for returns.\"\n}",
+      "seconds": 2.1322000000476837
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"allowed\": false,\n  \"reply\": \"I'm sorry, but items that are made to order or personalised unfortunately cannot be returned.\"\n}",
+     "seconds": 1.418600000023842,
+     "tokensIn": 169,
+     "tokensOut": 35
+    }
+   },
+   "returns-16": {
+    "device": [
+     {
+      "text": "{\n  \"allowed\": false,\n  \"reply\": \"I'm so sorry to hear you'd like to return the chopping board, but unfortunately, items made to order or personalised like this one cannot be returned.\"\n}",
+      "seconds": 1.9903000000119209
+     },
+     {
+      "text": "{\"allowed\": false, \"reply\": \"Unfortunately, because the chopping board was personalised, we're unable to accept a return, but we appreciate you shopping with Larkfield!\"}",
+      "seconds": 1.667
+     },
+     {
+      "text": "{\n  \"allowed\": false,\n  \"reply\": \"Unfortunately, engraved items made to order or personalized are not eligible for return.\"\n}",
+      "seconds": 1.4923000000119209
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"allowed\": false,\n  \"reply\": \"Unfortunately, items made to order or personalised cannot be returned, but we hope your parents still appreciate the thoughtful anniversary gift!\"\n}",
+     "seconds": 1.026199999988079,
+     "tokensIn": 166,
+     "tokensOut": 40
+    }
+   },
+   "returns-17": {
+    "device": [
+     {
+      "text": "{\n  \"allowed\": true,\n  \"reply\": \"Absolutely! You can return the olive tree as it was delivered within the last 30 days. We're happy to help if you'd like to explore other options!\"\n}",
+      "seconds": 2.077
+     },
+     {
+      "text": "{\"allowed\": true, \"reply\": \"Yes, absolutely! Since the olive tree was delivered on November 8th, you have plenty of time to return it, and you don't need to worry about the packaging.\"}",
+      "seconds": 1.9505
+     },
+     {
+      "text": "{\"allowed\": true, \"reply\": \"Yes, absolutely! Since the olive tree was delivered on November 8th, and you have until November 28th (30 days), you are eligible for a return - we're happy you're pleased with its size!\"}",
+      "seconds": 2.3182000000476837
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"allowed\": true,\n  \"reply\": \"Of course you can return your olive tree, as plants can be returned within 14 days of delivery.\"\n}",
+     "seconds": 0.8911000000238418,
+     "tokensIn": 163,
+     "tokensOut": 38
+    }
+   },
+   "returns-18": {
+    "device": [
+     {
+      "text": "{\n  \"allowed\": true,\n  \"reply\": \"Yes, absolutely! You can return the wildflower seeds; they're within our 14-day return window for plants and seeds.\"\n}",
+      "seconds": 1.8706999999880791
+     },
+     {
+      "text": "{\"allowed\": true, \"reply\": \"Yes, absolutely! You can return your wildflower seeds; we're happy to help you with that.\"}",
+      "seconds": 1.4701000000238418
+     },
+     {
+      "text": "{\n  \"allowed\": true,\n  \"reply\": \"Yes, you can absolutely return the wildflower seeds! Since they were delivered on October 20th, you're well within our 14-day return window for plants and seeds.\"\n}",
+      "seconds": 2.175399999976158
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"allowed\": true,\n  \"reply\": \"Yes, you can certainly send those back since plants and seeds can be returned within 14 days of delivery.\"\n}",
+     "seconds": 0.9207999999523163,
+     "tokensIn": 167,
+     "tokensOut": 39
+    }
+   },
+   "returns-19": {
+    "device": [
+     {
+      "text": "{\n  \"allowed\": true,\n  \"reply\": \"Absolutely! Since you received the potted lavender on October 31st, and that's within our 30-day return window, you're all set to send it back. We appreciate you choosing Larkfield!\"\n}",
+      "seconds": 2.389100000023842
+     },
+     {
+      "text": "{\"allowed\": true, \"reply\": \"Yes, absolutely! Since you received the potted lavender on October 31st, you're well within our 30-day return window – we'd be happy to process a return for you.\"}",
+      "seconds": 2.067600000023842
+     },
+     {
+      "text": "{\n  \"allowed\": true,\n  \"reply\": \"Absolutely! Since you received the lavender on October 31st and it's been within the 30-day return window, you're all set to return it - we're happy to help make things right!\"\n}",
+      "seconds": 2.3515
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"allowed\": true,\n  \"reply\": \"Yes, you can return your potted lavender since plants can be returned within 14 days of delivery.\"\n}",
+     "seconds": 1.0246000000238418,
+     "tokensIn": 166,
+     "tokensOut": 37
+    }
+   },
+   "returns-20": {
+    "device": [
+     {
+      "text": "{\"allowed\": true, \"reply\": \"Yes, you are absolutely within the return window for your rose bush! We're happy to help make this process smooth for you.\"}",
+      "seconds": 1.6203999999761582
+     },
+     {
+      "text": "{\"allowed\":true,\"reply\":\"Yes, absolutely! As your rose bush arrived on October 30th, and you're contacting us on November 14th, you are well within our 14-day return window for plants and seeds. We're happy to help you process this return!\"}",
+      "seconds": 2.407399999976158
+     },
+     {
+      "text": "{\"allowed\": true, \"reply\": \"Yes, you're absolutely within our return window! Please let me know if you have any questions about getting your rose bush returned to us.\"}",
+      "seconds": 1.672300000011921
+     }
+    ],
+    "cloud": {
+     "text": "{\"allowed\": true, \"reply\": \"You are definitely in time, as plants and seeds can be returned within 14 days of delivery!\"}",
+     "seconds": 0.9214000000357628,
+     "tokensIn": 163,
+     "tokensOut": 31
+    }
+   },
+   "returns-21": {
+    "device": [
+     {
+      "text": "{\"allowed\": true, \"reply\": \"Absolutely! Since the hedge trimmer is faulty, you're within our 12-month return window for any item, and we're happy to help you arrange a return.\"}",
+      "seconds": 1.907
+     },
+     {
+      "text": "{\n  \"allowed\": true,\n  \"reply\": \"Yes, absolutely! Since the electric hedge trimmer is faulty, you can definitely return it within our 12-month timeframe – we're so sorry to hear it's stopped charging and will help you get this sorted out.\"\n}",
+      "seconds": 2.404
+     },
+     {
+      "text": "{\"allowed\": true, \"reply\": \"Yes, absolutely! Since the hedge trimmer stopped charging, it's covered under our policy for faulty items, and you're within the 12-month return window – we'd be happy to help you with a return.\"}",
+      "seconds": 2.284399999976158
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"allowed\": true,\n  \"reply\": \"Since your hedge trimmer is faulty and it has been less than 12 months since delivery, you are welcome to return it to us.\"\n}",
+     "seconds": 0.9214000000357628,
+     "tokensIn": 158,
+     "tokensOut": 44
+    }
+   },
+   "returns-22": {
+    "device": [
+     {
+      "text": "{\n  \"allowed\": true,\n  \"reply\": \"Yes, absolutely! Since your patio heater is faulty, you can return it within the 12-month timeframe, and we'd be happy to help you with a replacement or refund.\"\n}",
+      "seconds": 2.162800000011921
+     },
+     {
+      "text": "{\n  \"allowed\": true,\n  \"reply\": \"Absolutely! Since the heater is faulty, you're well within our 12-month timeframe for returns on items of this nature – we're happy to help you arrange a return.\"\n}",
+      "seconds": 2.1537999999523163
+     },
+     {
+      "text": "{\"allowed\": true, \"reply\": \"Absolutely! Since the heater is faulty, you can definitely return it within the 12-month timeframe from the delivery date.\"}",
+      "seconds": 1.620300000011921
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"allowed\": true,\n  \"reply\": \"Since your patio heater is faulty, you can certainly send it back to us within 12 months of delivery!\"\n}",
+     "seconds": 0.814,
+     "tokensIn": 161,
+     "tokensOut": 39
+    }
+   },
+   "returns-23": {
+    "device": [
+     {
+      "text": "{\n  \"allowed\": true,\n  \"reply\": \"Absolutely! Since the garden hose reel is faulty and was delivered on 8 September 2025, you're well within our 12-month return window for faulty items. We'd be happy to help you process a return.\"\n}",
+      "seconds": 2.537300000011921
+     },
+     {
+      "text": "{\"allowed\": true, \"reply\": \"Yes, you can absolutely return the garden hose reel! Since it's faulty, it falls under our 12-month return policy, even though the delivery was a little while ago. We're happy to help make this right for you!\"}",
+      "seconds": 2.3573999999761583
+     },
+     {
+      "text": "{\"allowed\": true, \"reply\": \"Yes, absolutely! Since the hose reel is faulty, you can return it within the 12-month timeframe, and we'd be happy to help you resolve this.\"}",
+      "seconds": 1.9255
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"allowed\": false,\n  \"reply\": \"Unfortunately, since your garden hose reel was delivered more than 12 months ago, it falls outside our return window for faulty items, but please let us know if there is anything else we can help you with.\"\n}",
+     "seconds": 0.8796000000238419,
+     "tokensIn": 164,
+     "tokensOut": 59
+    }
+   },
+   "returns-24": {
+    "device": [
+     {
+      "text": "{\n  \"allowed\": true,\n  \"reply\": \"Absolutely, we can definitely help with that! Since the blind is faulty, you can return it within our 12-month fault period from the delivery date of 5 October 2026.\"\n}",
+      "seconds": 2.259899999976158
+     },
+     {
+      "text": "{\n  \"allowed\": true,\n  \"reply\": \"Absolutely! Since the blind is faulty, you can definitely return it within the 12-month warranty period – we're sorry you're experiencing this issue.\"\n}",
+      "seconds": 2.058899999976158
+     },
+     {
+      "text": "{\n  \"allowed\": true,\n  \"reply\": \"Absolutely! Since the blind is faulty, you can return it within 12 months of delivery. We're so sorry you're having trouble with the cord mechanism and will gladly assist you with a resolution.\"\n}",
+      "seconds": 2.3077000000476837
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"allowed\": false,\n  \"reply\": \"Unfortunately, items that are made to measure or personalised cannot be returned, even if there is an issue.\"\n}",
+     "seconds": 1.096100000023842,
+     "tokensIn": 167,
+     "tokensOut": 37
+    }
+   },
+   "returns-25": {
+    "device": [
+     {
+      "text": "{\n  \"allowed\": true,\n  \"reply\": \"Oh dear, I'm so sorry to hear your bay tree arrived damaged! Absolutely, you can return it – given the faulty condition, you're within our 12-month timeframe for returns on any item.\"\n}",
+      "seconds": 2.3585
+     },
+     {
+      "text": "{\n  \"allowed\": true,\n  \"reply\": \"Oh dear, that's awful! Yes, absolutely – given the damage, you can return the bay tree within the 12-month period for faulty items. We're so sorry it arrived in that condition and will do our best to make things right for you.\"\n}",
+      "seconds": 2.591
+     },
+     {
+      "text": "{\n  \"allowed\": true,\n  \"reply\": \"Oh dear, I'm so sorry to hear your bay tree arrived damaged! Yes, you can definitely return it as it's faulty and within our 12-month return window.\"\n}",
+      "seconds": 2.114100000023842
+     }
+    ],
+    "cloud": {
+     "text": "{\n  \"allowed\": true,\n  \"reply\": \"Since your bay tree arrived damaged, you are welcome to return it as a faulty item within 12 months of delivery.\"\n}",
+     "seconds": 1.0007999999523163,
+     "tokensIn": 164,
+     "tokensOut": 41
+    }
+   }
+  },
+  "product_title": {
+   "title-1": {
+    "device": [
+     {
+      "text": "Handmade Stoneware Mug - 350ml",
+      "seconds": 10.100900000035763
+     },
+     {
+      "text": "Handmade Stoneware Mug - 350ml",
+      "seconds": 0.6070999999642372
+     },
+     {
+      "text": "Stoneware Mug - 350ml, Speckled Blue",
+      "seconds": 0.6781000000238419
+     }
+    ],
+    "cloud": {
+     "text": "Hand made stoneware mug speckled blue 350ml",
+     "seconds": 1.005,
+     "tokensIn": 92,
+     "tokensOut": 11
+    },
+    "grades": {
+     "Stoneware Mug - 350ml, Speckled Blue": {
+      "ok": true
+     },
+     "Hand made stoneware mug speckled blue 350ml": {
+      "ok": true
+     }
+    }
+   },
+   "title-2": {
+    "device": [
+     {
+      "text": "Kids Yellow Raincoat 5-6 Years Fleece Lined",
+      "seconds": 0.6270999999642373
+     },
+     {
+      "text": "Yellow Kids Raincoat, Size 5-6",
+      "seconds": 0.582300000011921
+     },
+     {
+      "text": "Yellow Reflective Striped Fleece Lined Raincoat 5-6",
+      "seconds": 0.68
+     }
+    ],
+    "cloud": {
+     "text": "Yellow fleece-lined kids raincoat age 5-6 with reflective strips",
+     "seconds": 1.330800000011921,
+     "tokensIn": 89,
+     "tokensOut": 14
+    },
+    "grades": {
+     "Kids Yellow Raincoat 5-6 Years Fleece Lined": {
+      "ok": true
+     },
+     "Yellow Kids Raincoat, Size 5-6": {
+      "ok": true
+     },
+     "Yellow Reflective Striped Fleece Lined Raincoat 5-6": {
+      "ok": true
+     }
+    }
+   },
+   "title-3": {
+    "device": [
+     {
+      "text": "Wool Blanket Grey Herringbone 130x180cm",
+      "seconds": 0.692
+     },
+     {
+      "text": "Wool Blanket Grey Herringbone 130x180cm",
+      "seconds": 0.6936999999880791
+     },
+     {
+      "text": "Wool Blanket Grey Herringbone 130x180cm",
+      "seconds": 0.6891999999880791
+     }
+    ],
+    "cloud": {
+     "text": "Grey herringbone wool blanket 130 x 180 cm",
+     "seconds": 1.1248999999761582,
+     "tokensIn": 94,
+     "tokensOut": 14
+    },
+    "grades": {
+     "Wool Blanket Grey Herringbone 130x180cm": {
+      "ok": true
+     },
+     "Grey herringbone wool blanket 130 x 180 cm": {
+      "ok": true
+     }
+    }
+   },
+   "title-4": {
+    "device": [
+     {
+      "text": "9L Galvanised Steel Watering Can",
+      "seconds": 0.49980000001192093
+     },
+     {
+      "text": "9 Litre Galvanised Steel Watering Can",
+      "seconds": 0.5213000000119209
+     },
+     {
+      "text": "9 Litre Galvanised Steel Watering Can",
+      "seconds": 0.5225999999642372
+     }
+    ],
+    "cloud": {
+     "text": "9 Litre Galvanised Steel Watering Can With Brass Rose",
+     "seconds": 0.7547999999523163,
+     "tokensIn": 86,
+     "tokensOut": 11
+    },
+    "grades": {
+     "9L Galvanised Steel Watering Can": {
+      "ok": true
+     },
+     "9 Litre Galvanised Steel Watering Can": {
+      "ok": true
+     },
+     "9 Litre Galvanised Steel Watering Can With Brass Rose": {
+      "ok": true
+     }
+    }
+   },
+   "title-5": {
+    "device": [
+     {
+      "text": "Linen Tablecloth - 150cm Round - Natural",
+      "seconds": 0.6563000000119209
+     },
+     {
+      "text": "Linen Tablecloth - 150cm Round, Natural",
+      "seconds": 0.6526000000238419
+     },
+     {
+      "text": "Linen Tablecloth - Natural 150cm Round",
+      "seconds": 0.6298999999761581
+     }
+    ],
+    "cloud": {
+     "text": "Natural linen round tablecloth 150cm",
+     "seconds": 0.8860999999642372,
+     "tokensIn": 87,
+     "tokensOut": 9
+    },
+    "grades": {
+     "Linen Tablecloth - 150cm Round - Natural": {
+      "ok": true
+     },
+     "Linen Tablecloth - 150cm Round, Natural": {
+      "ok": true
+     },
+     "Linen Tablecloth - Natural 150cm Round": {
+      "ok": true
+     },
+     "Natural linen round tablecloth 150cm": {
+      "ok": true
+     }
+    }
+   },
+   "title-6": {
+    "device": [
+     {
+      "text": "Oak Chopping Board 40x28cm with Groove",
+      "seconds": 0.6501999999880791
+     },
+     {
+      "text": "Oak Chopping Board 40x28cm Juice Groove",
+      "seconds": 0.650699999988079
+     },
+     {
+      "text": "Oak Chopping Board 40x28cm, Juice Groove",
+      "seconds": 0.680800000011921
+     }
+    ],
+    "cloud": {
+     "text": "Oak chopping board 40 x 28 cm with juice groove",
+     "seconds": 0.7130999999642372,
+     "tokensIn": 89,
+     "tokensOut": 14
+    },
+    "grades": {
+     "Oak Chopping Board 40x28cm with Groove": {
+      "ok": true
+     },
+     "Oak Chopping Board 40x28cm Juice Groove": {
+      "ok": true
+     },
+     "Oak Chopping Board 40x28cm, Juice Groove": {
+      "ok": true
+     },
+     "Oak chopping board 40 x 28 cm with juice groove": {
+      "ok": true
+     }
+    }
+   },
+   "title-7": {
+    "device": [
+     {
+      "text": "White 20cm Ceramic Plant Pot with Saucer",
+      "seconds": 0.6076000000238418
+     },
+     {
+      "text": "White 20cm Ceramic Plant Pot with Saucer",
+      "seconds": 0.5972999999523163
+     },
+     {
+      "text": "White 20cm Ceramic Plant Pot with Saucer",
+      "seconds": 0.5957000000476838
+     }
+    ],
+    "cloud": {
+     "text": "White 20cm ceramic plant pot with saucer",
+     "seconds": 0.720300000011921,
+     "tokensIn": 91,
+     "tokensOut": 10
+    },
+    "grades": {
+     "White 20cm Ceramic Plant Pot with Saucer": {
+      "ok": true
+     },
+     "White 20cm ceramic plant pot with saucer": {
+      "ok": true
+     }
+    }
+   },
+   "title-8": {
+    "device": [
+     {
+      "text": "Foam Garden Kneeler - Green, 45x20cm",
+      "seconds": 0.7061000000238419
+     },
+     {
+      "text": "Garden Kneeler - Foam, Green, 45x20cm",
+      "seconds": 0.7016999999880791
+     },
+     {
+      "text": "Foam Garden Kneeler - Green, 45x20cm",
+      "seconds": 0.7053999999761581
+     }
+    ],
+    "cloud": {
+     "text": "Green foam garden kneeler 45 x 20 cm",
+     "seconds": 0.7156999999880791,
+     "tokensIn": 91,
+     "tokensOut": 13
+    },
+    "grades": {
+     "Foam Garden Kneeler - Green, 45x20cm": {
+      "ok": true
+     },
+     "Garden Kneeler - Foam, Green, 45x20cm": {
+      "ok": true
+     },
+     "Green foam garden kneeler 45 x 20 cm": {
+      "ok": true
+     }
+    }
+   },
+   "title-9": {
+    "device": [
+     {
+      "text": "Navy Stripe Cotton Apron - One Size",
+      "seconds": 0.5203000000119209
+     },
+     {
+      "text": "Cotton Apron - Navy Stripe - One Size",
+      "seconds": 0.5551999999880791
+     },
+     {
+      "text": "Navy Stripe Cotton Apron - One Size",
+      "seconds": 0.5233000000119209
+     }
+    ],
+    "cloud": {
+     "text": "Cotton navy stripe apron one size adjustable strap",
+     "seconds": 0.6803999999761582,
+     "tokensIn": 87,
+     "tokensOut": 8
+    },
+    "grades": {
+     "Navy Stripe Cotton Apron - One Size": {
+      "ok": true
+     },
+     "Cotton Apron - Navy Stripe - One Size": {
+      "ok": true
+     },
+     "Cotton navy stripe apron one size adjustable strap": {
+      "ok": true
+     }
+    }
+   },
+   "title-10": {
+    "device": [
+     {
+      "text": "LED Desk Lamp - Black - 3 Brightness Levels",
+      "seconds": 0.5978000000119209
+     },
+     {
+      "text": "Black LED Desk Lamp - 3 Brightness Levels",
+      "seconds": 0.5743999999761581
+     },
+     {
+      "text": "Black LED Desk Lamp - 3 Brightness Levels",
+      "seconds": 0.5796999999880791
+     }
+    ],
+    "cloud": {
+     "text": "Black LED Desk Lamp",
+     "seconds": 0.7528000000119209,
+     "tokensIn": 92,
+     "tokensOut": 4
+    },
+    "grades": {
+     "LED Desk Lamp - Black - 3 Brightness Levels": {
+      "ok": true
+     },
+     "Black LED Desk Lamp - 3 Brightness Levels": {
+      "ok": true
+     },
+     "Black LED Desk Lamp": {
+      "ok": true
+     }
+    }
+   },
+   "title-11": {
+    "device": [
+     {
+      "text": "Garden Hose 30m Green with Spray Gun",
+      "seconds": 0.5960999999642372
+     },
+     {
+      "text": "Garden Hose 30m Green Spray Gun",
+      "seconds": 0.565
+     },
+     {
+      "text": "Garden Hose 30m Green with Spray Gun",
+      "seconds": 0.5921000000238419
+     }
+    ],
+    "cloud": {
+     "text": "Green 30 metre garden hose with spray gun",
+     "seconds": 0.9213999999761582,
+     "tokensIn": 99,
+     "tokensOut": 10
+    },
+    "grades": {
+     "Garden Hose 30m Green with Spray Gun": {
+      "ok": true
+     },
+     "Garden Hose 30m Green Spray Gun": {
+      "ok": true
+     },
+     "Green 30 metre garden hose with spray gun": {
+      "ok": true
+     }
+    }
+   },
+   "title-12": {
+    "device": [
+     {
+      "text": "Mustard Yellow Velvet Cushion - 45cm",
+      "seconds": 0.5915
+     },
+     {
+      "text": "Mustard Yellow Velvet Cushion - 45cm",
+      "seconds": 0.5920999999642372
+     },
+     {
+      "text": "Mustard Yellow Velvet Cushion - 45cm",
+      "seconds": 0.595199999988079
+     }
+    ],
+    "cloud": {
+     "text": "Mustard yellow 45cm square feather filled velvet cushion",
+     "seconds": 0.9005999999642372,
+     "tokensIn": 98,
+     "tokensOut": 12
+    },
+    "grades": {
+     "Mustard Yellow Velvet Cushion - 45cm": {
+      "ok": true
+     },
+     "Mustard yellow 45cm square feather filled velvet cushion": {
+      "ok": true
+     }
+    }
+   },
+   "title-13": {
+    "device": [
+     {
+      "text": "Bamboo Bath Mat 60x40cm - Natural Finish",
+      "seconds": 0.67
+     },
+     {
+      "text": "Bamboo Bath Mat 60x40cm Natural Finish",
+      "seconds": 0.6423000000119209
+     },
+     {
+      "text": "Bamboo Bath Mat - 60x40cm Natural Finish",
+      "seconds": 0.6736999999880791
+     }
+    ],
+    "cloud": {
+     "text": "Natural bamboo bath mat 60x40cm",
+     "seconds": 1.2490999999642372,
+     "tokensIn": 96,
+     "tokensOut": 11
+    },
+    "grades": {
+     "Bamboo Bath Mat 60x40cm - Natural Finish": {
+      "ok": true
+     },
+     "Bamboo Bath Mat 60x40cm Natural Finish": {
+      "ok": true
+     },
+     "Bamboo Bath Mat - 60x40cm Natural Finish": {
+      "ok": true
+     },
+     "Natural bamboo bath mat 60x40cm": {
+      "ok": true
+     }
+    }
+   },
+   "title-14": {
+    "device": [
+     {
+      "text": "Cast Iron Casserole Dish 24cm Red",
+      "seconds": 0.6045999999642372
+     },
+     {
+      "text": "Cast Iron Casserole Dish 24cm Red",
+      "seconds": 0.599
+     },
+     {
+      "text": "Cast Iron Casserole Dish 24cm Red Enamel",
+      "seconds": 0.6509000000357628
+     }
+    ],
+    "cloud": {
+     "text": "Red enameled cast iron casserole dish 24cm",
+     "seconds": 0.6978999999761581,
+     "tokensIn": 91,
+     "tokensOut": 12
+    },
+    "grades": {
+     "Cast Iron Casserole Dish 24cm Red": {
+      "ok": true
+     },
+     "Cast Iron Casserole Dish 24cm Red Enamel": {
+      "ok": true
+     },
+     "Red enameled cast iron casserole dish 24cm": {
+      "ok": true
+     }
+    }
+   },
+   "title-15": {
+    "device": [
+     {
+      "text": "Coir Doormat - 60x90cm - Natural",
+      "seconds": 0.717199999988079
+     },
+     {
+      "text": "Doormat Coir 60x90cm Natural",
+      "seconds": 0.6713000000119209
+     },
+     {
+      "text": "Coir Doormat - 60x90cm Natural",
+      "seconds": 0.6956999999880791
+     }
+    ],
+    "cloud": {
+     "text": "Plain natural coir doormat 60 x 90 cm",
+     "seconds": 0.9262999999523163,
+     "tokensIn": 97,
+     "tokensOut": 15
+    },
+    "grades": {
+     "Coir Doormat - 60x90cm - Natural": {
+      "ok": true
+     },
+     "Doormat Coir 60x90cm Natural": {
+      "ok": true
+     },
+     "Coir Doormat - 60x90cm Natural": {
+      "ok": true
+     },
+     "Plain natural coir doormat 60 x 90 cm": {
+      "ok": true
+     }
+    }
+   },
+   "title-16": {
+    "device": [
+     {
+      "text": "Black 2m Braided Nylon USB-C Cable",
+      "seconds": 0.6527000000476837
+     },
+     {
+      "text": "Black 2m Braided Nylon USB-C Cable",
+      "seconds": 0.6505999999642372
+     },
+     {
+      "text": "Black 2m USB-C Braided Nylon Charging Cable",
+      "seconds": 0.681800000011921
+     }
+    ],
+    "cloud": {
+     "text": "Black 2m braided nylon USB-C cable",
+     "seconds": 1.3455,
+     "tokensIn": 113,
+     "tokensOut": 10
+    },
+    "grades": {
+     "Black 2m Braided Nylon USB-C Cable": {
+      "ok": true
+     },
+     "Black 2m USB-C Braided Nylon Charging Cable": {
+      "ok": true
+     },
+     "Black 2m braided nylon USB-C cable": {
+      "ok": true
+     }
+    }
+   },
+   "title-17": {
+    "device": [
+     {
+      "text": "Clear Plastic Bird Feeder with Green Lid",
+      "seconds": 0.5725999999642372
+     },
+     {
+      "text": "Clear Plastic Bird Feeder with Green Lid",
+      "seconds": 0.5734000000357627
+     },
+     {
+      "text": "Clear Plastic Bird Feeder with Metal Lid",
+      "seconds": 0.5788999999761582
+     }
+    ],
+    "cloud": {
+     "text": "Clear plastic hanging bird feeder with green metal lid, 38 cm",
+     "seconds": 1.113600000023842,
+     "tokensIn": 114,
+     "tokensOut": 14
+    }
+   },
+   "title-18": {
+    "device": [
+     {
+      "text": "Brass Floor Lamp - 150cm Cream Shade",
+      "seconds": 0.7098999999761582
+     },
+     {
+      "text": "Brass Floor Lamp - Cream Shade, 150cm",
+      "seconds": 0.7329000000357628
+     },
+     {
+      "text": "Brass Floor Lamp - 150cm Cream Shade",
+      "seconds": 0.7106999999880791
+     }
+    ],
+    "cloud": {
+     "text": "150 cm cream fabric and brass steel floor lamp",
+     "seconds": 0.9354000000357627,
+     "tokensIn": 119,
+     "tokensOut": 11
+    },
+    "grades": {
+     "Brass Floor Lamp - 150cm Cream Shade": {
+      "ok": true
+     },
+     "Brass Floor Lamp - Cream Shade, 150cm": {
+      "ok": true
+     },
+     "150 cm cream fabric and brass steel floor lamp": {
+      "ok": true
+     }
+    }
+   },
+   "title-19": {
+    "device": [
+     {
+      "text": "Larkfield Garden Trowel - 30cm, Leather Loop",
+      "seconds": 0.7345
+     },
+     {
+      "text": "Garden Trowel - Ash Wood & Stainless Steel",
+      "seconds": 0.6086999999880791
+     },
+     {
+      "text": "Garden Trowel - Ash Wood & Stainless Steel",
+      "seconds": 0.610300000011921
+     }
+    ],
+    "cloud": {
+     "text": "Stainless steel garden trowel with ash wood handle 30cm",
+     "seconds": 0.7486999999880791,
+     "tokensIn": 108,
+     "tokensOut": 13
+    },
+    "grades": {
+     "Stainless steel garden trowel with ash wood handle 30cm": {
+      "ok": true
+     }
+    }
+   },
+   "title-20": {
+    "device": [
+     {
+      "text": "Seagrass Storage Basket - 35x30cm - Natural",
+      "seconds": 0.7505
+     },
+     {
+      "text": "Seagrass Storage Basket - Natural 35x30cm",
+      "seconds": 0.7276999999880791
+     },
+     {
+      "text": "Seagrass Storage Basket - 35x30cm Natural",
+      "seconds": 0.730199999988079
+     }
+    ],
+    "cloud": {
+     "text": "Natural seagrass woven storage basket 35x30 cm",
+     "seconds": 0.6866000000238418,
+     "tokensIn": 110,
+     "tokensOut": 13
+    },
+    "grades": {
+     "Seagrass Storage Basket - 35x30cm - Natural": {
+      "ok": true
+     },
+     "Seagrass Storage Basket - Natural 35x30cm": {
+      "ok": true
+     },
+     "Seagrass Storage Basket - 35x30cm Natural": {
+      "ok": true
+     },
+     "Natural seagrass woven storage basket 35x30 cm": {
+      "ok": true
+     }
+    }
+   },
+   "title-21": {
+    "device": [
+     {
+      "text": "Set of 6 Clear Wine Glasses - 350ml",
+      "seconds": 0.6691000000238418
+     },
+     {
+      "text": "Larkfield 6-Piece Clear Wine Glass Set",
+      "seconds": 0.6188999999761582
+     },
+     {
+      "text": "Larkfield 6 Glass Wine Set - Clear 350ml",
+      "seconds": 0.7226999999880791
+     }
+    ],
+    "cloud": {
+     "text": "Set of 6 clear glass wine glasses 350ml",
+     "seconds": 0.6737999999523163,
+     "tokensIn": 94,
+     "tokensOut": 13
+    },
+    "grades": {
+     "Set of 6 Clear Wine Glasses - 350ml": {
+      "ok": true
+     },
+     "Set of 6 clear glass wine glasses 350ml": {
+      "ok": true
+     }
+    }
+   },
+   "title-22": {
+    "device": [
+     {
+      "text": "Beeswax Tea Lights - 20 Pack - Yellow",
+      "seconds": 0.6268999999761582
+     },
+     {
+      "text": "Beeswax Tea Lights - 20 Count, Yellow",
+      "seconds": 0.6261000000238418
+     },
+     {
+      "text": "Beeswax Tea Lights - 20 Pack - Natural Yellow",
+      "seconds": 0.656
+     }
+    ],
+    "cloud": {
+     "text": "Pack of 20 natural yellow beeswax tea lights",
+     "seconds": 0.7386000000238419,
+     "tokensIn": 91,
+     "tokensOut": 10
+    },
+    "grades": {
+     "Beeswax Tea Lights - 20 Pack - Yellow": {
+      "ok": true
+     },
+     "Beeswax Tea Lights - 20 Count, Yellow": {
+      "ok": true
+     },
+     "Beeswax Tea Lights - 20 Pack - Natural Yellow": {
+      "ok": true
+     },
+     "Pack of 20 natural yellow beeswax tea lights": {
+      "ok": true
+     }
+    }
+   },
+   "title-23": {
+    "device": [
+     {
+      "text": "Cork Coasters - 4 Round 10cm Plain",
+      "seconds": 0.627699999988079
+     },
+     {
+      "text": "Cork Coasters - 4 Round 10cm Plain",
+      "seconds": 0.6313000000119209
+     },
+     {
+      "text": "Cork Coasters - 4 Pack, 10cm Round",
+      "seconds": 0.65
+     }
+    ],
+    "cloud": {
+     "text": "4 plain round 10cm cork coasters",
+     "seconds": 0.8841999999880791,
+     "tokensIn": 87,
+     "tokensOut": 9
+    },
+    "grades": {
+     "Cork Coasters - 4 Round 10cm Plain": {
+      "ok": true
+     },
+     "Cork Coasters - 4 Pack, 10cm Round": {
+      "ok": true
+     },
+     "4 plain round 10cm cork coasters": {
+      "ok": true
+     }
+    }
+   },
+   "title-24": {
+    "device": [
+     {
+      "text": "Terracotta Herb Pots & Wooden Tray - 3 Pack",
+      "seconds": 0.6088999999761582
+     },
+     {
+      "text": "Terracotta Herb Pots - 12cm x 3 + Tray",
+      "seconds": 0.6821999999880791
+     },
+     {
+      "text": "Terracotta Herb Pots & Wooden Tray",
+      "seconds": 0.496
+     }
+    ],
+    "cloud": {
+     "text": "Three 12cm terracotta herb pots on a wooden tray",
+     "seconds": 0.7749000000357628,
+     "tokensIn": 87,
+     "tokensOut": 12
+    },
+    "grades": {
+     "Terracotta Herb Pots - 12cm x 3 + Tray": {
+      "ok": true
+     },
+     "Three 12cm terracotta herb pots on a wooden tray": {
+      "ok": true
+     }
+    }
+   },
+   "title-25": {
+    "device": [
+     {
+      "text": "Grey Quilted Cotton Oven Gloves 30cm",
+      "seconds": 0.5767000000476837
+     },
+     {
+      "text": "Grey Quilted Cotton Oven Gloves 30cm",
+      "seconds": 0.5785
+     },
+     {
+      "text": "Grey Quilted Cotton Oven Gloves - 30cm",
+      "seconds": 0.607
+     }
+    ],
+    "cloud": {
+     "text": "Pair of quilted cotton oven gloves grey 30cm",
+     "seconds": 0.7653000000119209,
+     "tokensIn": 90,
+     "tokensOut": 11
+    },
+    "grades": {
+     "Pair of quilted cotton oven gloves grey 30cm": {
+      "ok": true
+     }
+    }
+   }
+  }
+ }
+}

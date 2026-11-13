@@ -1,12 +1,60 @@
 {
   "parameters": {
-    "mode_ticket_route": { "defaultValue": { "value": "only_in_cloud" }, "description": "Route a support ticket", "valueType": "STRING" },
-    "mode_review_mood": { "defaultValue": { "value": "only_in_cloud" }, "description": "Read a review's mood", "valueType": "STRING" },
-    "mode_receipt_fields": { "defaultValue": { "value": "only_in_cloud" }, "description": "Pull fields from a receipt", "valueType": "STRING" },
-    "mode_product_title": { "defaultValue": { "value": "only_in_cloud" }, "description": "Rewrite a product title", "valueType": "STRING" },
-    "mode_delivery_summary": { "defaultValue": { "value": "only_in_cloud" }, "description": "Summarise a delivery note", "valueType": "STRING" },
-    "mode_invoice_total": { "defaultValue": { "value": "only_in_cloud" }, "description": "Work out an invoice total", "valueType": "STRING" },
-    "mode_email_address": { "defaultValue": { "value": "only_in_cloud" }, "description": "Pull an address from an email", "valueType": "STRING" },
-    "mode_returns_answer": { "defaultValue": { "value": "only_in_cloud" }, "description": "Answer a returns question", "valueType": "STRING" }
+    "mode_ticket_route": {
+      "defaultValue": {
+        "value": "only_in_cloud"
+      },
+      "description": "Route a support ticket. Keep in the cloud. Wrong on 2 of 25.",
+      "valueType": "STRING"
+    },
+    "mode_review_mood": {
+      "defaultValue": {
+        "value": "only_in_cloud"
+      },
+      "description": "Read a review's mood. Fix the prompt first. The cloud gets 2 of 25 wrong too; the device, 5.",
+      "valueType": "STRING"
+    },
+    "mode_receipt_fields": {
+      "defaultValue": {
+        "value": "only_in_cloud"
+      },
+      "description": "Pull fields from a receipt. Keep in the cloud. Wrong on 1 of 25, one of the dates written day first in numbers, like 12-11-2026.",
+      "valueType": "STRING"
+    },
+    "mode_product_title": {
+      "defaultValue": {
+        "value": "only_in_cloud"
+      },
+      "description": "Rewrite a product title. Fix the prompt first. The cloud gets 2 of 25 wrong too; the device, 6.",
+      "valueType": "STRING"
+    },
+    "mode_delivery_summary": {
+      "defaultValue": {
+        "value": "only_in_cloud"
+      },
+      "description": "Summarise a delivery note. Fix the prompt first. The cloud gets 2 of 25 wrong too; the device, 14.",
+      "valueType": "STRING"
+    },
+    "mode_invoice_total": {
+      "defaultValue": {
+        "value": "only_in_cloud"
+      },
+      "description": "Work out an invoice total. Fix the prompt first. The cloud gets 11 of 25 wrong too; the device, 23.",
+      "valueType": "STRING"
+    },
+    "mode_email_address": {
+      "defaultValue": {
+        "value": "only_in_cloud"
+      },
+      "description": "Pull an address from an email. Fix the prompt first. The cloud gets 1 of 25 wrong too; the device, 6.",
+      "valueType": "STRING"
+    },
+    "mode_returns_answer": {
+      "defaultValue": {
+        "value": "only_in_cloud"
+      },
+      "description": "Answer a returns question. Fix the prompt first. The cloud gets 6 of 25 wrong too; the device, 10.",
+      "valueType": "STRING"
+    }
   }
 }

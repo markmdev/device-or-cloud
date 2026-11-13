@@ -1,11 +1,15 @@
-import { getAI, getGenerativeModel, GoogleAIBackend, InferenceMode } from "firebase/ai";
+import { getAI, getGenerativeModel, GoogleAIBackend, InferenceMode, type GenerativeModel } from "firebase/ai";
 import { initializeApp } from "firebase/app";
 import { initializeAppCheck, ReCaptchaEnterpriseProvider } from "firebase/app-check";
+import type { Feature } from "./features";
 
 // Firebase Hosting serves the project's own config here, so none of it lives in the repo.
 const config = await (await fetch("/__/firebase/init.json")).json();
-const app = initializeApp(config);
+export const app = initializeApp(config);
 
+if (import.meta.env.DEV) {
+  (self as { FIREBASE_APPCHECK_DEBUG_TOKEN?: string }).FIREBASE_APPCHECK_DEBUG_TOKEN = import.meta.env.VITE_APPCHECK_DEBUG_TOKEN;
+}
 initializeAppCheck(app, {
   provider: new ReCaptchaEnterpriseProvider(import.meta.env.VITE_RECAPTCHA_SITE_KEY),
   isTokenAutoRefreshEnabled: true,
@@ -14,10 +18,44 @@ initializeAppCheck(app, {
 const ai = getAI(app, { backend: new GoogleAIBackend() });
 
 export const CLOUD_MODEL = "gemini-3.5-flash-lite";
+export type Mode = InferenceMode;
+export const MODES = Object.values(InferenceMode);
 
-export const onDevice = getGenerativeModel(ai, { mode: InferenceMode.ONLY_ON_DEVICE });
+const models = new Map<string, GenerativeModel>();
 
-export const inCloud = getGenerativeModel(ai, {
-  mode: InferenceMode.ONLY_IN_CLOUD,
-  inCloudParams: { model: CLOUD_MODEL },
-});
+/**
+ * One feature's model in one mode. The instruction and the output shape are given twice because the SDK
+ * sends each side its own: the cloud reads the request's settings, Chrome's model reads the session's.
+ */
+export function modelFor(feature: Pick<Feature, "id" | "system" | "schema">, mode: Mode): GenerativeModel {
+  const key = `${feature.id}:${mode}`;
+  let model = models.get(key);
+  if (!model) {
+    model = getGenerativeModel(ai, {
+      mode,
+      inCloudParams: {
+        model: CLOUD_MODEL,
+        systemInstruction: feature.system,
+        generationConfig: feature.schema ? { responseMimeType: "application/json", responseJsonSchema: feature.schema } : undefined,
+      },
+      onDeviceParams: {
+        createOptions: { initialPrompts: [{ role: "system", content: [{ type: "text", value: feature.system }] }] },
+        promptOptions: feature.schema ? { responseConstraint: feature.schema } : undefined,
+      },
+    });
+    models.set(key, model);
+  }
+  return model;
+}
+
+export type DeviceState = "unsupported" | "unavailable" | "downloadable" | "downloading" | "available";
+
+export async function deviceState(): Promise<DeviceState> {
+  if (typeof LanguageModel === "undefined") return "unsupported";
+  return LanguageModel.availability();
+}
+
+/** Starts the download of Chrome's model; it must be called from a click. */
+export function downloadDeviceModel(onProgress: (share: number) => void): Promise<void> {
+  return getGenerativeModel(ai, { mode: InferenceMode.ONLY_ON_DEVICE }).initializeDeviceModel(onProgress);
+}

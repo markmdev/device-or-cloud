@@ -1,0 +1,64 @@
+:root { color-scheme: light; font: 16px/1.5 system-ui, sans-serif; color: #10130f; background: #f3f4ef; --device: #d6f36b; --cloud: #c4dcff; --wrong: #c8321a; }
+body { margin: 0; }
+main { max-width: 1180px; margin: 0 auto; padding: 24px 20px 64px; }
+h1 { font-size: 24px; margin: 0; }
+h2 { font-size: 20px; margin: 0 0 12px; }
+a { color: inherit; }
+button { padding: 9px 16px; font: inherit; font-weight: 600; border: 2px solid #10130f; border-radius: 999px; background: #10130f; color: #fff; cursor: pointer; }
+button:disabled { opacity: 0.45; cursor: default; }
+textarea, input { font: inherit; border: 1px solid #b9bdb0; border-radius: 8px; background: #fff; padding: 8px 10px; }
+textarea { width: 100%; box-sizing: border-box; font-family: ui-monospace, monospace; font-size: 14px; }
+pre { margin: 8px 0; padding: 12px; border-radius: 8px; background: #f3f4ef; font: 14px/1.5 ui-monospace, monospace; white-space: pre-wrap; }
+.quiet { color: #5c6157; }
+.wrong { color: var(--wrong); font-weight: 600; }
+.right { font-weight: 600; }
+.big { font-size: 20px; font-weight: 600; margin: 0 0 4px; }
+.notice, .download { margin: 16px 0; padding: 12px 16px; border-radius: 12px; background: #fff4c9; }
+.download p { margin: 0; }
+.download progress { display: block; width: 100%; margin-top: 8px; }
+.badge { display: inline-flex; gap: 16px; justify-content: space-between; margin: 0 0 8px; padding: 3px 12px; border-radius: 999px; font-size: 14px; font-weight: 600; }
+.badge[data-source="on_device"] { background: var(--device); }
+.badge[data-source="in_cloud"] { background: var(--cloud); }
+dl.answer { margin: 0 0 8px; font: 14px/1.6 ui-monospace, monospace; }
+dl.answer div { display: flex; gap: 12px; }
+dl.answer dt { min-width: 90px; color: #5c6157; }
+dl.answer dd { margin: 0; }
+p.answer { margin: 0 0 8px; white-space: pre-wrap; }
+
+.check header { display: flex; flex-wrap: wrap; gap: 8px 20px; align-items: center; }
+.check header p { margin: 0; }
+.check header .quiet { margin-left: auto; }
+.lede { max-width: 820px; }
+.sides { display: grid; grid-template-columns: 1fr 1fr; }
+.sides .side { padding: 20px; }
+.sides .device { background: var(--device); border-right: 2px solid #10130f; }
+.sides .cloud { background: var(--cloud); }
+.sides h2 b { font-size: 56px; line-height: 1; margin-right: 8px; }
+.sides ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.feature { display: grid; gap: 2px; width: 100%; text-align: left; padding: 12px 16px; border: 2px solid transparent; border-radius: 14px; background: #fff; color: inherit; font-weight: 400; }
+.feature[aria-pressed="true"] { border-color: #10130f; }
+.feature small { color: #5c6157; }
+.proof { display: grid; grid-template-columns: 1fr 1.1fr 1fr; border: 2px solid #10130f; border-radius: 18px; background: #fff; margin: 16px 0; overflow: hidden; }
+.proof > * { padding: 16px 20px; }
+.proof > p { grid-column: 1 / -1; margin: 0; }
+.proof .input { background: #f3f4ef; border-inline: 2px solid #10130f; }
+.proof .input pre { background: none; padding: 0; }
+.pager { float: right; display: inline-flex; gap: 6px; align-items: center; }
+.pager button { padding: 0 8px; border: 0; background: none; color: inherit; font-size: 18px; }
+.bottom { margin-top: 28px; }
+.bottom h2 { font-size: 32px; }
+.bottom input { width: 110px; }
+.bottom input[max] { width: 64px; }
+footer { margin-top: 28px; max-width: 820px; color: #3d4239; font-size: 15px; }
+
+.shop header { border-bottom: 2px solid #10130f; padding-bottom: 12px; margin-bottom: 20px; }
+.shop header p { max-width: 820px; margin: 6px 0 0; }
+.cards { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.card { display: flex; flex-direction: column; border: 2px solid #10130f; border-radius: 18px; background: #fff; overflow: hidden; }
+.card { padding: 0 20px; }
+.card .label { margin-top: 16px; margin-bottom: 0; font-size: 14px; font-weight: 600; color: #5c6157; }
+.card .actions { margin-block: 10px; }
+.card .result { min-height: 84px; flex: 1; }
+.card .badge { display: flex; margin: 12px -20px 0; padding: 10px 20px; border-radius: 0; border-top: 2px solid #10130f; }
+.card .badge[data-ran="false"] { background: #f3f4ef; font-weight: 400; }
+@media (max-width: 800px) { .sides, .cards, .proof { grid-template-columns: 1fr; } .proof .input { border-inline: 0; border-block: 2px solid #10130f; } .sides .device { border-right: 0; } }
