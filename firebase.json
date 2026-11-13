@@ -1,0 +1,6 @@
+{
+  "hosting": { "public": "dist" },
+  "auth": { "providers": { "anonymous": true } },
+  "firestore": { "rules": "firestore.rules" },
+  "remoteconfig": { "template": "remoteconfig.template.json" }
+}

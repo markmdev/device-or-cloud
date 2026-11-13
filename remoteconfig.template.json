@@ -1,0 +1,12 @@
+{
+  "parameters": {
+    "mode_ticket_route": { "defaultValue": { "value": "only_in_cloud" }, "description": "Route a support ticket", "valueType": "STRING" },
+    "mode_review_mood": { "defaultValue": { "value": "only_in_cloud" }, "description": "Read a review's mood", "valueType": "STRING" },
+    "mode_receipt_fields": { "defaultValue": { "value": "only_in_cloud" }, "description": "Pull fields from a receipt", "valueType": "STRING" },
+    "mode_product_title": { "defaultValue": { "value": "only_in_cloud" }, "description": "Rewrite a product title", "valueType": "STRING" },
+    "mode_delivery_summary": { "defaultValue": { "value": "only_in_cloud" }, "description": "Summarise a delivery note", "valueType": "STRING" },
+    "mode_invoice_total": { "defaultValue": { "value": "only_in_cloud" }, "description": "Work out an invoice total", "valueType": "STRING" },
+    "mode_email_address": { "defaultValue": { "value": "only_in_cloud" }, "description": "Pull an address from an email", "valueType": "STRING" },
+    "mode_returns_answer": { "defaultValue": { "value": "only_in_cloud" }, "description": "Answer a returns question", "valueType": "STRING" }
+  }
+}
