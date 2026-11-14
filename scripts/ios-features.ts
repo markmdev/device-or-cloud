@@ -4,13 +4,13 @@ import { writeFileSync } from "node:fs";
 import { build } from "vite";
 import { parameterFor } from "../src/check/apply";
 import { FEATURES } from "../src/features";
-import { SHOWN } from "../src/shop/present";
+import { sampleOf, SHOWN } from "../src/shop/present";
 
 const inputs = (cases: { id: string; input: string }[] = []) => cases.map(({ id, input }) => ({ id, input }));
 
 const features = FEATURES.map((f) => {
   const { label, heading, button } = SHOWN[f.id];
-  return { id: f.id, parameter: parameterFor(f), name: f.name, system: f.system, schema: f.schema, label, heading, button, cases: inputs(f.cases), heldBack: inputs(f.heldBack) };
+  return { id: f.id, parameter: parameterFor(f), name: f.name, system: f.system, schema: f.schema, label, heading, button, sample: sampleOf(f), cases: inputs(f.cases), heldBack: inputs(f.heldBack) };
 });
 writeFileSync("ios/Larkfield/features.json", JSON.stringify(features, null, 1) + "\n");
 

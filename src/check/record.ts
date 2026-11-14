@@ -40,6 +40,10 @@ export type Cases = Record<string, CaseRecord>;
 /** The same answers as the iPhone app has them: Apple's runs in the place of Chrome's, so every count and verdict is the iPhone's. */
 export const onApple = (cases: Cases = {}): Cases => Object.fromEntries(Object.entries(cases).map(([id, r]) => [id, { ...r, device: r.apple ?? [] }]));
 
+/** Where Apple's runs were made, in a sentence. */
+export const whereApple = (a: NonNullable<CheckRecord["apple"]>) =>
+  `Apple's model was run from the iPhone app in the ${a.device}, iOS ${a.os}, on ${new Date(a.date).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}; the simulator answers with the model of the Mac it runs on, ${a.host}.`;
+
 /** Whether the cloud grader has a say on this input's answers. */
 export const graded = (feature: Feature, c: Case) => !!feature.graded && !c.codeDecides;
 

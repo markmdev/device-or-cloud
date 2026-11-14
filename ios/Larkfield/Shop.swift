@@ -58,6 +58,13 @@ struct Shop: View {
             config.setDefaults(Dictionary(uniqueKeysWithValues: Feature.all.map { ($0.parameter, "only_in_cloud" as NSObject) }))
             _ = try? await config.fetchAndActivate()
             modes = read()
+            #if DEBUG
+            // Started with -walk, the app also says whether Apple's model answers here at all, whatever the modes are.
+            if CommandLine.arguments.contains("-walk"), let feature = Feature.all.first {
+                let answer = try? await ask(feature, mode: .onlyOnDevice, input: feature.sample.text)
+                print("WALK apple", answer?.onDevice == true ? "on_device" : "failed")
+            }
+            #endif
             // A template published while the app is open moves its features at once.
             do {
                 for try await _ in config.configUpdates {
@@ -84,7 +91,7 @@ private struct Card: View {
     init(feature: Feature, mode: Mode) {
         self.feature = feature
         self.mode = mode
-        _input = State(initialValue: feature.cases[0].input)
+        _input = State(initialValue: feature.sample.text)
     }
 
     var body: some View {
@@ -98,6 +105,12 @@ private struct Card: View {
                     .font(.system(size: 13.5, design: .monospaced))
                     .padding(14)
                     .background(Color.wash, in: RoundedRectangle(cornerRadius: 14))
+                if !feature.sample.added.isEmpty {
+                    Text("The shop adds its own line first: “\(feature.sample.added.trimmingCharacters(in: .whitespacesAndNewlines))”")
+                        .font(.system(size: 12.5))
+                        .foregroundStyle(Color.soft)
+                        .padding(.top, 8)
+                }
                 Button(feature.button) { Task { await run() } }
                     .buttonStyle(Solid())
                     .disabled(busy || input.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
@@ -148,7 +161,7 @@ private struct Card: View {
         answer = nil
         problem = nil
         do {
-            answer = try await ask(feature, mode: mode, input: input)
+            answer = try await ask(feature, mode: mode, input: feature.sample.added + input)
         } catch {
             problem = String(describing: error).contains(NSURLErrorDomain) ? "This feature runs in the cloud, so it needs a connection." : error.localizedDescription
         }
@@ -190,7 +203,7 @@ private struct Result: View {
         switch feature.id {
         case "ticket_route": big("Sent to our \(Self.teams[string(a["label"])] ?? string(a["label"])) team.")
         case "review_mood": big("Filed as a \(string(a["label"])) review.")
-        case "receipt_fields": rows([("Shop", string(a["merchant"])), ("Date", longDate(a["date"])), ("Paid", pounds(a["total"]))])
+        case "receipt_fields": rows([("Shop", string(a["merchant"])), ("Date", longDate(string(a["date"]))), ("Paid", pounds(a["total"]))])
         case "invoice_total": big("Total to pay: \(pounds(a["total"]))")
         case "email_address": rows([("Name", string(a["name"])), ("Street", string(a["street"])), ("Town", string(a["city"])), ("Postcode", string(a["postcode"]))])
         case "returns_answer":
@@ -225,9 +238,10 @@ private struct Result: View {
     private func pounds(_ value: Any?) -> String {
         (value as? Double).map { "£\($0.formatted(.number.precision(.fractionLength(2)).grouping(.never)))" } ?? string(value)
     }
+}
 
-    private func longDate(_ value: Any?) -> String {
-        guard let date = try? Date(string(value), strategy: .iso8601.year().month().day()) else { return string(value) }
-        return date.formatted(Date.FormatStyle(locale: Locale(identifier: "en_GB"), timeZone: .gmt).day().month(.wide).year())
-    }
+/// A date written 2026-11-12 as a person reads it: 12 November 2026.
+func longDate(_ iso: String) -> String {
+    guard let date = try? Date(iso, strategy: .iso8601.year().month().day()) else { return iso }
+    return date.formatted(Date.FormatStyle(locale: Locale(identifier: "en_GB"), timeZone: .gmt).day().month(.wide).year())
 }

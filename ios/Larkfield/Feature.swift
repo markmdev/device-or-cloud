@@ -8,6 +8,12 @@ struct Feature: Decodable, Identifiable, Sendable {
         let input: String
     }
 
+    /// What its card in the shop starts with: the customer's text, and the line the shop puts before it, if it has one.
+    struct Sample: Decodable, Sendable {
+        let added: String
+        let text: String
+    }
+
     let id: String
     /// Its Remote Config parameter.
     let parameter: String
@@ -19,6 +25,7 @@ struct Feature: Decodable, Identifiable, Sendable {
     let label: String
     let heading: String
     let button: String
+    let sample: Sample
     let cases: [Case]
     let heldBack: [Case]
 

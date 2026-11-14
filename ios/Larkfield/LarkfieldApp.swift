@@ -4,7 +4,7 @@ import SwiftUI
 
 @main
 struct LarkfieldApp: App {
-    @State private var tab = CommandLine.arguments.contains("-record") ? "check" : "shop"
+    @AppStorage("tab") private var tab = "shop"
 
     init() {
         #if DEBUG

@@ -34,9 +34,11 @@ The cloud side runs on Google's free Gemini tier, which the whole site shares: 1
 
 **The inputs and their right answers** are in `src/features/`. Code decides whether an answer is right wherever an input has one right answer: a category, a date, a total, an address, a yes or no. For receipts, invoices and returns questions, the input text and the right answer are built from the same figures, so the key can't disagree with the input. Two features, the product title and the delivery note, have no single right answer. Code checks their rules (length, required details), and the cloud model judges the rest, 25 answers in one request.
 
-**The iPhone shop** (`ios/`) is the same shop as a SwiftUI app. Firebase AI Logic's hybrid inference for Apple platforms reaches Apple's on-device model through the Foundation Models framework, with Gemini behind it. The app bundles the same instructions, answer shapes and sample inputs as the web shop (`npm run ios` writes them from `src/features/` into `ios/Larkfield/features.json`), reads each feature's mode from the same Remote Config template under its own condition, "The iPhone app", and badges every answer with where the SDK says it ran. So one feature can run on the device on one platform and in the cloud on the other.
+**The iPhone shop** (`ios/`) is the same shop as a SwiftUI app. Firebase AI Logic's hybrid inference for Apple platforms reaches Apple's on-device model through the Foundation Models framework, with Gemini behind it. The app bundles the same instructions, answer shapes and inputs as the web shop (`npm run ios` writes them from `src/features/` into `ios/Larkfield/features.json`), reads each feature's mode from the same Remote Config template under its own condition, "The iPhone app", and badges every answer with where the SDK says it ran. So one feature can run on the device on one platform and in the cloud on the other.
 
-The check has Apple's model as a third column. The app, started with `-record`, sends every input three times to the on-device model alone; `npm run apple` puts those answers into the same record, and they are checked by the same code and the same cloud judge. On the check, a switch picks the platform the two sides are about.
+The check has Apple's model as a third column, and the iPhone app runs the check itself. Its Check tab sends every input three times to the on-device model alone and gives each feature its verdict on the phone. The verdicts come from the web check's own code: `npm run ios` builds `src/check/phone.ts` into one script, `ios/Larkfield/check.js`, which the app runs, so both apps count, judge and decide the same way, against the same recorded cloud answers. `npm run apple` puts the app's answers into the record. On the web check, a switch picks the platform the two sides are about.
+
+In the recorded check Apple's model stays within the default bar on none of the eight features, so the template keeps all of them in the cloud for the iPhone app, while Chrome runs two on the device.
 
 ## The numbers
 
@@ -69,11 +71,12 @@ To record the check on your own machine, add an App Check debug token for your w
 
 ### The iPhone app
 
-It needs Xcode 26 with the iOS 26 simulator on a Mac with Apple Intelligence switched on (the simulator answers with the Mac's own model), and Swift 6.2.3 or newer: the SDK's hybrid inference for Apple's model is compiled only from that version on. It uses firebase-ios-sdk 12.19.3, the last release with this API for iOS 26.
+It needs Xcode 26 and a Mac with Apple Intelligence switched on, because the iPhone simulator answers with the Mac's own model. The simulator's iOS version has to be close to the Mac's macOS version: iOS 26.0 on macOS 26.6 fails every on-device request, iOS 26.5 works (`xcodebuild -downloadPlatform iOS -buildVersion 26.5`). It also needs Swift 6.2.3 or newer: the SDK's hybrid inference for Apple's model is compiled only from that version on. It uses firebase-ios-sdk 12.19.3, the last release with this API for iOS 26.
 
 1. Register an iOS app with the bundle ID `app.deviceorcloud.larkfield` in your Firebase project and save its config as `ios/Larkfield/GoogleService-Info.plist`: `npx firebase apps:sdkconfig IOS <app id> -o ios/Larkfield/GoogleService-Info.plist`. The file is not in this repo.
 2. Register an App Check debug token for that app and pass it to the simulator as `FIRAAppCheckDebugToken`.
-3. Open `ios/Larkfield.xcodeproj` and run it on an iPhone simulator, or build it from the command line:
+3. `npm install`, then `npm run ios`: it writes the two files the app bundles and this repo doesn't hold, `ios/Larkfield/features.json` and `ios/Larkfield/check.js`. Run it again after the features or the record change.
+4. Open `ios/Larkfield.xcodeproj` and run it on an iPhone simulator, or build it from the command line:
 
 ```sh
 cd ios && xcodebuild -project Larkfield.xcodeproj -scheme Larkfield \
@@ -84,7 +87,7 @@ With Xcode 26.0 or 26.1, whose Swift is older, install the Swift 6.2.3 toolchain
 
 `IOS_APPCHECK_DEBUG_TOKEN=<token> node scripts/walk-ios.mjs` walks the built app in the simulator: every feature answers its sample where the template says, and with the app's network cut the device features still answer while the cloud ones say they need a connection. The simulator has no flight mode, so the walk loads `ios/offline/offline.c` into the app to refuse its network connections.
 
-To record Apple's column: launch the app with `-record` (`xcrun simctl launch --console-pty booted app.deviceorcloud.larkfield -record`), then `npm run apple -- "$(xcrun simctl get_app_container booted app.deviceorcloud.larkfield data)/Documents/apple-record.json"`, then `GRADE=1 CDP=... node scripts/record.mjs` for the answers the cloud model judges.
+To record Apple's column: launch the app on its Check tab with `-record`, which also answers the held-back inputs (`xcrun simctl launch --console-pty booted app.deviceorcloud.larkfield -tab check -record`), then `npm run apple -- "$(xcrun simctl get_app_container booted app.deviceorcloud.larkfield data)/Documents/check.json"`, then `GRADE=1 CDP=... node scripts/record.mjs` for the answers the cloud model has not judged yet.
 
 `scripts/walk.mjs` walks the whole path on the live site: the recorded check, a live run, the results page, a feature pasted into "Check your own prompts", every shop feature, and the shop with the network off.
 

@@ -2,9 +2,9 @@ import { createRoot } from "react-dom/client";
 import { AnswerText } from "../answer";
 import "../base.css";
 import recorded from "../check/recorded.json";
-import { APPLES, CHROMES, DEFAULT_ALLOWED, graded, judge, RUNS, VERDICT_NAME, type CaseRecord, type CheckRecord, type Run, type Tally } from "../check/record";
+import { APPLES, CHROMES, DEFAULT_ALLOWED, graded, judge, RUNS, VERDICT_NAME, whereApple, type CaseRecord, type CheckRecord, type Run, type Tally } from "../check/record";
 import type { Case, Feature } from "../features";
-import { numbers, whereApple, WHO, type FeatureNumbers } from "./numbers";
+import { numbers, WHO, type FeatureNumbers } from "./numbers";
 
 const RECORD = recorded as CheckRecord;
 const APPLE = RECORD.apple;

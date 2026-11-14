@@ -15,7 +15,7 @@ struct CheckScreen: View {
                     Text("The check").font(.system(size: 32, weight: .heavy)).tracking(-1)
                     Text("Each of the shop's eight features was sent \(board.features.first?.inputs ?? 0) inputs through Firebase AI Logic: three times to Apple's on-device model, in this app, and once to the cloud. A feature runs on the iPhone when Apple's model is wrong on at most \(board.allowed) answers in 100.")
                     if let recorded = board.recorded {
-                        Text("Recorded on an \(recorded.device), iOS \(recorded.os), \(recorded.date). The cloud's answers are the recorded ones.")
+                        Text("Recorded on an \(recorded.device), iOS \(recorded.os), \(longDate(recorded.date)). The cloud's answers are the recorded ones.")
                             .font(.system(size: 13.5))
                             .foregroundStyle(Color.soft)
                     }
@@ -35,11 +35,11 @@ struct CheckScreen: View {
                         .background(Color.notice, in: RoundedRectangle(cornerRadius: 14))
                 }
 
-                side("run on this iPhone", of: "device", in: board, tint: .device)
-                side("stay in the cloud", of: "cloud", in: board, tint: .cloud)
+                side("run on this iPhone", of: "device", in: board, tint: .device, none: "Nothing yet. At this bar, Apple's model is wrong too often on every feature.")
+                side("stay in the cloud", of: "cloud", in: board, tint: .cloud, none: "Nothing has to stay here at this bar.")
                 let neither = board.features.filter { $0.kind != "device" && $0.kind != "cloud" }
                 if !neither.isEmpty {
-                    group(neither, count: neither.count, title: "on neither side yet", named: true, allowed: board.allowed)
+                    group(neither, title: "on neither side yet", named: true, allowed: board.allowed, none: "")
                         .padding(14)
                         .overlay(RoundedRectangle(cornerRadius: 22).strokeBorder(Color.ink, lineWidth: 2))
                 }
@@ -62,18 +62,17 @@ struct CheckScreen: View {
         }
     }
 
-    private func side(_ title: String, of kind: String, in board: Board, tint: Color) -> some View {
-        let rows = board.features.filter { $0.kind == kind }
-        return group(rows, count: rows.count, title: title, named: false, allowed: board.allowed)
+    private func side(_ title: String, of kind: String, in board: Board, tint: Color, none: String) -> some View {
+        group(board.features.filter { $0.kind == kind }, title: title, named: false, allowed: board.allowed, none: none)
             .padding(14)
             .background(tint, in: RoundedRectangle(cornerRadius: 22))
             .overlay(RoundedRectangle(cornerRadius: 22).strokeBorder(Color.ink, lineWidth: 2))
     }
 
-    private func group(_ rows: [Board.Row], count: Int, title: String, named: Bool, allowed: Int) -> some View {
+    private func group(_ rows: [Board.Row], title: String, named: Bool, allowed: Int, none: String) -> some View {
         VStack(alignment: .leading, spacing: 10) {
             HStack(alignment: .firstTextBaseline, spacing: 10) {
-                Text("\(count)").font(.system(size: 44, weight: .heavy)).tracking(-2)
+                Text("\(rows.count)").font(.system(size: 44, weight: .heavy)).tracking(-2)
                 Text(title).font(.system(size: 21, weight: .bold)).tracking(-0.4)
             }
             ForEach(rows) { row in
@@ -81,7 +80,7 @@ struct CheckScreen: View {
                     .buttonStyle(.plain)
                     .disabled(row.failures.isEmpty)
             }
-            if rows.isEmpty { Text("Nothing at this bar.").font(.system(size: 14)).foregroundStyle(Color.soft) }
+            if rows.isEmpty { Text(none).font(.system(size: 14)) }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
     }

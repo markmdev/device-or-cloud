@@ -6,7 +6,7 @@ import { parse, plain } from "../features/types";
 import { CLOUD_MODEL } from "../firebase";
 import { appCode, CHROME, DEPLOY, IPHONE, parameterFor, swiftCode, TEMPLATE_FILE, templateText } from "./apply";
 import { Fixes } from "./fixes";
-import { APPLES, barInWords, CHROMES, DEFAULT_ALLOWED, graded, modeFor, moves, NEITHER_ADVICE, onApple, RUNS, VERDICT_NAME, verdictFor, verdictLine, type Failure, type FixRecord, type Run, type Verdict } from "./record";
+import { APPLES, barInWords, CHROMES, DEFAULT_ALLOWED, graded, moves, NEITHER_ADVICE, onApple, RUNS, VERDICT_NAME, verdictFor, verdictLine, type Failure, type FixRecord, type Run, type Verdict } from "./record";
 import type { Cases } from "./run";
 
 /** One model's share of right answers, with the bar marked on it. */
@@ -301,7 +301,7 @@ function Apply({ verdicts, apple, children }: { verdicts: Verdict[]; apple?: Ver
 /**
  * The verdicts for a list of features: the bar, the two sides, the proof for one feature, its one-line fixes and the bottom line.
  */
-export function Board({ features, cases, mine = [], recordedOn, held, fixes, opensOn, canRun, onFix, below, children }: {
+export function Board({ features, cases, mine = [], recordedOn, held, fixes, opensOn, canRun, onFix, below, belowOnIphone, children }: {
   features: Feature[];
   cases: Record<string, Cases>;
   /** Features whose device answers were made on this computer just now. */
@@ -318,6 +318,8 @@ export function Board({ features, cases, mine = [], recordedOn, held, fixes, ope
   onFix?: (featureId: string, fix: FixRecord) => void;
   /** Shown right under the board, above the bottom line. */
   below?: ReactNode;
+  /** The same place on the iPhone view. */
+  belowOnIphone?: ReactNode;
   /** A note under "Apply it" about where this template is in use. */
   children?: ReactNode;
 }) {
@@ -434,7 +436,7 @@ export function Board({ features, cases, mine = [], recordedOn, held, fixes, ope
           </section>
         )}
       </div>
-      {below}
+      {iphone ? belowOnIphone : below}
       <BottomLine
         verdicts={verdicts}
         allowed={allowed}

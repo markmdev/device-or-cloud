@@ -8,7 +8,7 @@ import { OutOfRequests, outOfRequests } from "./ask";
 import { Board } from "./board";
 import { heldBackOf, missesOf, OUR_LINES, proposeLine, tryLine } from "./fix";
 import recorded from "./recorded.json";
-import { RUNS, verdictFor, type CheckRecord, type FixRecord } from "./record";
+import { RUNS, verdictFor, whereApple, type CheckRecord, type FixRecord } from "./record";
 import { gradeFeature, runCloud, runDevice, type Cases } from "./run";
 
 const RECORD = recorded as CheckRecord;
@@ -189,6 +189,13 @@ function App() {
               now="Everything above was recorded on our laptop."
               toGetIt="To run it on yours, Chrome downloads its built-in model once: about 4 GB, 12 minutes on ours."
             />
+          )
+        }
+        belowOnIphone={
+          RECORD.apple && (
+            <aside className="download">
+              <p>{whereApple(RECORD.apple)} To run it on your own iPhone, open the shop's app and its Check tab.</p>
+            </aside>
           )
         }
       >

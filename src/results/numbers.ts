@@ -1,4 +1,4 @@
-import { DEFAULT_ALLOWED, moves, onApple, tally, VERDICT_NAME, verdictFor, type CheckRecord, type FixRecord, type Tally, type Verdict } from "../check/record";
+import { DEFAULT_ALLOWED, moves, onApple, tally, VERDICT_NAME, verdictFor, whereApple, type CheckRecord, type FixRecord, type Tally, type Verdict } from "../check/record";
 import { FEATURES, type Feature } from "../features";
 
 export type FixNumbers = { fix: FixRecord; own: Tally; held: Tally; moved: boolean };
@@ -43,10 +43,6 @@ export function numbers(record: CheckRecord): FeatureNumbers[] {
     };
   });
 }
-
-/** Where Apple's runs were made, in a sentence. */
-export const whereApple = (a: NonNullable<CheckRecord["apple"]>) =>
-  `Apple's model was run from the iPhone app in the ${a.device}, iOS ${a.os}, on ${a.date}; the simulator answers with the model of the Mac it runs on, ${a.host}.`;
 
 export const WHO: Record<FixRecord["by"], string> = { cloud: "the cloud model's line", us: "our line", you: "your line" };
 
