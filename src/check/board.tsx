@@ -4,9 +4,9 @@ import { SOURCE_LABEL } from "../answer";
 import type { Check, Feature } from "../features";
 import { parse, plain } from "../features/types";
 import { CLOUD_MODEL } from "../firebase";
-import { appCode, CHROME, DEPLOY, TEMPLATE_FILE, templateText } from "./apply";
+import { appCode, CHROME, DEPLOY, parameterFor, TEMPLATE_FILE, templateText } from "./apply";
 import { Fixes } from "./fixes";
-import { barInWords, DEFAULT_ALLOWED, graded, moves, NEITHER_ADVICE, RUNS, VERDICT_NAME, verdictFor, verdictLine, type Failure, type FixRecord, type Run, type Verdict } from "./record";
+import { barInWords, DEFAULT_ALLOWED, graded, modeFor, moves, NEITHER_ADVICE, RUNS, VERDICT_NAME, verdictFor, verdictLine, type Failure, type FixRecord, type Run, type Verdict } from "./record";
 import type { Cases } from "./run";
 
 /** One model's share of right answers, with the bar marked on it. */
@@ -235,34 +235,48 @@ function Apply({ verdicts, children }: { verdicts: Verdict[]; children?: ReactNo
         Firebase console, with no release.
       </p>
       {children}
-      <article>
-        <h3>1. Save this as {TEMPLATE_FILE}</h3>
-        <pre>{text}</pre>
-        <p className="actions">
-          <Copy text={text} />
-          <a className="button plain" download={TEMPLATE_FILE} href={`data:application/json;charset=utf-8,${encodeURIComponent(text)}`}>
-            Download
-          </a>
-        </p>
-      </article>
-      <article>
-        <h3>2. Read each feature's mode in your app</h3>
-        <p>
-          Chrome's model reads the instruction and the answer's shape only from <code>onDeviceParams</code>, so both are set twice.
-        </p>
-        <pre>{code}</pre>
-        <p className="actions">
-          <Copy text={code} />
-        </p>
-      </article>
-      <article>
-        <h3>3. Deploy it</h3>
-        <p>Name the template in your firebase.json, then deploy only Remote Config:</p>
-        <pre>{`"remoteconfig": { "template": "${TEMPLATE_FILE}" }\n\n${DEPLOY}`}</pre>
-        <p className="quiet">
-          This replaces your project's whole Remote Config template. If the project already has parameters, add these to its own template instead.
-        </p>
-      </article>
+      <ul className="modes">
+        {verdicts.map((v) => (
+          <li key={v.feature.id} data-verdict={v.kind}>
+            <b>{v.feature.name}</b>
+            <code>{parameterFor(v.feature)}</code>
+            <span>{v.kind === "device" ? `${modeFor(v)} in ${CHROME}, only_in_cloud everywhere else` : "only_in_cloud"}</span>
+          </li>
+        ))}
+      </ul>
+      <details>
+        <summary>The template, the app code and the deploy command</summary>
+        <div className="files">
+          <article>
+            <h3>1. Save this as {TEMPLATE_FILE}</h3>
+            <pre>{text}</pre>
+            <p className="actions">
+              <Copy text={text} />
+              <a className="button plain" download={TEMPLATE_FILE} href={`data:application/json;charset=utf-8,${encodeURIComponent(text)}`}>
+                Download
+              </a>
+            </p>
+          </article>
+          <article>
+            <h3>2. Read each feature's mode in your app</h3>
+            <p>
+              Chrome's model reads the instruction and the answer's shape only from <code>onDeviceParams</code>, so both are set twice.
+            </p>
+            <pre>{code}</pre>
+            <p className="actions">
+              <Copy text={code} />
+            </p>
+          </article>
+          <article>
+            <h3>3. Deploy it</h3>
+            <p>Name the template in your firebase.json, then deploy only Remote Config:</p>
+            <pre>{`"remoteconfig": { "template": "${TEMPLATE_FILE}" }\n\n${DEPLOY}`}</pre>
+            <p className="quiet">
+              This replaces your project's whole Remote Config template. If the project already has parameters, add these to its own template instead.
+            </p>
+          </article>
+        </div>
+      </details>
     </section>
   );
 }
@@ -311,8 +325,14 @@ export function Board({ features, cases, mine = [], recordedOn, held, fixes, ope
     document.startViewTransition(() => flushSync(() => setAllowed(latestBar.current))).ready.catch(() => {});
   }
   const shown = verdicts.find((v) => v.feature.id === selected) ?? verdicts.find((v) => v.kind === "cloud") ?? verdicts.find((v) => v.failures.length) ?? verdicts[0];
+  const proof = useRef<HTMLDivElement>(null);
+  function select(id: string) {
+    setSelected(id);
+    const calm = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    requestAnimationFrame(() => proof.current?.scrollIntoView({ block: "nearest", behavior: calm ? "auto" : "smooth" }));
+  }
   const row = (v: Verdict, named?: boolean) => (
-    <FeatureRow key={v.feature.id} v={v} allowed={allowed} named={named} mine={mine.includes(v.feature.id)} selected={shown === v} onSelect={() => setSelected(v.feature.id)} />
+    <FeatureRow key={v.feature.id} v={v} allowed={allowed} named={named} mine={mine.includes(v.feature.id)} selected={shown === v} onSelect={() => select(v.feature.id)} />
   );
 
   return (
@@ -342,15 +362,14 @@ export function Board({ features, cases, mine = [], recordedOn, held, fixes, ope
         </div>
 
         {neither.length > 0 && (
-          <section className="neither">
-            <h2>
-              <b>{neither.length}</b> <span>on neither side yet</span>
-            </h2>
-            <ul>{neither.map((v) => row(v, true))}</ul>
-          </section>
+          <a className="more" href="#neither">
+            <b>{neither.length}</b> on neither side yet
+          </a>
         )}
 
-        <Proof v={shown} cases={cases[shown.feature.id] ?? {}} recordedOn={mine.includes(shown.feature.id) ? undefined : recordedOn} />
+        <div className="shown" ref={proof}>
+          <Proof v={shown} cases={cases[shown.feature.id] ?? {}} recordedOn={mine.includes(shown.feature.id) ? undefined : recordedOn} />
+        </div>
         {shown.kind === "cloud" && shown.feature.heldBack?.length && held?.[shown.feature.id] && (
           <Fixes
             feature={shown.feature}
@@ -361,6 +380,15 @@ export function Board({ features, cases, mine = [], recordedOn, held, fixes, ope
             canRun={canRun}
             onFix={onFix && ((fix) => onFix(shown.feature.id, fix))}
           />
+        )}
+
+        {neither.length > 0 && (
+          <section className="neither" id="neither">
+            <h2>
+              <b>{neither.length}</b> <span>on neither side yet</span>
+            </h2>
+            <ul>{neither.map((v) => row(v, true))}</ul>
+          </section>
         )}
       </div>
       {below}

@@ -26,7 +26,10 @@ const ON_DEVICE: Mode[] = ["prefer_on_device", "only_on_device"];
 
 function Card({ feature, mode, device }: { feature: Feature; mode: Mode; device?: DeviceState }) {
   const shown = SHOWN[feature.id];
-  const [input, setInput] = useState(feature.cases[0].input);
+  const sample = shown.sample ?? feature.cases[0].input;
+  const cut = shown.ownFirstLine ? sample.indexOf("\n") : -1;
+  const added = sample.slice(0, cut + 1);
+  const [input, setInput] = useState(sample.slice(cut + 1));
   const [busy, setBusy] = useState(false);
   const [answer, setAnswer] = useState<Answer>();
   const [problem, setProblem] = useState<string>();
@@ -36,7 +39,7 @@ function Card({ feature, mode, device }: { feature: Feature; mode: Mode; device?
     setAnswer(undefined);
     setProblem(undefined);
     try {
-      setAnswer(await ask(feature, mode, input));
+      setAnswer(await ask(feature, mode, added + input));
     } catch (e) {
       setProblem(navigator.onLine ? (e instanceof Error ? e.message : String(e)) : "This feature runs in the cloud, so it needs a connection.");
     }
@@ -56,6 +59,7 @@ function Card({ feature, mode, device }: { feature: Feature; mode: Mode; device?
       <p className="label">{shown.label}</p>
       <h2>{shown.heading}</h2>
       <textarea value={input} onChange={(e) => setInput(e.target.value)} rows={Math.min(8, input.split("\n").length + 2)} />
+      {added && <p className="adds">The shop adds its own line first: “{added.trim()}”</p>}
       <p className="actions">
         <button onClick={run} disabled={busy || !input.trim()}>
           {shown.button}
@@ -89,10 +93,22 @@ function Shop() {
     });
   }, []);
 
+  const card = (id: string) => {
+    const feature = FEATURES.find((f) => f.id === id)!;
+    return mode && <Card feature={feature} mode={mode[id]} device={device} />;
+  };
+
   return (
     <main className="shop">
       <header>
         <h1>Larkfield</h1>
+        <nav>
+          <a href="#shears">Garden tools</a>
+          <a href="#orders">Your orders</a>
+          <a href="#more">Rewards, trade and selling</a>
+        </nav>
+      </header>
+      <aside className="about">
         <p>
           A made-up home and garden shop with eight AI features. Each one reads where to run from Firebase Remote Config, set from{" "}
           <a href="/">the check's verdicts</a>, and says where its answer ran.
@@ -101,7 +117,7 @@ function Shop() {
           What you type into a feature that runs in the cloud goes to Google's free Gemini tier, and Google may use it to improve its products. A
           feature that runs on this computer sends nothing.
         </p>
-      </header>
+      </aside>
       {device && (
         <DownloadPanel
           state={device}
@@ -110,10 +126,89 @@ function Shop() {
           toGetIt="To run the device features on this computer, Chrome downloads it once: about 4 GB, 12 minutes on our laptop."
         />
       )}
-      <div className="cards">
-        {mode && FEATURES.map((f) => <Card key={f.id} feature={f} mode={mode[f.id]} device={device} />)}
-      </div>
+
+      <section className="aisle product" id="shears">
+        <div className="shelf">
+          <Shears />
+          <p className="label">Garden tools</p>
+          <h2>Hedge shears, 25 cm blades</h2>
+          <p className="price">£24.00</p>
+          <p>Carbon steel blades and ash handles. Sharpened by hand before they leave us.</p>
+        </div>
+        <div className="said">
+          <ul className="reviews">
+            <li>
+              <b>Priya</b> Went through a year of privet in an afternoon. The handles are a little long for me.
+            </li>
+            <li>
+              <b>Tom</b> Sharp, light and well balanced. My old pair went in the shed.
+            </li>
+          </ul>
+          {card("review_mood")}
+        </div>
+      </section>
+
+      <section className="aisle" id="orders">
+        <h2>Your orders</h2>
+        <div className="orders">
+          <div className="order">
+            <p className="order-line">
+              <Shears />
+              <span>
+                <b>Order #88406</b> Hedge shears, 25 cm blades
+              </span>
+              <i>On its way</i>
+            </p>
+            {card("email_address")}
+            {card("delivery_summary")}
+          </div>
+          <div className="order">
+            <p className="order-line">
+              <Lamp />
+              <span>
+                <b>Order #88213</b> Desk lamp
+              </span>
+              <i>Delivered 9 November</i>
+            </p>
+            {card("returns_answer")}
+            {card("ticket_route")}
+          </div>
+        </div>
+      </section>
+
+      <section className="aisle" id="more">
+        <h2>Rewards, trade and selling</h2>
+        <div className="cards">
+          {card("receipt_fields")}
+          {card("invoice_total")}
+          {card("product_title")}
+        </div>
+      </section>
     </main>
+  );
+}
+
+const drawn = { viewBox: "0 0 120 90", fill: "none", stroke: "currentColor", strokeWidth: 3, strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": true } as const;
+
+function Shears() {
+  return (
+    <svg className="drawn" {...drawn}>
+      <path d="M57 56 L24 9 L67 47 Z" fill="currentColor" />
+      <path d="M63 56 L96 9 L53 47 Z" fill="currentColor" />
+      <path d="M55 60 L41 83 M65 60 L79 83" strokeWidth={8} />
+      <circle cx="60" cy="50" r="2.5" stroke="var(--wash)" fill="var(--wash)" />
+    </svg>
+  );
+}
+
+function Lamp() {
+  return (
+    <svg className="drawn" {...drawn}>
+      <path d="M34 80 H78" />
+      <path d="M56 80 L46 46 L74 30" />
+      <path d="M66 20 L92 34 L80 52 L60 38 Z" />
+      <circle cx="46" cy="46" r="3.5" fill="currentColor" />
+    </svg>
   );
 }
 
