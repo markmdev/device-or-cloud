@@ -9,6 +9,7 @@ Working name; built for the Firebase #BuildHybridAI hackathon.
 - **The check:** https://device-or-cloud.web.app
 - **The sample shop it checks:** https://device-or-cloud.web.app/shop/
 - **Check your own prompts:** https://device-or-cloud.web.app/own/
+- **Every input and answer of the recorded check:** https://device-or-cloud.web.app/results/
 
 Open them in Chrome on a computer to see the device side run.
 
@@ -32,6 +33,10 @@ The page shows the check as recorded on our laptop, with every wrong answer side
 The cloud side runs on Google's free Gemini tier, which the whole site shares: 15 requests a minute and 500 a day. One feature uses about 30. Google may use what is sent to that tier to improve its products, and the page says so before you paste.
 
 **The inputs and their right answers** are in `src/features/`. Code decides whether an answer is right wherever an input has one right answer: a category, a date, a total, an address, a yes or no. For receipts, invoices and returns questions, the input text and the right answer are built from the same figures, so the key can't disagree with the input. Two features, the product title and the delivery note, have no single right answer. Code checks their rules (length, required details), and the cloud model judges the rest, 25 answers in one request.
+
+## The numbers
+
+The results page shows the whole record: every input, its right answer, all three answers from Chrome's model and the cloud model's, each marked right or wrong with the reason, the held-back inputs, and every answer under each one-line fix. `npm run results` prints the same counts from the same file, `src/check/recorded.json`: for each feature and each kind of input, how many runs Chrome's model got right and how many inputs the cloud model did.
 
 ## Where Firebase is used
 
@@ -57,7 +62,7 @@ npm run deploy
 
 To record the check on your own machine, add an App Check debug token for your web app to `.env.local` as `VITE_APPCHECK_DEBUG_TOKEN`, start `npm run dev`, start Chrome with `--remote-debugging-port=9222` and run `CDP=http://127.0.0.1:9222 node scripts/record.mjs`. It writes `src/check/recorded.json`. The free tier allows 15 cloud requests a minute and 500 a day for the whole project; the recording waits out a full minute and resumes after a full day.
 
-`scripts/walk.mjs` walks the whole path on the live site: the recorded check, a live run, a feature pasted into "Check your own prompts", every shop feature, and the shop with the network off.
+`scripts/walk.mjs` walks the whole path on the live site: the recorded check, a live run, the results page, a feature pasted into "Check your own prompts", every shop feature, and the shop with the network off.
 
 ## Licence
 
