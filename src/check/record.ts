@@ -13,8 +13,8 @@ export type CaseRecord = { device: Run[]; cloud?: CloudRun; grades?: Grades };
 /** One line added to a feature's instruction, and how both sets of inputs went with it. */
 export type FixRecord = {
   line: string;
-  /** Who wrote it: the cloud model from the failures, or us after reading them. */
-  by: "cloud" | "us";
+  /** Who wrote it: the cloud model from the failures, us after reading them, or the developer checking their own feature. */
+  by: "cloud" | "us" | "you";
   /** The check's own inputs with the line, on the device. */
   cases: Record<string, CaseRecord>;
   /** The held-back inputs with the line, on the device and in the cloud. */
@@ -32,12 +32,15 @@ export type CheckRecord = {
   fixes?: Record<string, FixRecord[]>;
 };
 
+/** Whether the cloud grader has a say on this input's answers. */
+export const graded = (feature: Feature, c: Case) => !!feature.graded && !c.codeDecides;
+
 /** Code decides first; the grader's word counts only where code found nothing wrong. */
 export function judge(feature: Feature, c: Case, run: Run | undefined, grades?: Grades): Check | undefined {
   if (!run) return undefined;
   if ("error" in run) return { ok: false, reason: run.error };
   const byCode = feature.check(run.text, c);
-  if (!byCode.ok || !feature.graded) return byCode;
+  if (!byCode.ok || !graded(feature, c)) return byCode;
   return grades?.[run.text];
 }
 

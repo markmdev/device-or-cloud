@@ -1,6 +1,6 @@
 import type { Feature } from "../features";
 import { ask, CLOUD } from "./ask";
-import type { FixRecord } from "./record";
+import { verdictFor, type FixRecord } from "./record";
 import { gradeFeature, runCloud, runDevice, type Cases } from "./run";
 
 /** The feature with one more line at the end of its instruction. */
@@ -24,6 +24,15 @@ const PROPOSER = {
 };
 
 export type Miss = { input: string; answer: string; reason: string };
+
+/** What Chrome's model got wrong on a feature's inputs: one wrong answer for each input it missed. */
+export function missesOf(feature: Feature, cases: Cases): Miss[] {
+  return verdictFor(feature, cases).failures.flatMap((x) => {
+    const at = x.device.findIndex((d) => !d.ok);
+    const run = cases[x.c.id].device[at], check = x.device[at];
+    return run && check && !check.ok ? [{ input: x.c.input, answer: "text" in run ? run.text : run.error, reason: check.reason }] : [];
+  });
+}
 
 /** Asks the cloud model for one line to add to the instruction, from what Chrome's model got wrong. One request. */
 export async function proposeLine(feature: Feature, misses: Miss[]): Promise<string> {

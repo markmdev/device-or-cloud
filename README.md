@@ -8,8 +8,9 @@ Working name; built for the Firebase #BuildHybridAI hackathon.
 
 - **The check:** https://device-or-cloud.web.app
 - **The sample shop it checks:** https://device-or-cloud.web.app/shop/
+- **Check your own prompts:** https://device-or-cloud.web.app/own/
 
-Open both in Chrome on a computer to see the device side run.
+Open them in Chrome on a computer to see the device side run.
 
 ## What is here
 
@@ -23,6 +24,10 @@ Open both in Chrome on a computer to see the device side run.
 - **Not enough inputs to tell:** fewer than 20 inputs.
 
 The page shows the check as recorded on our laptop, with every wrong answer side by side with the input and the other model's answer. "Run it on your own computer" runs the device side again on yours.
+
+**Check your own prompts** (`own/`, `src/own/`) gives the same verdicts for a feature you paste: the instruction your app sends, the shape of the answer and a few inputs. The cloud model writes 30 more inputs from yours, hard ones included, with the right answer where there is one; you tick the ones a real user could send and correct the answers. An input with a right answer is decided by code. One without is judged by the cloud model, and the page says which. One ticked input in four is kept out of the check, so a one-line fix to the prompt is proved on inputs it wasn't written from. Your features and their answers are kept only in your browser.
+
+The cloud side runs on Google's free Gemini tier, which the whole site shares: 15 requests a minute and 500 a day. One feature uses about 30. Google may use what is sent to that tier to improve its products, and the page says so before you paste.
 
 **The inputs and their right answers** are in `src/features/`. Code decides whether an answer is right wherever an input has one right answer: a category, a date, a total, an address, a yes or no. For receipts, invoices and returns questions, the input text and the right answer are built from the same figures, so the key can't disagree with the input. Two features, the product title and the delivery note, have no single right answer. Code checks their rules (length, required details), and the cloud model judges the rest, 25 answers in one request.
 
@@ -46,11 +51,11 @@ npx firebase use <your project id>
 npm run deploy
 ```
 
-`npm run deploy` writes the Remote Config template from the recorded verdicts (`scripts/modes.ts`), builds both pages and deploys Hosting, the Remote Config template, the Firestore rules and anonymous sign-in. The pages read the project's config from Firebase Hosting at `/__/firebase/init.json`, so no config or key is in this repo.
+`npm run deploy` writes the Remote Config template from the recorded verdicts (`scripts/modes.ts`), builds the pages and deploys Hosting, the Remote Config template, the Firestore rules and anonymous sign-in. The pages read the project's config from Firebase Hosting at `/__/firebase/init.json`, so no config or key is in this repo.
 
 To record the check on your own machine, add an App Check debug token for your web app to `.env.local` as `VITE_APPCHECK_DEBUG_TOKEN`, start `npm run dev`, start Chrome with `--remote-debugging-port=9222` and run `CDP=http://127.0.0.1:9222 node scripts/record.mjs`. It writes `src/check/recorded.json`. The free tier allows 15 cloud requests a minute and 500 a day for the whole project; the recording waits out a full minute and resumes after a full day.
 
-`scripts/walk.mjs` walks the whole path on the live site: the recorded check, a live run, every shop feature, and the shop with the network off.
+`scripts/walk.mjs` walks the whole path on the live site: the recorded check, a live run, a feature pasted into "Check your own prompts", every shop feature, and the shop with the network off.
 
 ## Licence
 

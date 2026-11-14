@@ -17,6 +17,22 @@ export class OutOfRequests extends Error {
   }
 }
 
+/** The free tier's day ends at midnight in California; this is that moment on the reader's own clock. */
+function freeRequestsReturn(): string {
+  const [h, m, sec] = new Intl.DateTimeFormat("en-GB", { timeZone: "America/Los_Angeles", hour: "2-digit", minute: "2-digit", second: "2-digit", hourCycle: "h23" })
+    .format(new Date())
+    .split(":")
+    .map(Number);
+  const left = 86_400 - (h * 3600 + m * 60 + sec);
+  return new Date(Date.now() + left * 1000).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+}
+
+/** What to tell the reader when the free cloud requests run out. */
+export const outOfRequests = (e: OutOfRequests) =>
+  e.forToday
+    ? `Today's free cloud requests are used up: everyone on this site shares 500 a day on Google's free tier. They come back at ${freeRequestsReturn()}.`
+    : "The site's free cloud requests for this minute are used up: everyone here shares 15 a minute. Wait a minute and run it again.";
+
 const sleep = (seconds: number) => new Promise((done) => setTimeout(done, seconds * 1000));
 
 /** One request, as the app would send it. A full minute on the free tier is waited out; a full day isn't. */

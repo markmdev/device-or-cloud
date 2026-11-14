@@ -13,6 +13,8 @@ page.on("pageerror", (e) => console.log("page crashed:", String(e).slice(0, 300)
 
 let failed = 0;
 const expect = (ok, what) => { console.log(ok ? "ok  " : "FAIL", what); if (!ok) failed++; };
+// What the page shows once it has settled: a move across the line is animated, so the words follow a moment later.
+const settles = (check) => page.waitForFunction(check, null, { timeout: 5000 }).then(() => true, () => false);
 const shot = (name) => process.env.SHOTS && page.screenshot({ path: `${process.env.SHOTS}/${name}.png`, fullPage: true });
 
 // The check: the recorded verdicts, the proof, the bottom line and its controls.
@@ -24,8 +26,9 @@ const onDevice = modes.filter(([, mode]) => mode === "prefer_on_device").length;
 expect((await page.locator(".sides .device .feature").count()) === onDevice, `${onDevice} features are on the device side, as published`);
 expect((await page.locator(".bottom h2").innerText()).includes(`${onDevice} of ${modes.length} features`), "the bottom line counts the same");
 await page.getByLabel("Wrong answers allowed in 100").press("Home");
-expect((await page.locator(".bottom h2").innerText()).startsWith("With no wrong answers allowed"), "the bar moves the verdicts and the headline names it");
+expect(await settles(() => document.querySelector(".bottom h2").innerText.startsWith("With no wrong answers allowed")), "the bar moves the verdicts and the headline names it");
 for (let i = 0; i < 10; i++) await page.getByLabel("Wrong answers allowed in 100").press("ArrowRight");
+expect(await settles(() => document.querySelector(".bottom h2").innerText.startsWith("At up to 1 wrong answer in 10")), "ten steps up, the headline names the default bar again");
 expect((await page.locator(".sides .device .feature").count()) === onDevice, "back at the default bar, the published split shows again");
 expect((await page.locator(".proof pre").count()) === 1, "a failure is shown with its input and both answers");
 const money = () => page.locator(".money b").innerText();
@@ -49,6 +52,43 @@ await page.getByRole("button", { name: /Stop · .+: [1-9]/ }).waitFor({ timeout:
 expect(true, "the device side reruns on this computer");
 await page.getByRole("button", { name: /Stop/ }).click();
 await page.getByRole("button", { name: "Run it on your own computer" }).waitFor({ timeout: 60_000 });
+
+// Check your own prompts: a feature pasted by hand, more inputs written by the cloud model, then its verdict.
+// This part uses about 30 of the day's free cloud requests.
+const own = {
+  name: "Sort a message to the front desk",
+  system:
+    "You sort messages sent to the front desk of Alder Street Dental, a dental practice. Reply with the one thing the patient wants. book: a new appointment or a check-up. change: moving or cancelling an appointment they already have. bill: charges, payments, insurance and receipts. urgent: pain, swelling, bleeding or a broken tooth that can't wait. other: anything else.",
+  shape: { type: "object", properties: { label: { type: "string", enum: ["book", "change", "bill", "urgent", "other"] } }, required: ["label"], additionalProperties: false },
+  inputs: [
+    ["Hi, I'd like to come in for a check-up some time next week, mornings are best.", "book"],
+    ["I can't make Thursday at 3 any more. Could we move it to the week after?", "change"],
+    ["My crown fell out at dinner and the tooth underneath is throbbing. Can someone see me today?", "urgent"],
+  ],
+};
+await page.goto(`${site}/own/`);
+await page.getByLabel("What the feature does").fill(own.name);
+await page.getByLabel("The instruction your app sends").fill(own.system);
+await page.getByLabel("The answer's shape").fill(JSON.stringify(own.shape));
+for (const [i, [input, label]] of own.inputs.entries()) {
+  const row = page.locator('.own-input[data-by="you"]').nth(i);
+  await row.locator("textarea").nth(0).fill(input);
+  await row.locator("textarea").nth(1).fill(JSON.stringify({ label }));
+}
+expect(/may use what is sent/.test(await page.locator("main > .notice").first().innerText()), "own: the page says pasted prompts may be used by Google");
+await page.getByRole("button", { name: /Have the cloud model write/ }).click();
+await page.locator('.own-input[data-by="cloud"]').first().waitFor({ timeout: 180_000 }).catch(() => {});
+const written = await page.locator('.own-input[data-by="cloud"]').count();
+expect(written >= 20, `own: the cloud model wrote ${written} more inputs from three`);
+for (let i = 0; i < written; i++) await page.locator('.own-input[data-by="cloud"] input[type=checkbox]').nth(i).check();
+await page.getByRole("button", { name: "Run the check" }).click();
+const decided = page.locator('.board .feature:is([data-verdict="device"], [data-verdict="cloud"], [data-verdict="fix"])');
+await decided.waitFor({ timeout: 900_000 }).catch(() => {});
+expect((await decided.count()) === 1, "own: the pasted feature gets its verdict");
+if (!(await decided.count())) console.log("     the page says:", (await page.locator("main > .notice").allInnerTexts()).join(" | ").slice(0, 400));
+expect(/this feature/.test(await page.locator(".bottom h2").innerText().catch(() => "")), "own: the bottom line speaks of the one feature");
+expect(/inputs have a right answer, and code compared/.test(await page.locator("footer").innerText().catch(() => "")), "own: the page says how the answers were judged");
+await shot("own");
 
 // The shop: every feature answers where Remote Config says, and says so.
 await page.goto(`${site}/shop/`);

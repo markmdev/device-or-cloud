@@ -1,7 +1,7 @@
 import type { Feature } from "../features";
 import { ask, CLOUD, DEVICE, OutOfRequests } from "./ask";
 import { grade, type ToGrade } from "./grade";
-import { RUNS, type CaseRecord, type Run } from "./record";
+import { graded, RUNS, type CaseRecord, type Run } from "./record";
 
 export type Cases = Record<string, CaseRecord>;
 
@@ -27,8 +27,9 @@ export async function runDevice(feature: Feature, cases: Cases, onChange: (cases
 }
 
 /** Runs every input once in the cloud. The recorded check does this once; a visitor's rerun reuses its answers. */
-export async function runCloud(feature: Feature, cases: Cases, onChange: (cases: Cases) => void): Promise<Cases> {
+export async function runCloud(feature: Feature, cases: Cases, onChange: (cases: Cases) => void, stopped: () => boolean = () => false): Promise<Cases> {
   for (const c of feature.cases) {
+    if (stopped()) break;
     if (cases[c.id]?.cloud) continue;
     const cloud = await ask(feature, CLOUD, c.input).then(({ text, seconds, tokensIn, tokensOut }) => ({ text, seconds, tokensIn, tokensOut }), failed);
     cases = { ...cases, [c.id]: { ...(cases[c.id] ?? { device: [] }), cloud } };
@@ -42,6 +43,7 @@ export async function gradeFeature(feature: Feature, cases: Cases): Promise<Case
   if (!feature.graded) return cases;
   const items: (ToGrade & { id: string })[] = [];
   for (const c of feature.cases) {
+    if (!graded(feature, c)) continue;
     const r = cases[c.id];
     const texts = new Set([...(r?.device ?? []), r?.cloud].flatMap((run) => (run && "text" in run ? [run.text] : [])));
     for (const answer of texts) {
