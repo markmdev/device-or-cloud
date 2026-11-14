@@ -125,7 +125,8 @@ function App() {
     sessionStorage.setItem("record", JSON.stringify({ ...RECORD, features: all, held }));
   }
 
-  const date = new Date(RECORD.date).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
+  const written = (iso: string) => new Date(iso).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
+  const date = written(RECORD.date);
   const runningName = FEATURES.find((f) => f.id === running)?.name;
   const done = running ? Object.values(features[running] ?? {}).filter((r) => r.device.length === RUNS).length : 0;
 
@@ -140,16 +141,19 @@ function App() {
           <a href="/shop/">Larkfield shop</a> · {FEATURES.length} AI features · <a href="/own/">Check your own prompts</a>
         </p>
         <p className="quiet">
-          {mine.length === FEATURES.length
-            ? `Run on this computer just now, Chrome ${chromeVersion()}`
-            : `Recorded on ${RECORD.machine}, Chrome ${RECORD.chrome}, ${date}`}
+          {iphone && RECORD.apple
+            ? `Recorded in the iPhone app on an iOS ${RECORD.apple.os} simulator, on our laptop's copy of Apple's model, ${written(RECORD.apple.date)}`
+            : mine.length === FEATURES.length
+              ? `Run on this computer just now, Chrome ${chromeVersion()}`
+              : `Recorded on ${RECORD.machine}, Chrome ${RECORD.chrome}, ${date}`}
         </p>
         {running ? (
           <button onClick={() => (stop.current = true)}>
             Stop · {runningName}: {done} of {FEATURES.find((f) => f.id === running)!.cases.length}
           </button>
         ) : (
-          device !== "unsupported" && (
+          device !== "unsupported" &&
+          !iphone && (
             <button onClick={runHere} disabled={device !== "available"}>
               Run it on your own computer
             </button>
