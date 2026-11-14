@@ -22,32 +22,29 @@ const shot = (name) => process.env.SHOTS && page.screenshot({ path: `${process.e
 // The check: the recorded verdicts, the proof, the bottom line and its controls.
 await page.goto(site);
 await page.locator(".sides").waitFor();
-expect(/Recorded on a .+, Chrome \d+, \d+ \w+ 20\d\d/.test(await page.locator("header").innerText()), "the check says where and when it was recorded");
+expect(/Recorded on our laptop.*, Chrome \d+, \d+ \w+ 20\d\d/.test(await page.locator("header").innerText()), "the check says where and when it was recorded");
 expect((await page.locator(".feature").count()) === modes.length, `all ${modes.length} features have a verdict`);
 const onDevice = modes.filter(([, mode]) => mode === "prefer_on_device").length;
 expect((await page.locator(".sides .device .feature").count()) === onDevice, `${onDevice} features are on the device side, as published`);
-expect((await page.locator(".bottom h2").innerText()).includes(`${onDevice} of ${modes.length} features`), "the bottom line counts the same");
+expect((await page.locator(".bottom h2").innerText()).includes(`${onDevice} of the shop's ${modes.length} AI features`), "the bottom line counts the same");
 await page.getByLabel("Wrong answers allowed in 100").press("Home");
 expect(await settles(() => document.querySelector(".bottom h2").innerText.startsWith("With no wrong answers allowed")), "the bar moves the verdicts and the headline names it");
 for (let i = 0; i < 10; i++) await page.getByLabel("Wrong answers allowed in 100").press("ArrowRight");
 expect(await settles(() => document.querySelector(".bottom h2").innerText.startsWith("At up to 1 wrong answer in 10")), "ten steps up, the headline names the default bar again");
 expect((await page.locator(".sides .device .feature").count()) === onDevice, "back at the default bar, the published split shows again");
 expect((await page.locator(".proof pre").count()) === 1, "a failure is shown with its input and both answers");
-const money = () => page.locator(".money b").innerText();
-const before = await money();
-await page.getByLabel("Requests a month for each feature").fill("500000");
-expect(onDevice === 0 || (await money()) !== before, "the money follows the request count");
 await shot("check");
 
 // Apply it: the page hands over the same Remote Config template the shop was deployed with.
 expect(JSON.stringify(JSON.parse(await page.locator(".apply pre").first().innerText())) === JSON.stringify(template), "apply: at the default bar the template shown is the one the shop runs on");
 const appCode = await page.locator(".apply pre").nth(1).innerText();
 expect(modes.every(([id]) => appCode.includes(`mode_${id}:`)), "apply: the app code names every feature's parameter");
+expect(/onDeviceParams/.test(appCode) && modes.every(([id]) => appCode.includes(`model(\n  "mode_${id}",\n  "`)), "apply: the app code gives every feature its instruction on the device side too");
 expect(/firebase deploy --only remoteconfig/.test(await page.locator(".apply pre").nth(2).innerText()), "apply: the deploy command is given");
 expect(/Nothing on this page writes to your Firebase project/.test(await page.locator(".apply").innerText()), "apply: it says nothing is written to the reader's project");
 
 // A feature kept in the cloud: the recorded one-line fixes, and a line of the reader's own on Chrome's model.
-expect(/after one-line fixes/.test(await page.locator(".bottom h2").innerText()), "the bottom line counts what one-line fixes move");
+expect(/after one added line in its prompt/.test(await page.locator(".bottom h2").innerText()), "the bottom line counts what one added line moves");
 await page.locator(".sides .cloud .feature", { hasText: "Read a review's mood" }).click();
 expect((await page.locator('.fixes .fix[data-moved="true"] blockquote').count()) > 0, "a recorded line moves the mood feature, shown with its counts");
 await page.getByRole("button", { name: "Run Chrome's model with this line" }).click();
@@ -68,7 +65,7 @@ await page.locator(".feature-results").first().waitFor();
 const record = JSON.parse(readFileSync("src/check/recorded.json", "utf8"));
 const inputs = Object.values(record.features).reduce((n, cases) => n + Object.keys(cases).length, 0) + Object.values(record.held).reduce((n, cases) => n + Object.keys(cases).length, 0);
 expect((await page.locator(".feature-results > .result").count()) === inputs, `results: all ${inputs} inputs are shown with their answers`);
-expect((await page.locator("header").innerText()).includes(`Recorded on a ${record.machine}, Chrome ${record.chrome}`), "results: the machine and Chrome's version are given");
+expect((await page.locator("header").innerText()).includes(`Recorded on ${record.machine}, Chrome ${record.chrome}`), "results: the machine and Chrome's version are given");
 const summary = await page.locator(".summary table").innerText();
 expect(Object.values(template.parameters).every((p) => summary.replace(/\s+/g, " ").includes(/(\d+ of \d+) runs/.exec(p.description)[1])), "results: each feature's count is the one its Remote Config mode was set from");
 expect((await page.locator('.result .given[data-ok="false"]').count()) > 100, "results: the wrong answers are there too");

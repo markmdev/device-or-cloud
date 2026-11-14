@@ -40,8 +40,11 @@ export function template(verdicts: Verdict[], apple?: Verdict[]) {
 
 export const templateText = (verdicts: Verdict[], apple?: Verdict[]) => JSON.stringify(template(verdicts, apple), null, 2) + "\n";
 
-/** The few lines of a web app that read the template: each feature's model takes its mode from Remote Config. */
-export function appCode(verdicts: Verdict[]): string {
+/**
+ * The lines of a web app that read the template: each feature's model takes its mode from Remote Config, and carries the
+ * instruction and the answer's shape that were checked, for both sides.
+ */
+export function appCode(verdicts: Verdict[], cloudModel: string): string {
   const names = verdicts.map((v) => parameterFor(v.feature));
   return `import { getAI, getGenerativeModel, GoogleAIBackend, type InferenceMode } from "firebase/ai";
 import { fetchAndActivate, getRemoteConfig, getString } from "firebase/remote-config";
@@ -55,10 +58,25 @@ await fetchAndActivate(remoteConfig).catch(() => {});
 
 const ai = getAI(app, { backend: new GoogleAIBackend() });
 
-// One model for each feature, in the mode the check gave it.
-const ${camel(names[0] ?? "mode_feature")} = getGenerativeModel(ai, {
-  mode: getString(remoteConfig, "${names[0] ?? "mode_feature"}") as InferenceMode,
-});
+function model(parameter: string, instruction: string, shape?: Record<string, unknown>) {
+  return getGenerativeModel(ai, {
+    mode: getString(remoteConfig, parameter) as InferenceMode,
+    inCloudParams: {
+      model: "${cloudModel}",
+      systemInstruction: instruction,
+      generationConfig: shape && { responseMimeType: "application/json", responseJsonSchema: shape },
+    },
+    onDeviceParams: {
+      createOptions: { initialPrompts: [{ role: "system", content: [{ type: "text", value: instruction }] }] },
+      promptOptions: shape && { responseConstraint: shape },
+    },
+  });
+}
+
+// One model for each feature, in the mode the check gave it, with the instruction and the shape it was checked with.
+${verdicts
+  .map((v, i) => `const ${camel(names[i])} = model(\n  "${names[i]}",\n  ${JSON.stringify(v.feature.system)},${v.feature.schema ? `\n  ${JSON.stringify(v.feature.schema)},` : ""}\n);`)
+  .join("\n")}
 `;
 }
 

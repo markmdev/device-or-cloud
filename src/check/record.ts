@@ -66,10 +66,6 @@ export type Verdict = {
   failures: Failure[];
   /** What the failing inputs have in common, when they all share it. */
   pattern?: string;
-  deviceSeconds?: number;
-  /** Measured tokens of one cloud request, averaged. */
-  tokensIn?: number;
-  tokensOut?: number;
 };
 
 /** Right answers among those given so far, for each model. */
@@ -95,26 +91,25 @@ export const within = (right: number, of: number, allowed: number) => (of - righ
  * A line moves a feature when Chrome's model stays within the bar with it on the check's inputs and on the held-back ones,
  * and the cloud model stays within it on the held-back ones.
  */
-export function moves(feature: Feature, fix: FixRecord, allowed: number): boolean {
+export const moves = (feature: Feature, fix: FixRecord, allowed: number) => !shortOn(feature, fix, allowed);
+
+/** Where a line falls short: answers still missing, the check's inputs, the held-back ones, or the cloud model on those. */
+export function shortOn(feature: Feature, fix: FixRecord, allowed: number): "answers" | "check" | "held" | "cloud" | undefined {
   const held = feature.heldBack ?? [];
   const own = tally(feature, fix.cases), kept = tally(feature, fix.held, held);
-  return (
-    own.runs === feature.cases.length * RUNS && kept.runs === held.length * RUNS && kept.cloud === held.length &&
-    within(own.runsRight, own.runs, allowed) && within(kept.runsRight, kept.runs, allowed) && within(kept.cloudRight, kept.cloud, allowed)
-  );
+  if (own.runs !== feature.cases.length * RUNS || kept.runs !== held.length * RUNS || kept.cloud !== held.length) return "answers";
+  if (!within(own.runsRight, own.runs, allowed)) return "check";
+  if (!within(kept.runsRight, kept.runs, allowed)) return "held";
+  if (!within(kept.cloudRight, kept.cloud, allowed)) return "cloud";
 }
 
 export const ENOUGH_INPUTS = 20;
 /** Wrong answers allowed in 100 before a model is not good enough for a feature. */
 export const DEFAULT_ALLOWED = 10;
 
-const median = (values: number[]) => [...values].sort((a, b) => a - b)[Math.floor(values.length / 2)];
-const mean = (values: number[]) => values.reduce((a, b) => a + b, 0) / values.length;
-
 export function verdictFor(feature: Feature, cases: Record<string, CaseRecord> = {}, allowed = DEFAULT_ALLOWED): Verdict {
   let runsRight = 0, cloudRight = 0, pending = false;
   const failures: Failure[] = [];
-  const seconds: number[] = [], tokensIn: number[] = [], tokensOut: number[] = [];
   for (const c of feature.cases) {
     const r = cases[c.id];
     const device = Array.from({ length: RUNS }, (_, i) => judge(feature, c, r?.device[i], r?.grades));
@@ -124,8 +119,6 @@ export function verdictFor(feature: Feature, cases: Record<string, CaseRecord> =
     runsRight += (device as Check[]).filter((d) => d.ok).length;
     if (cloud.ok) cloudRight++;
     if (!deviceOk || !cloud.ok) failures.push({ c, side: deviceOk ? "cloud" : cloud.ok ? "device" : "both", device: device as Check[], cloud });
-    for (const run of r.device) if ("seconds" in run) seconds.push(run.seconds);
-    if (r.cloud?.tokensIn != null) { tokensIn.push(r.cloud.tokensIn); tokensOut.push(r.cloud.tokensOut ?? 0); }
   }
   const inputs = feature.cases.length;
   const runs = inputs * RUNS;
@@ -139,9 +132,6 @@ export function verdictFor(feature: Feature, cases: Record<string, CaseRecord> =
     cloudRight,
     failures,
     pattern: kinds.size === 1 ? [...kinds][0] : undefined,
-    deviceSeconds: seconds.length ? median(seconds) : undefined,
-    tokensIn: tokensIn.length ? mean(tokensIn) : undefined,
-    tokensOut: tokensOut.length ? mean(tokensOut) : undefined,
   };
 }
 
@@ -171,12 +161,10 @@ export function verdictLine(v: Verdict, who = CHROMES): string {
 export const VERDICT_NAME: Record<Verdict["kind"], string> = {
   device: "Runs on the device.",
   cloud: "Keep in the cloud.",
-  fix: "Fix the prompt first.",
+  fix: "Neither model is good enough.",
   more: "Not enough inputs to tell.",
   pending: "Waiting for answers.",
 };
 
-// gemini-3.5-flash-lite's published price in US dollars per million tokens, read on 13 November 2026.
-const PRICE_IN = 0.3, PRICE_OUT = 2.5;
-
-export const dollarsPerRequest = (v: Verdict) => ((v.tokensIn ?? 0) * PRICE_IN + (v.tokensOut ?? 0) * PRICE_OUT) / 1_000_000;
+/** What to do about a feature neither model is good enough for. */
+export const NEITHER_ADVICE = "Change the prompt, or don't use a model for this: work it out in code.";

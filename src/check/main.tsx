@@ -141,23 +141,24 @@ function App() {
         <p className="quiet">
           {mine.length === FEATURES.length
             ? `Run on this computer just now, Chrome ${chromeVersion()}`
-            : `Recorded on a ${RECORD.machine}, Chrome ${RECORD.chrome}, ${date}`}
+            : `Recorded on ${RECORD.machine}, Chrome ${RECORD.chrome}, ${date}`}
         </p>
         {running ? (
           <button onClick={() => (stop.current = true)}>
             Stop · {runningName}: {done} of {FEATURES.find((f) => f.id === running)!.cases.length}
           </button>
         ) : (
-          <button onClick={runHere} disabled={device !== "available"}>
-            Run it on your own computer
-          </button>
+          device !== "unsupported" && (
+            <button onClick={runHere} disabled={device !== "available"}>
+              Run it on your own computer
+            </button>
+          )
         )}
         {import.meta.env.DEV && !running && <button onClick={recordEverything}>Record everything</button>}
         {import.meta.env.DEV && !running && <button onClick={recordFixes}>Record the fixes</button>}
         {import.meta.env.DEV && !running && <button onClick={gradeNew}>Grade what's new</button>}
       </header>
 
-      {device && <DownloadPanel state={device} onState={setDevice} meanwhile="nothing below ran here" />}
       {notice && <p className="notice">{notice}</p>}
 
       <section className="intro">
@@ -166,12 +167,31 @@ function App() {
           Each of the shop's eight features was sent {FEATURES[0].cases.length} inputs through Firebase AI Logic: {RUNS} times to the model built into
           Chrome, {RECORD.apple && `${RUNS} times to Apple's on-device model from the shop's iPhone app, `}once to {RECORD.cloudModel || CLOUD_MODEL} in
           the cloud. A feature runs on the device when {RECORD.apple ? "its platform's own model" : "Chrome's model"} stays within the bar you set. It
-          stays in the cloud when only the cloud does, and its prompt needs fixing when neither does.
+          stays in the cloud when only the cloud does. When neither does, neither model is good enough for it.
         </p>
       </section>
 
       {/* Opens on the address feature: its dropped house number is the plainest proof on the page. */}
-      <Board features={FEATURES} cases={features} mine={mine} held={RECORD.held} fixes={RECORD.fixes} opensOn="email_address" canRun={device === "available" && !running}>
+      <Board
+        features={FEATURES}
+        cases={features}
+        mine={mine}
+        recordedOn="our laptop"
+        held={RECORD.held}
+        fixes={RECORD.fixes}
+        opensOn="email_address"
+        canRun={device === "available" && !running}
+        below={
+          device && (
+            <DownloadPanel
+              state={device}
+              onState={setDevice}
+              now="Everything above was recorded on our laptop."
+              toGetIt="To run it on yours, Chrome downloads its built-in model once: about 4 GB, 12 minutes on ours."
+            />
+          )
+        }
+      >
         <p>
           <a href="/shop/">The Larkfield shop</a> runs on this template as it stands at the default bar of 10: we deployed it from the recorded
           check, and each of the shop's features reads its mode from it.
@@ -181,8 +201,7 @@ function App() {
       <footer>
         <p>
           Code decides wherever an input has one right answer. Two features, the product title and the delivery note, have none, so the cloud model
-          judges what code can't. On 69 answers we labelled by hand it agreed with us on 59 to 62, and in each run it passed 1 or 2 of the 20 answers we
-          had marked clearly wrong.{" "}
+          judges what code can't: its own answers as well as Chrome's model's.{" "}
           <a href="/results/">Every input and every answer of this record</a> is on one page, misses included.
         </p>
         <p>

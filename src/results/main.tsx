@@ -170,7 +170,7 @@ function App() {
           Every input and every answer · <a href="/">Back to the check</a>
         </p>
         <p className="quiet">
-          Recorded on a {RECORD.machine}, Chrome {RECORD.chrome}, {date}
+          Recorded on {RECORD.machine}, Chrome {RECORD.chrome}, {date}
         </p>
         {APPLE && <p className="quiet">{whereApple(APPLE)}</p>}
       </header>
@@ -219,10 +219,6 @@ function App() {
         <p>
           The same numbers print from the same record in the project's repository: <code>npm install</code>, then <code>npm run results</code>. The
           record is the file <code>src/check/recorded.json</code>, and the inputs and their right answers are in <code>src/features/</code>.
-        </p>
-        <p className="quiet">
-          How far to trust the cloud model as a judge, where it is one: on 69 answers we labelled by hand it agreed with us on 59 to 62, and in each run
-          it passed 1 or 2 of the 20 answers we had marked clearly wrong.
         </p>
       </section>
 

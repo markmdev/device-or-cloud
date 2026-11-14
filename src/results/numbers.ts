@@ -57,7 +57,7 @@ export function printed(record: CheckRecord): string {
   const a = record.apple;
   const apples = (t?: { runsRight: number; runs: number }) => (t ? `, Apple's model ${t.runsRight} of ${t.runs}` : "");
   const lines = [
-    `Recorded on a ${record.machine}, Chrome ${record.chrome}, ${record.date}. Cloud model: ${record.cloudModel}.`,
+    `Recorded on ${record.machine}, Chrome ${record.chrome}, ${record.date}. Cloud model: ${record.cloudModel}.`,
     ...(a ? [whereApple(a)] : []),
     `Bar: up to ${DEFAULT_ALLOWED} wrong answers in 100.`,
     "",

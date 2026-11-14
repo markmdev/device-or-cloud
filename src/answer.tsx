@@ -16,4 +16,4 @@ export function AnswerText({ text }: { text: string }) {
   );
 }
 
-export const SOURCE_LABEL = { on_device: "Ran on this computer", on_iphone: "Ran on this iPhone", in_cloud: "Ran in the cloud" } as const;
+export const SOURCE_LABEL = { on_device: "Ran on this computer", in_cloud: "Ran in the cloud" } as const;
