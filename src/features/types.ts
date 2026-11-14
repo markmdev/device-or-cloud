@@ -5,6 +5,8 @@ export type Case = {
   expect?: unknown;
   /** What kind of input this is, in a few plain words; failures are grouped by it. */
   kind: string;
+  /** In a feature the cloud grader judges: code alone decides this input, because it has a right answer. */
+  codeDecides?: boolean;
 };
 
 export type Check = { ok: true } | { ok: false; reason: string };
@@ -87,7 +89,7 @@ export function fields(shape: Record<string, Field>, only?: string[]): Pick<Feat
   };
 }
 
-const show = (v: unknown) => (typeof v === "string" ? (v === "" ? "nothing" : `"${v}"`) : String(v));
+export const show = (v: unknown) => (typeof v === "string" ? (v === "" ? "nothing" : `"${v}"`) : String(v));
 
 export const money = (got: unknown, want: unknown) =>
   typeof got === "number" && Math.abs(got - (want as number)) < 0.005;

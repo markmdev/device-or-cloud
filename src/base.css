@@ -236,3 +236,29 @@ p.answer { white-space: pre-wrap; }
 @media (prefers-reduced-motion: reduce) {
   *, ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) { animation: none !important; transition: none !important; }
 }
+
+/* Check your own prompts: the paste form, in a stand-in look. */
+.own > .notice { border-bottom: 0; }
+.own-features { display: grid; gap: 18px; padding: 28px var(--gutter) 44px; }
+.own-feature { display: grid; gap: 16px; padding: 20px 24px 24px; border: 2px solid var(--ink); border-radius: 22px; }
+.own-feature summary { display: flex; align-items: baseline; gap: 14px; cursor: pointer; }
+.own-feature summary strong { font: 700 24px/1.1 var(--display); letter-spacing: -0.6px; }
+.own-feature summary span { color: var(--soft); font-size: 14px; }
+.own-feature[open] summary { margin-bottom: 16px; }
+.own-feature label { display: grid; gap: 6px; margin-top: 14px; font-weight: 600; font-size: 14px; }
+.own-feature label small { color: var(--soft); font-weight: 400; }
+.own-feature input[type="text"] { padding: 12px 16px; border: 0; border-radius: 14px; background: var(--wash); }
+.own-feature h3 { margin: 26px 0 4px; font: 700 19px/1.2 var(--display); letter-spacing: -0.3px; }
+.own-feature .quiet { max-width: 86ch; font-size: 14px; }
+.own-feature ul { display: grid; gap: 10px; margin-top: 12px; }
+.own-input { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) auto; gap: 4px 14px; align-items: end; padding: 4px 14px 14px; border-radius: 16px; border: 1.5px solid var(--rule); }
+.own-input textarea { min-height: 3.2em; }
+.own-input .tick { grid-column: 1 / -1; display: flex; align-items: center; justify-content: space-between; gap: 14px; margin-top: 12px; }
+.own-input .tick label { display: flex; align-items: center; gap: 8px; margin: 0; cursor: pointer; }
+.own-input .tick input { width: 18px; height: 18px; accent-color: var(--ink); }
+.own-input .tick small { color: var(--soft); }
+.own-input[data-by="cloud"][data-ticked="false"] { background: var(--wash); }
+.own-input[data-by="cloud"][data-ticked="false"] textarea { background: var(--white); }
+.own .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+button.plain { background: var(--white); color: var(--ink); }
+.own-features > .quiet { font-size: 14px; }
