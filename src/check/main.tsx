@@ -112,6 +112,18 @@ function App() {
     sessionStorage.setItem("record", JSON.stringify({ ...RECORD, held, fixes }));
   }
 
+  // Dev only: has the cloud model judge the free-text answers that have no verdict yet, as Apple's have after `npm run apple`.
+  async function gradeNew() {
+    const all = { ...RECORD.features }, held = { ...RECORD.held };
+    for (const f of FEATURES) {
+      setRunning(f.id);
+      all[f.id] = await gradeFeature(f, all[f.id]);
+      if (held[f.id]) held[f.id] = await gradeFeature(heldBackOf(f), held[f.id]);
+    }
+    setRunning(undefined);
+    sessionStorage.setItem("record", JSON.stringify({ ...RECORD, features: all, held }));
+  }
+
   const date = new Date(RECORD.date).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
   const runningName = FEATURES.find((f) => f.id === running)?.name;
   const done = running ? Object.values(features[running] ?? {}).filter((r) => r.device.length === RUNS).length : 0;
@@ -142,6 +154,7 @@ function App() {
         )}
         {import.meta.env.DEV && !running && <button onClick={recordEverything}>Record everything</button>}
         {import.meta.env.DEV && !running && <button onClick={recordFixes}>Record the fixes</button>}
+        {import.meta.env.DEV && !running && <button onClick={gradeNew}>Grade what's new</button>}
       </header>
 
       {device && <DownloadPanel state={device} onState={setDevice} meanwhile="nothing below ran here" />}
@@ -151,8 +164,9 @@ function App() {
         <h2>Which of an app's AI features can run on its users' own devices?</h2>
         <p className="lede">
           Each of the shop's eight features was sent {FEATURES[0].cases.length} inputs through Firebase AI Logic: {RUNS} times to the model built into
-          Chrome, once to {RECORD.cloudModel || CLOUD_MODEL} in the cloud. A feature runs on the device when Chrome's model stays within the bar you set.
-          It stays in the cloud when only the cloud does, and its prompt needs fixing when neither does.
+          Chrome, {RECORD.apple && `${RUNS} times to Apple's on-device model from the shop's iPhone app, `}once to {RECORD.cloudModel || CLOUD_MODEL} in
+          the cloud. A feature runs on the device when {RECORD.apple ? "its platform's own model" : "Chrome's model"} stays within the bar you set. It
+          stays in the cloud when only the cloud does, and its prompt needs fixing when neither does.
         </p>
       </section>
 

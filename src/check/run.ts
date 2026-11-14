@@ -1,9 +1,9 @@
 import type { Feature } from "../features";
 import { ask, CLOUD, DEVICE, OutOfRequests } from "./ask";
 import { grade, type ToGrade } from "./grade";
-import { graded, RUNS, type CaseRecord, type Run } from "./record";
+import { graded, RUNS, type Cases, type Run } from "./record";
 
-export type Cases = Record<string, CaseRecord>;
+export type { Cases };
 
 /** A failed request is an answer of its own, except running out of free requests, which stops the run. */
 function failed(e: unknown): Run {
@@ -45,7 +45,7 @@ export async function gradeFeature(feature: Feature, cases: Cases): Promise<Case
   for (const c of feature.cases) {
     if (!graded(feature, c)) continue;
     const r = cases[c.id];
-    const texts = new Set([...(r?.device ?? []), r?.cloud].flatMap((run) => (run && "text" in run ? [run.text] : [])));
+    const texts = new Set([...(r?.device ?? []), ...(r?.apple ?? []), r?.cloud].flatMap((run) => (run && "text" in run ? [run.text] : [])));
     for (const answer of texts) {
       if (feature.check(answer, c).ok && !r.grades?.[answer]) items.push({ id: c.id, input: c.input, answer });
     }

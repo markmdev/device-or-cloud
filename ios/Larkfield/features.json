@@ -1,0 +1,1170 @@
+[
+ {
+  "id": "ticket_route",
+  "parameter": "mode_ticket_route",
+  "name": "Route a support ticket",
+  "system": "You sort messages sent to the help desk of Larkfield, an online home and garden shop. Reply with the one team that should handle the message. billing: charges, refunds that haven't arrived, invoices, ways to pay. delivery: where an order is, and late, damaged or missing parcels. returns: sending an item back or exchanging it. account: signing in, passwords, email and saved addresses. other: anything else.",
+  "schema": {
+   "type": "object",
+   "properties": {
+    "label": {
+     "type": "string",
+     "enum": [
+      "billing",
+      "delivery",
+      "returns",
+      "account",
+      "other"
+     ]
+    }
+   },
+   "required": [
+    "label"
+   ],
+   "additionalProperties": false
+  },
+  "label": "Help",
+  "heading": "Tell us what went wrong",
+  "button": "Send",
+  "cases": [
+   {
+    "id": "ticket-1",
+    "input": "I was charged twice for order #88213, once on the 3rd and again on the 4th. Please refund one of them."
+   },
+   {
+    "id": "ticket-2",
+    "input": "My parcel was due on Tuesday and the tracking hasn't moved since Saturday. Where is it?"
+   },
+   {
+    "id": "ticket-3",
+    "input": "The lamp is lovely but too big for the shelf. How do I send it back?"
+   },
+   {
+    "id": "ticket-4",
+    "input": "I can't sign in. The password reset email never arrives."
+   },
+   {
+    "id": "ticket-5",
+    "input": "Do you sell gift cards?"
+   },
+   {
+    "id": "ticket-6",
+    "input": "Can I have a VAT invoice for order #90417 for my company's records?"
+   },
+   {
+    "id": "ticket-7",
+    "input": "The box arrived crushed and two of the six glasses are broken."
+   },
+   {
+    "id": "ticket-8",
+    "input": "I'd like to swap the medium gardening gloves for a large pair."
+   },
+   {
+    "id": "ticket-9",
+    "input": "Please change the email on my account to my new work address."
+   },
+   {
+    "id": "ticket-10",
+    "input": "My card was declined at checkout but the money has left my bank account."
+   },
+   {
+    "id": "ticket-11",
+    "input": "The courier left a card saying they missed me, but I was home all day. Can it be redelivered tomorrow?"
+   },
+   {
+    "id": "ticket-12",
+    "input": "I want to delete my account and all the data you hold on me."
+   },
+   {
+    "id": "ticket-13",
+    "input": "I'd like to work for Larkfield. Where do I send my CV?"
+   },
+   {
+    "id": "ticket-14",
+    "input": "Is the oak bookcase suitable for a damp conservatory?"
+   },
+   {
+    "id": "ticket-15",
+    "input": "The drill stopped working after three weeks. I'd like a replacement or to send it back."
+   },
+   {
+    "id": "ticket-16",
+    "input": "Thanks for the fast delivery! One question: the invoice shows the wrong company name. Can you correct it?"
+   },
+   {
+    "id": "ticket-17",
+    "input": "Before I order: if the rug doesn't suit the room, can I send it back?"
+   },
+   {
+    "id": "ticket-18",
+    "input": "I love the chairs I bought last month. This time though, the order shows as delivered and there's nothing here, and none of the neighbours have it."
+   },
+   {
+    "id": "ticket-19",
+    "input": "I returned the kettle two weeks ago and still haven't had my money back."
+   },
+   {
+    "id": "ticket-20",
+    "input": "I've moved house. Please update my saved delivery address, the old one keeps appearing at checkout."
+   },
+   {
+    "id": "ticket-21",
+    "input": "Why was I charged £4.99 delivery when the site said free delivery over £50? My order was £62."
+   },
+   {
+    "id": "ticket-22",
+    "input": "The discount code SPRING10 didn't come off my total at checkout. I paid full price."
+   },
+   {
+    "id": "ticket-23",
+    "input": "It's been 12 days and the money for the chair I sent back hasn't reached my card."
+   },
+   {
+    "id": "ticket-24",
+    "input": "Someone else's order history shows up when I log in."
+   },
+   {
+    "id": "ticket-25",
+    "input": "I forgot which email I used to register. I only know my order number."
+   }
+  ],
+  "heldBack": []
+ },
+ {
+  "id": "review_mood",
+  "parameter": "mode_review_mood",
+  "name": "Read a review's mood",
+  "system": "You read one product review from Larkfield, an online home and garden shop, and say how the buyer feels about the product overall. positive: happy with the product. negative: unhappy with the product. mixed: clear praise and a clear complaint about the product, with neither winning.",
+  "schema": {
+   "type": "object",
+   "properties": {
+    "label": {
+     "type": "string",
+     "enum": [
+      "positive",
+      "negative",
+      "mixed"
+     ]
+    }
+   },
+   "required": [
+    "label"
+   ],
+   "additionalProperties": false
+  },
+  "label": "Reviews",
+  "heading": "Leave a review",
+  "button": "Post review",
+  "cases": [
+   {
+    "id": "mood-1",
+    "input": "Does exactly what it says. The blades are sharp and it was half the price of the big brands."
+   },
+   {
+    "id": "mood-2",
+    "input": "Bought two for the patio. Sturdy, easy to put together, and they've survived a week of rain."
+   },
+   {
+    "id": "mood-3",
+    "input": "Lovely soft throw, washes well. My daughter has claimed it."
+   },
+   {
+    "id": "mood-4",
+    "input": "Arrived well packed. The colour matches the photos and the stitching is neat."
+   },
+   {
+    "id": "mood-5",
+    "input": "Third one I've bought from here. Never had a problem."
+   },
+   {
+    "id": "mood-6",
+    "input": "Stopped working after two days. Waste of money."
+   },
+   {
+    "id": "mood-7",
+    "input": "The handle snapped the first time I lifted it. Cheap plastic."
+   },
+   {
+    "id": "mood-8",
+    "input": "Nothing like the picture. Thin fabric and it smells of chemicals."
+   },
+   {
+    "id": "mood-9",
+    "input": "Leaks from the base. I've tried three washers and it still drips."
+   },
+   {
+    "id": "mood-10",
+    "input": "Wobbly, even after tightening every bolt. I wouldn't put anything heavy on it."
+   },
+   {
+    "id": "mood-11",
+    "input": "Looks beautiful on the table, but the lid doesn't fit and steam escapes everywhere. I'm torn on whether to keep it."
+   },
+   {
+    "id": "mood-12",
+    "input": "Great light, terrible battery. It lasts an evening at most. I can't decide if I'd buy it again."
+   },
+   {
+    "id": "mood-13",
+    "input": "The cushions are comfortable but the covers faded badly in a month. Half happy, half annoyed."
+   },
+   {
+    "id": "mood-14",
+    "input": "Cuts well and feels solid, yet the safety catch is so fiddly that I avoid using it. Mixed feelings."
+   },
+   {
+    "id": "mood-15",
+    "input": "Good size and a nice finish; the drawers stick badly. Three stars: as much good as bad."
+   },
+   {
+    "id": "mood-16",
+    "input": "Oh brilliant, another kettle that turns itself off before the water boils. Just what I wanted."
+   },
+   {
+    "id": "mood-17",
+    "input": "If you enjoy assembling furniture with missing screws and holes that don't line up, this is the wardrobe for you."
+   },
+   {
+    "id": "mood-18",
+    "input": "I expected it to be flimsy at this price. It isn't. Not a single complaint."
+   },
+   {
+    "id": "mood-19",
+    "input": "The courier was two days late and the box was battered, but the mirror itself is perfect and exactly what I wanted."
+   },
+   {
+    "id": "mood-20",
+    "input": "Five stars for the customer service, one star for the hedge trimmer, which is going back."
+   },
+   {
+    "id": "mood-21",
+    "input": "I wanted to love it. The design is clever. But it broke within a week and the replacement did too."
+   },
+   {
+    "id": "mood-22",
+    "input": "I was sceptical after the reviews here, but mine works fine and has done for six months. Happy."
+   },
+   {
+    "id": "mood-23",
+    "input": "Smaller than I pictured, which turned out to be a blessing: it fits the windowsill perfectly."
+   },
+   {
+    "id": "mood-24",
+    "input": "Would be perfect if it came in grey. As it is, still the best watering can I've owned."
+   },
+   {
+    "id": "mood-25",
+    "input": "Returned it. Enough said."
+   }
+  ],
+  "heldBack": [
+   {
+    "id": "mood-held-1",
+    "input": "Took a while to arrive, but the bench is solid and looks great on the patio."
+   },
+   {
+    "id": "mood-held-2",
+    "input": "Lovely packaging and a nice note from the seller. Shame the teapot dribbles everywhere and the lid is chipped."
+   },
+   {
+    "id": "mood-held-3",
+    "input": "Honestly thought it would be a gimmick. Used it every day since."
+   },
+   {
+    "id": "mood-held-4",
+    "input": "It works, I suppose, if you don't mind the motor screaming and the smell of burning. Sending it back."
+   },
+   {
+    "id": "mood-held-5",
+    "input": "The fabric is gorgeous and the fit is awful. I keep going back and forth on whether to return it."
+   },
+   {
+    "id": "mood-held-6",
+    "input": "My only gripe is that I didn't buy two. Brilliant little heater."
+   },
+   {
+    "id": "mood-held-7",
+    "input": "Great idea, poor product. The hinge failed in a fortnight."
+   },
+   {
+    "id": "mood-held-8",
+    "input": "Instructions were useless, but once it's up it's sturdy, level and exactly the right size. Very pleased."
+   },
+   {
+    "id": "mood-held-9",
+    "input": "Half the tiles are perfect and half arrived a different shade. Not sure yet whether I'll keep them."
+   },
+   {
+    "id": "mood-held-10",
+    "input": "Would not buy again."
+   }
+  ]
+ },
+ {
+  "id": "receipt_fields",
+  "parameter": "mode_receipt_fields",
+  "name": "Pull fields from a receipt",
+  "system": "You read the text of a till receipt from a shop in the UK, which a Larkfield customer has pasted in, and pull out the shop's name, the date as YYYY-MM-DD and the total the customer paid as a number.",
+  "schema": {
+   "type": "object",
+   "properties": {
+    "merchant": {
+     "type": "string"
+    },
+    "date": {
+     "type": "string"
+    },
+    "total": {
+     "type": "number"
+    }
+   },
+   "required": [
+    "merchant",
+    "date",
+    "total"
+   ],
+   "additionalProperties": false
+  },
+  "label": "Rewards",
+  "heading": "Paste a receipt from a partner shop",
+  "button": "Collect points",
+  "cases": [
+   {
+    "id": "receipt-1",
+    "input": "THE COPPER KETTLE\nTable 6  12-11-2026\n2 x Flat white 6.80\n1 x Carrot cake 4.20\nSubtotal 11.00\nService 12.5% 1.38\nAmount paid 12.38"
+   },
+   {
+    "id": "receipt-2",
+    "input": "GREENLEAF MARKET\n07/11/2026 18:42\nOat milk 1.95\nBananas 0.89\nBread 2.40\nTOTAL 5.24"
+   },
+   {
+    "id": "receipt-3",
+    "input": "Northgate Hardware\nDate 03.11.2026\nWood screws 4x40 box 4.75\nSandpaper pack 3.20\nMasking tape 2.65\nTotal 10.60"
+   },
+   {
+    "id": "receipt-4",
+    "input": "Mill Lane Bakery\n05/10/26  08:15\nSourdough loaf 4.20\nCinnamon bun x2 5.00\nTotal paid 9.20\nCash 10.00  Change 0.80"
+   },
+   {
+    "id": "receipt-5",
+    "input": "FERNHILL GARDEN CENTRE\nTill 3  09-10-2026\nCompost 50L 7.99\nTulip bulbs x20 6.50\nHand trowel 8.99\nTOTAL DUE 23.48"
+   },
+   {
+    "id": "receipt-6",
+    "input": "Saltmarsh Deli\nServed by Jo  04/11/26\nOlives 200g 3.80\nSourdough crackers 2.95\nGoat's cheese 5.40\nTotal 12.15"
+   },
+   {
+    "id": "receipt-7",
+    "input": "Ivy House Books\n08.10.2026\nPaperback 9.99\nGreeting card 3.25\nAmount paid 13.24"
+   },
+   {
+    "id": "receipt-8",
+    "input": "THE BLUE DOOR TEA ROOM\nTable 2  02/11/2026\nCream tea for two 17.00\nPot of Assam 3.90\nSubtotal 20.90\nService 10% 2.09\nTotal 22.99"
+   },
+   {
+    "id": "receipt-9",
+    "input": "Castle Street Cycles\nDate: 25/10/2026\nInner tube 700c 6.50\nBrake pads pair 12.99\nTotal 19.49"
+   },
+   {
+    "id": "receipt-10",
+    "input": "HOLLINS FARM SHOP\n13/11/2026 10:07\nFree range eggs x12 4.20\nApple juice 1L 3.50\nPotatoes 2kg 2.80\nTOTAL 10.50\nCash 20.00  Change 9.50"
+   },
+   {
+    "id": "receipt-11",
+    "input": "Willow Row Florist\nOrder 0412  28.10.2026\nHand-tied bouquet 32.00\nGift card 1.50\nPaid 33.50"
+   },
+   {
+    "id": "receipt-12",
+    "input": "Quayside Fishmongers\n19/10/26\nHaddock fillet 400g 7.60\nSmoked mackerel 4.45\nTotal 12.05\nCash 15.00  Change 2.95"
+   },
+   {
+    "id": "receipt-13",
+    "input": "OLD FORGE IRONMONGERS\nReceipt 2291  31-10-2026\nPadlock 40mm 11.50\nCable ties x100 3.99\nTOTAL 15.49"
+   },
+   {
+    "id": "receipt-14",
+    "input": "Harbour Pharmacy\nDate: 2 Nov 2026\nPlasters 2.15\nHand cream 3.49\nTotal due 5.64\nCash 10.00  Change 4.36"
+   },
+   {
+    "id": "receipt-15",
+    "input": "Brook & Barley\n14 October 2026\nLunch special x2 24.00\nSparkling water 3.50\nSubtotal 27.50\nService 12.5% 3.44\nAmount paid 30.94"
+   },
+   {
+    "id": "receipt-16",
+    "input": "LARCH & PINE\n6 Nov 2026  14:20\nPine shelf 80cm 18.99\nBrackets pair 6.50\nTOTAL 25.49"
+   },
+   {
+    "id": "receipt-17",
+    "input": "Beacon Hill Pet Supplies\nSaturday 7 November 2026\nCat litter 10L 8.99\nDog treats 4.25\nBird seed 1kg 3.10\nTotal 16.34"
+   },
+   {
+    "id": "receipt-18",
+    "input": "Tanner's Yard Cafe\nTable 11  23 Oct 2026\nSoup of the day 6.50\nToasted sandwich 7.80\nTea x2 5.20\nTotal 19.50\nCash 20.00  Change 0.50"
+   },
+   {
+    "id": "receipt-19",
+    "input": "WINDMILL STORES\n1 November 2026\nMilk 2L 1.65\nNewspaper 2.20\nStamps x4 6.80\nTOTAL 10.65"
+   },
+   {
+    "id": "receipt-20",
+    "input": "Foxglove Nurseries\n2026-11-02 11:32\nLavender 2L pot 8.99\nTerracotta pot 30cm 12.50\nTotal 21.49"
+   },
+   {
+    "id": "receipt-21",
+    "input": "Seven Stars Kitchenware\nInvoice date 2026-10-17\nCast iron pan 26cm 34.50\nWooden spoon set 8.95\nAmount paid 43.45"
+   },
+   {
+    "id": "receipt-22",
+    "input": "THE PAPER LANTERN\n10/11/2026  19:55\nSet menu x2 38.00\nJasmine tea 3.00\nSubtotal 41.00\nService 10% 4.10\nTotal 45.10"
+   },
+   {
+    "id": "receipt-23",
+    "input": "Marlow's Greengrocer\n06-10-2026\nCarrots 1kg 0.95\nLeeks x3 1.80\nClementines net 2.50\nTotal 5.25\nCash 10.00  Change 4.75"
+   },
+   {
+    "id": "receipt-24",
+    "input": "Ashby Road Dry Cleaners\nTicket 778  20-10-2026\nSuit two-piece 14.50\nShirt x3 7.50\nPaid 22.00"
+   },
+   {
+    "id": "receipt-25",
+    "input": "Orchard Lane Toys\nDate 9 Nov 2026\nWooden train set 24.99\nJigsaw 500 piece 10.99\nTotal 35.98"
+   }
+  ],
+  "heldBack": []
+ },
+ {
+  "id": "product_title",
+  "parameter": "mode_product_title",
+  "name": "Rewrite a product title",
+  "system": "You write the title of a product listing for Larkfield, an online home and garden shop, from the seller's notes. At most 60 characters. Start with a capital letter. Keep the size, colour, material and quantity the notes give. No word written all in capitals, no exclamation marks and no sales talk. Reply with the title only.",
+  "label": "Sell with us",
+  "heading": "Describe your product",
+  "button": "Write my title",
+  "cases": [
+   {
+    "id": "title-1",
+    "input": "hand made mug, stoneware, speckled blue glaze, holds about 350ml"
+   },
+   {
+    "id": "title-2",
+    "input": "kids raincoat age 5-6 yellow with reflective strips, fleece lined"
+   },
+   {
+    "id": "title-3",
+    "input": "wool blanket 130 x 180 cm, grey herringbone, made in Wales"
+   },
+   {
+    "id": "title-4",
+    "input": "watering can 9 litre galvanised steel with brass rose"
+   },
+   {
+    "id": "title-5",
+    "input": "linen tablecloth, natural colour, 150cm round"
+   },
+   {
+    "id": "title-6",
+    "input": "oak chopping board 40 x 28 cm with juice groove"
+   },
+   {
+    "id": "title-7",
+    "input": "ceramic plant pot, white, 20cm, with drainage hole and saucer"
+   },
+   {
+    "id": "title-8",
+    "input": "garden kneeler, foam, green, 45 x 20 cm"
+   },
+   {
+    "id": "title-9",
+    "input": "cotton apron, navy stripe, adjustable neck strap, one size"
+   },
+   {
+    "id": "title-10",
+    "input": "BEST EVER!!! LED DESK LAMP - black - 3 brightness levels - AMAZING VALUE"
+   },
+   {
+    "id": "title-11",
+    "input": "*** BARGAIN *** GARDEN HOSE 30 METRES GREEN WITH SPRAY GUN!!! DON'T MISS OUT"
+   },
+   {
+    "id": "title-12",
+    "input": "STUNNING VELVET CUSHION!!! mustard yellow, 45cm square, feather filled, WOW"
+   },
+   {
+    "id": "title-13",
+    "input": "UNBEATABLE PRICE bamboo bath mat 60x40cm, natural finish, FREE GIFT"
+   },
+   {
+    "id": "title-14",
+    "input": "MUST HAVE!!! cast iron casserole dish 24cm RED enamel, oven safe"
+   },
+   {
+    "id": "title-15",
+    "input": "SALE SALE SALE doormat coir 60 x 90 cm plain natural, BEST SELLER"
+   },
+   {
+    "id": "title-16",
+    "input": "USB-C cable 2 metres long braided nylon supports 100W fast charging and data, comes in black, 18 month warranty, works with laptops, tablets and phones"
+   },
+   {
+    "id": "title-17",
+    "input": "bird feeder, hanging, clear plastic tube with green metal lid and base, 4 feeding ports, holds 1 kg of seed, 38 cm tall, easy to clean, squirrel resistant"
+   },
+   {
+    "id": "title-18",
+    "input": "floor lamp with a brass finish steel stem, 150 cm tall, cream fabric shade, foot switch, takes an E27 bulb which is not included, 2 m cord, suits living rooms and bedrooms"
+   },
+   {
+    "id": "title-19",
+    "input": "garden trowel with ash wood handle and stainless steel blade, 30 cm long, leather hanging loop, rust resistant, 10 year guarantee, gift boxed"
+   },
+   {
+    "id": "title-20",
+    "input": "storage basket woven from seagrass, natural colour, 35 cm wide and 30 cm high, two handles, folds flat, good for toys, blankets or laundry"
+   },
+   {
+    "id": "title-21",
+    "input": "set of 6 wine glasses, clear glass, 350ml each, dishwasher safe"
+   },
+   {
+    "id": "title-22",
+    "input": "pack of 20 beeswax tea lights, natural yellow, 4 hour burn"
+   },
+   {
+    "id": "title-23",
+    "input": "4 cork coasters, round, 10cm, plain"
+   },
+   {
+    "id": "title-24",
+    "input": "three terracotta herb pots 12cm on a wooden tray"
+   },
+   {
+    "id": "title-25",
+    "input": "pair of oven gloves, quilted cotton, grey, 30cm long"
+   }
+  ],
+  "heldBack": [
+   {
+    "id": "title-held-1",
+    "input": "door wedge, solid beech, 12 cm long, natural finish"
+   },
+   {
+    "id": "title-held-2",
+    "input": "GORGEOUS!!! throw pillow cover linen sage green 50x50cm zip closure - BEST PRICE"
+   },
+   {
+    "id": "title-held-3",
+    "input": "set of 3 nesting storage tins, cream enamel, largest 18cm"
+   },
+   {
+    "id": "title-held-4",
+    "input": "garden twine 100 m jute, green, on a wooden spool"
+   },
+   {
+    "id": "title-held-5",
+    "input": "welcome mat rubber backed 45 x 75 cm charcoal grey, hose clean, hard wearing, suits porches and back doors, will not curl at the edges"
+   },
+   {
+    "id": "title-held-6",
+    "input": "pair of bookends, cast iron, black, 15cm high"
+   },
+   {
+    "id": "title-held-7",
+    "input": "bread bin bamboo lid white steel body 33cm wide"
+   },
+   {
+    "id": "title-held-8",
+    "input": "AMAZING DEAL 12 wooden clothes pegs with spring, birch"
+   },
+   {
+    "id": "title-held-9",
+    "input": "plant mister, amber glass, 300 ml, brass pump top"
+   },
+   {
+    "id": "title-held-10",
+    "input": "tea towel, organic cotton, blue check, 50 x 70 cm, hanging loop, woven in Lancashire, gets softer with every wash, pack of two"
+   }
+  ]
+ },
+ {
+  "id": "delivery_summary",
+  "parameter": "mode_delivery_summary",
+  "name": "Summarise a delivery note",
+  "system": "You turn a courier's or warehouse's note about an order from Larkfield, an online home and garden shop, into one sentence for the customer's order page. At most 25 words. Say what has happened or will happen, and what the customer has to do, if anything. Reply with the sentence only.",
+  "label": "Orders",
+  "heading": "The courier's note on your order",
+  "button": "Tell me what it means",
+  "cases": [
+   {
+    "id": "summary-1",
+    "input": "Parcel collected from the Larkfield warehouse this morning and loaded for the overnight trunk to the Leeds depot. It will go out for delivery from there on Thursday between 8 am and 6 pm. No signature is needed."
+   },
+   {
+    "id": "summary-2",
+    "input": "Delivered at 14:12 today. The driver left the parcel in the porch as the delivery instructions asked, and took a photo, which is attached to the order."
+   },
+   {
+    "id": "summary-3",
+    "input": "Your order has been split. The two armchairs leave the warehouse today and should arrive on Monday. The footstool is out of stock and will follow in a second parcel, with no extra delivery charge."
+   },
+   {
+    "id": "summary-4",
+    "input": "The driver delivered the parcel to your neighbour at number 14 at 11:40, because nobody answered at your address. A card was put through your door to say so."
+   },
+   {
+    "id": "summary-5",
+    "input": "The parcel reached the Bristol depot at 05:30 and is on the van for delivery today. The driver's round usually reaches your postcode between 1 pm and 3 pm."
+   },
+   {
+    "id": "summary-6",
+    "input": "Your table was delivered by our two-person team at 10:05 and carried to the dining room. The team took the packaging away for recycling. The legs were fitted on site."
+   },
+   {
+    "id": "summary-7",
+    "input": "We have received the item you sent back. It arrived at the returns centre on Wednesday and passed inspection. Your refund has been sent and takes 3 to 5 working days to reach your card."
+   },
+   {
+    "id": "summary-8",
+    "input": "Your delivery was booked for Tuesday 17 November. The van has broken down and the round is cancelled. We have rebooked you for Thursday 19 November, same time slot, 8 am to 12 noon."
+   },
+   {
+    "id": "summary-9",
+    "input": "The parcel missed the sorting cut-off at the hub last night, so it will not arrive today, Friday, as planned. It is now due on Monday."
+   },
+   {
+    "id": "summary-10",
+    "input": "Storm warnings have closed the ferry route. Deliveries to the island planned for Wednesday will now go on the first sailing on Friday, weather allowing."
+   },
+   {
+    "id": "summary-11",
+    "input": "The mattress you ordered was due from the maker on 12 November but they have told us it will reach our warehouse on 20 November. We will deliver it to you on 23 November."
+   },
+   {
+    "id": "summary-12",
+    "input": "Sorry, we gave you the wrong date. Your order is not coming tomorrow. The driver's round for your area is on Saturday, so it will be with you on Saturday morning."
+   },
+   {
+    "id": "summary-13",
+    "input": "Customs held the parcel for two days for a routine check. It was released this afternoon. Delivery moves from Monday to Wednesday."
+   },
+   {
+    "id": "summary-14",
+    "input": "The driver tried to deliver at 9:15 and nobody was in. The parcel has gone back to the depot. Please book a new delivery day on the tracking page within 5 days, or it will be returned to Larkfield."
+   },
+   {
+    "id": "summary-15",
+    "input": "Your parcel is waiting at the Corner Stores pickup point on Mill Lane. Bring the collection code from your email and photo ID. It will be held until Friday 20 November."
+   },
+   {
+    "id": "summary-16",
+    "input": "We could not find your address. The label says 12 Meadow Way but the driver found no number 12 on that road. Please reply with the right house number or a nearby landmark so we can try again."
+   },
+   {
+    "id": "summary-17",
+    "input": "The sofa is too big for the standard van. A larger vehicle is needed and there must be someone at home to show the team in. Please phone the delivery team on the number in your order email to pick a day."
+   },
+   {
+    "id": "summary-18",
+    "input": "One of the two boxes arrived at the depot damaged and we have not sent it out. The other box will be delivered tomorrow. Tell us whether you want the damaged item replaced or refunded."
+   },
+   {
+    "id": "summary-19",
+    "input": "Your parcel needs a signature from someone aged 18 or over, because it contains garden tools with blades. Please make sure an adult is at home on Tuesday between 10 am and 2 pm."
+   },
+   {
+    "id": "summary-20",
+    "input": "ATT DEL 0915 - NO ANS - CARD LEFT - RTD DEPOT - REDEL NEXT WKG DAY"
+   },
+   {
+    "id": "summary-21",
+    "input": "DEL TO SAFE PLACE (SHED) 1632 PER CUST INSTR. PHOTO TAKEN."
+   },
+   {
+    "id": "summary-22",
+    "input": "PCL DMG IN TRANSIT - HELD AT HUB - SENDER NOTIFIED - REPLACEMENT TO BE DISPATCHED"
+   },
+   {
+    "id": "summary-23",
+    "input": "OUT FOR DEL - ETA 1300-1500 - SIG REQ"
+   },
+   {
+    "id": "summary-24",
+    "input": "ADDR QUERY - NO SUCH NO. ON RD - AWAITING CUST CONTACT - HELD 3 DAYS THEN RTS"
+   },
+   {
+    "id": "summary-25",
+    "input": "COLL FROM SENDER 1105 - IN TRANSIT TO HUB - DEL DUE 16/11"
+   }
+  ],
+  "heldBack": [
+   {
+    "id": "summary-held-1",
+    "input": "Your order left our warehouse at 16:20 and is with the courier. It should reach you on Wednesday. You will get a text with a one-hour slot on the morning of delivery."
+   },
+   {
+    "id": "summary-held-2",
+    "input": "Delivered at 09:48 and signed for by R. Evans at reception. The parcel was left at the front desk of your building."
+   },
+   {
+    "id": "summary-held-3",
+    "input": "We planned to deliver on Friday 20 November, but the lorry bringing your wardrobe to our depot is delayed at the port. Your new delivery day is Tuesday 24 November."
+   },
+   {
+    "id": "summary-held-4",
+    "input": "The driver could not get into your building because the entry code on the order did not work. Please send us the right code today so the parcel can go out again tomorrow."
+   },
+   {
+    "id": "summary-held-5",
+    "input": "DEL ATT 1410 - GATE LOCKED - NO ACCESS - PCL HELD AT DEPOT 5 DAYS - CUST TO ARRANGE REDEL"
+   },
+   {
+    "id": "summary-held-6",
+    "input": "Your parcel has been handed to the local post office because we do not deliver to your area ourselves. They will bring it with your normal post within two working days."
+   },
+   {
+    "id": "summary-held-7",
+    "input": "The second of your three boxes has been found at our hub after going missing on Monday. All three boxes will now be delivered together on Thursday."
+   },
+   {
+    "id": "summary-held-8",
+    "input": "Your collection is booked. The courier will pick up the faulty mower on Monday between 9 am and 1 pm. Please have it boxed and ready by the front door."
+   },
+   {
+    "id": "summary-held-9",
+    "input": "OUT FOR DEL - 2 MAN CREW - CALL 30 MIN BEFORE ARR - ROOM OF CHOICE"
+   },
+   {
+    "id": "summary-held-10",
+    "input": "The weather has stopped all deliveries in your postcode today. Nothing is wrong with your order. We will send a new date by email as soon as the roads reopen."
+   }
+  ]
+ },
+ {
+  "id": "invoice_total",
+  "parameter": "mode_invoice_total",
+  "name": "Work out an invoice total",
+  "system": "You work out the total of a trade order for an invoice from Larkfield, an online home and garden shop. Reply with the total to pay in pounds as a number.",
+  "schema": {
+   "type": "object",
+   "properties": {
+    "total": {
+     "type": "number"
+    }
+   },
+   "required": [
+    "total"
+   ],
+   "additionalProperties": false
+  },
+  "label": "Trade",
+  "heading": "Your trade order",
+  "button": "Work out my total",
+  "cases": [
+   {
+    "id": "invoice-1",
+    "input": "2 x Garden bench at £129.00 each"
+   },
+   {
+    "id": "invoice-2",
+    "input": "4 x Terracotta pot 40cm at £18.50 each\n1 x Potting table at £89.00 each"
+   },
+   {
+    "id": "invoice-3",
+    "input": "10 x Bag of compost 50L at £7.99 each"
+   },
+   {
+    "id": "invoice-4",
+    "input": "3 x Solar path light at £14.99 each\n2 x Hose reel at £34.50 each"
+   },
+   {
+    "id": "invoice-5",
+    "input": "6 x Dining chair at £48.50 each\n1 x Dining table at £215.00 each"
+   },
+   {
+    "id": "invoice-6",
+    "input": "5 x Wool throw at £39.00 each\nDiscount: 10% off the goods"
+   },
+   {
+    "id": "invoice-7",
+    "input": "12 x Tea towel at £6.50 each\n4 x Apron at £18.00 each\nDiscount: 15% off the goods"
+   },
+   {
+    "id": "invoice-8",
+    "input": "2 x Floor lamp at £74.50 each\nDiscount: 20% off the goods"
+   },
+   {
+    "id": "invoice-9",
+    "input": "8 x Picture frame A3 at £12.75 each\nDiscount: 5% off the goods"
+   },
+   {
+    "id": "invoice-10",
+    "input": "3 x Bookcase at £119.00 each\n3 x Shelf insert at £14.50 each\nDiscount: 10% off the goods"
+   },
+   {
+    "id": "invoice-11",
+    "input": "20 x Paving slab at £8.95 each\nVAT: 20% on the goods"
+   },
+   {
+    "id": "invoice-12",
+    "input": "1 x Garden shed 6x4 at £349.00 each\nVAT: 20% on the goods"
+   },
+   {
+    "id": "invoice-13",
+    "input": "15 x Fence panel at £27.50 each\n16 x Fence post at £11.25 each\nVAT: 20% on the goods"
+   },
+   {
+    "id": "invoice-14",
+    "input": "7 x Planter box at £23.60 each\nVAT: 20% on the goods"
+   },
+   {
+    "id": "invoice-15",
+    "input": "2 x Wheelbarrow at £59.99 each\n4 x Spade at £22.49 each\nVAT: 20% on the goods"
+   },
+   {
+    "id": "invoice-16",
+    "input": "12 x Oak dining chair at £48.50 each\n3 x Extending table at £215.00 each\nDiscount: 10% off the goods\nVAT: 20% on the goods after the discount\nDelivery: £35.00, added after VAT"
+   },
+   {
+    "id": "invoice-17",
+    "input": "40 x Decking board 3.6m at £11.95 each\nDiscount: 5% off the goods\nVAT: 20% on the goods after the discount\nDelivery: £45.00, added after VAT"
+   },
+   {
+    "id": "invoice-18",
+    "input": "6 x Rattan armchair at £89.00 each\n2 x Coffee table at £64.50 each\nDiscount: 12% off the goods\nVAT: 20% on the goods after the discount\nDelivery: £25.00, added after VAT"
+   },
+   {
+    "id": "invoice-19",
+    "input": "25 x Bistro chair at £32.00 each\n8 x Bistro table at £56.00 each\nDiscount: 15% off the goods\nVAT: 20% on the goods after the discount\nDelivery: £60.00, added after VAT"
+   },
+   {
+    "id": "invoice-20",
+    "input": "3 x Greenhouse 6x8 at £419.00 each\nDiscount: 7.5% off the goods\nVAT: 20% on the goods after the discount\nDelivery: £95.00, added after VAT"
+   },
+   {
+    "id": "invoice-21",
+    "input": "18 x Raised bed kit at £46.75 each\nVAT: 20% on the goods\nDelivery: £30.00, added after VAT"
+   },
+   {
+    "id": "invoice-22",
+    "input": "9 x Parasol 2.7m at £54.50 each\n9 x Parasol base at £28.95 each\nDiscount: 10% off the goods\nDelivery: £19.95"
+   },
+   {
+    "id": "invoice-23",
+    "input": "30 x Outdoor cushion at £16.40 each\nDiscount: 20% off the goods\nVAT: 20% on the goods after the discount"
+   },
+   {
+    "id": "invoice-24",
+    "input": "4 x Fire pit at £139.00 each\n4 x Fire pit cover at £21.50 each\n10 x Log bag at £6.95 each\nDiscount: 10% off the goods\nVAT: 20% on the goods after the discount\nDelivery: £40.00, added after VAT"
+   },
+   {
+    "id": "invoice-25",
+    "input": "14 x Window box at £17.85 each\n14 x Bracket set at £6.40 each\nDiscount: 2.5% off the goods\nVAT: 20% on the goods after the discount\nDelivery: £12.50, added after VAT"
+   }
+  ],
+  "heldBack": []
+ },
+ {
+  "id": "email_address",
+  "parameter": "mode_email_address",
+  "name": "Pull an address from an email",
+  "system": "You read an email a customer sent to Larkfield, an online home and garden shop, about where to deliver an order. Pull out the delivery address the customer wants used: the name the parcel should be addressed to, the street line, the town or city, and the postcode. Leave a field empty when the email doesn't give it.",
+  "schema": {
+   "type": "object",
+   "properties": {
+    "name": {
+     "type": "string"
+    },
+    "street": {
+     "type": "string"
+    },
+    "city": {
+     "type": "string"
+    },
+    "postcode": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "name",
+    "street",
+    "city",
+    "postcode"
+   ],
+   "additionalProperties": false
+  },
+  "label": "Delivery",
+  "heading": "Email us where to deliver",
+  "button": "Read my address",
+  "cases": [
+   {
+    "id": "address-1",
+    "input": "Hi, please deliver my order to:\nHannah Whitcombe\n14 Mill Road\nLeeds\nLS6 4QT\nThanks!"
+   },
+   {
+    "id": "address-2",
+    "input": "Hello Larkfield, my delivery address is Daniel Okafor, Flat 3, 27 Harbour Street, Bristol BS1 5TX."
+   },
+   {
+    "id": "address-3",
+    "input": "Order #71520. Deliver to Priya Raman, 8 Orchard Close, Reading, RG4 7HB please."
+   },
+   {
+    "id": "address-4",
+    "input": "Please send it to Tom Ellery at The Old Bakery, Church Lane, Ludlow, SY8 1BN. There's no house number."
+   },
+   {
+    "id": "address-5",
+    "input": "delivery address for my order: grace liang, 61 station parade, harrogate, hg1 1tt"
+   },
+   {
+    "id": "address-6",
+    "input": "Hi team. It's a business address: Marcus Bell, Unit 5, Tannery Yard, Kendal LA9 4RE. Someone is in from 9 to 5."
+   },
+   {
+    "id": "address-7",
+    "input": "Name: Aisha Rahman\nAddress: 102 Kingsway\nTown: Swansea\nPostcode: SA1 5JE\nPhone: on my account"
+   },
+   {
+    "id": "address-8",
+    "input": "Could you post the lamp to Oliver Stroud, 3 Beech Avenue, Norwich NR2 3PL? Leave it in the porch if I'm out."
+   },
+   {
+    "id": "address-9",
+    "input": "I've moved since I ordered. Please don't use 4 Poplar Court, Salford M5 3WQ any more. The new address is Rosa Delgado, 19 Canal Walk, Manchester M4 6DE."
+   },
+   {
+    "id": "address-10",
+    "input": "My account still shows 55 Bridge Street, Perth PH1 5RS, where I lived until September. Deliver to Ian McAllister, 7 Lochside Terrace, Stirling FK8 2QR instead."
+   },
+   {
+    "id": "address-11",
+    "input": "Sophie Turnbull here. Send the order to 22 Abbey Gardens, Bath BA2 6LN. My billing address stays as 9 Northfield Road, Bath BA1 4HP."
+   },
+   {
+    "id": "address-12",
+    "input": "Change of plan: I'll be at my new flat by then. Not 31 Elm Grove, Liverpool L7 8SN but Kwame Mensah, Flat 12, Albion House, Dock Road, Liverpool L3 4BB."
+   },
+   {
+    "id": "address-13",
+    "input": "Hi, it's Elena Petrova. I'm in Cardiff, on Windsor Road, at number 45. The postcode, if you need it, is CF24 1DH."
+   },
+   {
+    "id": "address-14",
+    "input": "The postcode is YO17 7LX and the house is 2 The Green. That's in Malton. The order is in my name, James Hartley."
+   },
+   {
+    "id": "address-15",
+    "input": "You asked where to deliver. Leicester. The street is Clarence Street and we're number 88, the one with the blue door. LE1 3RW. Nadia Hussain."
+   },
+   {
+    "id": "address-16",
+    "input": "Please deliver my order to my home: Peter Vaughan, 16 Larch Rise, Exeter EX4 5AD.\n\n--\nPeter Vaughan, Facilities Manager\nBrennan Holt Surveyors, 200 Queen Street, Exeter EX1 1HS"
+   },
+   {
+    "id": "address-17",
+    "input": "Home delivery please, not the office: 5 Rookery Lane, Lincoln LN6 7PG.\n\nChloe Bannister\nAccounts Assistant\nTanaka Lab Ltd, 1 Science Park, Lincoln LN5 9ZZ"
+   },
+   {
+    "id": "address-18",
+    "input": "Deliver to 73 Victoria Road, Coventry CV1 3FJ.\n\nKind regards,\nSamir Qureshi\nSent from Larkfield Robotics, Innovation Way, Coventry CV4 7AL"
+   },
+   {
+    "id": "address-19",
+    "input": "It's a present for my mother, so please send it to her, not me: Margaret Doyle, 30 Seaview Crescent, Whitby YO21 3EZ. From her son Kevin Doyle."
+   },
+   {
+    "id": "address-20",
+    "input": "I'm away that week, so please address the parcel to my neighbour: Ben Achterberg, 11 Priory Mews, Oxford OX2 6HJ. Regards, Lucy Farrow."
+   },
+   {
+    "id": "address-21",
+    "input": "Please deliver the flowers to my sister, not to me. She is Helen Marsh, and she lives at 4 Castle Road, Durham DH1 4LS. Paid for by me, Robert Marsh."
+   },
+   {
+    "id": "address-22",
+    "input": "Hi, when will my order arrive? I need it before the weekend."
+   },
+   {
+    "id": "address-23",
+    "input": "This is Fiona Ashdown. Please use the same address as last time."
+   },
+   {
+    "id": "address-24",
+    "input": "Can you hold my delivery for a week? We're on holiday until the 21st."
+   },
+   {
+    "id": "address-25",
+    "input": "George Pym here. I can't remember the full address of the new place yet, only the postcode: CB5 8DZ. I'll send the rest tomorrow."
+   }
+  ],
+  "heldBack": [
+   {
+    "id": "address-held-1",
+    "input": "Please send my order to Ruth Calder, 9 Tannery Row, York YO1 7HB."
+   },
+   {
+    "id": "address-held-2",
+    "input": "Is my parcel coming today? The tracking page won't load."
+   },
+   {
+    "id": "address-held-3",
+    "input": "New address for the order: Liam Brody, Flat 4, 12 Quay Street, Bristol BS1 4DJ. The old one on file is wrong."
+   },
+   {
+    "id": "address-held-4",
+    "input": "It goes to Mei Tan at Rose Cottage, Back Lane, Hexham NE46 3PU. No number, just the name on the gate."
+   },
+   {
+    "id": "address-held-5",
+    "input": "Please leave the parcel with a neighbour if I'm out. Thanks."
+   },
+   {
+    "id": "address-held-6",
+    "input": "I'm Arjun Patel. We're at number 31, on Station Road in Luton. Postcode LU1 2QF."
+   },
+   {
+    "id": "address-held-7",
+    "input": "Clare Whitby here, I'll email the address once we've completed on the house."
+   },
+   {
+    "id": "address-held-8",
+    "input": "Deliver to the workshop please: Owen Price, Unit 2, Mill Court, Stroud GL5 1AA."
+   },
+   {
+    "id": "address-held-9",
+    "input": "Not the Leeds address any more. Send it to Sara Lindqvist, 76 Park Avenue, Hull HU5 3EX."
+   },
+   {
+    "id": "address-held-10",
+    "input": "I only have the postcode to hand: HX1 2AB. Will that do for now?"
+   }
+  ]
+ },
+ {
+  "id": "returns_answer",
+  "parameter": "mode_returns_answer",
+  "name": "Answer a returns question",
+  "system": "You answer customers of Larkfield, an online home and garden shop, who ask whether they can return an item. The returns policy: an item can be returned within 30 days of the day it was delivered, and the original packaging isn't needed. Sale items can be returned like any other. Plants and seeds can be returned within 14 days of delivery. Items made to order or personalised can't be returned. A faulty item of any kind can be returned within 12 months of delivery. Reply with whether this return is allowed and one friendly sentence for the customer.",
+  "schema": {
+   "type": "object",
+   "properties": {
+    "allowed": {
+     "type": "boolean"
+    },
+    "reply": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "allowed",
+    "reply"
+   ],
+   "additionalProperties": false
+  },
+  "label": "Returns",
+  "heading": "Can I send it back?",
+  "button": "Ask",
+  "cases": [
+   {
+    "id": "returns-1",
+    "input": "Today is 14 November 2026.\nMy desk lamp arrived on 9 November 2026. It's fine, I've just changed my mind. Can I send it back?"
+   },
+   {
+    "id": "returns-2",
+    "input": "Today is 14 November 2026.\nThe set of bath towels was delivered on 2 November 2026. The colour doesn't match the bathroom. Can I return them?"
+   },
+   {
+    "id": "returns-3",
+    "input": "Today is 14 November 2026.\nI bought a doormat in your sale, delivered 30 October 2026. It's too small. Do sale items go back?"
+   },
+   {
+    "id": "returns-4",
+    "input": "Today is 14 November 2026.\nI'd like to return the garden parasol that came on 20 August 2026. We never used it."
+   },
+   {
+    "id": "returns-5",
+    "input": "Today is 14 November 2026.\nCan I return a bookcase? It was delivered on 1 September 2026 and it's still boxed."
+   },
+   {
+    "id": "returns-6",
+    "input": "Today is 14 November 2026.\nThe wall clock came on 6 November 2026. I threw the box away. Can I still return it?"
+   },
+   {
+    "id": "returns-7",
+    "input": "Today is 14 November 2026.\nI ordered six dining chairs, delivered 3 June 2026, and we've decided they don't suit the room. Can they go back?"
+   },
+   {
+    "id": "returns-8",
+    "input": "Today is 14 November 2026.\nMy rug was delivered on 15 October 2026. I'd like to return it. Am I still in time?"
+   },
+   {
+    "id": "returns-9",
+    "input": "Today is 14 November 2026.\nThe coffee table arrived on 14 October 2026 and I want to send it back. Is that still possible?"
+   },
+   {
+    "id": "returns-10",
+    "input": "Today is 14 November 2026.\nThe kettle I ordered came on 16 October 2026. I haven't opened it. Can I return it?"
+   },
+   {
+    "id": "returns-11",
+    "input": "Today is 14 November 2026.\nA mirror was delivered to me on 13 October 2026. It's too big for the hallway. Can I return it?"
+   },
+   {
+    "id": "returns-12",
+    "input": "Today is 30 October 2026.\nThe cushion covers arrived on 30 September 2026. I'd like to return them, please."
+   },
+   {
+    "id": "returns-13",
+    "input": "Today is 31 October 2026.\nThe curtain pole was delivered on 30 September 2026. I'd like to send it back."
+   },
+   {
+    "id": "returns-14",
+    "input": "Today is 14 November 2026.\nThe doormat with our family name on it came on 10 November 2026. The font looks different from what I imagined. Can I return it?"
+   },
+   {
+    "id": "returns-15",
+    "input": "Today is 14 November 2026.\nI ordered curtains made to my window measurements, delivered 3 November 2026. I've changed my mind about the colour. Can they go back?"
+   },
+   {
+    "id": "returns-16",
+    "input": "Today is 14 November 2026.\nThe chopping board engraved for my parents' anniversary arrived on 12 November 2026. They already have one. Can I return it?"
+   },
+   {
+    "id": "returns-17",
+    "input": "Today is 14 November 2026.\nThe olive tree was delivered on 8 November 2026. It's bigger than I expected. Can I return it?"
+   },
+   {
+    "id": "returns-18",
+    "input": "Today is 14 November 2026.\nI bought three packets of wildflower seeds, delivered 20 October 2026. I haven't opened them. Can I send them back?"
+   },
+   {
+    "id": "returns-19",
+    "input": "Today is 14 November 2026.\nThe potted lavender came on 31 October 2026 and I've decided I don't want it. Can it go back?"
+   },
+   {
+    "id": "returns-20",
+    "input": "Today is 14 November 2026.\nMy rose bush arrived on 30 October 2026. I'd like to return it. Am I in time?"
+   },
+   {
+    "id": "returns-21",
+    "input": "Today is 14 November 2026.\nThe electric hedge trimmer delivered on 6 July 2026 has stopped charging. Can I return it?"
+   },
+   {
+    "id": "returns-22",
+    "input": "Today is 14 November 2026.\nMy patio heater came on 17 February 2026 and the switch has broken. Can I send it back?"
+   },
+   {
+    "id": "returns-23",
+    "input": "Today is 14 November 2026.\nThe garden hose reel was delivered on 8 September 2025. It has started leaking at the handle. Can I return it?"
+   },
+   {
+    "id": "returns-24",
+    "input": "Today is 14 November 2026.\nThe blind made to measure for my kitchen arrived on 5 October 2026 and the cord mechanism doesn't work. Can I return it?"
+   },
+   {
+    "id": "returns-25",
+    "input": "Today is 14 November 2026.\nThe bay tree delivered on 1 October 2026 came in a cracked pot with the main stem snapped. Can I return it?"
+   }
+  ],
+  "heldBack": []
+ }
+]

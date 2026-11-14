@@ -126,6 +126,9 @@ for (const [id, mode] of modes) {
   expect(ran, `shop: ${id} ran ${want === "on_device" ? "on this computer" : "in the cloud"}`);
   if (!ran) console.log("     the card says:", (await card.locator(".result").innerText()).replace(/\s+/g, " ").slice(0, 300));
 }
+// The results page's row styles once reached the cards' answers and squeezed each into a column 110 px wide.
+const [answer, wholeCard] = await Promise.all([page.locator(".card .result").first().boundingBox(), page.locator(".card").first().boundingBox()]);
+expect(answer.width > wholeCard.width * 0.8, "shop: an answer has its card's full width");
 await shot("shop");
 
 // Wi-Fi off: device features still answer, cloud features say they need a connection.

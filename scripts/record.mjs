@@ -17,7 +17,8 @@ if (process.env.REDO || process.env.REGRADE) {
   await page.evaluate((partial) => sessionStorage.setItem("partial", partial), JSON.stringify(kept));
 }
 // FIXES=1 records the one-line fixes on top of the last record, instead of the check itself.
-await page.getByRole("button", { name: process.env.FIXES ? "Record the fixes" : "Record everything" }).click();
+// GRADE=1 only has the cloud model judge the answers in the last record that it hasn't judged yet.
+await page.getByRole("button", { name: process.env.GRADE ? "Grade what's new" : process.env.FIXES ? "Record the fixes" : "Record everything" }).click();
 
 let last = "";
 for (;;) {

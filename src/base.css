@@ -359,3 +359,13 @@ article.result dl.answer div { grid-template-columns: 68px 1fr; gap: 8px; }
   article.result .given[data-source="in_cloud"] { grid-column: auto; }
   .feature-results > h2 { font-size: 24px; }
 }
+
+/* Apple's model in the record: its three runs sit in a second row, under Chrome's */
+article.result:has(.given[data-model="apple"]) .asked { grid-row: 1 / span 2; }
+article.result .given[data-model="apple"] { grid-row: 2; margin-top: 8px; }
+article.result .given[data-model="apple"] > .quiet:first-child::before { border-radius: 2px; }
+
+/* The board's platform switch, where the record has Apple's model too */
+.platforms { position: relative; z-index: 2; display: flex; gap: 8px; justify-content: center; padding-top: 14px; }
+.platforms button { background: var(--white); color: var(--ink); }
+.platforms button[aria-pressed="true"] { background: var(--ink); color: var(--white); }

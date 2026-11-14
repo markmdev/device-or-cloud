@@ -4,15 +4,15 @@ import { SOURCE_LABEL } from "../answer";
 import type { Check, Feature } from "../features";
 import { parse, plain } from "../features/types";
 import { CLOUD_MODEL } from "../firebase";
-import { appCode, CHROME, DEPLOY, TEMPLATE_FILE, templateText } from "./apply";
+import { appCode, CHROME, DEPLOY, IPHONE, swiftCode, TEMPLATE_FILE, templateText } from "./apply";
 import { Fixes } from "./fixes";
-import { barInWords, DEFAULT_ALLOWED, dollarsPerRequest, graded, moves, RUNS, VERDICT_NAME, verdictFor, verdictLine, type Failure, type FixRecord, type Run, type Verdict } from "./record";
+import { APPLES, barInWords, CHROMES, DEFAULT_ALLOWED, dollarsPerRequest, graded, moves, onApple, RUNS, VERDICT_NAME, verdictFor, verdictLine, type Failure, type FixRecord, type Run, type Verdict } from "./record";
 import type { Cases } from "./run";
 
 /** One model's share of right answers, with the bar marked on it. */
-function Meter({ who, right, of, unit, allowed }: { who: string; right: number; of: number; unit: string; allowed: number }) {
+function Meter({ who, right, of, unit, allowed, other }: { who: string; right: number; of: number; unit: string; allowed: number; other?: boolean }) {
   return (
-    <span className="meter" data-within={(of - right) * 100 <= allowed * of}>
+    <span className="meter" data-within={(of - right) * 100 <= allowed * of} data-other={other}>
       <span>{who}</span>
       <i style={{ "--share": right / of, "--bar": 1 - allowed / 100 } as React.CSSProperties} />
       <span>
@@ -23,7 +23,8 @@ function Meter({ who, right, of, unit, allowed }: { who: string; right: number; 
   );
 }
 
-function FeatureRow({ v, mine, selected, onSelect, allowed, named }: { v: Verdict; mine: boolean; selected: boolean; onSelect: () => void; allowed: number; named?: boolean }) {
+/** One feature on the board. `v` is its verdict on the platform the board shows; `chrome` and `apple` are each on-device model's own. */
+function FeatureRow({ v, chrome, apple, mine, selected, onSelect, allowed, named }: { v: Verdict; chrome: Verdict; apple?: Verdict; mine: boolean; selected: boolean; onSelect: () => void; allowed: number; named?: boolean }) {
   const counted = v.kind === "device" || v.kind === "cloud" || v.kind === "fix";
   return (
     <li>
@@ -32,12 +33,13 @@ function FeatureRow({ v, mine, selected, onSelect, allowed, named }: { v: Verdic
         {named && <em>{VERDICT_NAME[v.kind].replace(/\.$/, "")}</em>}
         {counted ? (
           <>
-            <Meter who="Chrome's model" right={v.runsRight} of={v.runs} unit=" runs" allowed={allowed} />
+            <Meter who={CHROMES} right={chrome.runsRight} of={chrome.runs} unit=" runs" allowed={allowed} other={v !== chrome} />
+            {apple && <Meter who={APPLES} right={apple.runsRight} of={apple.runs} unit=" runs" allowed={allowed} other={v !== apple} />}
             <Meter who="The cloud" right={v.cloudRight} of={v.inputs} unit="" allowed={allowed} />
             {v.kind === "cloud" && v.pattern && <small>Its misses: {v.pattern}.</small>}
           </>
         ) : (
-          <span>{verdictLine(v)}</span>
+          <span>{verdictLine(v, v === apple ? APPLES : CHROMES)}</span>
         )}
         {mine && <small>Run on this computer just now</small>}
       </button>
@@ -103,7 +105,7 @@ function RunAnswer({ run, check, telling, size, children }: { run?: Run; check?:
   );
 }
 
-function Proof({ v, cases }: { v: Verdict; cases: Cases }) {
+function Proof({ v, cases, who }: { v: Verdict; cases: Cases; who: string }) {
   const [at, setAt] = useState(0);
   useEffect(() => setAt(0), [v.feature.id]);
   if (v.kind === "pending") return <section className="proof"><p className="quiet">{v.feature.name}: waiting for answers.</p></section>;
@@ -111,12 +113,12 @@ function Proof({ v, cases }: { v: Verdict; cases: Cases }) {
     return (
       <section className="proof">
         <p>
-          <strong>{v.feature.name}.</strong> Chrome's model and the cloud model were both right on all {v.inputs} inputs, on every run.
+          <strong>{v.feature.name}.</strong> {who} and the cloud model were both right on all {v.inputs} inputs, on every run.
         </p>
       </section>
     );
   }
-  // The plainest failures come first: only Chrome's model wrong, and on every run.
+  // The plainest failures come first: only the on-device model wrong, and on every run.
   const sameOnAllRuns = (x: Failure) => new Set(cases[x.c.id].device.map((d) => ("text" in d ? d.text.replace(/\s+/g, "") : d.error))).size === 1;
   const plainness = (x: Failure) => (x.side === "device" ? 0 : 4) + (x.device.every((d) => !d.ok) ? 0 : 2) + (sameOnAllRuns(x) ? 0 : 1);
   const failures = [...v.failures].sort((a, b) => plainness(a) - plainness(b));
@@ -135,10 +137,10 @@ function Proof({ v, cases }: { v: Verdict; cases: Cases }) {
     <section className="proof">
       <div className="side device">
         <p className="badge" data-source="on_device">
-          {SOURCE_LABEL.on_device}
+          {who === APPLES ? SOURCE_LABEL.on_iphone : SOURCE_LABEL.on_device}
           {"seconds" in run && ` · ${run.seconds.toFixed(1)} s`}
         </p>
-        <p className="who">Chrome's model answered</p>
+        <p className="who">{who} answered</p>
         <RunAnswer run={run} check={deviceCheck} telling={telling} size={size}>
           <p className="quiet">
             {wrongRuns === 0 ? `Right on all ${RUNS} runs.` : sameText ? `The same answer on all ${RUNS} runs.` : `Wrong on ${wrongRuns} of ${RUNS} runs.`}
@@ -158,7 +160,7 @@ function Proof({ v, cases }: { v: Verdict; cases: Cases }) {
         <p className="why">
           {!deviceCheck.ok ? deviceCheck.reason : f.cloud && !f.cloud.ok ? f.cloud.reason : ""}
           <small>
-            {f.side === "cloud" ? "Only the cloud model got this one wrong." : f.side === "both" ? "Both models got this one wrong." : "Only Chrome's model got this one wrong."}{" "}
+            {f.side === "cloud" ? "Only the cloud model got this one wrong." : f.side === "both" ? "Both models got this one wrong." : `Only ${who} got this one wrong.`}{" "}
             {decidedByCode ? "Checked by code." : "Judged by the cloud model."}
           </small>
         </p>
@@ -174,7 +176,7 @@ function Proof({ v, cases }: { v: Verdict; cases: Cases }) {
   );
 }
 
-function BottomLine({ verdicts, allowed, afterFixes }: { verdicts: Verdict[]; allowed: number; afterFixes: number }) {
+function BottomLine({ verdicts, allowed, afterFixes, devices }: { verdicts: Verdict[]; allowed: number; afterFixes: number; devices: string }) {
   const [requests, setRequests] = useState(100_000);
   const [share, setShare] = useState(30);
   const onDevice = verdicts.filter((v) => v.kind === "device");
@@ -187,11 +189,11 @@ function BottomLine({ verdicts, allowed, afterFixes }: { verdicts: Verdict[]; al
         {barInWords(allowed)},{" "}
         {verdicts.length === 1
           ? onDevice.length
-            ? "this feature can run on your users' own devices."
+            ? `this feature can run on your users' own ${devices}.`
             : afterFixes
-              ? "this feature stays in the cloud today, and can run on your users' own devices after a one-line fix."
-              : "this feature can't run on your users' own devices yet."
-          : `${onDevice.length} of ${verdicts.length} features can run on your users' own devices${
+              ? `this feature stays in the cloud today, and can run on your users' own ${devices} after a one-line fix.`
+              : `this feature can't run on your users' own ${devices} yet.`
+          : `${onDevice.length} of ${verdicts.length} features can run on your users' own ${devices}${
               afterFixes > onDevice.length ? ` today, and ${afterFixes} of ${verdicts.length} after one-line fixes.` : "."
             }`}
       </h2>
@@ -223,8 +225,8 @@ function Copy({ text }: { text: string }) {
 }
 
 /** The verdicts handed over as Remote Config: the template, the app code that reads it, and the command that deploys it. */
-function Apply({ verdicts, children }: { verdicts: Verdict[]; children?: ReactNode }) {
-  const text = templateText(verdicts), code = appCode(verdicts);
+function Apply({ verdicts, apple, children }: { verdicts: Verdict[]; apple?: Verdict[]; children?: ReactNode }) {
+  const text = templateText(verdicts, apple), code = appCode(verdicts), swift = apple && swiftCode(verdicts, CLOUD_MODEL);
   const moved = verdicts.filter((v) => v.kind === "device").length;
   return (
     <section className="apply">
@@ -232,9 +234,11 @@ function Apply({ verdicts, children }: { verdicts: Verdict[]; children?: ReactNo
       <p className="lede">
         The verdicts at this bar as a Firebase Remote Config template: one parameter for each feature, holding its inference mode. Every feature
         stays in the cloud by default.{" "}
-        {moved > 0
-          ? `${moved === 1 ? "The one" : `The ${moved}`} that can run on the device ${moved === 1 ? "gets" : "get"} prefer_on_device under a condition, "${CHROME}": this check ran Chrome's model, so its verdicts hold there and nowhere else.`
-          : "At this bar none is moved to the device."}{" "}
+        {apple
+          ? `A feature that can run on the device gets prefer_on_device under a condition for the platform whose own model passed: "${CHROME}" for Chrome's model, "${IPHONE}" for Apple's. A verdict holds on its own platform and nowhere else.`
+          : moved > 0
+            ? `${moved === 1 ? "The one" : `The ${moved}`} that can run on the device ${moved === 1 ? "gets" : "get"} prefer_on_device under a condition, "${CHROME}": this check ran Chrome's model, so its verdicts hold there and nowhere else.`
+            : "At this bar none is moved to the device."}{" "}
         Nothing on this page writes to your Firebase project. You deploy the template yourself, and after that you move a feature back from the
         Firebase console, with no release.
       </p>
@@ -251,10 +255,20 @@ function Apply({ verdicts, children }: { verdicts: Verdict[]; children?: ReactNo
       </article>
       <article>
         <h3>2. Read each feature's mode in your app</h3>
+        {swift && <p className="quiet">On the web</p>}
         <pre>{code}</pre>
         <p className="actions">
           <Copy text={code} />
         </p>
+        {swift && (
+          <>
+            <p className="quiet">In the iPhone app</p>
+            <pre>{swift}</pre>
+            <p className="actions">
+              <Copy text={swift} />
+            </p>
+          </>
+        )}
       </article>
       <article>
         <h3>3. Deploy it</h3>
@@ -294,7 +308,14 @@ export function Board({ features, cases, mine = [], held, fixes, opensOn, canRun
   const [allowed, setAllowed] = useState(DEFAULT_ALLOWED);
   const latestBar = useRef(DEFAULT_ALLOWED);
 
-  const verdicts = features.map((f) => verdictFor(f, cases[f.id], allowed));
+  // Where the record has Apple's runs too, the board is about one platform at a time: Chrome on the web, or the iPhone app.
+  const hasApple = features.some((f) => Object.values(cases[f.id] ?? {}).some((r) => r.apple));
+  const [iphone, setIphone] = useState(false);
+  const who = iphone ? APPLES : CHROMES;
+  const seen = (id: string) => (iphone ? onApple(cases[id]) : cases[id]);
+  const chrome = features.map((f) => verdictFor(f, cases[f.id], allowed));
+  const apple = hasApple ? features.map((f) => verdictFor(f, onApple(cases[f.id]), allowed)) : undefined;
+  const verdicts = iphone ? apple! : chrome;
   const onDevice = verdicts.filter((v) => v.kind === "device"), inCloud = verdicts.filter((v) => v.kind === "cloud");
   const neither = verdicts.filter((v) => v.kind !== "device" && v.kind !== "cloud");
 
@@ -302,24 +323,37 @@ export function Board({ features, cases, mine = [], held, fixes, opensOn, canRun
   function setBar(next: number) {
     setBarNow(next);
     latestBar.current = next;
-    const sides = (at: number) => features.map((f) => verdictFor(f, cases[f.id], at).kind).join();
+    const sides = (at: number) => features.map((f) => verdictFor(f, seen(f.id), at).kind).join();
     if (!document.startViewTransition || sides(next) === sides(allowed)) return setAllowed(next);
     // A newer move of the slider skips this transition; its update still runs, so it takes the newest position.
     document.startViewTransition(() => flushSync(() => setAllowed(latestBar.current))).ready.catch(() => {});
   }
   const shown = verdicts.find((v) => v.feature.id === selected) ?? verdicts.find((v) => v.kind === "cloud") ?? verdicts.find((v) => v.failures.length) ?? verdicts[0];
-  const row = (v: Verdict, named?: boolean) => (
-    <FeatureRow key={v.feature.id} v={v} allowed={allowed} named={named} mine={mine.includes(v.feature.id)} selected={shown === v} onSelect={() => setSelected(v.feature.id)} />
-  );
+  const row = (v: Verdict, named?: boolean) => {
+    const i = verdicts.indexOf(v);
+    return (
+      <FeatureRow key={v.feature.id} v={v} chrome={chrome[i]} apple={apple?.[i]} allowed={allowed} named={named} mine={!iphone && mine.includes(v.feature.id)} selected={shown === v} onSelect={() => setSelected(v.feature.id)} />
+    );
+  };
 
   return (
     <>
-      <div className="board">
+      <div className="board" data-platform={iphone ? "iphone" : "chrome"}>
         <label className="bar">
           Wrong answers allowed in 100
           <input type="range" min={0} max={30} value={bar} onChange={(e) => setBar(Number(e.target.value))} />
           <output>{bar}</output>
         </label>
+        {hasApple && (
+          <div className="platforms" role="group" aria-label="Platform">
+            <button aria-pressed={!iphone} onClick={() => setIphone(false)}>
+              {CHROME}
+            </button>
+            <button aria-pressed={iphone} onClick={() => setIphone(true)}>
+              {IPHONE}
+            </button>
+          </div>
+        )}
 
         <div className="sides">
           <section className="side device">
@@ -327,7 +361,7 @@ export function Board({ features, cases, mine = [], held, fixes, opensOn, canRun
               <b>{onDevice.length}</b> <span>run on the device</span>
             </h2>
             <ul>{onDevice.map((v) => row(v))}</ul>
-            {onDevice.length === 0 && <p className="none">Nothing yet. At this bar, Chrome's model is wrong too often on every feature.</p>}
+            {onDevice.length === 0 && <p className="none">Nothing yet. At this bar, {who} is wrong too often on every feature.</p>}
           </section>
           <section className="side cloud">
             <h2>
@@ -347,8 +381,9 @@ export function Board({ features, cases, mine = [], held, fixes, opensOn, canRun
           </section>
         )}
 
-        <Proof v={shown} cases={cases[shown.feature.id] ?? {}} />
-        {shown.kind === "cloud" && shown.feature.heldBack?.length && held?.[shown.feature.id] && (
+        <Proof v={shown} cases={seen(shown.feature.id) ?? {}} who={who} />
+        {/* The one-line fixes were tried on Chrome's model only. */}
+        {!iphone && shown.kind === "cloud" && shown.feature.heldBack?.length && held?.[shown.feature.id] && (
           <Fixes
             feature={shown.feature}
             base={cases[shown.feature.id]}
@@ -363,9 +398,14 @@ export function Board({ features, cases, mine = [], held, fixes, opensOn, canRun
       <BottomLine
         verdicts={verdicts}
         allowed={allowed}
-        afterFixes={verdicts.filter((v) => v.kind === "device" || (v.kind === "cloud" && fixes?.[v.feature.id]?.some((fix) => moves(v.feature, fix, allowed)))).length}
+        afterFixes={verdicts.filter((v) => v.kind === "device" || (!iphone && v.kind === "cloud" && fixes?.[v.feature.id]?.some((fix) => moves(v.feature, fix, allowed)))).length}
+        devices={iphone ? "iPhones" : "devices"}
       />
-      {verdicts.every((v) => v.kind !== "pending") && <Apply verdicts={verdicts}>{children}</Apply>}
+      {chrome.every((v) => v.kind !== "pending") && (
+        <Apply verdicts={chrome} apple={apple}>
+          {children}
+        </Apply>
+      )}
     </>
   );
 }
