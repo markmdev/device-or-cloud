@@ -4,6 +4,7 @@ import { SOURCE_LABEL } from "../answer";
 import type { Check, Feature } from "../features";
 import { parse, plain } from "../features/types";
 import { CLOUD_MODEL } from "../firebase";
+import { appCode, CHROME, DEPLOY, TEMPLATE_FILE, templateText } from "./apply";
 import { Fixes } from "./fixes";
 import { barInWords, DEFAULT_ALLOWED, dollarsPerRequest, graded, moves, RUNS, VERDICT_NAME, verdictFor, verdictLine, type Failure, type FixRecord, type Run, type Verdict } from "./record";
 import type { Cases } from "./run";
@@ -211,10 +212,66 @@ function BottomLine({ verdicts, allowed, afterFixes }: { verdicts: Verdict[]; al
   );
 }
 
+function Copy({ text }: { text: string }) {
+  const [copied, setCopied] = useState(false);
+  useEffect(() => setCopied(false), [text]);
+  return (
+    <button className="plain" onClick={() => navigator.clipboard.writeText(text).then(() => setCopied(true))}>
+      {copied ? "Copied" : "Copy"}
+    </button>
+  );
+}
+
+/** The verdicts handed over as Remote Config: the template, the app code that reads it, and the command that deploys it. */
+function Apply({ verdicts, children }: { verdicts: Verdict[]; children?: ReactNode }) {
+  const text = templateText(verdicts), code = appCode(verdicts);
+  const moved = verdicts.filter((v) => v.kind === "device").length;
+  return (
+    <section className="apply">
+      <h2>Apply it</h2>
+      <p className="lede">
+        The verdicts at this bar as a Firebase Remote Config template: one parameter for each feature, holding its inference mode. Every feature
+        stays in the cloud by default.{" "}
+        {moved > 0
+          ? `${moved === 1 ? "The one" : `The ${moved}`} that can run on the device ${moved === 1 ? "gets" : "get"} prefer_on_device under a condition, "${CHROME}": this check ran Chrome's model, so its verdicts hold there and nowhere else.`
+          : "At this bar none is moved to the device."}{" "}
+        Nothing on this page writes to your Firebase project. You deploy the template yourself, and after that you move a feature back from the
+        Firebase console, with no release.
+      </p>
+      {children}
+      <article>
+        <h3>1. Save this as {TEMPLATE_FILE}</h3>
+        <pre>{text}</pre>
+        <p className="actions">
+          <Copy text={text} />
+          <a className="button plain" download={TEMPLATE_FILE} href={`data:application/json;charset=utf-8,${encodeURIComponent(text)}`}>
+            Download
+          </a>
+        </p>
+      </article>
+      <article>
+        <h3>2. Read each feature's mode in your app</h3>
+        <pre>{code}</pre>
+        <p className="actions">
+          <Copy text={code} />
+        </p>
+      </article>
+      <article>
+        <h3>3. Deploy it</h3>
+        <p>Name the template in your firebase.json, then deploy only Remote Config:</p>
+        <pre>{`"remoteconfig": { "template": "${TEMPLATE_FILE}" }\n\n${DEPLOY}`}</pre>
+        <p className="quiet">
+          This replaces your project's whole Remote Config template. If the project already has parameters, add these to its own template instead.
+        </p>
+      </article>
+    </section>
+  );
+}
+
 /**
  * The verdicts for a list of features: the bar, the two sides, the proof for one feature, its one-line fixes and the bottom line.
  */
-export function Board({ features, cases, mine = [], held, fixes, opensOn, canRun, onFix }: {
+export function Board({ features, cases, mine = [], held, fixes, opensOn, canRun, onFix, children }: {
   features: Feature[];
   cases: Record<string, Cases>;
   /** Features whose device answers were made on this computer just now. */
@@ -227,6 +284,8 @@ export function Board({ features, cases, mine = [], held, fixes, opensOn, canRun
   canRun: boolean;
   /** Given where a line tried on the page is also run in the cloud and kept: a developer's own feature. */
   onFix?: (featureId: string, fix: FixRecord) => void;
+  /** A note under "Apply it" about where this template is in use. */
+  children?: ReactNode;
 }) {
   const [selected, setSelected] = useState(opensOn);
   // The slider's own position is kept apart from the bar the verdicts use: the verdicts follow a moment later when
@@ -306,6 +365,7 @@ export function Board({ features, cases, mine = [], held, fixes, opensOn, canRun
         allowed={allowed}
         afterFixes={verdicts.filter((v) => v.kind === "device" || (v.kind === "cloud" && fixes?.[v.feature.id]?.some((fix) => moves(v.feature, fix, allowed)))).length}
       />
+      {verdicts.every((v) => v.kind !== "pending") && <Apply verdicts={verdicts}>{children}</Apply>}
     </>
   );
 }

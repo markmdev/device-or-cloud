@@ -4,7 +4,9 @@ import { readFileSync } from "node:fs";
 import { chromium } from "playwright-core";
 
 const site = process.env.SITE ?? "https://device-or-cloud.web.app";
-const modes = Object.entries(JSON.parse(readFileSync("remoteconfig.template.json", "utf8")).parameters).map(([key, p]) => [key.replace("mode_", ""), p.defaultValue.value]);
+// The mode each shop feature has in Chrome, where the walk runs: the template's value for Chrome on the web, or its default.
+const template = JSON.parse(readFileSync("remoteconfig.template.json", "utf8"));
+const modes = Object.entries(template.parameters).map(([key, p]) => [key.replace("mode_", ""), (p.conditionalValues?.["Chrome on the web"] ?? p.defaultValue).value]);
 const browser = await chromium.connectOverCDP(process.env.CDP);
 const context = await browser.newContext({ viewport: { width: 1440, height: 1000 } });
 if (process.env.APPCHECK_DEBUG_TOKEN) await context.addInitScript((token) => { self.FIREBASE_APPCHECK_DEBUG_TOKEN = token; }, process.env.APPCHECK_DEBUG_TOKEN);
@@ -36,6 +38,13 @@ const before = await money();
 await page.getByLabel("Requests a month for each feature").fill("500000");
 expect(onDevice === 0 || (await money()) !== before, "the money follows the request count");
 await shot("check");
+
+// Apply it: the page hands over the same Remote Config template the shop was deployed with.
+expect(JSON.stringify(JSON.parse(await page.locator(".apply pre").first().innerText())) === JSON.stringify(template), "apply: at the default bar the template shown is the one the shop runs on");
+const appCode = await page.locator(".apply pre").nth(1).innerText();
+expect(modes.every(([id]) => appCode.includes(`mode_${id}:`)), "apply: the app code names every feature's parameter");
+expect(/firebase deploy --only remoteconfig/.test(await page.locator(".apply pre").nth(2).innerText()), "apply: the deploy command is given");
+expect(/Nothing on this page writes to your Firebase project/.test(await page.locator(".apply").innerText()), "apply: it says nothing is written to the reader's project");
 
 // A feature kept in the cloud: the recorded one-line fixes, and a line of the reader's own on Chrome's model.
 expect(/after one-line fixes/.test(await page.locator(".bottom h2").innerText()), "the bottom line counts what one-line fixes move");
@@ -88,6 +97,9 @@ expect((await decided.count()) === 1, "own: the pasted feature gets its verdict"
 if (!(await decided.count())) console.log("     the page says:", (await page.locator("main > .notice").allInnerTexts()).join(" | ").slice(0, 400));
 expect(/this feature/.test(await page.locator(".bottom h2").innerText().catch(() => "")), "own: the bottom line speaks of the one feature");
 expect(/inputs have a right answer, and code compared/.test(await page.locator("footer").innerText().catch(() => "")), "own: the page says how the answers were judged");
+const ownMode = JSON.parse(await page.locator(".apply pre").first().innerText().catch(() => "{}")).parameters?.mode_sort_a_message_to_the_front_desk;
+const ownVerdict = await decided.getAttribute("data-verdict").catch(() => null);
+expect(!!ownMode && Boolean(ownMode.conditionalValues) === (ownVerdict === "device"), "own: the pasted feature's template moves it to the device only if its verdict does");
 await shot("own");
 
 // The shop: every feature answers where Remote Config says, and says so.
