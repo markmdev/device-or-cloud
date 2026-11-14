@@ -237,9 +237,10 @@ export function countLine(v: Verdict, who = CHROMES): string {
 /** Why a verdict could still change, and what would settle it. */
 export function unsureLine(v: Verdict, who = CHROMES): string | undefined {
   if (!v.unsure) return undefined;
-  const whose = [v.unsure.device && `${who}'s`, v.unsure.cloud && "the cloud model's"].filter(Boolean).join(" and ");
+  const both = v.unsure.device && v.unsure.cloud;
+  const whose = both ? `${who}'s range and the cloud model's cross` : `${v.unsure.device ? `${who}'s` : "the cloud model's"} range crosses`;
   const settle = v.unsure.more ? `About ${v.unsure.more} more inputs would settle it.` : "The rate sits on the bar, so it would take hundreds more inputs to settle it.";
-  return `${UNSURE}: ${whose} range crosses the bar. ${settle}`;
+  return `${UNSURE}: ${whose} the bar. ${settle}`;
 }
 
 /** What moving a feature to the device costs: the inputs the cloud model gets right and the on-device model doesn't. */
