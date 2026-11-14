@@ -3,7 +3,7 @@ import { AnswerText } from "../answer";
 import type { Feature } from "../features";
 import { parse } from "../features/types";
 
-type Shown = { label: string; heading: string; button: string; sample?: string; result(answer: Record<string, unknown>, text: string): ReactNode };
+type Shown = { label: string; heading: string; button: string; sample?: string; /** The input's first line is the shop's own, not the customer's. */ ownFirstLine?: true; result(answer: Record<string, unknown>, text: string): ReactNode };
 
 const longDate = (iso: unknown) => {
   const date = new Date(String(iso));
@@ -46,6 +46,7 @@ export const SHOWN: Record<string, Shown> = {
     label: "Returns",
     heading: "Can I send it back?",
     button: "Ask",
+    ownFirstLine: true,
     result: (a) => (
       <>
         <p className="big">{a.allowed ? "Yes, you can return it." : "No, this one can't come back."}</p>

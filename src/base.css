@@ -218,6 +218,7 @@ p.answer { white-space: pre-wrap; }
 .order-line b { color: var(--ink); }
 .order-line i { margin-left: auto; padding: 7px 12px; border: 1.5px solid var(--ink); border-radius: 999px; font: 600 12.5px/1 var(--ui); white-space: nowrap; }
 .card textarea { font: 400 15px/1.5 var(--ui); }
+.card .adds { margin-top: 8px; color: var(--soft); font-size: 13px; }
 .card:is([data-feature="receipt_fields"], [data-feature="invoice_total"]) textarea { font: 400 13.5px/1.55 var(--mono); }
 .card { display: flex; flex-direction: column; padding: 0 22px; border: 2px solid var(--ink); border-radius: 22px; background: var(--white); overflow: hidden; }
 .card .label { margin-top: 20px; color: var(--soft); font: 600 12.5px/1 var(--ui); }

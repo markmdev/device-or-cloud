@@ -26,7 +26,10 @@ const ON_DEVICE: Mode[] = ["prefer_on_device", "only_on_device"];
 
 function Card({ feature, mode, device }: { feature: Feature; mode: Mode; device?: DeviceState }) {
   const shown = SHOWN[feature.id];
-  const [input, setInput] = useState(shown.sample ?? feature.cases[0].input);
+  const sample = shown.sample ?? feature.cases[0].input;
+  const cut = shown.ownFirstLine ? sample.indexOf("\n") : -1;
+  const added = sample.slice(0, cut + 1);
+  const [input, setInput] = useState(sample.slice(cut + 1));
   const [busy, setBusy] = useState(false);
   const [answer, setAnswer] = useState<Answer>();
   const [problem, setProblem] = useState<string>();
@@ -36,7 +39,7 @@ function Card({ feature, mode, device }: { feature: Feature; mode: Mode; device?
     setAnswer(undefined);
     setProblem(undefined);
     try {
-      setAnswer(await ask(feature, mode, input));
+      setAnswer(await ask(feature, mode, added + input));
     } catch (e) {
       setProblem(navigator.onLine ? (e instanceof Error ? e.message : String(e)) : "This feature runs in the cloud, so it needs a connection.");
     }
@@ -56,6 +59,7 @@ function Card({ feature, mode, device }: { feature: Feature; mode: Mode; device?
       <p className="label">{shown.label}</p>
       <h2>{shown.heading}</h2>
       <textarea value={input} onChange={(e) => setInput(e.target.value)} rows={Math.min(8, input.split("\n").length + 2)} />
+      {added && <p className="adds">The shop adds its own line first: “{added.trim()}”</p>}
       <p className="actions">
         <button onClick={run} disabled={busy || !input.trim()}>
           {shown.button}
