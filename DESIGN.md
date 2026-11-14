@@ -30,17 +30,21 @@ All three are open licence, loaded from Google Fonts in `index.html` and `shop/i
 
 ## The check, top to bottom
 
+The first screen is the product: what it does in one sentence, the two counts, and one answer Chrome's model got wrong. On a laptop at 1440 by 900 all three are in view without scrolling.
+
 1. **The top line:** the name with its two-colour dot, the shop, where and when the check was recorded, the run button.
-2. **A notice** when Chrome's model isn't on this computer, or a run has to wait: a pale amber strip, full width.
-3. **The question** large on the left, how the check works small on the right.
+2. **A notice** only when a run has to wait: a pale amber strip, full width.
+3. **What it does**, one sentence, on the left, and how the check works small on the right.
 4. **The board**, edge to edge. The bar's slider sits on the line at the board's top edge, because it decides which side each feature is on.
    - Each side opens with its count, as large as the page goes.
-   - Each feature is a white card with two meters, Chrome's model and the cloud. The tick on a meter is the bar. A meter that falls short of it is red. Moving the slider moves every tick at once, and a feature that changes sides is seen crossing the line.
-   - Features that are on neither side (fix the prompt first, not enough inputs, still running) sit in one white panel across the line, each with its verdict in amber.
-   - **The proof** is a white panel across the line: Chrome's answer under the device side, the cloud's under the cloud side, the input between them. The field that tells the two answers apart is shown large, both at the same size; the full answers are below it in mono. The plainest failure opens first: only Chrome's model wrong, on every run, with the same answer each time. The page opens on the address feature, whose dropped house number reads in a second.
-   - **One more line in the prompt** follows the proof for a feature kept in the cloud: a white panel across the line. A line that moves the feature to the device is a lime card with a solid "Moves to the device"; one that doesn't is a quiet wash card. The reader's own line is the dashed card under them.
-5. **The bottom line:** the count in one sentence, then what moving gives the users, in lime.
-6. **The footer:** how answers are judged and what leaves the computer, small, on wash.
+   - Each feature is a white card: its name on the left, two meters on the right, Chrome's model and the cloud. The tick on a meter is the bar. A meter that falls short of it is red. Moving the slider moves every tick at once, and a feature that changes sides is seen crossing the line.
+   - A bead on the line, in amber, counts the features on neither side and jumps to them.
+   - **The proof** comes straight after the two sides, so the feature a reader picked and its proof are together: a white panel across the line, Chrome's answer under the device side, the cloud's under the cloud side, the input between them. The field that tells the two answers apart is shown large, both at the same size; the full answers are below it in mono. The plainest failure opens first: only Chrome's model wrong, on every run, with the same answer each time. The page opens on the address feature, whose dropped house number reads in a second. Picking a feature anywhere brings its proof into view.
+   - **One more line in the prompt** follows the proof for a feature kept in the cloud: a white panel across the line. A line that moves the feature to the device is a lime card with a solid "Moves to the device"; one that doesn't is a quiet wash card with its reason under a rule.
+   - **On neither side yet** comes last in the board: one white panel across the line, each feature with its verdict in amber.
+5. **The download notice**, when Chrome's model isn't on this computer, under the board: everything above it was recorded.
+6. **The bottom line:** what moving gives the users, in lime.
+7. **The footer:** how answers are judged and what leaves the computer, small, on wash.
 
 ## Check your own prompts
 
@@ -48,7 +52,7 @@ The same top line, question and board as the shop's check, with the paste form b
 
 ## Apply it
 
-Three steps under the bottom line, each a white card with an ink border: the template (tall, on the left), the app code and the deploy command. Code sits on wash, never on a dark block.
+Under the bottom line. One line for each feature first: its dot in its side's colour, its parameter, and the mode it gets. The template, the app code and the deploy command are behind one button under the list, as three white cards with ink borders: the template (tall, on the left), the code and the command. Code sits on wash, never on a dark block.
 
 ## The results page
 
@@ -79,4 +83,6 @@ A shopper's own words are set in Geist. A receipt and a trade order keep Geist M
 
 ## Sizes
 
-Laptop first: Chrome's model only runs on a computer. Under 900px the sides stack, the device first, and the panels that cross the line become plain panels. Nothing scrolls sideways at 390px.
+Laptop first: Chrome's model only runs on a computer. Under 900px the two counts stay side by side at the top of the board, so a phone's first screen has the sentence, the bar and both counts. The device's features follow on lime, then the cloud's on blue, and the panels that cross the line become plain panels. How the check works moves under the board. Nothing scrolls sideways at 390px.
+
+The share picture (`public/board.png`, 1200 by 630) is the real page with the feature lists hidden: the bar, the two counts and the address proof.
