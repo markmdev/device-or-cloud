@@ -52,8 +52,8 @@ export function Fixes({ feature, base, record, allowed, canRun }: { feature: Fea
     <section className="fixes">
       <h2>Can one more line in the prompt move it?</h2>
       <p className="quiet">
-        A line counts only if it also works on {feature.heldBack?.length} inputs that were kept out of the check, with the cloud model still within the
-        bar.
+        A line counts only if Chrome's model is within the bar with it on the check's inputs and on {feature.heldBack?.length} inputs that were kept
+        out of the check, with the cloud model still within the bar on those.
       </p>
       {fixes.map((fix) => (
         <article key={fix.line} className="fix" data-moved={moves(feature, fix, allowed)}>

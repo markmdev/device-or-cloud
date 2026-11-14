@@ -80,11 +80,17 @@ export function tally(feature: Feature, cases: Record<string, CaseRecord> = {}, 
 
 export const within = (right: number, of: number, allowed: number) => (of - right) * 100 <= allowed * of;
 
-/** A line moves a feature when, on the held-back inputs, Chrome's model and the cloud both stay within the bar with it. */
+/**
+ * A line moves a feature when Chrome's model stays within the bar with it on the check's inputs and on the held-back ones,
+ * and the cloud model stays within it on the held-back ones.
+ */
 export function moves(feature: Feature, fix: FixRecord, allowed: number): boolean {
   const held = feature.heldBack ?? [];
-  const t = tally(feature, fix.held, held);
-  return t.runs === held.length * RUNS && t.cloud === held.length && within(t.runsRight, t.runs, allowed) && within(t.cloudRight, t.cloud, allowed);
+  const own = tally(feature, fix.cases), kept = tally(feature, fix.held, held);
+  return (
+    own.runs === feature.cases.length * RUNS && kept.runs === held.length * RUNS && kept.cloud === held.length &&
+    within(own.runsRight, own.runs, allowed) && within(kept.runsRight, kept.runs, allowed) && within(kept.cloudRight, kept.cloud, allowed)
+  );
 }
 
 export const ENOUGH_INPUTS = 20;
