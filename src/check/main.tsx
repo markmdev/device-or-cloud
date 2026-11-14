@@ -6,9 +6,10 @@ import { DownloadPanel } from "../download";
 import { CLOUD_MODEL, deviceState, type DeviceState } from "../firebase";
 import { OutOfRequests, outOfRequests } from "./ask";
 import { Board } from "./board";
-import { heldBackOf, missesOf, OUR_LINES, proposeLine, tryLine } from "./fix";
+import { heldBackOf, missesOf, proposeLine, withLine } from "./fix";
+import { APPLE_LINES, OUR_LINES } from "./lines";
 import recorded from "./recorded.json";
-import { RUNS, verdictFor, whereApple, written, type CheckRecord, type FixRecord } from "./record";
+import { onApple, RUNS, verdictFor, whereApple, written, type CheckRecord, type FixRecord } from "./record";
 import { gradeFeature, runCloud, runDevice, type Cases } from "./run";
 
 const RECORD = recorded as CheckRecord;
@@ -57,24 +58,67 @@ function App() {
     setRunning(undefined);
   }
 
-  // Dev only: makes the recorded check, or adds to it what new inputs still lack. The device side comes first, because it is
-  // free; the cloud side keeps what it has after every feature, so a run cut short by the free tier's day picks up where it stopped.
+  // Dev only: makes the recorded check, or adds to it what it still lacks: answers to new inputs, the held-back inputs, each
+  // line's runs, the cloud model's judgments. Everything Chrome's model does comes first, because it is free. The cloud side
+  // follows, and a run cut short by the free tier's day keeps what it has and goes on from there the next time.
   async function recordEverything() {
-    const all: Record<string, Cases> = JSON.parse(sessionStorage.getItem("partial") ?? "null") ?? { ...RECORD.features };
+    const kept: Pick<CheckRecord, "features" | "held" | "fixes"> = JSON.parse(sessionStorage.getItem("partial") ?? "null") ?? RECORD;
+    const all = { ...kept.features }, held = { ...kept.held }, fixes: Record<string, FixRecord[]> = structuredClone(kept.fixes ?? {});
+    const save = () => sessionStorage.setItem("partial", JSON.stringify({ features: all, held, fixes }));
+    const quietly = () => {}, never = () => false;
     setFeatures(all);
-    const keep = (f: Feature, cases: Cases) => {
-      put(f.id)(cases);
-      all[f.id] = cases;
-      sessionStorage.setItem("partial", JSON.stringify(all));
-    };
+    const fixable = FEATURES.filter((f) => f.heldBack);
+    const lined = (f: Feature, fix: FixRecord) => (fix.line ? withLine(f, fix.line) : f);
+    // Apple's runs of a line come from the iPhone app (scripts/apple.ts); Chrome's are made here.
+    async function onChrome(f: Feature, fix: FixRecord) {
+      if (fix.on) return;
+      fix.cases = await runDevice(lined(f, fix), fix.cases, quietly, never);
+      fix.held = await runDevice(heldBackOf(lined(f, fix)), fix.held, quietly, never);
+      save();
+    }
+
     for (const f of FEATURES) {
       setRunning(f.id);
-      keep(f, await runDevice(f, all[f.id] ?? {}, put(f.id), () => false));
+      all[f.id] = await runDevice(f, all[f.id] ?? {}, put(f.id), never);
+      save();
     }
+    for (const f of fixable) {
+      setRunning(f.id);
+      held[f.id] = await runDevice(heldBackOf(f), held[f.id] ?? {}, quietly, never);
+      fixes[f.id] ??= [];
+      if (OUR_LINES[f.id] && !fixes[f.id].some((fix) => fix.by === "us" && !fix.on)) fixes[f.id].push({ line: OUR_LINES[f.id], by: "us", cases: {}, held: {} });
+      for (const fix of fixes[f.id]) await onChrome(f, fix);
+    }
+
     try {
       for (const f of FEATURES) {
         setRunning(f.id);
-        keep(f, await gradeFeature(f, await runCloud(f, all[f.id], (cases) => keep(f, cases))));
+        all[f.id] = await gradeFeature(f, await runCloud(f, all[f.id], put(f.id)));
+        put(f.id)(all[f.id]);
+        save();
+      }
+      for (const f of fixable) {
+        setRunning(f.id);
+        held[f.id] = await gradeFeature(heldBackOf(f), await runCloud(heldBackOf(f), held[f.id], quietly));
+        save();
+        // The product's own fix step: the cloud model writes one line from what each on-device model got wrong.
+        for (const on of [undefined, "apple"] as const) {
+          const cases = on ? onApple(all[f.id]) : all[f.id], v = verdictFor(f, cases);
+          const worthALine = v.kind === "cloud" || (v.kind === "device" && v.failures.some((x) => x.side !== "cloud"));
+          if ((on && !APPLE_LINES.includes(f.id)) || !worthALine || fixes[f.id].some((fix) => fix.by === "cloud" && fix.on === on)) continue;
+          fixes[f.id].push({ line: await proposeLine(f, missesOf(f, cases)), by: "cloud", on, cases: {}, held: {} });
+          save();
+        }
+        for (const fix of fixes[f.id]) {
+          await onChrome(f, fix);
+          // The held-back inputs go to the cloud once with each line. A setting leaves the cloud's request as it was, and a line
+          // tried on both on-device models is the same request, so those answers are taken over.
+          const same = fix.steady ? held[f.id] : fixes[f.id].find((other) => other !== fix && other.line === fix.line && Object.values(other.held).some((r) => r.cloud))?.held;
+          if (same) for (const c of f.heldBack!) if (same[c.id]?.cloud) fix.held[c.id] = { ...(fix.held[c.id] ?? { device: [] }), cloud: same[c.id].cloud };
+          fix.held = await gradeFeature(heldBackOf(lined(f, fix)), await runCloud(heldBackOf(lined(f, fix)), fix.held, quietly));
+          fix.cases = await gradeFeature(lined(f, fix), fix.cases);
+          save();
+        }
       }
     } catch (e) {
       if (!(e instanceof OutOfRequests)) throw e;
@@ -90,52 +134,10 @@ function App() {
       date: new Date().toISOString().slice(0, 10),
       cloudModel: CLOUD_MODEL,
       features: all,
+      held,
+      fixes,
     };
     sessionStorage.setItem("record", JSON.stringify(record));
-  }
-
-  // Dev only: for each feature the default bar keeps in the cloud, records the held-back inputs as they stand, the line the cloud
-  // model proposes from the failures, and our own line where we have one. It resumes like the main recording.
-  async function recordFixes() {
-    const held: Record<string, Cases> = JSON.parse(sessionStorage.getItem("partial-held") ?? "null") ?? RECORD.held ?? {};
-    const fixes: Record<string, FixRecord[]> = JSON.parse(sessionStorage.getItem("partial-fixes") ?? "null") ?? {};
-    const keep = () => {
-      sessionStorage.setItem("partial-held", JSON.stringify(held));
-      sessionStorage.setItem("partial-fixes", JSON.stringify(fixes));
-    };
-    for (const f of FEATURES) {
-      const v = verdictFor(f, RECORD.features[f.id]);
-      if (v.kind !== "cloud" || !f.heldBack) continue;
-      setRunning(f.id);
-      const heldFeature = heldBackOf(f);
-      held[f.id] = await gradeFeature(heldFeature, await runCloud(heldFeature, await runDevice(heldFeature, held[f.id] ?? {}, () => {}, () => false), () => {}));
-      keep();
-      fixes[f.id] ??= [];
-      if (!fixes[f.id].some((fix) => fix.by === "cloud")) {
-        fixes[f.id].push({ line: await proposeLine(f, missesOf(f, RECORD.features[f.id])), by: "cloud", cases: {}, held: {} });
-        keep();
-      }
-      if (OUR_LINES[f.id] && !fixes[f.id].some((fix) => fix.by === "us")) fixes[f.id].push({ line: OUR_LINES[f.id], by: "us", cases: {}, held: {} });
-      for (const fix of fixes[f.id]) {
-        if (Object.keys(fix.held).length && Object.values(fix.held).every((r) => r.cloud)) continue;
-        Object.assign(fix, await tryLine(f, fix.line, () => {}, true));
-        keep();
-      }
-    }
-    setRunning(undefined);
-    sessionStorage.setItem("record", JSON.stringify({ ...RECORD, held, fixes }));
-  }
-
-  // Dev only: has the cloud model judge the free-text answers that have no verdict yet, as Apple's have after `npm run apple`.
-  async function gradeNew() {
-    const all = { ...RECORD.features }, held = { ...RECORD.held };
-    for (const f of FEATURES) {
-      setRunning(f.id);
-      all[f.id] = await gradeFeature(f, all[f.id]);
-      if (held[f.id]) held[f.id] = await gradeFeature(heldBackOf(f), held[f.id]);
-    }
-    setRunning(undefined);
-    sessionStorage.setItem("record", JSON.stringify({ ...RECORD, features: all, held }));
   }
 
   const date = written(RECORD.date);
@@ -172,8 +174,6 @@ function App() {
           )
         )}
         {import.meta.env.DEV && !running && <button onClick={recordEverything}>Record everything</button>}
-        {import.meta.env.DEV && !running && <button onClick={recordFixes}>Record the fixes</button>}
-        {import.meta.env.DEV && !running && <button onClick={gradeNew}>Grade what's new</button>}
       </header>
 
       {notice && <p className="notice">{notice}</p>}

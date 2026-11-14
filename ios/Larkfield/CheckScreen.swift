@@ -123,8 +123,9 @@ private struct RowCard: View {
             if row.kind == "pending" || row.kind == "more" {
                 EmptyView()
             } else {
-                Meter(who: "Apple's model", right: row.runsRight, of: row.runs, unit: " runs", allowed: allowed)
-                Meter(who: "The cloud", right: row.cloudRight, of: row.inputs, unit: "", allowed: allowed)
+                Meter(who: "Apple's model", right: row.inputsRight, of: row.inputs, runs: (row.runsRight, row.runs), allowed: allowed)
+                Meter(who: "The cloud", right: row.cloudRight, of: row.inputs, runs: nil, allowed: allowed)
+                Text(row.unsure ?? "At this count: \(row.range).").font(.system(size: 12.5)).foregroundStyle(Color.soft)
             }
             if row.kind == "fix" { Text("Change the prompt, or don't use a model for this: work it out in code.").font(.system(size: 12.5)).foregroundStyle(Color.soft) }
             if row.mine { Text("Run on this iPhone just now").font(.system(size: 12.5)).foregroundStyle(Color.soft) }
@@ -136,29 +137,35 @@ private struct RowCard: View {
     }
 }
 
-/// One model's share of right answers, with the bar marked on it.
+/// One model's count of inputs it got right, with the bar marked on it. The bar goes by the share of answers that were
+/// right, which is the share of inputs unless answers vary between runs; then the runs are given too.
 private struct Meter: View {
     let who: String
     let right: Int
     let of: Int
-    let unit: String
+    let runs: (right: Int, of: Int)?
     let allowed: Int
 
     var body: some View {
-        let within = (of - right) * 100 <= allowed * of
-        HStack(spacing: 10) {
-            Text(who).foregroundStyle(Color.soft).frame(width: 92, alignment: .leading)
-            GeometryReader { box in
-                ZStack(alignment: .leading) {
-                    Capsule().fill(Color(0xe1e4da)).frame(height: 4)
-                    Capsule().fill(within ? Color.ink : Color.wrong).frame(width: box.size.width * Double(right) / Double(max(of, 1)), height: 4)
-                    Rectangle().fill(Color.ink).frame(width: 2, height: 12).offset(x: box.size.width * (1 - Double(allowed) / 100) - 1)
+        let share = runs.map { Double($0.right) / Double(max($0.of, 1)) } ?? Double(right) / Double(max(of, 1))
+        let within = (1 - share) * 100 <= Double(allowed)
+        let varies = runs.map { $0.right * of != right * $0.of } ?? false
+        VStack(alignment: .trailing, spacing: 2) {
+            HStack(spacing: 10) {
+                Text(who).foregroundStyle(Color.soft).frame(width: 92, alignment: .leading)
+                GeometryReader { box in
+                    ZStack(alignment: .leading) {
+                        Capsule().fill(Color(0xe1e4da)).frame(height: 4)
+                        Capsule().fill(within ? Color.ink : Color.wrong).frame(width: box.size.width * share, height: 4)
+                        Rectangle().fill(Color.ink).frame(width: 2, height: 12).offset(x: box.size.width * (1 - Double(allowed) / 100) - 1)
+                    }
+                    .frame(maxHeight: .infinity)
                 }
-                .frame(maxHeight: .infinity)
+                .frame(height: 12)
+                (Text("\(right)").fontWeight(.bold).foregroundStyle(within ? Color.ink : Color.wrong) + Text(" of \(of)"))
+                    .frame(width: 64, alignment: .trailing)
             }
-            .frame(height: 12)
-            (Text("\(right)").fontWeight(.bold).foregroundStyle(within ? Color.ink : Color.wrong) + Text(" of \(of)\(unit)"))
-                .frame(width: 92, alignment: .trailing)
+            if varies, let runs { Text("\(runs.right) of \(runs.of) runs").foregroundStyle(Color.soft) }
         }
         .font(.system(size: 12.5))
         .accessibilityElement(children: .combine)

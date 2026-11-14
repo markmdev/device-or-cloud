@@ -56,6 +56,11 @@ struct Board: Decodable {
         /// Answered on this iPhone, not taken from the record.
         let mine: Bool
         let inputs: Int
+        /// Inputs Apple's model got right on every run.
+        let inputsRight: Int
+        /// What that count allows, in words, and why the verdict could still change, when it could.
+        let range: String
+        let unsure: String?
         let runs: Int
         let runsRight: Int
         let cloudRight: Int

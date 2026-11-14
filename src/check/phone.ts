@@ -4,7 +4,7 @@ import { FEATURES } from "../features";
 import { parse } from "../features/types";
 import { BATCH, GRADER, gradingPrompt, readGrades, ungraded, withGrades } from "./grade";
 import recorded from "./recorded.json";
-import { DEFAULT_ALLOWED, differing, graded, onApple, RUNS, VERDICT_NAME, verdictFor, type Cases, type CheckRecord, type Grades, type Run } from "./record";
+import { APPLES, DEFAULT_ALLOWED, differing, graded, onApple, RUNS, unsureLine, VERDICT_NAME, verdictFor, type Cases, type CheckRecord, type Grades, type Run } from "./record";
 
 const RECORD = recorded as CheckRecord;
 
@@ -49,6 +49,9 @@ export function board(mineJson: string): string {
         verdict: VERDICT_NAME[v.kind],
         mine: complete(f.id, mine),
         inputs: v.inputs,
+        inputsRight: v.inputsRight,
+        range: `${Math.round(v.range.low)} to ${Math.round(v.range.high)} wrong in 100`,
+        unsure: unsureLine(v, APPLES),
         runs: v.runs,
         runsRight: v.runsRight,
         cloudRight: v.cloudRight,

@@ -17,6 +17,10 @@ export type FixRecord = {
   line: string;
   /** Who wrote it: the cloud model from the failures, us after reading them, or the developer checking their own feature. */
   by: "cloud" | "us" | "you";
+  /** Set when the line was tried on Apple's model in the iPhone app; `device` in its answers then holds Apple's runs. */
+  on?: "apple";
+  /** A setting in place of a line: Apple's model with its randomness off, so it always gives its most likely answer. */
+  steady?: boolean;
   /** The check's own inputs with the line, on the device. */
   cases: Record<string, CaseRecord>;
   /** The held-back inputs with the line, on the device and in the cloud. */
@@ -69,31 +73,62 @@ export function judge(feature: Feature, c: Case, run: Run | undefined, grades?: 
 
 export type Failure = { c: Case; side: "device" | "cloud" | "both"; device: Check[]; cloud?: Check };
 
+/** Wrong answers in 100 that a count allows: the 95% range around what was measured. */
+export type Range = { low: number; high: number };
+
+/**
+ * The range for `wrong` wrong inputs out of `of` (Wilson's interval). An input the model gets wrong on some runs only
+ * counts as that part of an input, so the three runs of one input never pass for three measurements.
+ */
+export function rangeOf(wrong: number, of: number): Range {
+  const z = 1.96, p = wrong / of, scale = 1 + (z * z) / of;
+  const centre = (p + (z * z) / (2 * of)) / scale, half = (z * Math.sqrt((p * (1 - p)) / of + (z * z) / (4 * of * of))) / scale;
+  return { low: Math.max(0, centre - half) * 100, high: Math.min(1, centre + half) * 100 };
+}
+
+const crosses = (r: Range, allowed: number) => r.low <= allowed && r.high > allowed;
+
+/** How many more inputs, at the same rate, until the range is clear of the bar; none when that takes more than 200. */
+function moreToTell(wrong: number, of: number, allowed: number): number | undefined {
+  for (let n = of + 10; n <= of + 200; n += 10) if (!crosses(rangeOf((wrong / of) * n, n), allowed)) return n - of;
+}
+
 export type Verdict = {
   feature: Feature;
   /** device: move it. cloud: keep it. fix: neither model is good enough. more: too few inputs. pending: not all answers are in. */
   kind: "device" | "cloud" | "fix" | "more" | "pending";
   inputs: number;
+  /** Inputs the on-device model got right on every run. */
+  inputsRight: number;
   /** Device answers given, and how many were right. */
   runs: number;
   runsRight: number;
   cloudRight: number;
+  /** What each model's count allows. */
+  range: Range;
+  cloudRange: Range;
+  /**
+   * Set when a range the verdict rests on crosses the bar, so more inputs could change it: whose range it is, and about
+   * how many more inputs would settle it (none: more than 200).
+   */
+  unsure?: { device: boolean; cloud: boolean; more?: number };
   failures: Failure[];
   /** What the failing inputs have in common, when they all share it. */
   pattern?: string;
 };
 
-/** Right answers among those given so far, for each model. */
-export type Tally = { runs: number; runsRight: number; cloud: number; cloudRight: number };
+/** Right answers among those given so far, for each model. `inputsRight` are the inputs the on-device model got right on every run. */
+export type Tally = { inputs: number; inputsRight: number; runs: number; runsRight: number; cloud: number; cloudRight: number };
 
 export function tally(feature: Feature, cases: Record<string, CaseRecord> = {}, inputs = feature.cases): Tally {
-  const t: Tally = { runs: 0, runsRight: 0, cloud: 0, cloudRight: 0 };
+  const t: Tally = { inputs: 0, inputsRight: 0, runs: 0, runsRight: 0, cloud: 0, cloudRight: 0 };
   for (const c of inputs) {
     const r = cases[c.id];
-    for (const run of r?.device ?? []) {
-      const check = judge(feature, c, run, r.grades);
-      if (check) { t.runs++; if (check.ok) t.runsRight++; }
-    }
+    const device = (r?.device ?? []).flatMap((run) => judge(feature, c, run, r.grades) ?? []);
+    t.runs += device.length;
+    t.runsRight += device.filter((d) => d.ok).length;
+    if (device.length) t.inputs++;
+    if (device.length && device.every((d) => d.ok)) t.inputsRight++;
     const cloud = judge(feature, c, r?.cloud, r?.grades);
     if (cloud) { t.cloud++; if (cloud.ok) t.cloudRight++; }
   }
@@ -123,7 +158,7 @@ export const ENOUGH_INPUTS = 20;
 export const DEFAULT_ALLOWED = 10;
 
 export function verdictFor(feature: Feature, cases: Record<string, CaseRecord> = {}, allowed = DEFAULT_ALLOWED): Verdict {
-  let runsRight = 0, cloudRight = 0, pending = false;
+  let runsRight = 0, inputsRight = 0, cloudRight = 0, pending = false;
   const failures: Failure[] = [];
   for (const c of feature.cases) {
     const r = cases[c.id];
@@ -132,19 +167,30 @@ export function verdictFor(feature: Feature, cases: Record<string, CaseRecord> =
     if (device.includes(undefined) || !cloud) { pending = true; continue; }
     const deviceOk = (device as Check[]).every((d) => d.ok);
     runsRight += (device as Check[]).filter((d) => d.ok).length;
+    if (deviceOk) inputsRight++;
     if (cloud.ok) cloudRight++;
     if (!deviceOk || !cloud.ok) failures.push({ c, side: deviceOk ? "cloud" : cloud.ok ? "device" : "both", device: device as Check[], cloud });
   }
   const inputs = feature.cases.length;
   const runs = inputs * RUNS;
   const kinds = new Set(failures.filter((f) => f.side !== "cloud").map((f) => f.c.kind));
+  const kind = pending ? "pending" : inputs < ENOUGH_INPUTS ? "more" : within(runsRight, runs, allowed) ? "device" : within(cloudRight, inputs, allowed) ? "cloud" : "fix";
+  const wrong = (runs - runsRight) / RUNS, cloudWrong = inputs - cloudRight;
+  const range = rangeOf(wrong, inputs), cloudRange = rangeOf(cloudWrong, inputs);
+  // A device verdict rests on the on-device model's count alone; the other two rest on the cloud model's too.
+  const device = crosses(range, allowed), cloud = kind !== "device" && crosses(cloudRange, allowed);
+  const more = [device && moreToTell(wrong, inputs, allowed), cloud && moreToTell(cloudWrong, inputs, allowed)].filter((n) => n !== false);
   return {
     feature,
-    kind: pending ? "pending" : inputs < ENOUGH_INPUTS ? "more" : within(runsRight, runs, allowed) ? "device" : within(cloudRight, inputs, allowed) ? "cloud" : "fix",
+    kind,
     inputs,
+    inputsRight,
     runs,
     runsRight,
     cloudRight,
+    range,
+    cloudRange,
+    unsure: (kind === "device" || kind === "cloud" || kind === "fix") && (device || cloud) ? { device, cloud, more: more.includes(undefined) ? undefined : Math.max(...(more as number[])) } : undefined,
     failures,
     pattern: kinds.size === 1 ? [...kinds][0] : undefined,
   };
@@ -163,14 +209,45 @@ export const modeFor = (v: Verdict) => (v.kind === "device" ? "prefer_on_device"
 export const CHROMES = "Chrome's model", APPLES = "Apple's model";
 
 export function verdictLine(v: Verdict, who = CHROMES): string {
-  const device = `${v.runsRight} of ${v.runs} runs`, cloud = `${v.cloudRight} of ${v.inputs}`;
+  const counts = `${who} got ${v.inputsRight} of ${v.inputs} inputs right on every run; the cloud, ${v.cloudRight}.`;
   switch (v.kind) {
-    case "device": return `${who} was right on ${device}; the cloud, on ${cloud}.`;
-    case "cloud": return `${who} was right on ${device}; the cloud, on ${cloud}.${v.pattern ? ` Its misses: ${v.pattern}.` : ""}`;
-    case "fix": return `The cloud was right on ${cloud}; ${who}, on ${device}.`;
+    case "device":
+    case "fix": return counts;
+    case "cloud": return `${counts}${v.pattern ? ` Its misses: ${v.pattern}.` : ""}`;
     case "more": return `Add ${ENOUGH_INPUTS - v.inputs} more.`;
     case "pending": return "Not run yet.";
   }
+}
+
+export const UNSURE = "Not enough inputs to tell";
+
+const inWords = (r: Range) => `${Math.round(r.low)} to ${Math.round(r.high)} wrong answers in 100`;
+
+/** A model's count in a sentence: its inputs right on every run, the ones that vary, and the range that allows. */
+export function countLine(v: Verdict, who = CHROMES): string {
+  if (v.kind === "pending" || v.kind === "more") return verdictLine(v, who);
+  const wrongEveryRun = v.failures.filter((f) => f.side !== "cloud" && f.device.every((d) => !d.ok)).length;
+  const varies = v.inputs - v.inputsRight - wrongEveryRun;
+  return (
+    `${who} was right on ${v.inputsRight} of ${v.inputs} inputs on every run, wrong on ${wrongEveryRun} on every run` +
+    `${varies ? `, and right on some runs only on ${varies}` : ""}. With ${v.inputs} inputs, that allows ${inWords(v.range)}; the cloud model's ${v.cloudRight} of ${v.inputs}, ${inWords(v.cloudRange)}.`
+  );
+}
+
+/** Why a verdict could still change, and what would settle it. */
+export function unsureLine(v: Verdict, who = CHROMES): string | undefined {
+  if (!v.unsure) return undefined;
+  const whose = [v.unsure.device && `${who}'s`, v.unsure.cloud && "the cloud model's"].filter(Boolean).join(" and ");
+  const settle = v.unsure.more ? `About ${v.unsure.more} more inputs would settle it.` : "The rate sits on the bar, so it would take hundreds more inputs to settle it.";
+  return `${UNSURE}: ${whose} range crosses the bar. ${settle}`;
+}
+
+/** What moving a feature to the device costs: the inputs the cloud model gets right and the on-device model doesn't. */
+export function costLine(v: Verdict): string | undefined {
+  const lost = v.failures.filter((f) => f.side === "device");
+  if (!lost.length) return undefined;
+  const kinds = [...new Set(lost.map((f) => f.c.kind))];
+  return `Moving costs ${lost.length} of ${v.inputs} inputs that the cloud gets right${kinds.length <= 2 ? `: ${kinds.join(", and ")}` : ""}.`;
 }
 
 export const VERDICT_NAME: Record<Verdict["kind"], string> = {

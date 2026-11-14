@@ -9,18 +9,13 @@ page.on("console", (m) => m.type() === "error" && console.log("page error:", m.t
 page.on("pageerror", (e) => console.log("page crashed:", String(e).slice(0, 300)));
 await page.goto(process.env.SITE ?? "http://127.0.0.1:5173/");
 // The run goes on from record.partial.json when a run cut short left one, and from the last record otherwise, so only
-// inputs without answers are asked. REDO=<feature id>,... records those features again from nothing.
+// what is missing is asked. REDO=<feature id>,... records those features again from nothing.
 // REGRADE=<feature id>,... keeps their answers and asks the cloud model to judge them again.
-const whole = !process.env.FIXES && !process.env.GRADE;
-if (whole) {
-  const kept = existsSync("record.partial.json") ? JSON.parse(readFileSync("record.partial.json", "utf8")) : JSON.parse(readFileSync("src/check/recorded.json", "utf8")).features;
-  for (const id of process.env.REDO?.split(",") ?? []) delete kept[id];
-  for (const id of process.env.REGRADE?.split(",") ?? []) for (const c of Object.values(kept[id])) delete c.grades;
-  await page.evaluate((partial) => sessionStorage.setItem("partial", partial), JSON.stringify(kept));
-}
-// FIXES=1 records the one-line fixes on top of the last record, instead of the check itself.
-// GRADE=1 only has the cloud model judge the answers in the last record that it hasn't judged yet.
-await page.getByRole("button", { name: process.env.GRADE ? "Grade what's new" : process.env.FIXES ? "Record the fixes" : "Record everything" }).click();
+const kept = JSON.parse(readFileSync(existsSync("record.partial.json") ? "record.partial.json" : "src/check/recorded.json", "utf8"));
+for (const id of process.env.REDO?.split(",") ?? []) delete kept.features[id];
+for (const id of process.env.REGRADE?.split(",") ?? []) for (const c of Object.values(kept.features[id])) delete c.grades;
+await page.evaluate((partial) => sessionStorage.setItem("partial", partial), JSON.stringify({ features: kept.features, held: kept.held, fixes: kept.fixes }));
+await page.getByRole("button", { name: "Record everything" }).click();
 
 let last = "";
 for (;;) {
@@ -29,10 +24,10 @@ for (;;) {
     partial: sessionStorage.getItem("partial"),
     at: document.querySelector("header button")?.textContent ?? "",
   }));
-  if (state.partial && whole) writeFileSync("record.partial.json", state.partial);
+  if (state.partial) writeFileSync("record.partial.json", state.partial);
   if (state.record) {
     writeFileSync("src/check/recorded.json", JSON.stringify(JSON.parse(state.record), null, 1) + "\n");
-    if (whole) rmSync("record.partial.json", { force: true });
+    rmSync("record.partial.json", { force: true });
     console.log("recorded");
     break;
   }
