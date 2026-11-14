@@ -36,6 +36,7 @@ expect((await page.locator(".proof pre").count()) === 1, "a failure is shown wit
 await shot("check");
 
 // Apply it: the page hands over the same Remote Config template the shop was deployed with.
+await page.locator(".apply summary").click();
 expect(JSON.stringify(JSON.parse(await page.locator(".apply pre").first().innerText())) === JSON.stringify(template), "apply: at the default bar the template shown is the one the shop runs on");
 const appCode = await page.locator(".apply pre").nth(1).innerText();
 expect(modes.every(([id]) => appCode.includes(`mode_${id}:`)), "apply: the app code names every feature's parameter");
@@ -106,6 +107,7 @@ expect((await decided.count()) === 1, "own: the pasted feature gets its verdict"
 if (!(await decided.count())) console.log("     the page says:", (await page.locator("main > .notice").allInnerTexts()).join(" | ").slice(0, 400));
 expect(/this feature/.test(await page.locator(".bottom h2").innerText().catch(() => "")), "own: the bottom line speaks of the one feature");
 expect(/inputs have a right answer, and code compared/.test(await page.locator("footer").innerText().catch(() => "")), "own: the page says how the answers were judged");
+await page.locator(".apply summary").click().catch(() => {});
 const ownMode = JSON.parse(await page.locator(".apply pre").first().innerText().catch(() => "{}")).parameters?.mode_sort_a_message_to_the_front_desk;
 const ownVerdict = await decided.getAttribute("data-verdict").catch(() => null);
 expect(!!ownMode && Boolean(ownMode.conditionalValues) === (ownVerdict === "device"), "own: the pasted feature's template moves it to the device only if its verdict does");
