@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react";
 import type { Feature } from "../features";
 import { OutOfRequests } from "./ask";
-import { tryLine } from "./fix";
-import { moves, RUNS, tally, type CheckRecord, type FixRecord } from "./record";
+import { tryLine, type Tried } from "./fix";
+import { moves, RUNS, tally, type CheckRecord } from "./record";
 import type { Cases } from "./run";
-
-type Tried = Pick<FixRecord, "cases" | "held">;
 
 function Counts({ feature, base, heldBase, tried, cloud }: { feature: Feature; base: Cases; heldBase?: Cases; tried: Tried; cloud: boolean }) {
   const held = feature.heldBack ?? [];

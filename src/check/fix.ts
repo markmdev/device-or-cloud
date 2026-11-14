@@ -34,23 +34,21 @@ export async function proposeLine(feature: Feature, misses: Miss[]): Promise<str
   return String(JSON.parse(text).line).trim();
 }
 
-type Report = (fix: Pick<FixRecord, "cases" | "held">) => void;
-const noStop = () => false;
+export type Tried = Pick<FixRecord, "cases" | "held">;
+const neverStopped = () => false;
 
 /**
  * Runs a line on Chrome's model over the check's inputs and the held-back ones, and has free-text answers judged.
  * With `cloud`, the held-back inputs also go to the cloud model once, to see the line doesn't break it there.
  */
-export async function tryLine(feature: Feature, line: string, onChange: Report, cloud: boolean, stopped = noStop): Promise<Pick<FixRecord, "cases" | "held">> {
+export async function tryLine(feature: Feature, line: string, onChange: (tried: Tried) => void, cloud: boolean): Promise<Tried> {
   const lined = withLine(feature, line);
   let cases: Cases = {}, held: Cases = {};
-  cases = await runDevice(lined, cases, (c) => onChange({ cases: c, held }), stopped);
-  held = await runDevice(heldBackOf(lined), held, (h) => onChange({ cases, held: h }), stopped);
+  cases = await runDevice(lined, cases, (c) => onChange({ cases: c, held }), neverStopped);
+  held = await runDevice(heldBackOf(lined), held, (h) => onChange({ cases, held: h }), neverStopped);
   if (cloud) held = await runCloud(heldBackOf(lined), held, (h) => onChange({ cases, held: h }));
-  if (!stopped()) {
-    cases = await gradeFeature(lined, cases);
-    held = await gradeFeature(heldBackOf(lined), held);
-  }
+  cases = await gradeFeature(lined, cases);
+  held = await gradeFeature(heldBackOf(lined), held);
   onChange({ cases, held });
   return { cases, held };
 }
