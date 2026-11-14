@@ -46,6 +46,14 @@ All three are open licence, loaded from Google Fonts in `index.html` and `shop/i
 
 The same top line, question and board as the shop's check, with the paste form between the question and the board, on wash. Each feature is a white card. Its inputs are one compact row each, on wash, with the column names said once above the rows: the input, the right answer, and for an input the cloud model wrote, a tick box before it and its kind after it. An unticked row loses its fill, since it isn't in the check. What's still missing before a check can run is said in ink, not red: nothing is wrong yet.
 
+## Apply it
+
+Three steps under the bottom line, each a white card with an ink border: the template (tall, on the left), the app code and the deploy command. Code sits on wash, never on a dark block.
+
+## The results page
+
+A record to read down, not a dashboard. The summary table is on wash, with each verdict's dot in its side's colour. Each feature's name stays at the top of the window while its inputs scroll. An input is one row: what was asked and the right answer on the left, then Chrome's three runs (lime dot) and the cloud's answer (blue dot). A right answer is a quiet wash box; a wrong one is white with a red outline, so the misses are what the eye lands on.
+
 ## Motion
 
 - Buttons and cards press in slightly (`scale(0.97)` to `0.99`, 140 ms).
