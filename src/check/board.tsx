@@ -9,6 +9,8 @@ import { Fixes } from "./fixes";
 import { APPLES, barInWords, CHROMES, DEFAULT_ALLOWED, graded, moves, NEITHER_ADVICE, onApple, RUNS, VERDICT_NAME, verdictFor, verdictLine, type Failure, type FixRecord, type Run, type Verdict } from "./record";
 import type { Cases } from "./run";
 
+const MAX_ALLOWED = 30;
+
 /** One model's share of right answers, with the bar marked on it. */
 function Meter({ who, right, of, unit, allowed, other }: { who: string; right: number; of: number; unit: string; allowed: number; other?: boolean }) {
   return (
@@ -78,6 +80,8 @@ function RunAnswer({ run, check, telling, size, children }: { run?: Run; check?:
   if (!run) return <p className="quiet">No answer yet.</p>;
   const object = "text" in run ? parse(run.text) : null;
   const head = headline(textOf(run), telling);
+  // The mark stays on the line of the answer's last word.
+  const lastWord = (head?.value.lastIndexOf(" ") ?? -1) + 1;
   return (
     <div className="said" data-ok={check?.ok} data-size={size}>
       {"error" in run ? (
@@ -86,8 +90,13 @@ function RunAnswer({ run, check, telling, size, children }: { run?: Run; check?:
         <>
           <p className="telling">
             {head?.key && <span>{head.key}</span>}
-            <b>{head?.value}</b>
-            {check && <Mark ok={check.ok} />}
+            <b>
+              {head?.value.slice(0, lastWord)}
+              <span className="together">
+                {head?.value.slice(lastWord)}
+                {check && <Mark ok={check.ok} />}
+              </span>
+            </b>
           </p>
           {object && Object.keys(object).length > 1 && (
             <dl className="answer">
@@ -301,7 +310,7 @@ function Apply({ verdicts, apple, children }: { verdicts: Verdict[]; apple?: Ver
 /**
  * The verdicts for a list of features: the bar, the two sides, the proof for one feature, its one-line fixes and the bottom line.
  */
-export function Board({ features, cases, mine = [], recordedOn, held, fixes, opensOn, canRun, onFix, below, belowOnIphone, children }: {
+export function Board({ features, cases, mine = [], recordedOn, held, fixes, opensOn, canRun, onFix, onPlatform, below, belowOnIphone, children }: {
   features: Feature[];
   cases: Record<string, Cases>;
   /** Features whose device answers were made on this computer just now. */
@@ -318,6 +327,8 @@ export function Board({ features, cases, mine = [], recordedOn, held, fixes, ope
   onFix?: (featureId: string, fix: FixRecord) => void;
   /** Shown right under the board, above the bottom line. */
   below?: ReactNode;
+  /** Told when the reader switches between Chrome on the web and the iPhone app. */
+  onPlatform?: (iphone: boolean) => void;
   /** The same place on the iPhone view. */
   belowOnIphone?: ReactNode;
   /** A note under "Apply it" about where this template is in use. */
@@ -332,7 +343,11 @@ export function Board({ features, cases, mine = [], recordedOn, held, fixes, ope
 
   // Where the record has Apple's runs too, the board is about one platform at a time: Chrome on the web, or the iPhone app.
   const hasApple = features.some((f) => Object.values(cases[f.id] ?? {}).some((r) => r.apple));
-  const [iphone, setIphone] = useState(false);
+  const [iphone, setIphoneHere] = useState(false);
+  const setIphone = (to: boolean) => {
+    setIphoneHere(to);
+    onPlatform?.(to);
+  };
   const who = iphone ? APPLES : CHROMES;
   const seen = (id: string) => (iphone ? onApple(cases[id]) : cases[id]);
   const chrome = features.map((f) => verdictFor(f, cases[f.id], allowed));
@@ -357,6 +372,11 @@ export function Board({ features, cases, mine = [], recordedOn, held, fixes, ope
     const calm = matchMedia("(prefers-reduced-motion: reduce)").matches;
     requestAnimationFrame(() => proof.current?.scrollIntoView({ block: "nearest", behavior: calm ? "auto" : "smooth" }));
   }
+  let firstOver: { at: number; name: string } | undefined;
+  for (let at = allowed + 1; at <= MAX_ALLOWED && !firstOver && onDevice.length === 0; at++) {
+    const over = features.find((f) => verdictFor(f, seen(f.id), at).kind === "device");
+    if (over) firstOver = { at, name: over.name };
+  }
   const row = (v: Verdict, named?: boolean) => {
     const i = verdicts.indexOf(v);
     return (
@@ -369,7 +389,7 @@ export function Board({ features, cases, mine = [], recordedOn, held, fixes, ope
       <div className="board" data-platform={iphone ? "iphone" : "chrome"}>
         <label className="bar">
           Wrong answers allowed in 100
-          <input type="range" min={0} max={30} value={bar} onChange={(e) => setBar(Number(e.target.value))} />
+          <input type="range" min={0} max={MAX_ALLOWED} value={bar} onChange={(e) => setBar(Number(e.target.value))} />
           <output>{bar}</output>
         </label>
         {hasApple && (
@@ -389,7 +409,12 @@ export function Board({ features, cases, mine = [], recordedOn, held, fixes, ope
               <b>{onDevice.length}</b> <span>run on the device</span>
             </h2>
             <ul>{onDevice.map((v) => row(v))}</ul>
-            {onDevice.length === 0 && <p className="none">Nothing yet. At this bar, {who} is wrong too often on every feature.</p>}
+            {onDevice.length === 0 && (
+              <p className="none">
+                Nothing yet. At this bar, {who} is wrong too often on every feature.
+                {firstOver && ` The first to cross is ${firstOver.name}, at ${firstOver.at}.`}
+              </p>
+            )}
           </section>
           <section className="side cloud">
             <h2>

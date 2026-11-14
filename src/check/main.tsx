@@ -21,6 +21,7 @@ function App() {
   const [device, setDevice] = useState<DeviceState>();
   const [notice, setNotice] = useState<string>();
   const stop = useRef(false);
+  const [iphone, setIphone] = useState(false);
 
   useEffect(() => {
     deviceState().then(setDevice);
@@ -162,7 +163,11 @@ function App() {
       {notice && <p className="notice">{notice}</p>}
 
       <section className="intro">
-        <h2>Find out which of your app's AI features Chrome's <span className="together">built-in</span> model gets right, measured on your own inputs, and ship the answer as Remote Config.</h2>
+        {iphone ? (
+          <h2>The same check, run inside the shop's iPhone app: which of its AI features Apple's <span className="together">on-device</span> model gets right, shipped in the same Remote Config template.</h2>
+        ) : (
+          <h2>Find out which of your app's AI features Chrome's <span className="together">built-in</span> model gets right, measured on your own inputs, and ship the answer as Remote Config.</h2>
+        )}
         <p className="lede">
           This is a sample shop's check. Each of its eight features was sent {FEATURES[0].cases.length} inputs through Firebase AI Logic: {RUNS} times to the model built into
           Chrome, {RECORD.apple && `${RUNS} times to Apple's on-device model in the shop's iPhone app, `}once to {RECORD.cloudModel || CLOUD_MODEL} in the cloud. A feature
@@ -181,6 +186,7 @@ function App() {
         fixes={RECORD.fixes}
         opensOn="email_address"
         canRun={device === "available" && !running}
+        onPlatform={setIphone}
         below={
           device && (
             <DownloadPanel

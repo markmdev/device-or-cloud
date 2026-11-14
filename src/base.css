@@ -132,7 +132,7 @@ p.answer { white-space: pre-wrap; }
 .proof > p { grid-column: 1 / -1; }
 .proof .who { margin-top: 18px; color: var(--soft); font-weight: 500; font-size: 14px; }
 .telling { margin-top: 6px; }
-.telling span { display: block; font: 400 12.5px/1.4 var(--mono); color: var(--faint); }
+.telling > span { display: block; font: 400 12.5px/1.4 var(--mono); color: var(--faint); }
 .telling b { font: 700 clamp(30px, 3.05vw, 44px)/1.04 var(--display); letter-spacing: -0.03em; overflow-wrap: anywhere; }
 [data-size="medium"] .telling b { font-size: 28px; line-height: 1.12; letter-spacing: -0.8px; }
 [data-size="small"] .telling b { font-size: 22px; line-height: 1.22; letter-spacing: -0.4px; }
@@ -239,7 +239,7 @@ p.answer { white-space: pre-wrap; }
   .cards .badge span:last-child { flex-basis: 100%; margin-left: 19px; }
   .sides h2 { height: 100px; }
   .sides h2 b { font-size: 108px; }
-  .sides .feature { grid-template-columns: minmax(0, 0.6fr) minmax(0, 1fr); gap: 5px 18px; padding: 11px 18px 12px; }
+  .sides .feature { grid-template-columns: minmax(0, 0.74fr) minmax(0, 1fr); gap: 5px 18px; padding: 11px 18px 12px; }
   .sides .feature strong { grid-row: span 2; }
   .sides .feature .meter { grid-column: 2; grid-template-columns: 100px 1fr 92px; }
 }
@@ -443,7 +443,24 @@ article.result:has(.given[data-model="apple"]) .asked { grid-row: 1 / span 2; }
 article.result .given[data-model="apple"] { grid-row: 2; margin-top: 8px; }
 article.result .given[data-model="apple"] > .quiet:first-child::before { border-radius: 2px; }
 
-/* The board's platform switch, where the record has Apple's model too */
-.platforms { position: relative; z-index: 2; display: flex; gap: 8px; justify-content: center; padding-top: 14px; }
-.platforms button { background: var(--white); color: var(--ink); }
+/* The board's platform switch, where the record has Apple's model too: one control, since it decides whose device the left side is */
+.platforms { position: relative; z-index: 2; display: flex; gap: 4px; width: fit-content; margin: 14px auto 0; padding: 4px; border: 2px solid var(--ink); border-radius: 999px; background: var(--white); }
+.platforms button { padding: 10px 14px; border: 0; background: transparent; color: var(--ink); font-size: 13.5px; }
 .platforms button[aria-pressed="true"] { background: var(--ink); color: var(--white); }
+@media (min-width: 1260px) {
+  .platforms { position: absolute; top: -24px; left: var(--gutter); margin: 0; }
+}
+
+/* On a card, the model of the platform that isn't shown is one quiet line, not a meter */
+.meter[data-other="true"] { order: 1; display: flex; gap: 6px; font-size: 13px; }
+.meter[data-other="true"] i { display: none; }
+.meter[data-other="true"] span:first-child::after { content: ":"; }
+.feature > small { order: 2; }
+@media (min-width: 901px) {
+  .sides .feature:has(.meter[data-other="true"]) strong { grid-row: auto; }
+  .sides .feature .meter[data-other="true"] { grid-column: 1; grid-row: 2; }
+  .sides .none { max-width: 22em; }
+}
+
+.sides .none { font: 600 19px/1.3 var(--display); letter-spacing: -0.3px; }
+.card .result .wrong { color: var(--ink); }
