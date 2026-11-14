@@ -177,12 +177,39 @@ p.answer { white-space: pre-wrap; }
 
 /* The sample shop */
 .shop { max-width: 1180px; margin: 0 auto; padding: 0 24px 72px; }
-.shop header { padding: 24px 0 20px; border-bottom: 2px solid var(--ink); margin-bottom: 24px; }
+.shop > header { display: flex; align-items: baseline; gap: 12px 32px; flex-wrap: wrap; padding: 24px 0 18px; border-bottom: 2px solid var(--ink); }
 .shop h1 { font: 800 32px/1 var(--display); letter-spacing: -1px; }
-.shop header p { max-width: 70ch; margin-top: 10px; }
-.shop header .quiet { font-size: 13.5px; }
-.shop .download { margin: -24px 0 24px; padding-inline: 18px; border: 2px solid var(--ink); border-top: 0; border-radius: 0 0 14px 14px; }
-.cards { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.shop nav { display: flex; flex-wrap: wrap; gap: 8px 24px; margin-left: auto; font: 500 15px/1.2 var(--ui); }
+.shop nav a { text-decoration: none; }
+.shop nav a:hover { text-decoration: underline; }
+.about { display: grid; gap: 6px; padding: 14px 18px 16px; border-radius: 0 0 14px 14px; background: var(--wash); font-size: 14.5px; }
+.about p { max-width: 96ch; }
+.about .quiet { font-size: 13px; }
+.shop .download { margin-top: 12px; padding-inline: 18px; border: 2px solid var(--ink); border-radius: 14px; }
+.aisle { margin-top: 48px; scroll-margin-top: 20px; }
+.aisle > h2 { margin-bottom: 18px; font: 800 30px/1 var(--display); letter-spacing: -0.9px; }
+.product, .orders { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start; }
+.cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.order { display: grid; gap: 20px; }
+.drawn { color: var(--ink); background: var(--wash); border-radius: 22px; }
+.shelf { display: grid; align-content: start; gap: 6px; }
+.shelf .drawn { width: 100%; height: 300px; padding: 40px; margin-bottom: 14px; }
+.shelf .label { color: var(--soft); font: 600 12.5px/1 var(--ui); }
+.shelf h2 { font: 800 34px/1.05 var(--display); letter-spacing: -1px; }
+.shelf .price { font: 700 22px/1.2 var(--display); }
+.shelf > p:not(.label, .price) { max-width: 46ch; color: var(--soft); }
+.said { display: grid; gap: 20px; align-content: start; }
+.reviews { display: grid; gap: 12px; font-size: 15px; }
+.reviews li { padding-bottom: 12px; border-bottom: 1.5px solid var(--rule); }
+.reviews b { display: block; font-weight: 600; font-size: 13.5px; }
+.order-line { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; padding-bottom: 14px; border-bottom: 2px solid var(--ink); }
+.order-line .drawn { flex: none; width: 64px; height: 48px; padding: 6px; border-radius: 12px; }
+.order-line b { display: block; font: 700 19px/1.2 var(--display); letter-spacing: -0.3px; }
+.order-line span { flex: 1; min-width: 180px; color: var(--soft); font-size: 14.5px; }
+.order-line b { color: var(--ink); }
+.order-line i { margin-left: auto; padding: 7px 12px; border: 1.5px solid var(--ink); border-radius: 999px; font: 600 12.5px/1 var(--ui); white-space: nowrap; }
+.card textarea { font: 400 15px/1.5 var(--ui); }
+.card:is([data-feature="receipt_fields"], [data-feature="invoice_total"]) textarea { font: 400 13.5px/1.55 var(--mono); }
 .card { display: flex; flex-direction: column; padding: 0 22px; border: 2px solid var(--ink); border-radius: 22px; background: var(--white); overflow: hidden; }
 .card .label { margin-top: 20px; color: var(--soft); font: 600 12.5px/1 var(--ui); }
 .card h2 { margin: 8px 0 14px; font: 700 23px/1.1 var(--display); letter-spacing: -0.5px; }
@@ -209,7 +236,7 @@ p.answer { white-space: pre-wrap; }
   .board::before { display: none; }
   .bar { flex-wrap: wrap; justify-content: center; width: auto; height: auto; margin: 16px; padding: 12px 18px; border-radius: 22px; }
   .bar input { width: 100%; order: 3; }
-  .sides, .neither ul, .proof, .fixes, .fix.yours, .check footer, .cards { grid-template-columns: 1fr; }
+  .sides, .neither ul, .proof, .fixes, .fix.yours, .check footer, .cards, .product, .orders { grid-template-columns: 1fr; }
   .fixes { padding: 16px; }
   .fix.yours label { grid-row: auto; }
   .sides .side { padding: 8px 16px 20px; }
@@ -227,6 +254,13 @@ p.answer { white-space: pre-wrap; }
   .bottom { padding-block: 32px; }
   .bottom h2 { font-size: 28px; letter-spacing: -0.7px; }
   .shop { padding-inline: 16px; }
+  .shop nav { margin-left: 0; }
+  .aisle { margin-top: 36px; }
+  .shelf h2 { font-size: 28px; }
+  .shelf .drawn { height: 180px; }
+  .order + .order { margin-top: 16px; }
+  .card .result { min-height: 56px; }
+  .order-line i { margin-left: 78px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

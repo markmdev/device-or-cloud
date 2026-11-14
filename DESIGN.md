@@ -54,6 +54,17 @@ Three steps under the bottom line, each a white card with an ink border: the tem
 
 A record to read down, not a dashboard. The summary table is on wash, with each verdict's dot in its side's colour. Each feature's name stays at the top of the window while its inputs scroll. An input is one row: what was asked and the right answer on the left, then Chrome's three runs (lime dot) and the cloud's answer (blue dot). A right answer is a quiet wash box; a wrong one is white with a red outline, so the misses are what the eye lands on.
 
+## The sample shop
+
+Larkfield reads as a shop, and each of its eight features sits where a shop would have it. The check's layer over it is one thing only: the strip at the foot of each feature's card.
+
+1. **The top:** the shop's name and its three places. Under it, on wash, what this shop is and what leaves the computer.
+2. **A product page:** the product on the left, drawn in ink on wash (no photographs), its reviews and "Leave a review" on the right.
+3. **Your orders:** two orders side by side, each under its own line with the order's number, what it is and where it stands. The order on its way holds the delivery address and the courier's note. The delivered one holds the returns question and the help form.
+4. **Rewards, trade and selling:** three cards in a row.
+
+A shopper's own words are set in Geist. A receipt and a trade order keep Geist Mono, since their columns matter. Under 900px everything is one column, in the same order.
+
 ## Motion
 
 - Buttons and cards press in slightly (`scale(0.97)` to `0.99`, 140 ms).
