@@ -1,4 +1,5 @@
 import type { Case, Check, Feature } from "../features";
+import { parse, plain } from "../features/types";
 
 export const RUNS = 3;
 
@@ -40,9 +41,19 @@ export type Cases = Record<string, CaseRecord>;
 /** The same answers as the iPhone app has them: Apple's runs in the place of Chrome's, so every count and verdict is the iPhone's. */
 export const onApple = (cases: Cases = {}): Cases => Object.fromEntries(Object.entries(cases).map(([id, r]) => [id, { ...r, device: r.apple ?? [] }]));
 
+/** A date of the record as the pages write it: 14 November 2026. */
+export const written = (iso: string) => new Date(iso).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
+
 /** Where Apple's runs were made, in a sentence. */
 export const whereApple = (a: NonNullable<CheckRecord["apple"]>) =>
-  `Apple's model was run from the iPhone app in the ${a.device}, iOS ${a.os}, on ${new Date(a.date).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}; the simulator answers with the model of the Mac it runs on, ${a.host}.`;
+  `Apple's model was run from the iPhone app in the ${a.device}, iOS ${a.os}, on ${written(a.date)}; the simulator answers with the model of the Mac it runs on, ${a.host}.`;
+
+/** The fields in which two answers differ: what a reader should look at first. */
+export function differing(a?: string, b?: string): string[] {
+  const one = a ? parse(a) : null, other = b ? parse(b) : null;
+  if (!one || !other) return [];
+  return Object.keys(one).filter((key) => plain(one[key]) !== plain(other[key]));
+}
 
 /** Whether the cloud grader has a say on this input's answers. */
 export const graded = (feature: Feature, c: Case) => !!feature.graded && !c.codeDecides;

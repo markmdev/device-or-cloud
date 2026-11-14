@@ -35,13 +35,22 @@ expect((await page.locator(".sides .device .feature").count()) === onDevice, "ba
 expect((await page.locator(".proof pre").count()) === 1, "a failure is shown with its input and both answers");
 await shot("check");
 
+// The iPhone view: the same board on Apple's model, split as the template has it for the iPhone app.
+const onIphone = Object.values(template.parameters).filter((p) => (p.conditionalValues?.["The iPhone app"] ?? p.defaultValue).value === "prefer_on_device").length;
+await page.getByRole("button", { name: "The iPhone app" }).click();
+expect(await settles(() => document.querySelector(".bottom h2").innerText.includes("iPhones")), "the iPhone view speaks of the shop's iPhone users");
+expect((await page.locator(".sides .device .feature").count()) === onIphone, `${onIphone} features are on the device side in the iPhone app, as published`);
+await shot("check-iphone");
+await page.getByRole("button", { name: "Chrome on the web" }).click();
+expect(await settles(() => !document.querySelector(".bottom h2").innerText.includes("iPhones")), "back on Chrome, the board is Chrome's again");
+
 // Apply it: the page hands over the same Remote Config template the shop was deployed with.
 await page.locator(".apply summary").click();
 expect(JSON.stringify(JSON.parse(await page.locator(".apply pre").first().innerText())) === JSON.stringify(template), "apply: at the default bar the template shown is the one the shop runs on");
 const appCode = await page.locator(".apply pre").nth(1).innerText();
 expect(modes.every(([id]) => appCode.includes(`mode_${id}:`)), "apply: the app code names every feature's parameter");
 expect(/onDeviceParams/.test(appCode) && modes.every(([id]) => appCode.includes(`model(\n  "mode_${id}",\n  "`)), "apply: the app code gives every feature its instruction on the device side too");
-expect(/firebase deploy --only remoteconfig/.test(await page.locator(".apply pre").nth(2).innerText()), "apply: the deploy command is given");
+expect(/firebase deploy --only remoteconfig/.test(await page.locator(".apply pre").last().innerText()), "apply: the deploy command is given");
 expect(/Nothing on this page writes to your Firebase project/.test(await page.locator(".apply").innerText()), "apply: it says nothing is written to the reader's project");
 
 // A feature kept in the cloud: the recorded one-line fixes, and a line of the reader's own on Chrome's model.

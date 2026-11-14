@@ -4,7 +4,7 @@ import { FEATURES } from "../features";
 import { parse } from "../features/types";
 import { BATCH, GRADER, gradingPrompt, readGrades, ungraded, withGrades } from "./grade";
 import recorded from "./recorded.json";
-import { DEFAULT_ALLOWED, graded, onApple, RUNS, VERDICT_NAME, verdictFor, type Cases, type CheckRecord, type Grades, type Run } from "./record";
+import { DEFAULT_ALLOWED, differing, graded, onApple, RUNS, VERDICT_NAME, verdictFor, type Cases, type CheckRecord, type Grades, type Run } from "./record";
 
 const RECORD = recorded as CheckRecord;
 
@@ -25,10 +25,12 @@ function casesOf(id: string, mine: Mine): Cases {
 
 const textOf = (run?: Run) => (run && "text" in run ? run.text : run?.error);
 
-/** An answer as the phone shows it: a JSON object as one line for each field, anything else as it is. */
-function shown(run?: Run): string {
+/** An answer as the phone shows it: a JSON object as one line for each field, anything else as it is. A line is marked where the two answers differ. */
+function shown(run: Run | undefined, other: Run | undefined): { text: string; differs: boolean }[] {
   const text = textOf(run) ?? "", object = parse(text);
-  return object ? Object.entries(object).map(([key, value]) => `${key}: ${String(value) || "(empty)"}`).join("\n") : text;
+  if (!object) return [{ text, differs: true }];
+  const differs = differing(text, textOf(other));
+  return Object.entries(object).map(([key, value]) => ({ text: `${key}: ${String(value) || "(empty)"}`, differs: differs.includes(key) }));
 }
 
 /** Every feature's verdict at the default bar, with its counts and its wrong answers. */
@@ -56,9 +58,9 @@ export function board(mineJson: string): string {
             id: x.c.id,
             input: x.c.input,
             side: x.side,
-            answer: shown(r.apple?.[worst]),
+            answer: shown(r.apple?.[worst], r.cloud),
             wrongRuns: x.device.filter((d) => !d.ok).length,
-            cloudAnswer: shown(r.cloud),
+            cloudAnswer: shown(r.cloud, r.apple?.[worst]),
             reason: !device.ok ? device.reason : x.cloud && !x.cloud.ok ? x.cloud.reason : "",
             byCode: !graded(f, x.c) || !f.check(textOf(r.apple?.[worst]) ?? "", x.c).ok,
           };

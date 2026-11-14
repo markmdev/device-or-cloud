@@ -119,7 +119,7 @@ private struct Card: View {
                 VStack(alignment: .leading, spacing: 6) {
                     if busy { Text("Working…").foregroundStyle(Color.soft) }
                     if let answer { Result(feature: feature, text: answer.text) }
-                    if let problem { Text(problem).fontWeight(.semibold).foregroundStyle(Color.wrong) }
+                    if let problem { Text(problem) }
                 }
                 .frame(maxWidth: .infinity, minHeight: 72, alignment: .topLeading)
             }

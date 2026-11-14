@@ -185,12 +185,17 @@ private struct Failures: View {
         .preferredColorScheme(.light)
     }
 
-    private func said(_ who: String, _ answer: String, wrong: Bool) -> some View {
+    private func said(_ who: String, _ answer: [Board.Line], wrong: Bool) -> some View {
         VStack(alignment: .leading, spacing: 3) {
             Text(who).font(.system(size: 12.5)).foregroundStyle(Color.soft)
             HStack(alignment: .firstTextBaseline, spacing: 6) {
                 Image(systemName: wrong ? "xmark.circle.fill" : "checkmark.circle.fill").foregroundStyle(wrong ? Color.wrong : Color.ink)
-                Text(answer).font(.system(size: 13, design: .monospaced)).foregroundStyle(wrong ? Color.wrong : Color.ink)
+                VStack(alignment: .leading, spacing: 0) {
+                    ForEach(answer.indices, id: \.self) { i in
+                        Text(answer[i].text).foregroundStyle(wrong && answer[i].differs ? Color.wrong : Color.ink)
+                    }
+                }
+                .font(.system(size: 13, design: .monospaced))
             }
         }
     }

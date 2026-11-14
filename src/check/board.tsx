@@ -2,11 +2,11 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 import { flushSync } from "react-dom";
 import { SOURCE_LABEL } from "../answer";
 import type { Check, Feature } from "../features";
-import { parse, plain } from "../features/types";
+import { parse } from "../features/types";
 import { CLOUD_MODEL } from "../firebase";
 import { appCode, CHROME, DEPLOY, IPHONE, parameterFor, swiftCode, TEMPLATE_FILE, templateText } from "./apply";
 import { Fixes } from "./fixes";
-import { APPLES, barInWords, CHROMES, DEFAULT_ALLOWED, graded, moves, NEITHER_ADVICE, onApple, RUNS, VERDICT_NAME, verdictFor, verdictLine, type Failure, type FixRecord, type Run, type Verdict } from "./record";
+import { APPLES, barInWords, CHROMES, DEFAULT_ALLOWED, differing, graded, moves, NEITHER_ADVICE, onApple, RUNS, VERDICT_NAME, verdictFor, verdictLine, type Failure, type FixRecord, type Run, type Verdict } from "./record";
 import type { Cases } from "./run";
 
 const MAX_ALLOWED = 30;
@@ -59,13 +59,6 @@ const Mark = ({ ok }: { ok?: boolean }) => (
 );
 
 const textOf = (run?: Run) => (run && "text" in run ? run.text : undefined);
-
-/** The fields in which two answers differ: what a reader should look at first. */
-function differing(a?: string, b?: string): string[] {
-  const one = a ? parse(a) : null, other = b ? parse(b) : null;
-  if (!one || !other) return [];
-  return Object.keys(one).filter((key) => plain(one[key]) !== plain(other[key]));
-}
 
 /** What an answer shows large: the first field that tells the two answers apart, or the whole text. */
 function headline(text: string | undefined, telling: string[]): { key?: string; value: string } | undefined {

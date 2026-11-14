@@ -29,14 +29,20 @@ struct Board: Decodable {
         let date: String
     }
 
+    /// One line of an answer; `differs` where the two models' answers part.
+    struct Line: Decodable {
+        let text: String
+        let differs: Bool
+    }
+
     struct Failure: Decodable, Identifiable {
         let id: String
         let input: String
         /// Which model got it wrong: device, cloud or both.
         let side: String
-        let answer: String
+        let answer: [Line]
         let wrongRuns: Int
-        let cloudAnswer: String
+        let cloudAnswer: [Line]
         let reason: String
         let byCode: Bool
     }

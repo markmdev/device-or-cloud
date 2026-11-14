@@ -8,7 +8,7 @@ import { OutOfRequests, outOfRequests } from "./ask";
 import { Board } from "./board";
 import { heldBackOf, missesOf, OUR_LINES, proposeLine, tryLine } from "./fix";
 import recorded from "./recorded.json";
-import { RUNS, verdictFor, whereApple, type CheckRecord, type FixRecord } from "./record";
+import { RUNS, verdictFor, whereApple, written, type CheckRecord, type FixRecord } from "./record";
 import { gradeFeature, runCloud, runDevice, type Cases } from "./run";
 
 const RECORD = recorded as CheckRecord;
@@ -125,7 +125,6 @@ function App() {
     sessionStorage.setItem("record", JSON.stringify({ ...RECORD, features: all, held }));
   }
 
-  const written = (iso: string) => new Date(iso).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
   const date = written(RECORD.date);
   const runningName = FEATURES.find((f) => f.id === running)?.name;
   const done = running ? Object.values(features[running] ?? {}).filter((r) => r.device.length === RUNS).length : 0;
