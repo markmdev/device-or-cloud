@@ -129,7 +129,7 @@ function App() {
   const done = running ? Object.values(features[running] ?? {}).filter((r) => r.device.length === RUNS).length : 0;
 
   return (
-    <main className="check">
+    <main className="check sample">
       <header>
         <h1>
           <i />
@@ -162,12 +162,12 @@ function App() {
       {notice && <p className="notice">{notice}</p>}
 
       <section className="intro">
-        <h2>Which of an app's AI features can run on its users' own devices?</h2>
+        <h2>Find out which of your app's AI features Chrome's <span className="together">built-in</span> model gets right, measured on your own inputs, and ship the answer as Remote Config.</h2>
         <p className="lede">
-          Each of the shop's eight features was sent {FEATURES[0].cases.length} inputs through Firebase AI Logic: {RUNS} times to the model built into
-          Chrome, {RECORD.apple && `${RUNS} times to Apple's on-device model from the shop's iPhone app, `}once to {RECORD.cloudModel || CLOUD_MODEL} in
-          the cloud. A feature runs on the device when {RECORD.apple ? "its platform's own model" : "Chrome's model"} stays within the bar you set. It
-          stays in the cloud when only the cloud does. When neither does, neither model is good enough for it.
+          This is a sample shop's check. Each of its eight features was sent {FEATURES[0].cases.length} inputs through Firebase AI Logic: {RUNS} times to the model built into
+          Chrome, {RECORD.apple && `${RUNS} times to Apple's on-device model in the shop's iPhone app, `}once to {RECORD.cloudModel || CLOUD_MODEL} in the cloud. A feature
+          runs on the device when {RECORD.apple ? "its platform's own model" : "Chrome's model"} stays within the bar you set. It stays in the cloud when only the cloud does.
+          When neither does, neither model is good enough for it.
         </p>
       </section>
 
