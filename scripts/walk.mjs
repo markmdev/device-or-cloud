@@ -34,6 +34,15 @@ await page.getByLabel("Requests a month for each feature").fill("500000");
 expect(onDevice === 0 || (await money()) !== before, "the money follows the request count");
 await shot("check");
 
+// A feature kept in the cloud: the recorded one-line fixes, and a line of the reader's own on Chrome's model.
+expect(/after one-line fixes/.test(await page.locator(".bottom h2").innerText()), "the bottom line counts what one-line fixes move");
+await page.locator(".sides .cloud .feature", { hasText: "Read a review's mood" }).click();
+expect((await page.locator('.fixes .fix[data-moved="true"] blockquote').count()) > 0, "a recorded line moves the mood feature, shown with its counts");
+await page.getByRole("button", { name: "Run Chrome's model with this line" }).click();
+await page.locator(".fix.yours p", { hasText: "On the check's 25 inputs" }).waitFor({ timeout: 600_000 }).catch(() => {});
+expect((await page.locator(".fix.yours p", { hasText: "On the check's 25 inputs" }).count()) === 1, "a line of the reader's own runs on this computer and gets its counts");
+await shot("fixes");
+
 // Run it here: Chrome's model answers live, then stop.
 await page.getByRole("button", { name: "Run it on your own computer" }).click();
 await page.getByRole("button", { name: /Stop · .+: [1-9]/ }).waitFor({ timeout: 120_000 });
