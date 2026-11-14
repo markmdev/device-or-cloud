@@ -17,7 +17,7 @@ Open them in Chrome on a computer to see the device side run.
 
 **The sample shop** (`shop/`, `src/shop/`) is a small made-up shop, Larkfield, with eight AI features: routing a support ticket, reading a review's mood, pulling fields from a receipt, rewriting a product title, summarising a delivery note, working out an invoice total, pulling an address from an email and answering a returns question. Each feature reads its inference mode from Firebase Remote Config and calls Firebase AI Logic in that mode. Every answer carries a badge that says where the SDK reports it ran.
 
-**The check** (`index.html`, `src/check/`) sends each feature 25 inputs through Firebase AI Logic: three times to Chrome's model in device-only mode, once to Gemini in cloud-only mode. It gives each feature one verdict, against a bar the reader sets with a slider: how many wrong answers in 100 the feature can live with. The default is 10.
+**The check** (`index.html`, `src/check/`) sends each feature 50 inputs through Firebase AI Logic: three times to Chrome's model in device-only mode, once to Gemini in cloud-only mode. It gives each feature one verdict, against a bar the reader sets with a slider: how many wrong answers in 100 the feature can live with. The default is 10. Counts are in inputs, because three runs of one input are not three measurements. Next to each verdict is the range its count allows, and when that range crosses the bar the verdict is marked "Not enough inputs to tell", with about how many more inputs would settle it.
 
 - **Runs on the device:** the platform's own model stays within the bar. Sets `prefer_on_device` for that platform: Chrome on the web for Chrome's model, the iPhone app for Apple's.
 - **Keep in the cloud:** only the cloud model stays within it. Sets `only_in_cloud`.
@@ -67,7 +67,7 @@ npm run deploy
 
 `npm run deploy` writes the Remote Config template from the recorded verdicts (`scripts/modes.ts`), builds the pages and deploys Hosting and the Remote Config template. The pages read the project's config from Firebase Hosting at `/__/firebase/init.json`, so no config or key is in this repo.
 
-To record the check on your own machine, add an App Check debug token for your web app to `.env.local` as `VITE_APPCHECK_DEBUG_TOKEN`, start `npm run dev`, start Chrome with `--remote-debugging-port=9222` and run `CDP=http://127.0.0.1:9222 node scripts/record.mjs`. It writes `src/check/recorded.json`. The free tier allows 15 cloud requests a minute and 500 a day for the whole project; the recording waits out a full minute and resumes after a full day.
+To record the check on your own machine, add an App Check debug token for your web app to `.env.local` as `VITE_APPCHECK_DEBUG_TOKEN`, start `npm run dev`, start Chrome with `--remote-debugging-port=9222` and run `CDP=http://127.0.0.1:9222 node scripts/record.mjs`. It runs everything Chrome's model has to answer first, which is free, and then the cloud side. The free tier allows 15 cloud requests a minute and 500 a day for the whole project; the recording waits out a full minute, and when the day runs out it stops and keeps what it has in `record.partial.json`. Run it again the next day and it goes on from there. When nothing is missing it writes `src/check/recorded.json`.
 
 ### The iPhone app
 
@@ -87,7 +87,7 @@ The app has to be signed, if only for local use as here: an unsigned build can't
 
 `IOS_APPCHECK_DEBUG_TOKEN=<token> node scripts/walk-ios.mjs` walks the built app in the simulator: every feature answers its sample where the template says, and with the app's network cut the device features still answer while the cloud ones say they need a connection. The simulator has no flight mode, so the walk loads `ios/offline/offline.c` into the app to refuse its network connections.
 
-To record Apple's column: launch the app on its Check tab with `-record`, which also answers the held-back inputs (`xcrun simctl launch --console-pty booted app.deviceorcloud.larkfield -tab check -record`), then `npm run apple -- "$(xcrun simctl get_app_container booted app.deviceorcloud.larkfield data)/Documents/check.json"`, then `GRADE=1 CDP=... node scripts/record.mjs` for the answers the cloud model has not judged yet.
+To record Apple's side: launch the app on its Check tab with `-record` (`xcrun simctl launch booted app.deviceorcloud.larkfield -tab check -record`). It answers the check's inputs and the held-back ones, and then tries every line and setting listed in `fixes.json` in its Documents folder. It keeps what it has in `check.json` there. Then `npm run apple -- <that check.json> <a fixes.json to write>` puts Apple's answers into the record and writes the list of what the app should try next, such as a line the cloud model has proposed since. Copy that list into the app's Documents folder and launch it again; run `scripts/record.mjs` again for what the cloud model has not judged yet.
 
 `scripts/walk.mjs` walks the whole path on the live site: the recorded check, a live run, the results page, a feature pasted into "Check your own prompts", every shop feature, and the shop with the network off.
 
