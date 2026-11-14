@@ -117,6 +117,17 @@ final class Check {
         var os: String
         var date: String
         var answers: Mine = [:]
+        var fixes: [Fix]?
+    }
+
+    /// One change tried on a feature for the record: a line added to its instruction, or Apple's model's randomness
+    /// switched off, with its answers to the feature's inputs and the held-back ones.
+    private struct Fix: Codable {
+        var feature: String
+        var line: String
+        var by: String
+        var steady: Bool
+        var answers: [String: [Run]]?
     }
 
     private static let file = URL.documentsDirectory.appending(path: "check.json")
@@ -141,8 +152,8 @@ final class Check {
         stopped = true
     }
 
-    /// Answers every feature again. With `heldBack`, also the inputs kept out of the check, and a feature already whole in
-    /// the file is kept: that is how the record's own column is made, and it picks up where it stopped.
+    /// Answers every feature again. With `heldBack`, the way the record's own column is made, it also answers the inputs
+    /// kept out of the check and the changes asked for in fixes.json, and it keeps the answers the file already has.
     func run(heldBack: Bool = false) async {
         stopped = false
         problem = nil
@@ -154,28 +165,53 @@ final class Check {
         }
         for feature in Feature.all {
             let cases = feature.cases + (heldBack ? feature.heldBack : [])
-            if heldBack, cases.allSatisfy({ saved.answers[feature.id]?[$0.id]?.apple.count == 3 }) { continue }
-            var answers: [String: Answers] = [:]
-            for (n, c) in cases.enumerated() {
-                running = (feature.name, n, cases.count)
-                var runs: [Run] = []
-                for _ in 0..<3 where !stopped {
-                    do {
-                        let answer = try await ask(feature, mode: .onlyOnDevice, input: c.input)
-                        runs.append(Run(text: answer.text, seconds: answer.seconds))
-                    } catch {
-                        runs.append(Run(error: error.localizedDescription))
-                    }
-                }
-                if stopped { return }
+            var answers = heldBack ? saved.answers[feature.id] ?? [:] : [:]
+            let missing = cases.filter { answers[$0.id]?.apple.count != 3 }
+            if missing.isEmpty { continue }
+            for (n, c) in missing.enumerated() {
+                running = (feature.name, cases.count - missing.count + n, cases.count)
+                guard let runs = await threeRuns(feature, c) else { return }
                 answers[c.id] = Answers(apple: runs)
-                if heldBack { print("RECORD \(feature.name): \(n + 1) of \(cases.count)") }
+                if heldBack { print("RECORD \(feature.name): \(cases.count - missing.count + n + 1) of \(cases.count)") }
             }
             saved.answers[feature.id] = answers
             await grade()
             try? JSONEncoder().encode(saved).write(to: Self.file)
             board = Judge.board(saved.answers)
         }
+        guard heldBack, let asked = try? JSONDecoder().decode([Fix].self, from: Data(contentsOf: URL.documentsDirectory.appending(path: "fixes.json"))) else { return }
+        for ask in asked {
+            guard let feature = Feature.all.first(where: { $0.id == ask.feature }) else { continue }
+            var fixes = saved.fixes ?? []
+            let at = fixes.firstIndex { $0.feature == ask.feature && $0.line == ask.line && $0.steady == ask.steady } ?? fixes.endIndex
+            var fix = at < fixes.endIndex ? fixes[at] : ask
+            var answers = fix.answers ?? [:]
+            let cases = feature.cases + feature.heldBack
+            for (n, c) in cases.enumerated() where answers[c.id]?.count != 3 {
+                running = (feature.name, n, cases.count)
+                guard let runs = await threeRuns(feature, c, line: ask.line, steady: ask.steady) else { return }
+                answers[c.id] = runs
+                print("RECORD \(feature.name), \(ask.steady ? "randomness off" : "with a line"): \(n + 1) of \(cases.count)")
+            }
+            fix.answers = answers
+            if at < fixes.endIndex { fixes[at] = fix } else { fixes.append(fix) }
+            saved.fixes = fixes
+            try? JSONEncoder().encode(saved).write(to: Self.file)
+        }
+    }
+
+    /// One input answered three times on Apple's model; nil when the run was stopped.
+    private func threeRuns(_ feature: Feature, _ c: Feature.Case, line: String = "", steady: Bool = false) async -> [Run]? {
+        var runs: [Run] = []
+        for _ in 0..<3 where !stopped {
+            do {
+                let answer = try await ask(feature, mode: .onlyOnDevice, input: c.input, line: line, steady: steady)
+                runs.append(Run(text: answer.text, seconds: answer.seconds))
+            } catch {
+                runs.append(Run(error: error.localizedDescription))
+            }
+        }
+        return stopped ? nil : runs
     }
 
     /// Has the cloud model judge the free-text answers code found nothing wrong with.

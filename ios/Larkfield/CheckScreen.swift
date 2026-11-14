@@ -9,6 +9,7 @@ struct CheckScreen: View {
 
     var body: some View {
         let board = check.board
+        ScrollViewReader { scroll in
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
                 VStack(alignment: .leading, spacing: 10) {
@@ -36,7 +37,7 @@ struct CheckScreen: View {
                 }
 
                 side("run on this iPhone", of: "device", in: board, tint: .device, none: "Nothing yet. At this bar, Apple's model is wrong too often on every feature.")
-                side("stay in the cloud", of: "cloud", in: board, tint: .cloud, none: "Nothing has to stay here at this bar.")
+                side("stay in the cloud", of: "cloud", in: board, tint: .cloud, none: "Nothing has to stay here at this bar.").id("cloud")
                 let neither = board.features.filter { $0.kind != "device" && $0.kind != "cloud" }
                 if !neither.isEmpty {
                     group(neither, title: "on neither side yet", named: true, allowed: board.allowed, none: "")
@@ -59,10 +60,25 @@ struct CheckScreen: View {
             #if DEBUG
             // Started with -shown <feature id>, the screen opens on that feature's wrong answers, for pictures.
             shown = board.features.first { $0.id == UserDefaults.standard.string(forKey: "shown") }
+            // Started with -film scroll, -film run or -film <feature id>, the screen moves by itself after a moment, for a
+            // take nobody has to touch: it scrolls down the cloud side, starts the run, or opens that feature's wrong answers.
+            if let film = UserDefaults.standard.string(forKey: "film") {
+                let row = board.features.first { $0.id == film }
+                if let row { scroll.scrollTo(row.id, anchor: UnitPoint(x: 0.5, y: 0.3)) }
+                try? await Task.sleep(for: .seconds(3))
+                if let row {
+                    shown = row
+                } else if film == "scroll" {
+                    withAnimation(.linear(duration: 8)) { scroll.scrollTo("cloud", anchor: .bottom) }
+                } else {
+                    await check.run()
+                }
+            }
             #endif
             guard recording else { return }
             await check.run(heldBack: true)
             print("RECORD done", URL.documentsDirectory.appending(path: "check.json").path)
+        }
         }
     }
 
@@ -83,6 +99,7 @@ struct CheckScreen: View {
                 Button { shown = row } label: { RowCard(row: row, named: named, allowed: allowed) }
                     .buttonStyle(.plain)
                     .disabled(row.failures.isEmpty)
+                    .id(row.id)
             }
             if rows.isEmpty { Text(none).font(.system(size: 14)) }
         }

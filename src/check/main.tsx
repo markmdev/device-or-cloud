@@ -57,21 +57,34 @@ function App() {
     setRunning(undefined);
   }
 
-  // Dev only: makes the recorded check. It keeps what it has after every feature, so a run cut short by the free tier's day picks up where it stopped.
+  // Dev only: makes the recorded check, or adds to it what new inputs still lack. The device side comes first, because it is
+  // free; the cloud side keeps what it has after every feature, so a run cut short by the free tier's day picks up where it stopped.
   async function recordEverything() {
-    const all: Record<string, Cases> = JSON.parse(sessionStorage.getItem("partial") ?? "{}");
+    const all: Record<string, Cases> = JSON.parse(sessionStorage.getItem("partial") ?? "null") ?? { ...RECORD.features };
     setFeatures(all);
-    for (const f of FEATURES) {
-      setRunning(f.id);
-      let cases = await runDevice(f, all[f.id] ?? {}, put(f.id), () => false);
-      cases = await runCloud(f, cases, put(f.id));
-      cases = await gradeFeature(f, cases);
+    const keep = (f: Feature, cases: Cases) => {
       put(f.id)(cases);
       all[f.id] = cases;
       sessionStorage.setItem("partial", JSON.stringify(all));
+    };
+    for (const f of FEATURES) {
+      setRunning(f.id);
+      keep(f, await runDevice(f, all[f.id] ?? {}, put(f.id), () => false));
     }
-    setRunning(undefined);
+    try {
+      for (const f of FEATURES) {
+        setRunning(f.id);
+        keep(f, await gradeFeature(f, await runCloud(f, all[f.id], (cases) => keep(f, cases))));
+      }
+    } catch (e) {
+      if (!(e instanceof OutOfRequests)) throw e;
+      setNotice(outOfRequests(e));
+      return;
+    } finally {
+      setRunning(undefined);
+    }
     const record: CheckRecord = {
+      ...RECORD,
       machine: import.meta.env.VITE_RECORD_MACHINE ?? "",
       chrome: chromeVersion(),
       date: new Date().toISOString().slice(0, 10),
