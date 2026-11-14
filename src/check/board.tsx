@@ -1,4 +1,4 @@
-import { useEffect, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { flushSync } from "react-dom";
 import { SOURCE_LABEL } from "../answer";
 import type { Check, Feature } from "../features";
@@ -229,7 +229,11 @@ export function Board({ features, cases, mine = [], held, fixes, opensOn, canRun
   onFix?: (featureId: string, fix: FixRecord) => void;
 }) {
   const [selected, setSelected] = useState(opensOn);
+  // The slider's own position is kept apart from the bar the verdicts use: the verdicts follow a moment later when
+  // a feature crosses the line, and a slider that waited for them would snap back under a held key.
+  const [bar, setBarNow] = useState(DEFAULT_ALLOWED);
   const [allowed, setAllowed] = useState(DEFAULT_ALLOWED);
+  const latestBar = useRef(DEFAULT_ALLOWED);
 
   const verdicts = features.map((f) => verdictFor(f, cases[f.id], allowed));
   const onDevice = verdicts.filter((v) => v.kind === "device"), inCloud = verdicts.filter((v) => v.kind === "cloud");
@@ -237,9 +241,12 @@ export function Board({ features, cases, mine = [], held, fixes, opensOn, canRun
 
   // A feature that changes sides is seen crossing the line.
   function setBar(next: number) {
-    const sides = (bar: number) => features.map((f) => verdictFor(f, cases[f.id], bar).kind).join();
+    setBarNow(next);
+    latestBar.current = next;
+    const sides = (at: number) => features.map((f) => verdictFor(f, cases[f.id], at).kind).join();
     if (!document.startViewTransition || sides(next) === sides(allowed)) return setAllowed(next);
-    document.startViewTransition(() => flushSync(() => setAllowed(next)));
+    // A newer move of the slider skips this transition; its update still runs, so it takes the newest position.
+    document.startViewTransition(() => flushSync(() => setAllowed(latestBar.current))).ready.catch(() => {});
   }
   const shown = verdicts.find((v) => v.feature.id === selected) ?? verdicts.find((v) => v.kind === "cloud") ?? verdicts.find((v) => v.failures.length) ?? verdicts[0];
   const row = (v: Verdict, named?: boolean) => (
@@ -251,8 +258,8 @@ export function Board({ features, cases, mine = [], held, fixes, opensOn, canRun
       <div className="board">
         <label className="bar">
           Wrong answers allowed in 100
-          <input type="range" min={0} max={30} value={allowed} onChange={(e) => setBar(Number(e.target.value))} />
-          <output>{allowed}</output>
+          <input type="range" min={0} max={30} value={bar} onChange={(e) => setBar(Number(e.target.value))} />
+          <output>{bar}</output>
         </label>
 
         <div className="sides">

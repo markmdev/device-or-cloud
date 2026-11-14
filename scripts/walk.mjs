@@ -13,6 +13,8 @@ page.on("pageerror", (e) => console.log("page crashed:", String(e).slice(0, 300)
 
 let failed = 0;
 const expect = (ok, what) => { console.log(ok ? "ok  " : "FAIL", what); if (!ok) failed++; };
+// What the page shows once it has settled: a move across the line is animated, so the words follow a moment later.
+const settles = (check) => page.waitForFunction(check, null, { timeout: 5000 }).then(() => true, () => false);
 const shot = (name) => process.env.SHOTS && page.screenshot({ path: `${process.env.SHOTS}/${name}.png`, fullPage: true });
 
 // The check: the recorded verdicts, the proof, the bottom line and its controls.
@@ -24,8 +26,9 @@ const onDevice = modes.filter(([, mode]) => mode === "prefer_on_device").length;
 expect((await page.locator(".sides .device .feature").count()) === onDevice, `${onDevice} features are on the device side, as published`);
 expect((await page.locator(".bottom h2").innerText()).includes(`${onDevice} of ${modes.length} features`), "the bottom line counts the same");
 await page.getByLabel("Wrong answers allowed in 100").press("Home");
-expect((await page.locator(".bottom h2").innerText()).startsWith("With no wrong answers allowed"), "the bar moves the verdicts and the headline names it");
+expect(await settles(() => document.querySelector(".bottom h2").innerText.startsWith("With no wrong answers allowed")), "the bar moves the verdicts and the headline names it");
 for (let i = 0; i < 10; i++) await page.getByLabel("Wrong answers allowed in 100").press("ArrowRight");
+expect(await settles(() => document.querySelector(".bottom h2").innerText.startsWith("At up to 1 wrong answer in 10")), "ten steps up, the headline names the default bar again");
 expect((await page.locator(".sides .device .feature").count()) === onDevice, "back at the default bar, the published split shows again");
 expect((await page.locator(".proof pre").count()) === 1, "a failure is shown with its input and both answers");
 const money = () => page.locator(".money b").innerText();
