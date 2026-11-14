@@ -70,7 +70,7 @@ const inputs = Object.values(record.features).reduce((n, cases) => n + Object.ke
 expect((await page.locator(".feature-results > .result").count()) === inputs, `results: all ${inputs} inputs are shown with their answers`);
 expect((await page.locator("header").innerText()).includes(`Recorded on a ${record.machine}, Chrome ${record.chrome}`), "results: the machine and Chrome's version are given");
 const summary = await page.locator(".summary table").innerText();
-expect(Object.values(template.parameters).every((p) => summary.replace(/\s+/g, " ").includes(/right on (\d+ of \d+) runs/.exec(p.description)[1])), "results: each feature's count is the one its Remote Config mode was set from");
+expect(Object.values(template.parameters).every((p) => summary.replace(/\s+/g, " ").includes(/(\d+ of \d+) runs/.exec(p.description)[1])), "results: each feature's count is the one its Remote Config mode was set from");
 expect((await page.locator('.result .given[data-ok="false"]').count()) > 100, "results: the wrong answers are there too");
 await shot("results");
 
