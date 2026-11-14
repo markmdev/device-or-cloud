@@ -16,13 +16,14 @@ if (process.env.REDO || process.env.REGRADE) {
   for (const id of process.env.REGRADE?.split(",") ?? []) for (const c of Object.values(kept[id])) delete c.grades;
   await page.evaluate((partial) => sessionStorage.setItem("partial", partial), JSON.stringify(kept));
 }
-await page.getByRole("button", { name: "Record everything" }).click();
+// FIXES=1 records the one-line fixes on top of the last record, instead of the check itself.
+await page.getByRole("button", { name: process.env.FIXES ? "Record the fixes" : "Record everything" }).click();
 
 let last = "";
 for (;;) {
   const state = await page.evaluate(() => ({
     record: sessionStorage.getItem("record"),
-    partial: sessionStorage.getItem("partial"),
+    partial: sessionStorage.getItem("partial-fixes") ?? sessionStorage.getItem("partial"),
     at: document.querySelector("header button")?.textContent ?? "",
   }));
   if (state.partial) writeFileSync("record.partial.json", state.partial);

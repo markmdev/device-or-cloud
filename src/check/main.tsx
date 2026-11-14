@@ -6,8 +6,10 @@ import { FEATURES, type Check, type Feature } from "../features";
 import { DownloadPanel } from "../download";
 import { CLOUD_MODEL, deviceState, type DeviceState } from "../firebase";
 import { OutOfRequests } from "./ask";
+import { heldBackOf, OUR_LINES, proposeLine, tryLine } from "./fix";
+import { Fixes } from "./fixes";
 import recorded from "./recorded.json";
-import { barInWords, DEFAULT_ALLOWED, dollarsPerRequest, RUNS, VERDICT_NAME, verdictFor, verdictLine, type CheckRecord, type Failure, type Run, type Verdict } from "./record";
+import { barInWords, DEFAULT_ALLOWED, dollarsPerRequest, moves, RUNS, VERDICT_NAME, verdictFor, verdictLine, type CheckRecord, type Failure, type FixRecord, type Run, type Verdict } from "./record";
 import { gradeFeature, runCloud, runDevice, type Cases } from "./run";
 
 const RECORD = recorded as CheckRecord;
@@ -93,7 +95,7 @@ function Proof({ v, cases }: { v: Verdict; cases: Cases }) {
   );
 }
 
-function BottomLine({ verdicts, allowed }: { verdicts: Verdict[]; allowed: number }) {
+function BottomLine({ verdicts, allowed, afterFixes }: { verdicts: Verdict[]; allowed: number; afterFixes: number }) {
   const [requests, setRequests] = useState(100_000);
   const [share, setShare] = useState(30);
   const onDevice = verdicts.filter((v) => v.kind === "device");
@@ -103,7 +105,8 @@ function BottomLine({ verdicts, allowed }: { verdicts: Verdict[]; allowed: numbe
   return (
     <section className="bottom">
       <h2>
-        {barInWords(allowed)}, {onDevice.length} of {verdicts.length} features can run on your users' own devices.
+        {barInWords(allowed)}, {onDevice.length} of {verdicts.length} features can run on your users' own devices
+        {afterFixes > onDevice.length ? ` today, and ${afterFixes} of ${verdicts.length} after one-line fixes.` : "."}
       </h2>
       {onDevice.length > 0 && (
         <p className="gains">
@@ -192,6 +195,43 @@ function App() {
     sessionStorage.setItem("record", JSON.stringify(record));
   }
 
+  // Dev only: for each feature the default bar keeps in the cloud, records the held-back inputs as they stand, the line the cloud
+  // model proposes from the failures, and our own line where we have one. It resumes like the main recording.
+  async function recordFixes() {
+    const held: Record<string, Cases> = JSON.parse(sessionStorage.getItem("partial-held") ?? "null") ?? RECORD.held ?? {};
+    const fixes: Record<string, FixRecord[]> = JSON.parse(sessionStorage.getItem("partial-fixes") ?? "null") ?? {};
+    const keep = () => {
+      sessionStorage.setItem("partial-held", JSON.stringify(held));
+      sessionStorage.setItem("partial-fixes", JSON.stringify(fixes));
+    };
+    for (const f of FEATURES) {
+      const v = verdictFor(f, RECORD.features[f.id]);
+      if (v.kind !== "cloud" || !f.heldBack) continue;
+      setRunning(f.id);
+      const heldFeature = heldBackOf(f);
+      held[f.id] = await gradeFeature(heldFeature, await runCloud(heldFeature, await runDevice(heldFeature, held[f.id] ?? {}, () => {}, () => false), () => {}));
+      keep();
+      fixes[f.id] ??= [];
+      if (!fixes[f.id].some((fix) => fix.by === "cloud")) {
+        const misses = v.failures.flatMap((x) => {
+          const run = RECORD.features[f.id][x.c.id].device.find((d, i) => !x.device[i].ok);
+          const check = x.device.find((d) => !d.ok);
+          return run && check && !check.ok ? [{ input: x.c.input, answer: "text" in run ? run.text : run.error, reason: check.reason }] : [];
+        });
+        fixes[f.id].push({ line: await proposeLine(f, misses), by: "cloud", cases: {}, held: {} });
+        keep();
+      }
+      if (OUR_LINES[f.id] && !fixes[f.id].some((fix) => fix.by === "us")) fixes[f.id].push({ line: OUR_LINES[f.id], by: "us", cases: {}, held: {} });
+      for (const fix of fixes[f.id]) {
+        if (Object.keys(fix.held).length && Object.values(fix.held).every((r) => r.cloud)) continue;
+        Object.assign(fix, await tryLine(f, fix.line, () => {}, true));
+        keep();
+      }
+    }
+    setRunning(undefined);
+    sessionStorage.setItem("record", JSON.stringify({ ...RECORD, held, fixes }));
+  }
+
   const date = new Date(RECORD.date).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
   const runningName = FEATURES.find((f) => f.id === running)?.name;
   const done = running ? Object.values(features[running] ?? {}).filter((r) => r.device.length === RUNS).length : 0;
@@ -218,6 +258,7 @@ function App() {
           </button>
         )}
         {import.meta.env.DEV && !running && <button onClick={recordEverything}>Record everything</button>}
+        {import.meta.env.DEV && !running && <button onClick={recordFixes}>Record the fixes</button>}
       </header>
 
       {device && <DownloadPanel state={device} onState={setDevice} meanwhile="nothing below ran here" />}
@@ -260,7 +301,14 @@ function App() {
       </div>
 
       <Proof v={shown} cases={features[shown.feature.id] ?? {}} />
-      <BottomLine verdicts={verdicts} allowed={allowed} />
+      {shown.kind === "cloud" && RECORD.held?.[shown.feature.id] && (
+        <Fixes feature={shown.feature} base={features[shown.feature.id]} record={RECORD} allowed={allowed} canRun={device === "available" && !running} />
+      )}
+      <BottomLine
+        verdicts={verdicts}
+        allowed={allowed}
+        afterFixes={verdicts.filter((v) => v.kind === "device" || (v.kind === "cloud" && RECORD.fixes?.[v.feature.id]?.some((fix) => moves(v.feature, fix, allowed)))).length}
+      />
 
       <footer>
         <p>

@@ -37,6 +37,19 @@ const rows: Row[] = [
   [NONE, "George Pym", "", "", "CB5 8DZ", "George Pym here. I can't remember the full address of the new place yet, only the postcode: CB5 8DZ. I'll send the rest tomorrow."],
 ];
 
+const heldBack: [name: string, street: string, city: string, postcode: string, email: string][] = [
+  ["Ruth Calder", "9 Tannery Row", "York", "YO1 7HB", "Please send my order to Ruth Calder, 9 Tannery Row, York YO1 7HB."],
+  ["", "", "", "", "Is my parcel coming today? The tracking page won't load."],
+  ["Liam Brody", "Flat 4, 12 Quay Street", "Bristol", "BS1 4DJ", "New address for the order: Liam Brody, Flat 4, 12 Quay Street, Bristol BS1 4DJ. The old one on file is wrong."],
+  ["Mei Tan", "Rose Cottage, Back Lane", "Hexham", "NE46 3PU", "It goes to Mei Tan at Rose Cottage, Back Lane, Hexham NE46 3PU. No number, just the name on the gate."],
+  ["", "", "", "", "Please leave the parcel with a neighbour if I'm out. Thanks."],
+  ["Arjun Patel", "31 Station Road", "Luton", "LU1 2QF", "I'm Arjun Patel. We're at number 31, on Station Road in Luton. Postcode LU1 2QF."],
+  ["Clare Whitby", "", "", "", "Clare Whitby here, I'll email the address once we've completed on the house."],
+  ["Owen Price", "Unit 2, Mill Court", "Stroud", "GL5 1AA", "Deliver to the workshop please: Owen Price, Unit 2, Mill Court, Stroud GL5 1AA."],
+  ["Sara Lindqvist", "76 Park Avenue", "Hull", "HU5 3EX", "Not the Leeds address any more. Send it to Sara Lindqvist, 76 Park Avenue, Hull HU5 3EX."],
+  ["", "", "", "HX1 2AB", "I only have the postcode to hand: HX1 2AB. Will that do for now?"],
+];
+
 const samePostcode = (a: unknown, b: unknown) => plain(a).replace(/ /g, "") === plain(b).replace(/ /g, "");
 /** "27 Harbour Street, Flat 3" reaches the same door as "Flat 3, 27 Harbour Street". */
 const parts = (line: unknown) => String(line ?? "").split(",").map(plain).filter(Boolean).sort().join("|");
@@ -49,4 +62,5 @@ export const address: Feature = {
     "You read an email a customer sent to Larkfield, an online home and garden shop, about where to deliver an order. Pull out the delivery address the customer wants used: the name the parcel should be addressed to, the street line, the town or city, and the postcode. Leave a field empty when the email doesn't give it.",
   ...fields({ name: { type: "string" }, street: { type: "string", same: sameStreet }, city: { type: "string" }, postcode: { type: "string", same: samePostcode } }),
   cases: rows.map(([kind, name, street, city, postcode, input], i): Case => ({ id: `address-${i + 1}`, input, expect: { name, street, city, postcode }, kind })),
+  heldBack: heldBack.map(([name, street, city, postcode, input], i): Case => ({ id: `address-held-${i + 1}`, input, expect: { name, street, city, postcode }, kind: "held back" })),
 };

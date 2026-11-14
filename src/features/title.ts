@@ -36,6 +36,19 @@ const rows: Row[] = [
   [QUANTITY, "pair of oven gloves, quilted cotton, grey, 30cm long", [["oven gloves", "oven mitts"], ["pair", "2", "two"], ["cotton"], ["grey", "gray"]], "Pair of grey quilted cotton oven gloves, 30 cm"],
 ];
 
+const heldBack: [notes: string, keep: string[][], example: string][] = [
+  ["door wedge, solid beech, 12 cm long, natural finish", [["wedge", "door stop", "doorstop"], ["beech"], ["12"]], "Solid beech door wedge, 12 cm, natural finish"],
+  ["GORGEOUS!!! throw pillow cover linen sage green 50x50cm zip closure - BEST PRICE", [["cover"], ["linen"], ["green"], ["50"]], "Sage green linen cushion cover, 50 x 50 cm, zip"],
+  ["set of 3 nesting storage tins, cream enamel, largest 18cm", [["tins"], ["3", "three"], ["cream"], ["18"]], "Set of 3 cream enamel nesting storage tins, 18 cm"],
+  ["garden twine 100 m jute, green, on a wooden spool", [["twine"], ["100"], ["jute"], ["green"]], "Green jute garden twine, 100 m, wooden spool"],
+  ["welcome mat rubber backed 45 x 75 cm charcoal grey, hose clean, hard wearing, suits porches and back doors, will not curl at the edges", [["mat"], ["45"], ["75"], ["grey", "gray"]], "Charcoal grey rubber backed welcome mat, 45 x 75 cm"],
+  ["pair of bookends, cast iron, black, 15cm high", [["bookends"], ["pair", "2", "two"], ["cast iron", "cast-iron"], ["black"]], "Pair of black cast iron bookends, 15 cm"],
+  ["bread bin bamboo lid white steel body 33cm wide", [["bread bin"], ["bamboo"], ["white"], ["33"]], "White steel bread bin with bamboo lid, 33 cm"],
+  ["AMAZING DEAL 12 wooden clothes pegs with spring, birch", [["pegs"], ["12", "twelve"], ["birch"]], "Pack of 12 birch wooden clothes pegs"],
+  ["plant mister, amber glass, 300 ml, brass pump top", [["mister", "spray"], ["glass"], ["amber"], ["300"]], "Amber glass plant mister, 300 ml, brass pump"],
+  ["tea towel, organic cotton, blue check, 50 x 70 cm, hanging loop, woven in Lancashire, gets softer with every wash, pack of two", [["tea towel"], ["cotton"], ["blue"], ["2", "two", "pair"]], "Pack of 2 blue check organic cotton tea towels"],
+];
+
 const SALES_TALK = ["best", "amazing", "bargain", "stunning", "wow", "unbeatable", "must have", "must-have", "don't miss", "free gift", "sale"];
 
 type Expect = { keep: string[][]; example: string };
@@ -61,4 +74,5 @@ export const title: Feature = {
     return OK;
   },
   cases: rows.map(([kind, input, keep, example], i): Case => ({ id: `title-${i + 1}`, input, expect: { keep, example }, kind })),
+  heldBack: heldBack.map(([input, keep, example], i): Case => ({ id: `title-held-${i + 1}`, input, expect: { keep, example }, kind: "held back" })),
 };

@@ -35,6 +35,19 @@ const rows: [string, string, string][] = [
   ["negative", SHORT, "Returned it. Enough said."],
 ];
 
+const heldBack: [string, string][] = [
+  ["positive", "Took a while to arrive, but the bench is solid and looks great on the patio."],
+  ["negative", "Lovely packaging and a nice note from the seller. Shame the teapot dribbles everywhere and the lid is chipped."],
+  ["positive", "Honestly thought it would be a gimmick. Used it every day since."],
+  ["negative", "It works, I suppose, if you don't mind the motor screaming and the smell of burning. Sending it back."],
+  ["mixed", "The fabric is gorgeous and the fit is awful. I keep going back and forth on whether to return it."],
+  ["positive", "My only gripe is that I didn't buy two. Brilliant little heater."],
+  ["negative", "Great idea, poor product. The hinge failed in a fortnight."],
+  ["positive", "Instructions were useless, but once it's up it's sturdy, level and exactly the right size. Very pleased."],
+  ["mixed", "Half the tiles are perfect and half arrived a different shade. Not sure yet whether I'll keep them."],
+  ["negative", "Would not buy again."],
+];
+
 export const mood: Feature = {
   id: "review_mood",
   name: "Read a review's mood",
@@ -42,4 +55,5 @@ export const mood: Feature = {
     "You read one product review from Larkfield, an online home and garden shop, and say how the buyer feels about the product overall. positive: happy with the product. negative: unhappy with the product. mixed: clear praise and a clear complaint about the product, with neither winning.",
   ...label(["positive", "negative", "mixed"]),
   cases: rows.map(([expect, kind, input], i): Case => ({ id: `mood-${i + 1}`, input, expect, kind })),
+  heldBack: heldBack.map(([expect, input], i): Case => ({ id: `mood-held-${i + 1}`, input, expect, kind: "held back" })),
 };
