@@ -26,7 +26,7 @@ const ON_DEVICE: Mode[] = ["prefer_on_device", "only_on_device"];
 
 function Card({ feature, mode, device }: { feature: Feature; mode: Mode; device?: DeviceState }) {
   const shown = SHOWN[feature.id];
-  const [input, setInput] = useState(feature.cases[0].input);
+  const [input, setInput] = useState(shown.sample ?? feature.cases[0].input);
   const [busy, setBusy] = useState(false);
   const [answer, setAnswer] = useState<Answer>();
   const [problem, setProblem] = useState<string>();

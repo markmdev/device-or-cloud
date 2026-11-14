@@ -3,7 +3,7 @@ import { AnswerText } from "../answer";
 import type { Feature } from "../features";
 import { parse } from "../features/types";
 
-type Shown = { label: string; heading: string; button: string; result(answer: Record<string, unknown>, text: string): ReactNode };
+type Shown = { label: string; heading: string; button: string; sample?: string; result(answer: Record<string, unknown>, text: string): ReactNode };
 
 const longDate = (iso: unknown) => {
   const date = new Date(String(iso));
@@ -30,6 +30,7 @@ export const SHOWN: Record<string, Shown> = {
     label: "Rewards",
     heading: "Paste a receipt from a partner shop",
     button: "Collect points",
+    sample: "LARKFIELD GARDEN CAFE\nTable 6  12-11-2026\n2 x Flat white 6.80\n1 x Carrot cake 4.20\nSubtotal 11.00\nService 12.5% 1.38\nAmount paid 12.38",
     result: (a) => rows([["Shop", String(a.merchant)], ["Date", longDate(a.date)], ["Paid", pounds(a.total)]]),
   },
   product_title: { label: "Sell with us", heading: "Describe your product", button: "Write my title", result: (_, text) => <p className="big">{text}</p> },
