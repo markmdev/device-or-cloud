@@ -1,6 +1,6 @@
 // Walks the iPhone shop in the iOS simulator: every feature answers its sample once with the network on, then once
 // with the app's network cut. Build the app first (the README says how).
-// [SIMULATOR=<name or id>] [IOS_APPCHECK_DEBUG_TOKEN=...] [SHOTS=<folder>] node scripts/walk-ios.mjs
+// [SIMULATOR=<name or id>] [IOS_APPCHECK_DEBUG_TOKEN=...] node scripts/walk-ios.mjs
 import { execFileSync, spawn } from "node:child_process";
 import { mkdtempSync, readFileSync } from "node:fs";
 import { tmpdir } from "node:os";
@@ -8,7 +8,7 @@ import { tmpdir } from "node:os";
 const BUNDLE = "app.deviceorcloud.larkfield";
 const APP = "ios/build/Build/Products/Debug-iphonesimulator/Larkfield.app";
 const device = process.env.SIMULATOR ?? "booted";
-const simctl = (...args) => execFileSync("xcrun", ["simctl", ...args], { encoding: "utf8" });
+const simctl = (...args) => execFileSync("xcrun", ["simctl", ...args], { encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] });
 
 // The mode each feature has in the iPhone app: the template's value for it, or its default.
 const template = JSON.parse(readFileSync("remoteconfig.template.json", "utf8"));
@@ -51,7 +51,6 @@ for (const [id, mode] of modes) {
   expect(got === mode, `${id} is set to ${mode}, as published for the iPhone app`);
   expect(where === (mode === "prefer_on_device" ? "on_device" : "in_cloud"), `${id} answered ${mode === "prefer_on_device" ? "on this iPhone" : "in the cloud"}`);
 }
-if (process.env.SHOTS) simctl("io", device, "screenshot", `${process.env.SHOTS}/iphone-shop.png`);
 
 const cut = await answers({ ...token, SIMCTL_CHILD_DYLD_INSERT_LIBRARIES: offline });
 expect(cut.apple?.[0] === "on_device", "Apple's model still answers with the network cut");
@@ -60,7 +59,7 @@ for (const [id, mode] of modes) {
   if (mode === "prefer_on_device") expect(where === "on_device", `${id} still answers on this iPhone with the network cut`);
   else expect(/needs a connection/.test(where ?? ""), `${id} says it needs a connection with the network cut`);
 }
-if (process.env.SHOTS) simctl("io", device, "screenshot", `${process.env.SHOTS}/iphone-shop-offline.png`);
 
-simctl("terminate", device, BUNDLE);
+// The app must not stay running with its network cut.
+try { simctl("terminate", device, BUNDLE); } catch {}
 process.exit(failed ? 1 : 0);

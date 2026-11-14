@@ -1,6 +1,7 @@
 // The check as the iPhone app runs it. `npm run ios` builds this file into one script the app loads, so the app judges
 // Apple's answers with the same code and the same recorded cloud answers as the web check.
 import { FEATURES } from "../features";
+import { parse } from "../features/types";
 import { BATCH, GRADER, gradingPrompt, readGrades, ungraded, withGrades } from "./grade";
 import recorded from "./recorded.json";
 import { DEFAULT_ALLOWED, graded, onApple, RUNS, VERDICT_NAME, verdictFor, type Cases, type CheckRecord, type Grades, type Run } from "./record";
@@ -23,6 +24,12 @@ function casesOf(id: string, mine: Mine): Cases {
 }
 
 const textOf = (run?: Run) => (run && "text" in run ? run.text : run?.error);
+
+/** An answer as the phone shows it: a JSON object as one line for each field, anything else as it is. */
+function shown(run?: Run): string {
+  const text = textOf(run) ?? "", object = parse(text);
+  return object ? Object.entries(object).map(([key, value]) => `${key}: ${String(value) || "(empty)"}`).join("\n") : text;
+}
 
 /** Every feature's verdict at the default bar, with its counts and its wrong answers. */
 export function board(mineJson: string): string {
@@ -49,9 +56,9 @@ export function board(mineJson: string): string {
             id: x.c.id,
             input: x.c.input,
             side: x.side,
-            answer: textOf(r.apple?.[worst]) ?? "",
+            answer: shown(r.apple?.[worst]),
             wrongRuns: x.device.filter((d) => !d.ok).length,
-            cloudAnswer: textOf(r.cloud) ?? "",
+            cloudAnswer: shown(r.cloud),
             reason: !device.ok ? device.reason : x.cloud && !x.cloud.ok ? x.cloud.reason : "",
             byCode: !graded(f, x.c) || !f.check(textOf(r.apple?.[worst]) ?? "", x.c).ok,
           };

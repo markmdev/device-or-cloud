@@ -80,10 +80,10 @@ It needs Xcode 26 and a Mac with Apple Intelligence switched on, because the iPh
 
 ```sh
 cd ios && xcodebuild -project Larkfield.xcodeproj -scheme Larkfield \
-  -destination 'platform=iOS Simulator,name=iPhone 17' -derivedDataPath build CODE_SIGNING_ALLOWED=NO build
+  -destination 'platform=iOS Simulator,name=iPhone 17' -derivedDataPath build CODE_SIGN_IDENTITY=- build
 ```
 
-With Xcode 26.0 or 26.1, whose Swift is older, install the Swift 6.2.3 toolchain from swift.org and put `TOOLCHAINS=<its identifier>` before `xcodebuild`.
+The app has to be signed, if only for local use as here: an unsigned build can't reach its keychain in the simulator, and then Remote Config and App Check both fail. With Xcode 26.0 or 26.1, whose Swift is older, install the Swift 6.2.3 toolchain from swift.org and put `TOOLCHAINS=<its identifier>` before `xcodebuild`.
 
 `IOS_APPCHECK_DEBUG_TOKEN=<token> node scripts/walk-ios.mjs` walks the built app in the simulator: every feature answers its sample where the template says, and with the app's network cut the device features still answer while the cloud ones say they need a connection. The simulator has no flight mode, so the walk loads `ios/offline/offline.c` into the app to refuse its network connections.
 

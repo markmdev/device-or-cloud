@@ -163,7 +163,14 @@ private struct Card: View {
         do {
             answer = try await ask(feature, mode: mode, input: feature.sample.added + input)
         } catch {
-            problem = String(describing: error).contains(NSURLErrorDomain) ? "This feature runs in the cloud, so it needs a connection." : error.localizedDescription
+            let said = String(describing: error)
+            problem = if said.contains(NSURLErrorDomain) {
+                "This feature runs in the cloud, so it needs a connection."
+            } else if said.contains("resourceExhausted") {
+                "The free cloud requests this shop shares are used up for now: 15 a minute and 500 a day on Google's free tier. Try again in a minute, or tomorrow."
+            } else {
+                error.localizedDescription
+            }
         }
         busy = false
     }

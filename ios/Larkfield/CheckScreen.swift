@@ -56,6 +56,10 @@ struct CheckScreen: View {
         .preferredColorScheme(.light)
         .sheet(item: $shown) { Failures(row: $0) }
         .task {
+            #if DEBUG
+            // Started with -shown <feature id>, the screen opens on that feature's wrong answers, for pictures.
+            shown = board.features.first { $0.id == UserDefaults.standard.string(forKey: "shown") }
+            #endif
             guard recording else { return }
             await check.run(heldBack: true)
             print("RECORD done", URL.documentsDirectory.appending(path: "check.json").path)
