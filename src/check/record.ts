@@ -1,4 +1,5 @@
 import type { Case, Check, Feature } from "../features";
+import { parse, plain } from "../features/types";
 
 export const RUNS = 3;
 
@@ -8,7 +9,8 @@ export type CloudRun = Run & { tokensIn?: number; tokensOut?: number };
 /** What the cloud grader said about one answer of a graded feature, keyed by the answer's text. */
 export type Grades = Record<string, Check>;
 
-export type CaseRecord = { device: Run[]; cloud?: CloudRun; grades?: Grades };
+/** `device` holds the runs on Chrome's model; `apple`, the runs on Apple's model from the iPhone app. */
+export type CaseRecord = { device: Run[]; apple?: Run[]; cloud?: CloudRun; grades?: Grades };
 
 /** One line added to a feature's instruction, and how both sets of inputs went with it. */
 export type FixRecord = {
@@ -26,11 +28,32 @@ export type CheckRecord = {
   chrome: string;
   date: string;
   cloudModel: string;
+  /** Where Apple's runs were made. */
+  apple?: { device: string; os: string; host: string; date: string };
   features: Record<string, Record<string, CaseRecord>>;
   /** The held-back inputs as the instruction stands, by feature. */
   held?: Record<string, Record<string, CaseRecord>>;
   fixes?: Record<string, FixRecord[]>;
 };
+
+export type Cases = Record<string, CaseRecord>;
+
+/** The same answers as the iPhone app has them: Apple's runs in the place of Chrome's, so every count and verdict is the iPhone's. */
+export const onApple = (cases: Cases = {}): Cases => Object.fromEntries(Object.entries(cases).map(([id, r]) => [id, { ...r, device: r.apple ?? [] }]));
+
+/** A date of the record as the pages write it: 14 November 2026. */
+export const written = (iso: string) => new Date(iso).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
+
+/** Where Apple's runs were made, in a sentence. */
+export const whereApple = (a: NonNullable<CheckRecord["apple"]>) =>
+  `Apple's model was run from the iPhone app in the ${a.device}, iOS ${a.os}, on ${written(a.date)}; the simulator answers with the model of the Mac it runs on, ${a.host}.`;
+
+/** The fields in which two answers differ: what a reader should look at first. */
+export function differing(a?: string, b?: string): string[] {
+  const one = a ? parse(a) : null, other = b ? parse(b) : null;
+  if (!one || !other) return [];
+  return Object.keys(one).filter((key) => plain(one[key]) !== plain(other[key]));
+}
 
 /** Whether the cloud grader has a say on this input's answers. */
 export const graded = (feature: Feature, c: Case) => !!feature.graded && !c.codeDecides;
@@ -137,12 +160,14 @@ export function barInWords(allowed: number): string {
 /** The Remote Config value each verdict sets. */
 export const modeFor = (v: Verdict) => (v.kind === "device" ? "prefer_on_device" : "only_in_cloud");
 
-export function verdictLine(v: Verdict): string {
+export const CHROMES = "Chrome's model", APPLES = "Apple's model";
+
+export function verdictLine(v: Verdict, who = CHROMES): string {
   const device = `${v.runsRight} of ${v.runs} runs`, cloud = `${v.cloudRight} of ${v.inputs}`;
   switch (v.kind) {
-    case "device": return `Chrome's model was right on ${device}; the cloud, on ${cloud}.`;
-    case "cloud": return `Chrome's model was right on ${device}; the cloud, on ${cloud}.${v.pattern ? ` Its misses: ${v.pattern}.` : ""}`;
-    case "fix": return `The cloud was right on ${cloud}; Chrome's model, on ${device}.`;
+    case "device": return `${who} was right on ${device}; the cloud, on ${cloud}.`;
+    case "cloud": return `${who} was right on ${device}; the cloud, on ${cloud}.${v.pattern ? ` Its misses: ${v.pattern}.` : ""}`;
+    case "fix": return `The cloud was right on ${cloud}; ${who}, on ${device}.`;
     case "more": return `Add ${ENOUGH_INPUTS - v.inputs} more.`;
     case "pending": return "Not run yet.";
   }

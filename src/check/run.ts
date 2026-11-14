@@ -1,9 +1,9 @@
-import type { Feature } from "../features";
+import type { Check, Feature } from "../features";
 import { ask, CLOUD, DEVICE, OutOfRequests } from "./ask";
-import { grade, type ToGrade } from "./grade";
-import { graded, RUNS, type CaseRecord, type Run } from "./record";
+import { BATCH, GRADER, gradingPrompt, readGrades, ungraded, withGrades } from "./grade";
+import { RUNS, type Cases, type Run } from "./record";
 
-export type Cases = Record<string, CaseRecord>;
+export type { Cases };
 
 /** A failed request is an answer of its own, except running out of free requests, which stops the run. */
 function failed(e: unknown): Run {
@@ -38,23 +38,13 @@ export async function runCloud(feature: Feature, cases: Cases, onChange: (cases:
   return cases;
 }
 
-/** Sends the cloud grader every free-text answer that code found nothing wrong with and that has no grade yet. */
+/** Sends the cloud grader every answer of a feature that still needs its judgment, many in one request. */
 export async function gradeFeature(feature: Feature, cases: Cases): Promise<Cases> {
-  if (!feature.graded) return cases;
-  const items: (ToGrade & { id: string })[] = [];
-  for (const c of feature.cases) {
-    if (!graded(feature, c)) continue;
-    const r = cases[c.id];
-    const texts = new Set([...(r?.device ?? []), r?.cloud].flatMap((run) => (run && "text" in run ? [run.text] : [])));
-    for (const answer of texts) {
-      if (feature.check(answer, c).ok && !r.grades?.[answer]) items.push({ id: c.id, input: c.input, answer });
-    }
+  const items = ungraded(feature, cases);
+  const checks: Check[] = [];
+  for (let start = 0; start < items.length; start += BATCH) {
+    const batch = items.slice(start, start + BATCH);
+    checks.push(...readGrades((await ask(GRADER, CLOUD, gradingPrompt(feature, batch))).text, batch.length));
   }
-  if (!items.length) return cases;
-  const checks = await grade(feature, items);
-  const next = { ...cases };
-  items.forEach((item, i) => {
-    next[item.id] = { ...next[item.id], grades: { ...next[item.id].grades, [item.answer]: checks[i] } };
-  });
-  return next;
+  return withGrades(cases, items, checks);
 }

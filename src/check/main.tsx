@@ -8,7 +8,7 @@ import { OutOfRequests, outOfRequests } from "./ask";
 import { Board } from "./board";
 import { heldBackOf, missesOf, OUR_LINES, proposeLine, tryLine } from "./fix";
 import recorded from "./recorded.json";
-import { RUNS, verdictFor, type CheckRecord, type FixRecord } from "./record";
+import { RUNS, verdictFor, whereApple, written, type CheckRecord, type FixRecord } from "./record";
 import { gradeFeature, runCloud, runDevice, type Cases } from "./run";
 
 const RECORD = recorded as CheckRecord;
@@ -21,6 +21,7 @@ function App() {
   const [device, setDevice] = useState<DeviceState>();
   const [notice, setNotice] = useState<string>();
   const stop = useRef(false);
+  const [iphone, setIphone] = useState(false);
 
   useEffect(() => {
     deviceState().then(setDevice);
@@ -112,7 +113,19 @@ function App() {
     sessionStorage.setItem("record", JSON.stringify({ ...RECORD, held, fixes }));
   }
 
-  const date = new Date(RECORD.date).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
+  // Dev only: has the cloud model judge the free-text answers that have no verdict yet, as Apple's have after `npm run apple`.
+  async function gradeNew() {
+    const all = { ...RECORD.features }, held = { ...RECORD.held };
+    for (const f of FEATURES) {
+      setRunning(f.id);
+      all[f.id] = await gradeFeature(f, all[f.id]);
+      if (held[f.id]) held[f.id] = await gradeFeature(heldBackOf(f), held[f.id]);
+    }
+    setRunning(undefined);
+    sessionStorage.setItem("record", JSON.stringify({ ...RECORD, features: all, held }));
+  }
+
+  const date = written(RECORD.date);
   const runningName = FEATURES.find((f) => f.id === running)?.name;
   const done = running ? Object.values(features[running] ?? {}).filter((r) => r.device.length === RUNS).length : 0;
 
@@ -127,16 +140,19 @@ function App() {
           <a href="/shop/">Larkfield shop</a> · {FEATURES.length} AI features · <a href="/own/">Check your own prompts</a>
         </p>
         <p className="quiet">
-          {mine.length === FEATURES.length
-            ? `Run on this computer just now, Chrome ${chromeVersion()}`
-            : `Recorded on ${RECORD.machine}, Chrome ${RECORD.chrome}, ${date}`}
+          {iphone && RECORD.apple
+            ? `Recorded in the iPhone app on an iOS ${RECORD.apple.os} simulator, on our laptop's copy of Apple's model, ${written(RECORD.apple.date)}`
+            : mine.length === FEATURES.length
+              ? `Run on this computer just now, Chrome ${chromeVersion()}`
+              : `Recorded on ${RECORD.machine}, Chrome ${RECORD.chrome}, ${date}`}
         </p>
         {running ? (
           <button onClick={() => (stop.current = true)}>
             Stop · {runningName}: {done} of {FEATURES.find((f) => f.id === running)!.cases.length}
           </button>
         ) : (
-          device !== "unsupported" && (
+          device !== "unsupported" &&
+          !iphone && (
             <button onClick={runHere} disabled={device !== "available"}>
               Run it on your own computer
             </button>
@@ -144,16 +160,22 @@ function App() {
         )}
         {import.meta.env.DEV && !running && <button onClick={recordEverything}>Record everything</button>}
         {import.meta.env.DEV && !running && <button onClick={recordFixes}>Record the fixes</button>}
+        {import.meta.env.DEV && !running && <button onClick={gradeNew}>Grade what's new</button>}
       </header>
 
       {notice && <p className="notice">{notice}</p>}
 
       <section className="intro">
-        <h2>Find out which of your app's AI features Chrome's <span className="together">built-in</span> model gets right, measured on your own inputs, and ship the answer as Remote Config.</h2>
+        {iphone ? (
+          <h2>The same check, run inside the shop's iPhone app: which of its AI features Apple's <span className="together">on-device</span> model gets right, shipped in the same Remote Config template.</h2>
+        ) : (
+          <h2>Find out which of your app's AI features Chrome's <span className="together">built-in</span> model gets right, measured on your own inputs, and ship the answer as Remote Config.</h2>
+        )}
         <p className="lede">
           This is a sample shop's check. Each of its eight features was sent {FEATURES[0].cases.length} inputs through Firebase AI Logic: {RUNS} times to the model built into
-          Chrome, once to {RECORD.cloudModel || CLOUD_MODEL} in the cloud. A feature runs on the device when Chrome's model stays within the bar you set.
-          It stays in the cloud when only the cloud does. When neither does, neither model is good enough for it.
+          Chrome, {RECORD.apple && `${RUNS} times to Apple's on-device model in the shop's iPhone app, `}once to {RECORD.cloudModel || CLOUD_MODEL} in the cloud. A feature
+          runs on the device when {RECORD.apple ? "its platform's own model" : "Chrome's model"} stays within the bar you set. It stays in the cloud when only the cloud does.
+          When neither does, neither model is good enough for it.
         </p>
       </section>
 
@@ -167,6 +189,7 @@ function App() {
         fixes={RECORD.fixes}
         opensOn="email_address"
         canRun={device === "available" && !running}
+        onPlatform={setIphone}
         below={
           device && (
             <DownloadPanel
@@ -175,6 +198,13 @@ function App() {
               now="Everything above was recorded on our laptop."
               toGetIt="To run it on yours, Chrome downloads its built-in model once: about 4 GB, 12 minutes on ours."
             />
+          )
+        }
+        belowOnIphone={
+          RECORD.apple && (
+            <aside className="download">
+              <p>{whereApple(RECORD.apple)} To run it on your own iPhone, open the shop's app and its Check tab.</p>
+            </aside>
           )
         }
       >

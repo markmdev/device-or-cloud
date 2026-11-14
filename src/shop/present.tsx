@@ -5,6 +5,14 @@ import { parse } from "../features/types";
 
 type Shown = { label: string; heading: string; button: string; sample?: string; /** The input's first line is the shop's own, not the customer's. */ ownFirstLine?: true; result(answer: Record<string, unknown>, text: string): ReactNode };
 
+/** What a card starts with: the customer's text in the box, and the line the shop puts before it, if it has one. */
+export function sampleOf(feature: Feature): { added: string; text: string } {
+  const shown = SHOWN[feature.id];
+  const sample = shown.sample ?? feature.cases[0].input;
+  const cut = shown.ownFirstLine ? sample.indexOf("\n") : -1;
+  return { added: sample.slice(0, cut + 1), text: sample.slice(cut + 1) };
+}
+
 const longDate = (iso: unknown) => {
   const date = new Date(String(iso));
   return isNaN(date.getTime()) ? String(iso) : date.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });

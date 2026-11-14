@@ -7,7 +7,7 @@ import { ask, type Answer } from "../check/ask";
 import { DownloadPanel } from "../download";
 import { FEATURES, type Feature } from "../features";
 import { app, deviceState, MODES, type DeviceState, type Mode } from "../firebase";
-import { Result, SHOWN } from "./present";
+import { Result, sampleOf, SHOWN } from "./present";
 
 const remoteConfig = getRemoteConfig(app);
 remoteConfig.settings.minimumFetchIntervalMillis = 5 * 60_000;
@@ -26,10 +26,8 @@ const ON_DEVICE: Mode[] = ["prefer_on_device", "only_on_device"];
 
 function Card({ feature, mode, device }: { feature: Feature; mode: Mode; device?: DeviceState }) {
   const shown = SHOWN[feature.id];
-  const sample = shown.sample ?? feature.cases[0].input;
-  const cut = shown.ownFirstLine ? sample.indexOf("\n") : -1;
-  const added = sample.slice(0, cut + 1);
-  const [input, setInput] = useState(sample.slice(cut + 1));
+  const { added, text } = sampleOf(feature);
+  const [input, setInput] = useState(text);
   const [busy, setBusy] = useState(false);
   const [answer, setAnswer] = useState<Answer>();
   const [problem, setProblem] = useState<string>();
