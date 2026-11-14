@@ -223,7 +223,11 @@ function App() {
   }
 
   const ready = saved.features.filter((own) => !problem(own));
-  const features = ready.map(toFeature);
+  // Two features with one name still need a Remote Config parameter each.
+  const features = ready.map(toFeature).map((f, at, all) => {
+    const earlier = all.slice(0, at).filter((other) => other.key === f.key).length;
+    return earlier ? { ...f, key: `${f.key}_${earlier + 1}` } : f;
+  });
   const started = features.filter((f) => Object.keys(saved.answers[f.id] ?? {}).length > 0);
   const requests = ready.reduce((sum, own) => sum + cloudRequests(own), 0);
   const answered = (id: string) => Object.values(saved.answers[id] ?? {}).filter((r) => r.device.length === RUNS).length;

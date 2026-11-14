@@ -13,6 +13,8 @@ export type Check = { ok: true } | { ok: false; reason: string };
 
 export type Feature = {
   id: string;
+  /** The name its Remote Config parameter is built from, where that isn't the id. */
+  key?: string;
   /** What the feature does, as the report names it. */
   name: string;
   /** The instruction the app sends with every request. */

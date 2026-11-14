@@ -157,7 +157,12 @@ function App() {
       </section>
 
       {/* Opens on the address feature: its dropped house number is the plainest proof on the page. */}
-      <Board features={FEATURES} cases={features} mine={mine} held={RECORD.held} fixes={RECORD.fixes} opensOn="email_address" canRun={device === "available" && !running} />
+      <Board features={FEATURES} cases={features} mine={mine} held={RECORD.held} fixes={RECORD.fixes} opensOn="email_address" canRun={device === "available" && !running}>
+        <p>
+          <a href="/shop/">The Larkfield shop</a> runs on this template as it stands at the default bar of 10: we deployed it from the recorded
+          check, and each of the shop's features reads its mode from it.
+        </p>
+      </Board>
 
       <footer>
         <p>

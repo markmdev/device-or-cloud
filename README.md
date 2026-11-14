@@ -18,12 +18,14 @@ Open them in Chrome on a computer to see the device side run.
 
 **The check** (`index.html`, `src/check/`) sends each feature 25 inputs through Firebase AI Logic: three times to Chrome's model in device-only mode, once to Gemini in cloud-only mode. It gives each feature one verdict, against a bar the reader sets with a slider: how many wrong answers in 100 the feature can live with. The default is 10.
 
-- **Runs on the device:** Chrome's model stays within the bar. Sets `prefer_on_device`.
+- **Runs on the device:** Chrome's model stays within the bar. Sets `prefer_on_device` for Chrome on the web.
 - **Keep in the cloud:** only the cloud model stays within it. Sets `only_in_cloud`.
 - **Fix the prompt first:** neither model does.
 - **Not enough inputs to tell:** fewer than 20 inputs.
 
 The page shows the check as recorded on our laptop, with every wrong answer side by side with the input and the other model's answer. "Run it on your own computer" runs the device side again on yours.
+
+**Apply it**, at the foot of both checks, hands the verdicts over as a Firebase Remote Config template (`src/check/apply.ts`): one parameter for each feature, `only_in_cloud` by default, and `prefer_on_device` under a condition for Chrome on the web for a feature that can run on the device. The check ran Chrome's model, so its verdicts hold for that platform only; a browser without the model, or an app on another platform, keeps the default. With it come the few lines of app code that read the modes and the `firebase deploy --only remoteconfig` command. The page writes nothing to your project. The sample shop runs on the template the recorded check gives at the default bar.
 
 **Check your own prompts** (`own/`, `src/own/`) gives the same verdicts for a feature you paste: the instruction your app sends, the shape of the answer and a few inputs. The cloud model writes 30 more inputs from yours, hard ones included, with the right answer where there is one; you tick the ones a real user could send and correct the answers. An input with a right answer is decided by code. One without is judged by the cloud model, and the page says which. One ticked input in four is kept out of the check, so a one-line fix to the prompt is proved on inputs it wasn't written from. Your features and their answers are kept only in your browser.
 

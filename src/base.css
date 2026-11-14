@@ -291,3 +291,14 @@ button.plain { background: var(--white); color: var(--ink); }
   .own-input .kind { padding-top: 12px; }
   .own-input[data-by="you"] button.plain { grid-column: 3; }
 }
+
+/* Apply it: the verdicts as Remote Config, in a stand-in look. */
+.apply { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 18px 28px; padding: 44px var(--gutter) 56px; border-top: 2px solid var(--ink); }
+.apply > h2 { grid-column: 1 / -1; font: 700 36px/1.06 var(--display); letter-spacing: -1.1px; }
+.apply > .lede, .apply > p { grid-column: 1 / -1; max-width: 92ch; }
+.apply article { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.apply article:first-of-type { grid-row: span 2; }
+.apply h3 { font: 700 19px/1.2 var(--display); letter-spacing: -0.3px; }
+.apply pre { max-height: 420px; overflow: auto; padding: 14px 16px; border-radius: 14px; background: var(--wash); font-size: 12.5px; }
+.apply .actions { display: flex; gap: 10px; }
+a.button { display: inline-block; padding: 12px 18px; font: 600 14.5px/1 var(--ui); border: 2px solid var(--ink); border-radius: 999px; text-decoration: none; }

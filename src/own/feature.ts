@@ -125,6 +125,7 @@ export function toFeature(own: OwnFeature): Feature {
   const { inCheck, heldBack } = split(own);
   return {
     id: own.id,
+    key: plain(own.name).replace(/ /g, "_") || "your_feature",
     name: own.name.trim() || "Your feature",
     system: own.system.trim(),
     schema,
