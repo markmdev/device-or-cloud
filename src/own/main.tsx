@@ -169,6 +169,8 @@ function FeatureForm({ own, onChange, onRemove, onProblem }: { own: OwnFeature; 
   );
 }
 
+const chromeVersion = /Chrome\/(\d+)/.exec(navigator.userAgent)?.[1] ?? "?";
+
 function App() {
   const [saved, setSaved] = useState(load);
   const latest = useRef(saved);
@@ -245,10 +247,18 @@ function App() {
         <p>
           Check your own prompts · <a href="/">See the sample shop's check</a>
         </p>
-        <p className="quiet">Runs on this computer, Chrome {/Chrome\/(\d+)/.exec(navigator.userAgent)?.[1] ?? "?"}</p>
+        {device === "available" && <p className="quiet">Runs on this computer, Chrome {chromeVersion}</p>}
+        {(device === "downloadable" || device === "downloading") && <p className="quiet">Chrome {chromeVersion}, without its built-in model yet</p>}
       </header>
 
-      {device && <DownloadPanel state={device} onState={setDevice} meanwhile="your prompts can't be checked here" />}
+      {device && (
+        <DownloadPanel
+          state={device}
+          onState={setDevice}
+          now="Your prompts can't be checked here without Chrome's built-in model."
+          toGetIt="Chrome downloads it once: about 4 GB, 12 minutes on our laptop."
+        />
+      )}
 
       <section className="intro">
         <h2>Which of your app's AI features can run on your users' own devices?</h2>
@@ -311,13 +321,9 @@ function App() {
             <p>
               {judged.filter(hasExpect).length} of your {judged.length} inputs have a right answer, and code compared every answer to it.
               {judged.some((i) => !hasExpect(i)) &&
-                ` The other ${judged.filter((i) => !hasExpect(i)).length} have none, so ${CLOUD_MODEL} judged each answer against your instruction; a failure shown above says which way it was judged.`}
+                ` The other ${judged.filter((i) => !hasExpect(i)).length} have none, so ${CLOUD_MODEL} judged each answer against your instruction, its own answers included; a failure shown above says which way it was judged.`}
               {wroteRight > 0 &&
                 ` ${wroteRight} of the right answers were written by ${CLOUD_MODEL} itself, which flatters its own score on them unless you corrected them.`}
-            </p>
-            <p>
-              How far to trust the cloud model as a judge: on 69 answers we labelled by hand it agreed with us on 59 to 62, and in each run it passed
-              1 or 2 of the 20 answers we had marked clearly wrong. A right answer of your own is the stronger check.
             </p>
           </footer>
         </>

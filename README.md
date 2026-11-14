@@ -4,7 +4,7 @@ Which of your app's AI features can run on your users' own devices?
 
 Firebase AI Logic's hybrid inference lets a web app send a prompt to the model built into Chrome or to Gemini in the cloud, and asks you to pick a mode for every feature. This project checks, feature by feature, where the small model's answers are good enough, and turns the result into the app's settings.
 
-Working name; built for the Firebase #BuildHybridAI hackathon.
+Working name; built for the Firebase #BuildHybridAI hackathon. Everything here was built during the hackathon: the first commit is from 13 November 2026.
 
 - **The check:** https://device-or-cloud.web.app
 - **The sample shop it checks:** https://device-or-cloud.web.app/shop/
@@ -21,12 +21,12 @@ Open them in Chrome on a computer to see the device side run.
 
 - **Runs on the device:** Chrome's model stays within the bar. Sets `prefer_on_device` for Chrome on the web.
 - **Keep in the cloud:** only the cloud model stays within it. Sets `only_in_cloud`.
-- **Fix the prompt first:** neither model does.
+- **Neither model is good enough:** neither stays within it. Change the prompt, or don't use a model for this: work it out in code.
 - **Not enough inputs to tell:** fewer than 20 inputs.
 
 The page shows the check as recorded on our laptop, with every wrong answer side by side with the input and the other model's answer. "Run it on your own computer" runs the device side again on yours.
 
-**Apply it**, at the foot of both checks, hands the verdicts over as a Firebase Remote Config template (`src/check/apply.ts`): one parameter for each feature, `only_in_cloud` by default, and `prefer_on_device` under a condition for Chrome on the web for a feature that can run on the device. The check ran Chrome's model, so its verdicts hold for that platform only; a browser without the model, or an app on another platform, keeps the default. With it come the few lines of app code that read the modes and the `firebase deploy --only remoteconfig` command. The page writes nothing to your project. The sample shop runs on the template the recorded check gives at the default bar.
+**Apply it**, at the foot of both checks, hands the verdicts over as a Firebase Remote Config template (`src/check/apply.ts`): one parameter for each feature, `only_in_cloud` by default, and `prefer_on_device` under a condition for Chrome on the web for a feature that can run on the device. The check ran Chrome's model, so its verdicts hold for that platform only; a browser without the model, or an app on another platform, keeps the default. With it come the app code that reads the modes, one model for each feature with its instruction and answer shape set for both sides, and the `firebase deploy --only remoteconfig` command. The page writes nothing to your project. The sample shop runs on the template the recorded check gives at the default bar.
 
 **Check your own prompts** (`own/`, `src/own/`) gives the same verdicts for a feature you paste: the instruction your app sends, the shape of the answer and a few inputs. The cloud model writes 30 more inputs from yours, hard ones included, with the right answer where there is one; you tick the ones a real user could send and correct the answers. An input with a right answer is decided by code. One without is judged by the cloud model, and the page says which. One ticked input in four is kept out of the check, so a one-line fix to the prompt is proved on inputs it wasn't written from. Your features and their answers are kept only in your browser.
 
@@ -43,7 +43,7 @@ The results page shows the whole record: every input, its right answer, all thre
 - `src/firebase.ts`: Firebase AI Logic (`firebase/ai`) with the Gemini Developer API, one model for each feature and mode, and App Check with reCAPTCHA Enterprise.
 - `src/check/ask.ts`: every request, on the device or in the cloud, and where the SDK says the answer ran.
 - `src/shop/main.tsx`: Remote Config holds each feature's mode, and the shop follows a change without a reload.
-- `firebase.json`: Hosting, anonymous Authentication, Firestore rules and the Remote Config template, all deployed with one command.
+- `firebase.json`: Hosting and the Remote Config template, deployed with one command.
 
 One thing we learned from the SDK's source: in hybrid mode the request's system instruction and output shape reach only the cloud model. Chrome's model takes them from `onDeviceParams`. `modelFor` in `src/firebase.ts` sets both.
 
@@ -58,7 +58,7 @@ npx firebase use <your project id>
 npm run deploy
 ```
 
-`npm run deploy` writes the Remote Config template from the recorded verdicts (`scripts/modes.ts`), builds the pages and deploys Hosting, the Remote Config template, the Firestore rules and anonymous sign-in. The pages read the project's config from Firebase Hosting at `/__/firebase/init.json`, so no config or key is in this repo.
+`npm run deploy` writes the Remote Config template from the recorded verdicts (`scripts/modes.ts`), builds the pages and deploys Hosting and the Remote Config template. The pages read the project's config from Firebase Hosting at `/__/firebase/init.json`, so no config or key is in this repo.
 
 To record the check on your own machine, add an App Check debug token for your web app to `.env.local` as `VITE_APPCHECK_DEBUG_TOKEN`, start `npm run dev`, start Chrome with `--remote-debugging-port=9222` and run `CDP=http://127.0.0.1:9222 node scripts/record.mjs`. It writes `src/check/recorded.json`. The free tier allows 15 cloud requests a minute and 500 a day for the whole project; the recording waits out a full minute and resumes after a full day.
 

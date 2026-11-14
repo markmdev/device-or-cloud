@@ -1,8 +1,11 @@
 import { useState } from "react";
 import { deviceState, downloadDeviceModel, type DeviceState } from "./firebase";
 
-/** Says plainly when Chrome's model isn't on this computer, and downloads it on a click. */
-export function DownloadPanel({ state, onState, meanwhile }: { state: DeviceState; onState: (s: DeviceState) => void; meanwhile: string }) {
+/**
+ * Says plainly when Chrome's model isn't on this computer, and downloads it on a click.
+ * `now` is what that means for the page; `toGetIt` is the sentence that leads to the download.
+ */
+export function DownloadPanel({ state, onState, now, toGetIt }: { state: DeviceState; onState: (s: DeviceState) => void; now: string; toGetIt: string }) {
   const [share, setShare] = useState(0);
   if (state === "available") return null;
   async function download() {
@@ -15,17 +18,16 @@ export function DownloadPanel({ state, onState, meanwhile }: { state: DeviceStat
   }
   return (
     <aside className="download" data-state={state}>
-      {state === "unsupported" && <p>This browser has no built-in model, so {meanwhile}. Chrome on a computer has one.</p>}
-      {state === "unavailable" && <p>This computer can't run Chrome's built-in model, so {meanwhile}.</p>}
+      {state === "unsupported" && <p>{now} This browser has no built-in model. Chrome on a computer has one.</p>}
+      {state === "unavailable" && <p>{now} This computer can't run Chrome's built-in model.</p>}
       {state === "downloadable" && (
         <p>
-          Chrome's built-in model isn't on this computer yet, so {meanwhile}. It's a download of about 4 GB, which took 12 minutes on our laptop.{" "}
-          <button onClick={download}>Download it</button>
+          {now} {toGetIt} <button onClick={download}>Download it</button>
         </p>
       )}
       {state === "downloading" && (
         <p>
-          Downloading Chrome's built-in model: {Math.round(share * 100)}%. Until it's done, {meanwhile}.
+          {now} Downloading Chrome's built-in model: {Math.round(share * 100)}%.
           <progress value={share} />
         </p>
       )}
