@@ -23,12 +23,12 @@ function Expected({ c }: { c: Case }) {
   );
 }
 
-function Answer({ feature, c, run, r, who }: { feature: Feature; c: Case; run?: Run; r?: CaseRecord; who: string }) {
+function Answer({ feature, c, run, r, who, source }: { feature: Feature; c: Case; run?: Run; r?: CaseRecord; who: string; source: "on_device" | "in_cloud" }) {
   const check = judge(feature, c, run, r?.grades);
   if (!run) return null;
   const byCode = !graded(feature, c) || ("text" in run && !feature.check(run.text, c).ok);
   return (
-    <div className="given" data-ok={check?.ok}>
+    <div className="given" data-ok={check?.ok} data-source={source}>
       <p className="quiet">
         {who}
         {"seconds" in run && ` · ${run.seconds.toFixed(1)} s`}
@@ -54,9 +54,9 @@ function Input({ feature, c, r, n }: { feature: Feature; c: Case; r?: CaseRecord
         <Expected c={c} />
       </div>
       {Array.from({ length: RUNS }, (_, i) => (
-        <Answer key={i} feature={feature} c={c} run={r?.device[i]} r={r} who={`Chrome's model, run ${i + 1}`} />
+        <Answer key={i} feature={feature} c={c} run={r?.device[i]} r={r} who={`Chrome's model, run ${i + 1}`} source="on_device" />
       ))}
-      <Answer feature={feature} c={c} run={r?.cloud} r={r} who="The cloud model" />
+      <Answer feature={feature} c={c} run={r?.cloud} r={r} who="The cloud model" source="in_cloud" />
     </article>
   );
 }
@@ -189,7 +189,7 @@ function App() {
                 <td>
                   <a href={`#${f.feature.id}`}>{f.feature.name}</a>
                 </td>
-                <td>{VERDICT_NAME[f.verdict.kind].replace(/\.$/, "")}</td>
+                <td data-verdict={f.verdict.kind}>{VERDICT_NAME[f.verdict.kind].replace(/\.$/, "")}</td>
                 <td>{f.verdict.inputs}</td>
                 <Count right={f.verdict.runsRight} of={f.verdict.runs} />
                 <Count right={f.verdict.cloudRight} of={f.verdict.inputs} />
