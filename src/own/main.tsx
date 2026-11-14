@@ -223,6 +223,7 @@ function App() {
   const answered = (id: string) => Object.values(saved.answers[id] ?? {}).filter((r) => r.device.length === RUNS).length;
   const runningOwn = ready.find((own) => own.id === running);
   const judged = ready.flatMap((own) => [...split(own).inCheck, ...split(own).heldBack]);
+  const wroteRight = judged.filter((i) => i.by === "cloud" && hasExpect(i)).length;
 
   return (
     <main className="check own">
@@ -301,6 +302,8 @@ function App() {
               {judged.filter(hasExpect).length} of your {judged.length} inputs have a right answer, and code compared every answer to it.
               {judged.some((i) => !hasExpect(i)) &&
                 ` The other ${judged.filter((i) => !hasExpect(i)).length} have none, so ${CLOUD_MODEL} judged each answer against your instruction; a failure shown above says which way it was judged.`}
+              {wroteRight > 0 &&
+                ` ${wroteRight} of the right answers were written by ${CLOUD_MODEL} itself, which flatters its own score on them unless you corrected them.`}
             </p>
             <p>
               How far to trust the cloud model as a judge: on 69 answers we labelled by hand it agreed with us on 59 to 62, and in each run it passed
