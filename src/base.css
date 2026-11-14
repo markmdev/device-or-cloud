@@ -302,3 +302,28 @@ button.plain { background: var(--white); color: var(--ink); }
 .apply pre { max-height: 420px; overflow: auto; padding: 14px 16px; border-radius: 14px; background: var(--wash); font-size: 12.5px; }
 .apply .actions { display: flex; gap: 10px; }
 a.button { display: inline-block; padding: 12px 18px; font: 600 14.5px/1 var(--ui); border: 2px solid var(--ink); border-radius: 999px; text-decoration: none; }
+
+/* The results page: every input and answer, in a stand-in look. */
+.results .summary, .feature-results { display: grid; gap: 14px; padding: 32px var(--gutter); border-top: 2px solid var(--ink); }
+.results table { width: 100%; border-collapse: collapse; font-size: 14.5px; }
+.results th, .results td { padding: 9px 12px 9px 0; text-align: left; border-bottom: 1.5px solid var(--rule); }
+.results th { color: var(--soft); font-weight: 500; font-size: 13px; }
+.results td[data-within="false"] { color: var(--wrong); font-weight: 600; }
+.results code { font: 500 13.5px/1 var(--mono); padding: 3px 7px; border-radius: 6px; background: var(--wash); }
+.feature-results > h2 { font: 700 30px/1.1 var(--display); letter-spacing: -0.8px; }
+.feature-results > h3 { margin-top: 18px; font: 700 21px/1.2 var(--display); letter-spacing: -0.4px; }
+.feature-results > pre { padding: 14px 16px; border-radius: 14px; background: var(--wash); }
+.result { display: grid; grid-template-columns: minmax(0, 1.5fr) repeat(4, minmax(0, 1fr)); gap: 0 18px; padding: 14px 0; border-top: 1.5px solid var(--rule); font-size: 13.5px; }
+.result .asked { display: grid; gap: 6px; align-content: start; }
+.result .given { display: grid; gap: 6px; align-content: start; padding-left: 14px; border-left: 3px solid var(--ink); }
+.result .given[data-ok="false"] { border-left-color: var(--wrong); }
+.result .quiet, .result small { font-size: 12.5px; }
+.result small { color: var(--soft); font-weight: 400; }
+.result .right { font-weight: 600; }
+.result dl.answer div { grid-template-columns: 72px 1fr; }
+.fix-results { padding: 14px 18px; border: 1.5px solid var(--rule); border-radius: 16px; }
+.fix-results summary { cursor: pointer; }
+.fix-results blockquote { margin: 14px 0; font: 700 19px/1.25 var(--display); letter-spacing: -0.3px; }
+@media (max-width: 900px) {
+  .result { grid-template-columns: 1fr; gap: 12px; }
+}

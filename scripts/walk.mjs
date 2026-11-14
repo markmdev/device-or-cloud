@@ -62,6 +62,18 @@ expect(true, "the device side reruns on this computer");
 await page.getByRole("button", { name: /Stop/ }).click();
 await page.getByRole("button", { name: "Run it on your own computer" }).waitFor({ timeout: 60_000 });
 
+// The results page: the whole record, linked from the check, with the counts the shop's template was written from.
+await page.getByRole("link", { name: "Every input and every answer of this record" }).click();
+await page.locator(".feature-results").first().waitFor();
+const record = JSON.parse(readFileSync("src/check/recorded.json", "utf8"));
+const inputs = Object.values(record.features).reduce((n, cases) => n + Object.keys(cases).length, 0) + Object.values(record.held).reduce((n, cases) => n + Object.keys(cases).length, 0);
+expect((await page.locator(".feature-results > .result").count()) === inputs, `results: all ${inputs} inputs are shown with their answers`);
+expect((await page.locator("header").innerText()).includes(`Recorded on a ${record.machine}, Chrome ${record.chrome}`), "results: the machine and Chrome's version are given");
+const summary = await page.locator(".summary table").innerText();
+expect(Object.values(template.parameters).every((p) => summary.replace(/\s+/g, " ").includes(/right on (\d+ of \d+) runs/.exec(p.description)[1])), "results: each feature's count is the one its Remote Config mode was set from");
+expect((await page.locator('.result .given[data-ok="false"]').count()) > 100, "results: the wrong answers are there too");
+await shot("results");
+
 // Check your own prompts: a feature pasted by hand, more inputs written by the cloud model, then its verdict.
 // This part uses about 30 of the day's free cloud requests.
 const own = {

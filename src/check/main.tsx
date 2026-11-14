@@ -168,7 +168,8 @@ function App() {
         <p>
           Code decides wherever an input has one right answer. Two features, the product title and the delivery note, have none, so the cloud model
           judges what code can't. On 69 answers we labelled by hand it agreed with us on 59 to 62, and in each run it passed 1 or 2 of the 20 answers we
-          had marked clearly wrong.
+          had marked clearly wrong.{" "}
+          <a href="/results/">Every input and every answer of this record</a> is on one page, misses included.
         </p>
         <p>
           Running the check again here sends those two features' answers to Google's free Gemini tier to be judged. Google may use what is sent to

@@ -7,6 +7,7 @@
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
     "modes": "tsx scripts/modes.ts",
+    "results": "tsx scripts/results.ts",
     "deploy": "npm run modes && npm run build && firebase deploy"
   },
   "dependencies": {
