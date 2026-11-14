@@ -1,8 +1,10 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
+import { flushSync } from "react-dom";
 import { createRoot } from "react-dom/client";
-import { AnswerText, SOURCE_LABEL } from "../answer";
+import { SOURCE_LABEL } from "../answer";
 import "../base.css";
 import { FEATURES, type Check, type Feature } from "../features";
+import { parse, plain } from "../features/types";
 import { DownloadPanel } from "../download";
 import { CLOUD_MODEL, deviceState, type DeviceState } from "../firebase";
 import { OutOfRequests } from "./ask";
@@ -15,28 +17,97 @@ import { gradeFeature, runCloud, runDevice, type Cases } from "./run";
 const RECORD = recorded as CheckRecord;
 const chromeVersion = () => /Chrome\/(\d+)/.exec(navigator.userAgent)?.[1] ?? "?";
 
-function FeatureRow({ v, mine, selected, onSelect }: { v: Verdict; mine: boolean; selected: boolean; onSelect: () => void }) {
+/** One model's share of right answers, with the bar marked on it. */
+function Meter({ who, right, of, unit, allowed }: { who: string; right: number; of: number; unit: string; allowed: number }) {
+  return (
+    <span className="meter" data-within={(of - right) * 100 <= allowed * of}>
+      <span>{who}</span>
+      <i style={{ "--share": right / of, "--bar": 1 - allowed / 100 } as React.CSSProperties} />
+      <span>
+        <b>{right}</b> of {of}
+        {unit}
+      </span>
+    </span>
+  );
+}
+
+function FeatureRow({ v, mine, selected, onSelect, allowed, named }: { v: Verdict; mine: boolean; selected: boolean; onSelect: () => void; allowed: number; named?: boolean }) {
+  const counted = v.kind === "device" || v.kind === "cloud" || v.kind === "fix";
   return (
     <li>
-      <button className="feature" data-verdict={v.kind} aria-pressed={selected} onClick={onSelect}>
+      <button className="feature" data-verdict={v.kind} aria-pressed={selected} onClick={onSelect} style={{ viewTransitionName: `feature-${v.feature.id}` }}>
         <strong>{v.feature.name}</strong>
-        <span>
-          <b>{VERDICT_NAME[v.kind]}</b> {verdictLine(v)}
-        </span>
+        {named && <em>{VERDICT_NAME[v.kind].replace(/\.$/, "")}</em>}
+        {counted ? (
+          <>
+            <Meter who="Chrome's model" right={v.runsRight} of={v.runs} unit=" runs" allowed={allowed} />
+            <Meter who="The cloud" right={v.cloudRight} of={v.inputs} unit="" allowed={allowed} />
+            {v.kind === "cloud" && v.pattern && <small>Its misses: {v.pattern}.</small>}
+          </>
+        ) : (
+          <span>{verdictLine(v)}</span>
+        )}
         {mine && <small>Run on this computer just now</small>}
       </button>
     </li>
   );
 }
 
-function RunAnswer({ run, check }: { run?: Run; check?: Check }) {
+/** A tick or a cross beside an answer. */
+const Mark = ({ ok }: { ok?: boolean }) => (
+  <svg className="mark" viewBox="0 0 30 30" aria-label={ok ? "Right" : "Wrong"}>
+    <circle cx="15" cy="15" r="15" />
+    <path d={ok ? "M8.5 15.5l4.5 4.5 8.5-10" : "M10 10l10 10M20 10L10 20"} />
+  </svg>
+);
+
+const textOf = (run?: Run) => (run && "text" in run ? run.text : undefined);
+
+/** The fields in which two answers differ: what a reader should look at first. */
+function differing(a?: string, b?: string): string[] {
+  const one = a ? parse(a) : null, other = b ? parse(b) : null;
+  if (!one || !other) return [];
+  return Object.keys(one).filter((key) => plain(one[key]) !== plain(other[key]));
+}
+
+/** What an answer shows large: the first field that tells the two answers apart, or the whole text. */
+function headline(text: string | undefined, telling: string[]): { key?: string; value: string } | undefined {
+  if (text === undefined) return undefined;
+  const object = parse(text);
+  if (!object) return { value: text };
+  const key = telling[0] ?? Object.keys(object)[0];
+  return key === undefined ? undefined : { key, value: String(object[key]) || "(empty)" };
+}
+
+function RunAnswer({ run, check, telling, size, children }: { run?: Run; check?: Check; telling: string[]; size: string; children?: ReactNode }) {
   if (!run) return <p className="quiet">No answer yet.</p>;
+  const object = "text" in run ? parse(run.text) : null;
+  const head = headline(textOf(run), telling);
   return (
-    <>
-      {"error" in run ? <p className="answer">{run.error}</p> : <AnswerText text={run.text} />}
-      {check && !check.ok && <p className="wrong">{check.reason}</p>}
-      {check?.ok && <p className="right">Right.</p>}
-    </>
+    <div className="said" data-ok={check?.ok} data-size={size}>
+      {"error" in run ? (
+        <p className="answer">{run.error}</p>
+      ) : (
+        <>
+          <p className="telling">
+            {head?.key && <span>{head.key}</span>}
+            <b>{head?.value}</b>
+            {check && <Mark ok={check.ok} />}
+          </p>
+          {object && Object.keys(object).length > 1 && (
+            <dl className="answer">
+              {Object.entries(object).map(([key, value]) => (
+                <div key={key} data-telling={telling.includes(key)}>
+                  <dt>{key}</dt>
+                  <dd>{String(value) || "(empty)"}</dd>
+                </div>
+              ))}
+            </dl>
+          )}
+        </>
+      )}
+      {children}
+    </div>
   );
 }
 
@@ -53,13 +124,21 @@ function Proof({ v, cases }: { v: Verdict; cases: Cases }) {
       </section>
     );
   }
-  const f: Failure = v.failures[Math.min(at, v.failures.length - 1)];
+  // The plainest failures come first: only Chrome's model wrong, and on every run.
+  const sameOnAllRuns = (x: Failure) => new Set(cases[x.c.id].device.map((d) => ("text" in d ? d.text.replace(/\s+/g, "") : d.error))).size === 1;
+  const plainness = (x: Failure) => (x.side === "device" ? 0 : 4) + (x.device.every((d) => !d.ok) ? 0 : 2) + (sameOnAllRuns(x) ? 0 : 1);
+  const failures = [...v.failures].sort((a, b) => plainness(a) - plainness(b));
+  const f: Failure = failures[Math.min(at, failures.length - 1)];
   const r = cases[f.c.id];
   const worst = Math.max(0, f.device.findIndex((d) => !d.ok));
   const run = r.device[worst];
   const wrongRuns = f.device.filter((d) => !d.ok).length;
   const sameText = new Set(r.device.map((d) => ("text" in d ? d.text : d.error))).size === 1;
   const decidedByCode = !v.feature.graded || !v.feature.check("text" in run ? run.text : "", f.c).ok;
+  const telling = differing(textOf(run), textOf(r.cloud));
+  const longest = Math.max(...[run, r.cloud].map((x) => headline(textOf(x), telling)?.value.length ?? 0));
+  const size = longest <= 16 ? "large" : longest <= 40 ? "medium" : "small";
+  const deviceCheck = f.device[worst];
   return (
     <section className="proof">
       <div className="side device">
@@ -67,29 +146,37 @@ function Proof({ v, cases }: { v: Verdict; cases: Cases }) {
           {SOURCE_LABEL.on_device}
           {"seconds" in run && ` · ${run.seconds.toFixed(1)} s`}
         </p>
-        <RunAnswer run={run} check={f.device[worst]} />
-        <p className="quiet">
-          {wrongRuns === 0 ? `Right on all ${RUNS} runs.` : sameText ? `The same answer on all ${RUNS} runs.` : `Wrong on ${wrongRuns} of ${RUNS} runs.`}
-        </p>
+        <p className="who">Chrome's model answered</p>
+        <RunAnswer run={run} check={deviceCheck} telling={telling} size={size}>
+          <p className="quiet">
+            {wrongRuns === 0 ? `Right on all ${RUNS} runs.` : sameText ? `The same answer on all ${RUNS} runs.` : `Wrong on ${wrongRuns} of ${RUNS} runs.`}
+          </p>
+        </RunAnswer>
       </div>
       <div className="input">
         <p className="quiet">
           {v.feature.name} · input {v.feature.cases.indexOf(f.c) + 1} of {v.inputs}
           <span className="pager">
-            <button onClick={() => setAt((at + v.failures.length - 1) % v.failures.length)} aria-label="Previous">‹</button>
-            {Math.min(at, v.failures.length - 1) + 1} of {v.failures.length}
-            <button onClick={() => setAt((at + 1) % v.failures.length)} aria-label="Next">›</button>
+            <button onClick={() => setAt((at + failures.length - 1) % failures.length)} aria-label="Previous">‹</button>
+            {Math.min(at, failures.length - 1) + 1} of {failures.length}
+            <button onClick={() => setAt((at + 1) % failures.length)} aria-label="Next">›</button>
           </span>
         </p>
         <pre>{f.c.input}</pre>
-        <p className="quiet">
-          {f.side === "cloud" ? "Only the cloud model got this one wrong." : f.side === "both" ? "Both models got this one wrong." : "Only Chrome's model got this one wrong."}{" "}
-          {decidedByCode ? "Checked by code." : "Judged by the cloud model."}
+        <p className="why">
+          {!deviceCheck.ok ? deviceCheck.reason : f.cloud && !f.cloud.ok ? f.cloud.reason : ""}
+          <small>
+            {f.side === "cloud" ? "Only the cloud model got this one wrong." : f.side === "both" ? "Both models got this one wrong." : "Only Chrome's model got this one wrong."}{" "}
+            {decidedByCode ? "Checked by code." : "Judged by the cloud model."}
+          </small>
         </p>
       </div>
       <div className="side cloud">
         <p className="badge" data-source="in_cloud">{SOURCE_LABEL.in_cloud}</p>
-        <RunAnswer run={r.cloud} check={f.cloud} />
+        <p className="who">The cloud model answered</p>
+        <RunAnswer run={r.cloud} check={f.cloud} telling={telling} size={size}>
+          {f.cloud && !f.cloud.ok && f.side === "both" && <p className="quiet">{f.cloud.reason}</p>}
+        </RunAnswer>
       </div>
     </section>
   );
@@ -131,7 +218,8 @@ function App() {
   const [running, setRunning] = useState<string>();
   const [device, setDevice] = useState<DeviceState>();
   const [notice, setNotice] = useState<string>();
-  const [selected, setSelected] = useState<string>();
+  // Opens on the address feature: its dropped house number is the plainest proof on the page.
+  const [selected, setSelected] = useState<string | undefined>("email_address");
   const [allowed, setAllowed] = useState(DEFAULT_ALLOWED);
   const stop = useRef(false);
 
@@ -141,7 +229,16 @@ function App() {
 
   const put = (id: string) => (cases: Cases) => setFeatures((all) => ({ ...all, [id]: cases }));
   const verdicts = FEATURES.map((f) => verdictFor(f, features[f.id], allowed));
-  const shown = verdicts.find((v) => v.feature.id === selected) ?? verdicts.find((v) => v.failures.length) ?? verdicts[0];
+  const onDevice = verdicts.filter((v) => v.kind === "device"), inCloud = verdicts.filter((v) => v.kind === "cloud");
+  const neither = verdicts.filter((v) => v.kind !== "device" && v.kind !== "cloud");
+
+  // A feature that changes sides is seen crossing the line.
+  function setBar(next: number) {
+    const sides = (bar: number) => FEATURES.map((f) => verdictFor(f, features[f.id], bar).kind).join();
+    if (!document.startViewTransition || sides(next) === sides(allowed)) return setAllowed(next);
+    document.startViewTransition(() => flushSync(() => setAllowed(next)));
+  }
+  const shown = verdicts.find((v) => v.feature.id === selected) ?? verdicts.find((v) => v.kind === "cloud") ?? verdicts.find((v) => v.failures.length) ?? verdicts[0];
 
   async function gradeOrSay(f: Feature, cases: Cases): Promise<Cases> {
     try {
@@ -239,7 +336,10 @@ function App() {
   return (
     <main className="check">
       <header>
-        <h1>Device or Cloud</h1>
+        <h1>
+          <i />
+          Device or Cloud
+        </h1>
         <p>
           <a href="/shop/">Larkfield shop</a> · {FEATURES.length} AI features
         </p>
@@ -264,46 +364,65 @@ function App() {
       {device && <DownloadPanel state={device} onState={setDevice} meanwhile="nothing below ran here" />}
       {notice && <p className="notice">{notice}</p>}
 
-      <p className="lede">
-        Which of an app's AI features can run on its users' own devices? Each of the shop's eight features was sent {FEATURES[0].cases.length} inputs
-        through Firebase AI Logic: {RUNS} times to the model built into Chrome, once to {RECORD.cloudModel || CLOUD_MODEL} in the cloud. A feature runs on
-        the device when Chrome's model stays within the bar you set. It stays in the cloud when only the cloud does, and its prompt needs fixing when
-        neither does.
-      </p>
+      <section className="intro">
+        <h2>Which of an app's AI features can run on its users' own devices?</h2>
+        <p className="lede">
+          Each of the shop's eight features was sent {FEATURES[0].cases.length} inputs through Firebase AI Logic: {RUNS} times to the model built into
+          Chrome, once to {RECORD.cloudModel || CLOUD_MODEL} in the cloud. A feature runs on the device when Chrome's model stays within the bar you set.
+          It stays in the cloud when only the cloud does, and its prompt needs fixing when neither does.
+        </p>
+      </section>
 
-      <label className="bar">
-        Wrong answers allowed in 100
-        <input type="range" min={0} max={30} value={allowed} onChange={(e) => setAllowed(Number(e.target.value))} />
-        <output>{allowed}</output>
-      </label>
+      <div className="board">
+        <label className="bar">
+          Wrong answers allowed in 100
+          <input type="range" min={0} max={30} value={allowed} onChange={(e) => setBar(Number(e.target.value))} />
+          <output>{allowed}</output>
+        </label>
 
-      <div className="sides">
-        <section className="side device">
-          <h2>
-            <b>{verdicts.filter((v) => v.kind === "device").length}</b> run on the device
-          </h2>
-          <ul>
-            {verdicts.filter((v) => v.kind === "device").map((v) => (
-              <FeatureRow key={v.feature.id} v={v} mine={mine.includes(v.feature.id)} selected={shown === v} onSelect={() => setSelected(v.feature.id)} />
-            ))}
-          </ul>
-        </section>
-        <section className="side cloud">
-          <h2>
-            <b>{verdicts.filter((v) => v.kind !== "device").length}</b> stay in the cloud
-          </h2>
-          <ul>
-            {verdicts.filter((v) => v.kind !== "device").map((v) => (
-              <FeatureRow key={v.feature.id} v={v} mine={mine.includes(v.feature.id)} selected={shown === v} onSelect={() => setSelected(v.feature.id)} />
-            ))}
-          </ul>
-        </section>
+        <div className="sides">
+          <section className="side device">
+            <h2>
+              <b>{onDevice.length}</b> <span>run on the device</span>
+            </h2>
+            <ul>
+              {onDevice.map((v) => (
+                <FeatureRow key={v.feature.id} v={v} allowed={allowed} mine={mine.includes(v.feature.id)} selected={shown === v} onSelect={() => setSelected(v.feature.id)} />
+              ))}
+            </ul>
+            {onDevice.length === 0 && <p className="none">Nothing yet. At this bar, Chrome's model is wrong too often on every feature.</p>}
+          </section>
+          <section className="side cloud">
+            <h2>
+              <b>{inCloud.length}</b> <span>stay in the cloud</span>
+            </h2>
+            <ul>
+              {inCloud.map((v) => (
+                <FeatureRow key={v.feature.id} v={v} allowed={allowed} mine={mine.includes(v.feature.id)} selected={shown === v} onSelect={() => setSelected(v.feature.id)} />
+              ))}
+            </ul>
+            {inCloud.length === 0 && <p className="none">Nothing has to stay here at this bar.</p>}
+          </section>
+        </div>
+
+        {neither.length > 0 && (
+          <section className="neither">
+            <h2>
+              <b>{neither.length}</b> <span>on neither side yet</span>
+            </h2>
+            <ul>
+              {neither.map((v) => (
+                <FeatureRow key={v.feature.id} v={v} allowed={allowed} named mine={mine.includes(v.feature.id)} selected={shown === v} onSelect={() => setSelected(v.feature.id)} />
+              ))}
+            </ul>
+          </section>
+        )}
+
+        <Proof v={shown} cases={features[shown.feature.id] ?? {}} />
+        {shown.kind === "cloud" && RECORD.held?.[shown.feature.id] && (
+          <Fixes feature={shown.feature} base={features[shown.feature.id]} record={RECORD} allowed={allowed} canRun={device === "available" && !running} />
+        )}
       </div>
-
-      <Proof v={shown} cases={features[shown.feature.id] ?? {}} />
-      {shown.kind === "cloud" && RECORD.held?.[shown.feature.id] && (
-        <Fixes feature={shown.feature} base={features[shown.feature.id]} record={RECORD} allowed={allowed} canRun={device === "available" && !running} />
-      )}
       <BottomLine
         verdicts={verdicts}
         allowed={allowed}
