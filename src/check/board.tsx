@@ -196,8 +196,10 @@ function Proof({ v, cases, who, recordedOn }: { v: Verdict; cases: Cases; who: s
 
 const NEXT = ["a first", "a second", "a third", "a fourth", "a fifth", "a sixth", "a seventh", "an eighth"];
 
-function BottomLine({ verdicts, allowed, afterFixes, shop, iphone }: { verdicts: Verdict[]; allowed: number; afterFixes: number; shop: boolean; iphone: boolean }) {
+/** `afterFixes` counts the features on the device once each has its line or setting; `bySetting`, that a setting alone does it. */
+function BottomLine({ verdicts, allowed, afterFixes, bySetting, shop, iphone }: { verdicts: Verdict[]; allowed: number; afterFixes: number; bySetting: boolean; shop: boolean; iphone: boolean }) {
   const onDevice = verdicts.filter((v) => v.kind === "device").length, more = afterFixes - onDevice;
+  const change = bySetting ? "with the model's randomness switched off" : "after one added line in its prompt";
   const whose = shop ? "its" : "your", devices = iphone ? "iPhones" : "devices";
   return (
     <section className="bottom">
@@ -207,11 +209,11 @@ function BottomLine({ verdicts, allowed, afterFixes, shop, iphone }: { verdicts:
           ? onDevice
             ? `this feature can run on your users' own ${devices}.`
             : more
-              ? `this feature stays in the cloud today, and can run on your users' own ${devices} after one added line in its prompt.`
+              ? `this feature stays in the cloud today, and can run on your users' own ${devices} ${change}.`
               : `this feature can't run on your users' own ${devices} yet.`
           : `${onDevice} of ${shop ? "the shop's" : "your"} ${verdicts.length} AI features can run on ${whose} users' own ${devices}${
               more === 1
-                ? ` today, and ${NEXT[onDevice] ?? "one more"} after one added line in its prompt.`
+                ? ` today, and ${NEXT[onDevice] ?? "one more"} ${change}.`
                 : more > 1
                   ? ` today, and ${more} more after one added line in each one's prompt.`
                   : "."
@@ -489,6 +491,7 @@ export function Board({ features, cases, mine = [], recordedOn, held, fixes, ope
         shop={!!recordedOn}
         iphone={iphone}
         afterFixes={verdicts.filter((v) => v.kind === "device" || (v.kind === "cloud" && fixesOn(v.feature.id).some((fix) => moves(v.feature, fix, allowed)))).length}
+        bySetting={verdicts.some((v) => v.kind === "cloud" && fixesOn(v.feature.id).some((fix) => fix.steady && moves(v.feature, fix, allowed)))}
       />
       {chrome.every((v) => v.kind !== "pending") && (
         <Apply verdicts={chrome} apple={apple}>

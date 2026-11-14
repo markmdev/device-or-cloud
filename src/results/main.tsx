@@ -198,7 +198,9 @@ function App() {
           Chrome's model was right on every run on {sum((f) => f.verdict.inputsRight)} of {sum((f) => f.verdict.inputs)} inputs,{" "}
           {APPLE && `Apple's model on ${sum((f) => f.apple!.inputsRight)}, `}the cloud model on {sum((f) => f.verdict.cloudRight)}. Where a model's
           answer to one input changes from run to run, its runs are given too. The verdicts are at the default bar, up to {DEFAULT_ALLOWED} wrong
-          answers in 100; a count short of it is marked, and so is a verdict that more inputs could still change.
+          answers in 100; a count short of it is marked, and so is a verdict that more inputs could still change. We wrote every input ourselves.
+          The first 25 of each feature came before the first recording. The other 25, and the 10 held back for each feature that has them, were
+          written before any model had answered them.
         </p>
       </section>
 
