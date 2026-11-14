@@ -127,8 +127,8 @@ function App() {
     } finally {
       setRunning(undefined);
     }
-    const record: CheckRecord = {
-      ...RECORD,
+    // What this page measured; scripts/record.mjs puts it into the record's file beside what it didn't, such as where Apple's runs were made.
+    const record: Omit<CheckRecord, "apple"> = {
       machine: import.meta.env.VITE_RECORD_MACHINE ?? "",
       chrome: chromeVersion(),
       date: new Date().toISOString().slice(0, 10),

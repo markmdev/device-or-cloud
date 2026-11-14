@@ -2,15 +2,16 @@
 // npm run apple -- <the app's check.json> <fixes.json to write>
 // The first file is what the app made when started with -record: Apple's answers, and its runs of each line and setting.
 // The second lists every line and setting the record wants tried on Apple's model; put it in the app's Documents folder and
-// start the app with -record again. Then record once more (scripts/record.mjs) for what the cloud model still has to judge.
+// start the app with -record again. Then record again (scripts/record.mjs) for what the cloud model still has to judge.
 import { execFileSync } from "node:child_process";
-import { readFileSync, writeFileSync } from "node:fs";
+import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { APPLE_LINES, OUR_LINES } from "../src/check/lines";
 import type { CheckRecord, FixRecord, Grades, Run } from "../src/check/record";
 import { FEATURES } from "../src/features";
 
 type Ask = { feature: string; line: string; by: FixRecord["by"]; steady: boolean };
-const FILE = "src/check/recorded.json";
+// A recording under way keeps its record in record.partial.json until it is whole (scripts/record.mjs).
+const FILE = existsSync("record.partial.json") ? "record.partial.json" : "src/check/recorded.json";
 const app: {
   device: string;
   os: string;

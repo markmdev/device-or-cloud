@@ -11,10 +11,13 @@ await page.goto(process.env.SITE ?? "http://127.0.0.1:5173/");
 // The run goes on from record.partial.json when a run cut short left one, and from the last record otherwise, so only
 // what is missing is asked. REDO=<feature id>,... records those features again from nothing.
 // REGRADE=<feature id>,... keeps their answers and asks the cloud model to judge them again.
-const kept = JSON.parse(readFileSync(existsSync("record.partial.json") ? "record.partial.json" : "src/check/recorded.json", "utf8"));
+const RECORD = "src/check/recorded.json", PARTIAL = "record.partial.json";
+const kept = JSON.parse(readFileSync(existsSync(PARTIAL) ? PARTIAL : RECORD, "utf8"));
 for (const id of process.env.REDO?.split(",") ?? []) delete kept.features[id];
 for (const id of process.env.REGRADE?.split(",") ?? []) for (const c of Object.values(kept.features[id])) delete c.grades;
 await page.evaluate((partial) => sessionStorage.setItem("partial", partial), JSON.stringify({ features: kept.features, held: kept.held, fixes: kept.fixes }));
+// The page reports what it measured; the rest of the record, such as where Apple's runs were made, stays as it was.
+const save = (file, measured) => writeFileSync(file, JSON.stringify({ ...kept, ...JSON.parse(measured) }, null, 1) + "\n");
 await page.getByRole("button", { name: "Record everything" }).click();
 
 let last = "";
@@ -24,10 +27,10 @@ for (;;) {
     partial: sessionStorage.getItem("partial"),
     at: document.querySelector("header button")?.textContent ?? "",
   }));
-  if (state.partial) writeFileSync("record.partial.json", state.partial);
+  if (state.partial) save(PARTIAL, state.partial);
   if (state.record) {
-    writeFileSync("src/check/recorded.json", JSON.stringify(JSON.parse(state.record), null, 1) + "\n");
-    rmSync("record.partial.json", { force: true });
+    save(RECORD, state.record);
+    rmSync(PARTIAL, { force: true });
     console.log("recorded");
     break;
   }
