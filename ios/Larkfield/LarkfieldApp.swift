@@ -4,6 +4,8 @@ import SwiftUI
 
 @main
 struct LarkfieldApp: App {
+    @State private var tab = CommandLine.arguments.contains("-record") ? "check" : "shop"
+
     init() {
         #if DEBUG
         AppCheck.setAppCheckProviderFactory(AppCheckDebugProviderFactory())
@@ -13,15 +15,11 @@ struct LarkfieldApp: App {
 
     var body: some Scene {
         WindowGroup {
-            #if DEBUG
-            if CommandLine.arguments.contains("-record") {
-                Recording()
-            } else {
-                Shop()
+            TabView(selection: $tab) {
+                Tab("Shop", systemImage: "bag", value: "shop") { Shop() }
+                Tab("Check", systemImage: "checklist", value: "check") { CheckScreen() }
             }
-            #else
-            Shop()
-            #endif
+            .tint(Color.ink)
         }
     }
 }

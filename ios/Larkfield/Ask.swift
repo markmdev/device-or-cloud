@@ -65,3 +65,24 @@ func ask(_ feature: Feature, mode: Mode, input: String) async throws -> Answer {
     let took = clock.now - started
     return Answer(text: text, onDevice: ranOn == device._modelName, seconds: Double(took.components.seconds) + Double(took.components.attoseconds) / 1e18)
 }
+
+/// The cloud model's judgment of a batch of answers, as the grader's JSON reply.
+func askGrader(system: String, prompt: String) async throws -> String {
+    let verdict = Schema.object(properties: ["number": .integer(), "reason": .string(), "good": .boolean()])
+    let model = FirebaseAI.firebaseAI(backend: .googleAI()).generativeModel(
+        modelName: cloudModel,
+        generationConfig: GenerationConfig(responseMIMEType: "application/json", responseSchema: .object(properties: ["verdicts": .array(items: verdict)])),
+        systemInstruction: ModelContent(role: "system", parts: system)
+    )
+    return try await model.generateContent(prompt).text ?? ""
+}
+
+/// Why Apple's model can't answer here yet, when it can't.
+var deviceModelWaiting: String? {
+    switch FirebaseAI.SystemLanguageModel.default.availability {
+    case .available: nil
+    case .unavailable(.appleIntelligenceNotEnabled): "Apple Intelligence is switched off on this iPhone."
+    case .unavailable(.modelNotReady): "This iPhone is still downloading its on-device model."
+    case .unavailable: "This iPhone can't run Apple's on-device model."
+    }
+}

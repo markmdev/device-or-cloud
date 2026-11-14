@@ -71,16 +71,6 @@ struct Shop: View {
     private func read() -> [String: Mode] {
         Dictionary(uniqueKeysWithValues: Feature.all.map { ($0.id, Mode(rawValue: config.configValue(forKey: $0.parameter).stringValue) ?? .onlyInCloud) })
     }
-
-    /// Why Apple's model can't answer here yet, when it can't.
-    private var deviceModelWaiting: String? {
-        switch FirebaseAI.SystemLanguageModel.default.availability {
-        case .available: nil
-        case .unavailable(.appleIntelligenceNotEnabled): "Apple Intelligence is switched off on this iPhone."
-        case .unavailable(.modelNotReady): "This iPhone is still downloading its on-device model."
-        case .unavailable: "This iPhone can't run Apple's on-device model."
-        }
-    }
 }
 
 private struct Card: View {
@@ -166,7 +156,7 @@ private struct Card: View {
     }
 }
 
-private struct Solid: ButtonStyle {
+struct Solid: ButtonStyle {
     @Environment(\.isEnabled) private var enabled
 
     func makeBody(configuration: Configuration) -> some View {

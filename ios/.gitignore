@@ -1,4 +1,6 @@
 GoogleService-Info.plist
+Larkfield/features.json
+Larkfield/check.js
 build/
 *.xcuserstate
 xcuserdata/

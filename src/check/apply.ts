@@ -80,10 +80,12 @@ ${verdicts
 `;
 }
 
-/** The same few lines for an iPhone app, where Firebase AI Logic reaches Apple's on-device model. */
+/**
+ * The same for a Swift app: a session carries a feature's instruction to whichever model answers, in the mode Remote
+ * Config gives the feature.
+ */
 export function swiftCode(verdicts: Verdict[], cloudModel: string): string {
   const names = verdicts.map((v) => parameterFor(v.feature));
-  const first = names[0] ?? "mode_feature";
   return `import FirebaseAILogic
 import FirebaseRemoteConfig
 
@@ -98,10 +100,19 @@ let ai = FirebaseAI.firebaseAI(backend: .googleAI())
 let cloud = ai.geminiModel(name: "${cloudModel}")
 let device = FirebaseAI.SystemLanguageModel.default
 
-// One model for each feature, in the mode the check gave it.
-let mode = remoteConfig.configValue(forKey: "${first}").stringValue
-let ${camel(first)}: any FirebaseAI.LanguageModel =
-  mode == "prefer_on_device" ? HybridModel(primary: device, secondary: cloud) : cloud
+/// A new session for one request of a feature, in the mode the check gave it.
+func session(_ parameter: String, instructions: String) -> GenerativeModelSession {
+  let mode = remoteConfig.configValue(forKey: parameter).stringValue
+  let model: any FirebaseAI.LanguageModel =
+    mode == "prefer_on_device" ? HybridModel(primary: device, secondary: cloud) : cloud
+  return ai.generativeModelSession(model: model, instructions: instructions)
+}
+
+// One for each feature, with the instruction it was checked with. Ask for the answer's shape
+// with respond(to:generating:) and a Generable type that has the fields the check used.
+${verdicts
+  .map((v, i) => `func ${camel(names[i]).replace(/Model$/, "Session")}() -> GenerativeModelSession {\n  session("${names[i]}", instructions: ${JSON.stringify(v.feature.system)})\n}`)
+  .join("\n")}
 `;
 }
 

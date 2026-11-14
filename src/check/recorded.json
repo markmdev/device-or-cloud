@@ -25,7 +25,21 @@
      "seconds": 1.1215999999642372,
      "tokensIn": 124,
      "tokensOut": 11
-    }
+    },
+    "apple": [
+     {
+      "seconds": 8.282267,
+      "text": "{\"label\": \"billing\"}"
+     },
+     {
+      "seconds": 0.624470583,
+      "text": "{\"label\": \"billing\"}"
+     },
+     {
+      "seconds": 0.592698209,
+      "text": "{\"label\": \"billing\"}"
+     }
+    ]
    },
    "ticket-2": {
     "device": [
@@ -47,7 +61,21 @@
      "seconds": 1.135899999976158,
      "tokensIn": 111,
      "tokensOut": 11
-    }
+    },
+    "apple": [
+     {
+      "text": "{\"label\": \"delivery\"}",
+      "seconds": 0.565418667
+     },
+     {
+      "text": "{\"label\": \"delivery\"}",
+      "seconds": 0.571320583
+     },
+     {
+      "text": "{\"label\": \"delivery\"}",
+      "seconds": 0.578087834
+     }
+    ]
    },
    "ticket-3": {
     "device": [
@@ -69,7 +97,21 @@
      "seconds": 0.865300000011921,
      "tokensIn": 109,
      "tokensOut": 11
-    }
+    },
+    "apple": [
+     {
+      "seconds": 0.653313,
+      "text": "{\"label\": \"returns\"}"
+     },
+     {
+      "seconds": 0.6182605,
+      "text": "{\"label\": \"returns\"}"
+     },
+     {
+      "seconds": 0.614930958,
+      "text": "{\"label\": \"returns\"}"
+     }
+    ]
    },
    "ticket-4": {
     "device": [
@@ -91,7 +133,21 @@
      "seconds": 1.1105,
      "tokensIn": 105,
      "tokensOut": 11
-    }
+    },
+    "apple": [
+     {
+      "seconds": 0.59069275,
+      "text": "{\"label\": \"account\"}"
+     },
+     {
+      "seconds": 0.581226209,
+      "text": "{\"label\": \"account\"}"
+     },
+     {
+      "seconds": 0.559503208,
+      "text": "{\"label\": \"account\"}"
+     }
+    ]
    },
    "ticket-5": {
     "device": [
@@ -113,7 +169,21 @@
      "seconds": 0.9293999999761582,
      "tokensIn": 97,
      "tokensOut": 11
-    }
+    },
+    "apple": [
+     {
+      "text": "{\"label\": \"other\"}",
+      "seconds": 0.592983
+     },
+     {
+      "text": "{\"label\": \"other\"}",
+      "seconds": 0.591792916
+     },
+     {
+      "text": "{\"label\": \"billing\"}",
+      "seconds": 0.600604291
+     }
+    ]
    },
    "ticket-6": {
     "device": [
@@ -135,7 +205,21 @@
      "seconds": 1.0628999999761581,
      "tokensIn": 112,
      "tokensOut": 11
-    }
+    },
+    "apple": [
+     {
+      "seconds": 0.681330791,
+      "text": "{\"label\": \"billing\"}"
+     },
+     {
+      "seconds": 0.596647042,
+      "text": "{\"label\": \"billing\"}"
+     },
+     {
+      "seconds": 0.560297042,
+      "text": "{\"label\": \"billing\"}"
+     }
+    ]
    },
    "ticket-7": {
     "device": [
@@ -157,7 +241,21 @@
      "seconds": 1.048,
      "tokensIn": 104,
      "tokensOut": 11
-    }
+    },
+    "apple": [
+     {
+      "text": "{\"label\": \"delivery\"}",
+      "seconds": 0.584761334
+     },
+     {
+      "text": "{\"label\": \"delivery\"}",
+      "seconds": 0.571252959
+     },
+     {
+      "text": "{\"label\": \"delivery\"}",
+      "seconds": 0.578815583
+     }
+    ]
    },
    "ticket-8": {
     "device": [
@@ -179,7 +277,21 @@
      "seconds": 1.017800000011921,
      "tokensIn": 106,
      "tokensOut": 11
-    }
+    },
+    "apple": [
+     {
+      "text": "{\"label\": \"returns\"}",
+      "seconds": 0.577066333
+     },
+     {
+      "text": "{\"label\": \"returns\"}",
+      "seconds": 0.604059167
+     },
+     {
+      "text": "{\"label\": \"returns\"}",
+      "seconds": 0.635232833
+     }
+    ]
    },
    "ticket-9": {
     "device": [
@@ -201,7 +313,21 @@
      "seconds": 1.8680999999642371,
      "tokensIn": 104,
      "tokensOut": 11
-    }
+    },
+    "apple": [
+     {
+      "seconds": 0.574406417,
+      "text": "{\"label\": \"account\"}"
+     },
+     {
+      "seconds": 0.578671875,
+      "text": "{\"label\": \"account\"}"
+     },
+     {
+      "seconds": 0.612298542,
+      "text": "{\"label\": \"account\"}"
+     }
+    ]
    },
    "ticket-10": {
     "device": [
@@ -223,7 +349,21 @@
      "seconds": 1.567699999988079,
      "tokensIn": 106,
      "tokensOut": 11
-    }
+    },
+    "apple": [
+     {
+      "seconds": 0.582938459,
+      "text": "{\"label\": \"billing\"}"
+     },
+     {
+      "seconds": 0.569901917,
+      "text": "{\"label\": \"billing\"}"
+     },
+     {
+      "seconds": 0.575679542,
+      "text": "{\"label\": \"billing\"}"
+     }
+    ]
    },
    "ticket-11": {
     "device": [
@@ -245,7 +385,21 @@
      "seconds": 1.296300000011921,
      "tokensIn": 116,
      "tokensOut": 11
-    }
+    },
+    "apple": [
+     {
+      "seconds": 0.615797083,
+      "text": "{\"label\": \"delivery\"}"
+     },
+     {
+      "seconds": 0.5811795,
+      "text": "{\"label\": \"delivery\"}"
+     },
+     {
+      "seconds": 0.637225958,
+      "text": "{\"label\": \"delivery\"}"
+     }
+    ]
    },
    "ticket-12": {
     "device": [
@@ -267,7 +421,21 @@
      "seconds": 0.7985,
      "tokensIn": 106,
      "tokensOut": 11
-    }
+    },
+    "apple": [
+     {
+      "text": "{\"label\": \"account\"}",
+      "seconds": 0.608412125
+     },
+     {
+      "text": "{\"label\": \"other\"}",
+      "seconds": 0.607616625
+     },
+     {
+      "text": "{\"label\": \"account\"}",
+      "seconds": 0.598540042
+     }
+    ]
    },
    "ticket-13": {
     "device": [
@@ -289,7 +457,21 @@
      "seconds": 1.029399999976158,
      "tokensIn": 108,
      "tokensOut": 11
-    }
+    },
+    "apple": [
+     {
+      "seconds": 0.628407334,
+      "text": "{\"label\": \"other\"}"
+     },
+     {
+      "seconds": 0.640721167,
+      "text": "{\"label\": \"other\"}"
+     },
+     {
+      "seconds": 0.61661025,
+      "text": "{\"label\": \"other\"}"
+     }
+    ]
    },
    "ticket-14": {
     "device": [
@@ -311,7 +493,21 @@
      "seconds": 0.9742000000476837,
      "tokensIn": 101,
      "tokensOut": 6
-    }
+    },
+    "apple": [
+     {
+      "seconds": 0.599443667,
+      "text": "{\"label\": \"other\"}"
+     },
+     {
+      "seconds": 0.650017625,
+      "text": "{\"label\": \"other\"}"
+     },
+     {
+      "seconds": 0.681874042,
+      "text": "{\"label\": \"delivery\"}"
+     }
+    ]
    },
    "ticket-15": {
     "device": [
@@ -333,7 +529,21 @@
      "seconds": 1.1262999999523162,
      "tokensIn": 111,
      "tokensOut": 11
-    }
+    },
+    "apple": [
+     {
+      "text": "{\"label\": \"returns\"}",
+      "seconds": 0.676696
+     },
+     {
+      "text": "{\"label\": \"returns\"}",
+      "seconds": 0.727487958
+     },
+     {
+      "text": "{\"label\": \"returns\"}",
+      "seconds": 0.635017666
+     }
+    ]
    },
    "ticket-16": {
     "device": [
@@ -355,7 +565,21 @@
      "seconds": 1.5735,
      "tokensIn": 113,
      "tokensOut": 11
-    }
+    },
+    "apple": [
+     {
+      "text": "{\"label\": \"account\"}",
+      "seconds": 0.689768833
+     },
+     {
+      "text": "{\"label\": \"billing\"}",
+      "seconds": 0.605534208
+     },
+     {
+      "text": "{\"label\": \"delivery\"}",
+      "seconds": 0.619058417
+     }
+    ]
    },
    "ticket-17": {
     "device": [
@@ -377,7 +601,21 @@
      "seconds": 1.1073999999761581,
      "tokensIn": 111,
      "tokensOut": 11
-    }
+    },
+    "apple": [
+     {
+      "seconds": 0.633979542,
+      "text": "{\"label\": \"returns\"}"
+     },
+     {
+      "seconds": 0.643941583,
+      "text": "{\"label\": \"returns\"}"
+     },
+     {
+      "seconds": 0.613096958,
+      "text": "{\"label\": \"returns\"}"
+     }
+    ]
    },
    "ticket-18": {
     "device": [
@@ -399,7 +637,21 @@
      "seconds": 1.175300000011921,
      "tokensIn": 124,
      "tokensOut": 11
-    }
+    },
+    "apple": [
+     {
+      "text": "{\"label\": \"delivery\"}",
+      "seconds": 0.764060167
+     },
+     {
+      "text": "{\"label\": \"delivery\"}",
+      "seconds": 0.607588417
+     },
+     {
+      "text": "{\"label\": \"delivery\"}",
+      "seconds": 0.669716833
+     }
+    ]
    },
    "ticket-19": {
     "device": [
@@ -421,7 +673,21 @@
      "seconds": 1.5845,
      "tokensIn": 108,
      "tokensOut": 11
-    }
+    },
+    "apple": [
+     {
+      "text": "{\"label\": \"returns\"}",
+      "seconds": 0.602868333
+     },
+     {
+      "text": "{\"label\": \"returns\"}",
+      "seconds": 0.637045083
+     },
+     {
+      "text": "{\"label\": \"returns\"}",
+      "seconds": 0.619750292
+     }
+    ]
    },
    "ticket-20": {
     "device": [
@@ -443,7 +709,21 @@
      "seconds": 0.9560999999642372,
      "tokensIn": 112,
      "tokensOut": 11
-    }
+    },
+    "apple": [
+     {
+      "seconds": 0.617752917,
+      "text": "{\"label\": \"delivery\"}"
+     },
+     {
+      "seconds": 0.618994,
+      "text": "{\"label\": \"delivery\"}"
+     },
+     {
+      "seconds": 0.627150791,
+      "text": "{\"label\": \"delivery\"}"
+     }
+    ]
    },
    "ticket-21": {
     "device": [
@@ -465,7 +745,21 @@
      "seconds": 1.224199999988079,
      "tokensIn": 119,
      "tokensOut": 11
-    }
+    },
+    "apple": [
+     {
+      "text": "{\"label\": \"delivery\"}",
+      "seconds": 0.637944583
+     },
+     {
+      "text": "{\"label\": \"delivery\"}",
+      "seconds": 0.615890917
+     },
+     {
+      "text": "{\"label\": \"delivery\"}",
+      "seconds": 0.625688583
+     }
+    ]
    },
    "ticket-22": {
     "device": [
@@ -487,7 +781,21 @@
      "seconds": 0.8505,
      "tokensIn": 112,
      "tokensOut": 11
-    }
+    },
+    "apple": [
+     {
+      "text": "{\"label\": \"billing\"}",
+      "seconds": 0.627352875
+     },
+     {
+      "text": "{\"label\": \"billing\"}",
+      "seconds": 0.599599792
+     },
+     {
+      "text": "{\"label\": \"billing\"}",
+      "seconds": 0.592648125
+     }
+    ]
    },
    "ticket-23": {
     "device": [
@@ -509,7 +817,21 @@
      "seconds": 0.7638999999761581,
      "tokensIn": 115,
      "tokensOut": 11
-    }
+    },
+    "apple": [
+     {
+      "text": "{\"label\": \"billing\"}",
+      "seconds": 0.610780416
+     },
+     {
+      "text": "{\"label\": \"billing\"}",
+      "seconds": 0.615556625
+     },
+     {
+      "text": "{\"label\": \"billing\"}",
+      "seconds": 0.628067625
+     }
+    ]
    },
    "ticket-24": {
     "device": [
@@ -531,7 +853,21 @@
      "seconds": 0.9815,
      "tokensIn": 104,
      "tokensOut": 6
-    }
+    },
+    "apple": [
+     {
+      "seconds": 0.589350292,
+      "text": "{\"label\": \"account\"}"
+     },
+     {
+      "seconds": 0.581352292,
+      "text": "{\"label\": \"account\"}"
+     },
+     {
+      "seconds": 0.597598417,
+      "text": "{\"label\": \"account\"}"
+     }
+    ]
    },
    "ticket-25": {
     "device": [
@@ -553,7 +889,21 @@
      "seconds": 0.9463999999761581,
      "tokensIn": 107,
      "tokensOut": 11
-    }
+    },
+    "apple": [
+     {
+      "text": "{\"label\": \"account\"}",
+      "seconds": 0.597907958
+     },
+     {
+      "text": "{\"label\": \"account\"}",
+      "seconds": 0.59078175
+     },
+     {
+      "text": "{\"label\": \"account\"}",
+      "seconds": 0.590788042
+     }
+    ]
    }
   },
   "review_mood": {
@@ -577,7 +927,21 @@
      "seconds": 1.4275,
      "tokensIn": 80,
      "tokensOut": 11
-    }
+    },
+    "apple": [
+     {
+      "seconds": 0.591467792,
+      "text": "{\"label\": \"positive\"}"
+     },
+     {
+      "seconds": 0.58319575,
+      "text": "{\"label\": \"positive\"}"
+     },
+     {
+      "seconds": 0.586114125,
+      "text": "{\"label\": \"positive\"}"
+     }
+    ]
    },
    "mood-2": {
     "device": [
@@ -599,7 +963,21 @@
      "seconds": 0.8865,
      "tokensIn": 83,
      "tokensOut": 11
-    }
+    },
+    "apple": [
+     {
+      "text": "{\"label\": \"positive\"}",
+      "seconds": 0.59197025
+     },
+     {
+      "text": "{\"label\": \"positive\"}",
+      "seconds": 0.577018292
+     },
+     {
+      "text": "{\"label\": \"positive\"}",
+      "seconds": 0.589220375
+     }
+    ]
    },
    "mood-3": {
     "device": [
@@ -621,7 +999,21 @@
      "seconds": 0.9345,
      "tokensIn": 72,
      "tokensOut": 11
-    }
+    },
+    "apple": [
+     {
+      "seconds": 0.5893895,
+      "text": "{\"label\": \"positive\"}"
+     },
+     {
+      "seconds": 0.578902166,
+      "text": "{\"label\": \"positive\"}"
+     },
+     {
+      "seconds": 0.567849542,
+      "text": "{\"label\": \"positive\"}"
+     }
+    ]
    },
    "mood-4": {
     "device": [
@@ -643,7 +1035,21 @@
      "seconds": 0.7604000000357628,
      "tokensIn": 75,
      "tokensOut": 11
-    }
+    },
+    "apple": [
+     {
+      "text": "{\"label\": \"positive\"}",
+      "seconds": 0.58737025
+     },
+     {
+      "text": "{\"label\": \"positive\"}",
+      "seconds": 0.615350125
+     },
+     {
+      "text": "{\"label\": \"positive\"}",
+      "seconds": 0.613637958
+     }
+    ]
    },
    "mood-5": {
     "device": [
@@ -665,7 +1071,21 @@
      "seconds": 0.8415,
      "tokensIn": 73,
      "tokensOut": 11
-    }
+    },
+    "apple": [
+     {
+      "text": "{\"label\": \"positive\"}",
+      "seconds": 0.579859708
+     },
+     {
+      "text": "{\"label\": \"positive\"}",
+      "seconds": 0.57853975
+     },
+     {
+      "text": "{\"label\": \"positive\"}",
+      "seconds": 0.579942458
+     }
+    ]
    },
    "mood-6": {
     "device": [
@@ -687,7 +1107,21 @@
      "seconds": 1.089800000011921,
      "tokensIn": 69,
      "tokensOut": 11
-    }
+    },
+    "apple": [
+     {
+      "text": "{\"label\": \"negative\"}",
+      "seconds": 0.600018209
+     },
+     {
+      "text": "{\"label\": \"negative\"}",
+      "seconds": 0.590037166
+     },
+     {
+      "text": "{\"label\": \"negative\"}",
+      "seconds": 0.603211541
+     }
+    ]
    },
    "mood-7": {
     "device": [
@@ -709,7 +1143,21 @@
      "seconds": 0.7081000000238419,
      "tokensIn": 72,
      "tokensOut": 11
-    }
+    },
+    "apple": [
+     {
+      "text": "{\"label\": \"negative\"}",
+      "seconds": 0.595839167
+     },
+     {
+      "text": "{\"label\": \"negative\"}",
+      "seconds": 0.605092375
+     },
+     {
+      "text": "{\"label\": \"negative\"}",
+      "seconds": 0.565411292
+     }
+    ]
    },
    "mood-8": {
     "device": [
@@ -731,7 +1179,21 @@
      "seconds": 0.9911000000238419,
      "tokensIn": 72,
      "tokensOut": 11
-    }
+    },
+    "apple": [
+     {
+      "text": "{\"label\": \"negative\"}",
+      "seconds": 0.570677666
+     },
+     {
+      "text": "{\"label\": \"negative\"}",
+      "seconds": 0.589762209
+     },
+     {
+      "text": "{\"label\": \"negative\"}",
+      "seconds": 0.576260209
+     }
+    ]
    },
    "mood-9": {
     "device": [
@@ -753,7 +1215,21 @@
      "seconds": 1.1261999999880792,
      "tokensIn": 75,
      "tokensOut": 11
-    }
+    },
+    "apple": [
+     {
+      "seconds": 0.559147917,
+      "text": "{\"label\": \"negative\"}"
+     },
+     {
+      "seconds": 0.5860925,
+      "text": "{\"label\": \"negative\"}"
+     },
+     {
+      "seconds": 0.583164709,
+      "text": "{\"label\": \"negative\"}"
+     }
+    ]
    },
    "mood-10": {
     "device": [
@@ -775,7 +1251,21 @@
      "seconds": 0.9217000000476837,
      "tokensIn": 78,
      "tokensOut": 11
-    }
+    },
+    "apple": [
+     {
+      "seconds": 0.603536791,
+      "text": "{\"label\": \"negative\"}"
+     },
+     {
+      "seconds": 0.597033375,
+      "text": "{\"label\": \"negative\"}"
+     },
+     {
+      "seconds": 0.615080667,
+      "text": "{\"label\": \"negative\"}"
+     }
+    ]
    },
    "mood-11": {
     "device": [
@@ -797,7 +1287,21 @@
      "seconds": 1.253800000011921,
      "tokensIn": 87,
      "tokensOut": 11
-    }
+    },
+    "apple": [
+     {
+      "seconds": 0.615126583,
+      "text": "{\"label\": \"mixed\"}"
+     },
+     {
+      "seconds": 0.630131125,
+      "text": "{\"label\": \"mixed\"}"
+     },
+     {
+      "seconds": 0.635354792,
+      "text": "{\"label\": \"mixed\"}"
+     }
+    ]
    },
    "mood-12": {
     "device": [
@@ -819,7 +1323,21 @@
      "seconds": 0.8955999999642372,
      "tokensIn": 85,
      "tokensOut": 11
-    }
+    },
+    "apple": [
+     {
+      "text": "{\"label\": \"negative\"}",
+      "seconds": 0.712204459
+     },
+     {
+      "text": "{\"label\": \"negative\"}",
+      "seconds": 0.661106333
+     },
+     {
+      "text": "{\"label\": \"negative\"}",
+      "seconds": 0.614107916
+     }
+    ]
    },
    "mood-13": {
     "device": [
@@ -841,7 +1359,21 @@
      "seconds": 0.8198000000119209,
      "tokensIn": 78,
      "tokensOut": 11
-    }
+    },
+    "apple": [
+     {
+      "text": "{\"label\": \"mixed\"}",
+      "seconds": 0.634044
+     },
+     {
+      "text": "{\"label\": \"mixed\"}",
+      "seconds": 0.616610417
+     },
+     {
+      "seconds": 0.602238917,
+      "text": "{\"label\": \"mixed\"}"
+     }
+    ]
    },
    "mood-14": {
     "device": [
@@ -863,7 +1395,21 @@
      "seconds": 1.135,
      "tokensIn": 83,
      "tokensOut": 11
-    }
+    },
+    "apple": [
+     {
+      "text": "{\"label\": \"mixed\"}",
+      "seconds": 0.597542416
+     },
+     {
+      "text": "{\"label\": \"mixed\"}",
+      "seconds": 0.616482542
+     },
+     {
+      "text": "{\"label\": \"mixed\"}",
+      "seconds": 0.612925792
+     }
+    ]
    },
    "mood-15": {
     "device": [
@@ -885,7 +1431,21 @@
      "seconds": 0.9065,
      "tokensIn": 80,
      "tokensOut": 11
-    }
+    },
+    "apple": [
+     {
+      "text": "{\"label\": \"mixed\"}",
+      "seconds": 0.644008583
+     },
+     {
+      "text": "{\"label\": \"mixed\"}",
+      "seconds": 0.678970875
+     },
+     {
+      "text": "{\"label\": \"mixed\"}",
+      "seconds": 0.648929875
+     }
+    ]
    },
    "mood-16": {
     "device": [
@@ -907,7 +1467,21 @@
      "seconds": 1.2323000000119209,
      "tokensIn": 78,
      "tokensOut": 11
-    }
+    },
+    "apple": [
+     {
+      "seconds": 0.6009055,
+      "text": "{\"label\": \"positive\"}"
+     },
+     {
+      "seconds": 0.583943458,
+      "text": "{\"label\": \"positive\"}"
+     },
+     {
+      "seconds": 0.586228541,
+      "text": "{\"label\": \"positive\"}"
+     }
+    ]
    },
    "mood-17": {
     "device": [
@@ -929,7 +1503,21 @@
      "seconds": 0.9276000000238419,
      "tokensIn": 83,
      "tokensOut": 11
-    }
+    },
+    "apple": [
+     {
+      "text": "{\"label\": \"negative\"}",
+      "seconds": 0.6574765
+     },
+     {
+      "text": "{\"label\": \"negative\"}",
+      "seconds": 0.598206375
+     },
+     {
+      "text": "{\"label\": \"negative\"}",
+      "seconds": 0.612204541
+     }
+    ]
    },
    "mood-18": {
     "device": [
@@ -951,7 +1539,21 @@
      "seconds": 1.0208000000119208,
      "tokensIn": 79,
      "tokensOut": 11
-    }
+    },
+    "apple": [
+     {
+      "text": "{\"label\": \"positive\"}",
+      "seconds": 0.618056625
+     },
+     {
+      "text": "{\"label\": \"positive\"}",
+      "seconds": 0.629132292
+     },
+     {
+      "text": "{\"label\": \"positive\"}",
+      "seconds": 0.663758041
+     }
+    ]
    },
    "mood-19": {
     "device": [
@@ -973,7 +1575,21 @@
      "seconds": 1.0236999999880791,
      "tokensIn": 83,
      "tokensOut": 11
-    }
+    },
+    "apple": [
+     {
+      "text": "{\"label\": \"mixed\"}",
+      "seconds": 0.642875834
+     },
+     {
+      "text": "{\"label\": \"positive\"}",
+      "seconds": 0.616777875
+     },
+     {
+      "text": "{\"label\": \"mixed\"}",
+      "seconds": 0.601992167
+     }
+    ]
    },
    "mood-20": {
     "device": [
@@ -995,7 +1611,21 @@
      "seconds": 0.904800000011921,
      "tokensIn": 78,
      "tokensOut": 11
-    }
+    },
+    "apple": [
+     {
+      "seconds": 0.600350209,
+      "text": "{\"label\": \"mixed\"}"
+     },
+     {
+      "seconds": 0.61627475,
+      "text": "{\"label\": \"positive\"}"
+     },
+     {
+      "seconds": 0.600675,
+      "text": "{\"label\": \"positive\"}"
+     }
+    ]
    },
    "mood-21": {
     "device": [
@@ -1017,7 +1647,21 @@
      "seconds": 1.0050999999642372,
      "tokensIn": 82,
      "tokensOut": 11
-    }
+    },
+    "apple": [
+     {
+      "text": "{\"label\": \"negative\"}",
+      "seconds": 0.620988167
+     },
+     {
+      "text": "{\"label\": \"negative\"}",
+      "seconds": 0.616055833
+     },
+     {
+      "text": "{\"label\": \"negative\"}",
+      "seconds": 0.594859292
+     }
+    ]
    },
    "mood-22": {
     "device": [
@@ -1039,7 +1683,21 @@
      "seconds": 1.024,
      "tokensIn": 80,
      "tokensOut": 6
-    }
+    },
+    "apple": [
+     {
+      "text": "{\"label\": \"positive\"}",
+      "seconds": 0.605107042
+     },
+     {
+      "text": "{\"label\": \"positive\"}",
+      "seconds": 0.582321
+     },
+     {
+      "text": "{\"label\": \"positive\"}",
+      "seconds": 0.599010834
+     }
+    ]
    },
    "mood-23": {
     "device": [
@@ -1061,7 +1719,21 @@
      "seconds": 0.7881999999880791,
      "tokensIn": 78,
      "tokensOut": 11
-    }
+    },
+    "apple": [
+     {
+      "text": "{\"label\": \"positive\"}",
+      "seconds": 0.61373175
+     },
+     {
+      "text": "{\"label\": \"positive\"}",
+      "seconds": 0.616465584
+     },
+     {
+      "text": "{\"label\": \"positive\"}",
+      "seconds": 0.590761667
+     }
+    ]
    },
    "mood-24": {
     "device": [
@@ -1083,7 +1755,21 @@
      "seconds": 0.8397999999523162,
      "tokensIn": 82,
      "tokensOut": 11
-    }
+    },
+    "apple": [
+     {
+      "text": "{\"label\": \"positive\"}",
+      "seconds": 0.614720208
+     },
+     {
+      "text": "{\"label\": \"mixed\"}",
+      "seconds": 0.663797667
+     },
+     {
+      "text": "{\"label\": \"positive\"}",
+      "seconds": 0.624703708
+     }
+    ]
    },
    "mood-25": {
     "device": [
@@ -1105,7 +1791,21 @@
      "seconds": 0.9286999999880791,
      "tokensIn": 65,
      "tokensOut": 11
-    }
+    },
+    "apple": [
+     {
+      "seconds": 0.569688291,
+      "text": "{\"label\": \"negative\"}"
+     },
+     {
+      "seconds": 0.554434959,
+      "text": "{\"label\": \"negative\"}"
+     },
+     {
+      "seconds": 0.5885245,
+      "text": "{\"label\": \"negative\"}"
+     }
+    ]
    }
   },
   "receipt_fields": {
@@ -1129,7 +1829,21 @@
      "seconds": 1.273100000023842,
      "tokensIn": 127,
      "tokensOut": 44
-    }
+    },
+    "apple": [
+     {
+      "seconds": 1.119213792,
+      "text": "{\"merchant\": \"THE COPPER KETTLE\", \"date\": \"2026-11-12\", \"total\": 12.380000000000001}"
+     },
+     {
+      "seconds": 1.0775374580000001,
+      "text": "{\"merchant\": \"THE COPPER KETTLE\", \"date\": \"2026-11-12\", \"total\": 12.380000000000001}"
+     },
+     {
+      "seconds": 1.063230584,
+      "text": "{\"merchant\": \"THE COPPER KETTLE\", \"date\": \"2026-11-12\", \"total\": 12.380000000000001}"
+     }
+    ]
    },
    "receipt-2": {
     "device": [
@@ -1151,7 +1865,21 @@
      "seconds": 1.085,
      "tokensIn": 107,
      "tokensOut": 41
-    }
+    },
+    "apple": [
+     {
+      "seconds": 1.134530542,
+      "text": "{\"merchant\": \"GREENLEAF MARKET\", \"date\": \"2026-11-07\", \"total\": 5.2400000000000002}"
+     },
+     {
+      "seconds": 1.20357825,
+      "text": "{\"merchant\": \"GREENLEAF MARKET\", \"date\": \"2026-11-07\", \"total\": 5.2400000000000002}"
+     },
+     {
+      "seconds": 1.139881166,
+      "text": "{\"merchant\": \"GREENLEAF MARKET\", \"date\": \"2026-11-07\", \"total\": 5.2400000000000002}"
+     }
+    ]
    },
    "receipt-3": {
     "device": [
@@ -1173,7 +1901,21 @@
      "seconds": 0.843300000011921,
      "tokensIn": 111,
      "tokensOut": 41
-    }
+    },
+    "apple": [
+     {
+      "seconds": 1.034389375,
+      "text": "{\"merchant\": \"Northgate Hardware\", \"date\": \"2026-11-03\", \"total\": 10.6}"
+     },
+     {
+      "seconds": 1.071469041,
+      "text": "{\"merchant\": \"Northgate Hardware\", \"date\": \"2026-11-03\", \"total\": 10.6}"
+     },
+     {
+      "seconds": 1.137137042,
+      "text": "{\"merchant\": \"Northgate Hardware\", \"date\": \"2026-11-03\", \"total\": 10.6}"
+     }
+    ]
    },
    "receipt-4": {
     "device": [
@@ -1195,7 +1937,21 @@
      "seconds": 1.0795,
      "tokensIn": 117,
      "tokensOut": 40
-    }
+    },
+    "apple": [
+     {
+      "seconds": 1.265933042,
+      "text": "{\"merchant\": \"Mill Lane Bakery\", \"date\": \"2026-10-05\", \"total\": 9.1999999999999993}"
+     },
+     {
+      "seconds": 1.097438083,
+      "text": "{\"merchant\": \"Mill Lane Bakery\", \"date\": \"2026-10-05\", \"total\": 9.1999999999999993}"
+     },
+     {
+      "seconds": 1.050611084,
+      "text": "{\"merchant\": \"Mill Lane Bakery\", \"date\": \"2026-10-05\", \"total\": 9.1999999999999993}"
+     }
+    ]
    },
    "receipt-5": {
     "device": [
@@ -1217,7 +1973,21 @@
      "seconds": 0.8092999999523163,
      "tokensIn": 118,
      "tokensOut": 44
-    }
+    },
+    "apple": [
+     {
+      "seconds": 1.155379333,
+      "text": "{\"merchant\": \"FERNHILL GARDEN CENTRE\", \"date\": \"2026-09-10\", \"total\": 23.48}"
+     },
+     {
+      "seconds": 1.133028125,
+      "text": "{\"merchant\": \"FERNHILL GARDEN CENTRE\", \"date\": \"2026-09-10\", \"total\": 23.48}"
+     },
+     {
+      "seconds": 1.195702834,
+      "text": "{\"merchant\": \"FERNHILL GARDEN CENTRE\", \"date\": \"2026-09-10\", \"total\": 23.48}"
+     }
+    ]
    },
    "receipt-6": {
     "device": [
@@ -1239,7 +2009,21 @@
      "seconds": 1.097899999976158,
      "tokensIn": 113,
      "tokensOut": 41
-    }
+    },
+    "apple": [
+     {
+      "seconds": 1.080501375,
+      "text": "{\"merchant\": \"Saltmarsh Deli\", \"date\": \"2026-11-04\", \"total\": 12.15}"
+     },
+     {
+      "seconds": 1.080018292,
+      "text": "{\"merchant\": \"Saltmarsh Deli\", \"date\": \"2026-11-04\", \"total\": 12.15}"
+     },
+     {
+      "seconds": 1.056947083,
+      "text": "{\"merchant\": \"Saltmarsh Deli\", \"date\": \"2026-11-04\", \"total\": 12.15}"
+     }
+    ]
    },
    "receipt-7": {
     "device": [
@@ -1261,7 +2045,21 @@
      "seconds": 0.9215,
      "tokensIn": 94,
      "tokensOut": 41
-    }
+    },
+    "apple": [
+     {
+      "seconds": 1.010371167,
+      "text": "{\"merchant\": \"Ivy House Books\", \"date\": \"2026-10-08\", \"total\": 13.24}"
+     },
+     {
+      "seconds": 1.028114333,
+      "text": "{\"merchant\": \"Ivy House Books\", \"date\": \"2026-10-08\", \"total\": 13.24}"
+     },
+     {
+      "seconds": 1.036213917,
+      "text": "{\"merchant\": \"Ivy House Books\", \"date\": \"2026-10-08\", \"total\": 13.24}"
+     }
+    ]
    },
    "receipt-8": {
     "device": [
@@ -1283,7 +2081,21 @@
      "seconds": 0.8646999999880791,
      "tokensIn": 123,
      "tokensOut": 43
-    }
+    },
+    "apple": [
+     {
+      "seconds": 1.120249916,
+      "text": "{\"merchant\": \"THE BLUE DOOR TEA ROOM\", \"date\": \"2026-11-02\", \"total\": 22.989999999999998}"
+     },
+     {
+      "seconds": 1.074257416,
+      "text": "{\"merchant\": \"THE BLUE DOOR TEA ROOM\", \"date\": \"2026-11-02\", \"total\": 22.989999999999998}"
+     },
+     {
+      "seconds": 1.134869417,
+      "text": "{\"merchant\": \"THE BLUE DOOR TEA ROOM\", \"date\": \"2026-02-11\", \"total\": 22.989999999999998}"
+     }
+    ]
    },
    "receipt-9": {
     "device": [
@@ -1305,7 +2117,21 @@
      "seconds": 1.1831999999880791,
      "tokensIn": 104,
      "tokensOut": 41
-    }
+    },
+    "apple": [
+     {
+      "seconds": 0.987202041,
+      "text": "{\"merchant\": \"Castle Street Cycles\", \"date\": \"2026-10-25\", \"total\": 19.489999999999998}"
+     },
+     {
+      "seconds": 1.007980458,
+      "text": "{\"merchant\": \"Castle Street Cycles\", \"date\": \"2026-10-25\", \"total\": 19.489999999999998}"
+     },
+     {
+      "seconds": 1.015466417,
+      "text": "{\"merchant\": \"Castle Street Cycles\", \"date\": \"2026-10-25\", \"total\": 19.489999999999998}"
+     }
+    ]
    },
    "receipt-10": {
     "device": [
@@ -1327,7 +2153,21 @@
      "seconds": 0.7883000000119209,
      "tokensIn": 134,
      "tokensOut": 43
-    }
+    },
+    "apple": [
+     {
+      "seconds": 1.059724166,
+      "text": "{\"merchant\": \"Hollins Farm Shop\", \"date\": \"2026-11-13\", \"total\": 10.5}"
+     },
+     {
+      "seconds": 1.060105917,
+      "text": "{\"merchant\": \"HOLLINS FARM SHOP\", \"date\": \"2026-11-13\", \"total\": 9.5}"
+     },
+     {
+      "seconds": 1.07297675,
+      "text": "{\"merchant\": \"HOLLINS FARM SHOP\", \"date\": \"2026-11-13\", \"total\": 9.5}"
+     }
+    ]
    },
    "receipt-11": {
     "device": [
@@ -1349,7 +2189,21 @@
      "seconds": 0.8841999999880791,
      "tokensIn": 104,
      "tokensOut": 42
-    }
+    },
+    "apple": [
+     {
+      "seconds": 1.103889667,
+      "text": "{\"merchant\": \"Willow Row Florist\", \"date\": \"2026-08-28\", \"total\": 33.5}"
+     },
+     {
+      "seconds": 1.074653583,
+      "text": "{\"merchant\": \"Willow Row Florist\", \"date\": \"2026-08-28\", \"total\": 33.5}"
+     },
+     {
+      "seconds": 1.058541959,
+      "text": "{\"merchant\": \"Willow Row Florist\", \"date\": \"2026-08-28\", \"total\": 33.5}"
+     }
+    ]
    },
    "receipt-12": {
     "device": [
@@ -1371,7 +2225,21 @@
      "seconds": 0.848300000011921,
      "tokensIn": 115,
      "tokensOut": 43
-    }
+    },
+    "apple": [
+     {
+      "seconds": 1.074915375,
+      "text": "{\"merchant\": \"Quayside Fishmongers\", \"date\": \"2026-10-19\", \"total\": 15}"
+     },
+     {
+      "seconds": 1.0891004579999999,
+      "text": "{\"merchant\": \"Quayside Fishmongers\", \"date\": \"2026-10-19\", \"total\": 15}"
+     },
+     {
+      "seconds": 1.0746795,
+      "text": "{\"merchant\": \"Quayside Fishmongers\", \"date\": \"2026-10-19\", \"total\": 15.050000000000001}"
+     }
+    ]
    },
    "receipt-13": {
     "device": [
@@ -1393,7 +2261,21 @@
      "seconds": 0.9512000000476837,
      "tokensIn": 112,
      "tokensOut": 44
-    }
+    },
+    "apple": [
+     {
+      "seconds": 1.106358625,
+      "text": "{\"merchant\": \"OLD FORGE IRONMONGERS\", \"date\": \"2026-10-31\", \"total\": 15.49}"
+     },
+     {
+      "seconds": 1.09190375,
+      "text": "{\"merchant\": \"OLD FORGE IRONMONGERS\", \"date\": \"2026-10-31\", \"total\": 15.49}"
+     },
+     {
+      "seconds": 1.097816833,
+      "text": "{\"merchant\": \"OLD FORGE IRONMONGERS\", \"date\": \"2026-10-31\", \"total\": 15.49}"
+     }
+    ]
    },
    "receipt-14": {
     "device": [
@@ -1415,7 +2297,21 @@
      "seconds": 0.6805999999642373,
      "tokensIn": 108,
      "tokensOut": 40
-    }
+    },
+    "apple": [
+     {
+      "seconds": 1.042670458,
+      "text": "{\"merchant\": \"Harbour Pharmacy\", \"date\": \"2026-11-02\", \"total\": 4.3600000000000003}"
+     },
+     {
+      "seconds": 0.989592292,
+      "text": "{\"merchant\": \"Harbour Pharmacy\", \"date\": \"2026-11-02\", \"total\": 4.3600000000000003}"
+     },
+     {
+      "seconds": 0.993395375,
+      "text": "{\"merchant\": \"Harbour Pharmacy\", \"date\": \"2026-11-02\", \"total\": 5.6399999999999997}"
+     }
+    ]
    },
    "receipt-15": {
     "device": [
@@ -1437,7 +2333,21 @@
      "seconds": 1.0435999999642371,
      "tokensIn": 118,
      "tokensOut": 41
-    }
+    },
+    "apple": [
+     {
+      "seconds": 1.03065725,
+      "text": "{\"merchant\": \"Brook & Barley\", \"date\": \"2026-10-14\", \"total\": 30.940000000000001}"
+     },
+     {
+      "seconds": 1.046402708,
+      "text": "{\"merchant\": \"Brook & Barley\", \"date\": \"2026-10-14\", \"total\": 30.940000000000001}"
+     },
+     {
+      "seconds": 1.091802792,
+      "text": "{\"merchant\": \"Brook & Barley\", \"date\": \"2026-10-14\", \"total\": 30.940000000000001}"
+     }
+    ]
    },
    "receipt-16": {
     "device": [
@@ -1459,7 +2369,21 @@
      "seconds": 1.025800000011921,
      "tokensIn": 104,
      "tokensOut": 43
-    }
+    },
+    "apple": [
+     {
+      "seconds": 1.071846459,
+      "text": "{\"merchant\": \"LARCH & PINE\", \"date\": \"2026-11-06\", \"total\": 25.489999999999998}"
+     },
+     {
+      "seconds": 1.0763374589999999,
+      "text": "{\"merchant\": \"LARCH & PINE\", \"date\": \"2026-11-06\", \"total\": 25.489999999999998}"
+     },
+     {
+      "seconds": 1.141105959,
+      "text": "{\"merchant\": \"LARCH & PINE\", \"date\": \"2026-11-06\", \"total\": 25.489999999999998}"
+     }
+    ]
    },
    "receipt-17": {
     "device": [
@@ -1481,7 +2405,21 @@
      "seconds": 0.8457000000476838,
      "tokensIn": 108,
      "tokensOut": 42
-    }
+    },
+    "apple": [
+     {
+      "seconds": 1.083939,
+      "text": "{\"merchant\": \"Beacon Hill Pet Supplies\", \"date\": \"2026-11-07\", \"total\": 16.34}"
+     },
+     {
+      "seconds": 1.078468,
+      "text": "{\"merchant\": \"Beacon Hill Pet Supplies\", \"date\": \"2026-11-07\", \"total\": 16.34}"
+     },
+     {
+      "seconds": 1.11787925,
+      "text": "{\"merchant\": \"Beacon Hill Pet Supplies\", \"date\": \"2026-11-07\", \"total\": 16.34}"
+     }
+    ]
    },
    "receipt-18": {
     "device": [
@@ -1503,7 +2441,21 @@
      "seconds": 0.8712999999523163,
      "tokensIn": 126,
      "tokensOut": 44
-    }
+    },
+    "apple": [
+     {
+      "seconds": 1.080970042,
+      "text": "{\"merchant\": \"Tanner's Yard Cafe\", \"date\": \"2026-10-23\", \"total\": 19.5}"
+     },
+     {
+      "seconds": 1.114789,
+      "text": "{\"merchant\": \"Tanner's Yard Cafe\", \"date\": \"2026-10-23\", \"total\": 19.5}"
+     },
+     {
+      "seconds": 1.068040041,
+      "text": "{\"merchant\": \"Tanner's Yard Cafe\", \"date\": \"2026-10-23\", \"total\": 19.5}"
+     }
+    ]
    },
    "receipt-19": {
     "device": [
@@ -1525,7 +2477,21 @@
      "seconds": 0.867,
      "tokensIn": 104,
      "tokensOut": 43
-    }
+    },
+    "apple": [
+     {
+      "seconds": 1.05021925,
+      "text": "{\"merchant\": \"WINDMILL STORES\", \"date\": \"2026-11-01\", \"total\": 10.65}"
+     },
+     {
+      "seconds": 1.089490167,
+      "text": "{\"merchant\": \"WINDMILL STORES\", \"date\": \"2026-11-01\", \"total\": 10.65}"
+     },
+     {
+      "seconds": 1.0577805,
+      "text": "{\"merchant\": \"WINDMILL STORES\", \"date\": \"2026-11-01\", \"total\": 10.65}"
+     }
+    ]
    },
    "receipt-20": {
     "device": [
@@ -1547,7 +2513,21 @@
      "seconds": 1.127699999988079,
      "tokensIn": 110,
      "tokensOut": 43
-    }
+    },
+    "apple": [
+     {
+      "seconds": 1.0853255,
+      "text": "{\"merchant\": \"Foxglove Nurseries\", \"date\": \"2026-11-02\", \"total\": 21.489999999999998}"
+     },
+     {
+      "seconds": 1.0618149159999999,
+      "text": "{\"merchant\": \"Foxglove Nurseries\", \"date\": \"2026-11-02\", \"total\": 21.489999999999998}"
+     },
+     {
+      "seconds": 1.027735625,
+      "text": "{\"merchant\": \"Foxglove Nurseries\", \"date\": \"2026-11-02\", \"total\": 21.489999999999998}"
+     }
+    ]
    },
    "receipt-21": {
     "device": [
@@ -1569,7 +2549,21 @@
      "seconds": 1.0820999999642371,
      "tokensIn": 105,
      "tokensOut": 42
-    }
+    },
+    "apple": [
+     {
+      "seconds": 1.100078209,
+      "text": "{\"merchant\": \"Seven Stars Kitchenware\", \"date\": \"2026-10-17\", \"total\": 43.450000000000003}"
+     },
+     {
+      "seconds": 1.024863875,
+      "text": "{\"merchant\": \"Seven Stars Kitchenware\", \"date\": \"2026-10-17\", \"total\": 43.450000000000003}"
+     },
+     {
+      "seconds": 1.102255417,
+      "text": "{\"merchant\": \"Seven Stars Kitchenware\", \"date\": \"2026-10-17\", \"total\": 43.450000000000003}"
+     }
+    ]
    },
    "receipt-22": {
     "device": [
@@ -1591,7 +2585,21 @@
      "seconds": 0.9555,
      "tokensIn": 124,
      "tokensOut": 42
-    }
+    },
+    "apple": [
+     {
+      "seconds": 1.092196334,
+      "text": "{\"merchant\": \"THE PAPER LANTERN\", \"date\": \"2026-11-10\", \"total\": 45.100000000000001}"
+     },
+     {
+      "seconds": 1.052035875,
+      "text": "{\"merchant\": \"THE PAPER LANTERN\", \"date\": \"2026-11-10\", \"total\": 45.100000000000001}"
+     },
+     {
+      "seconds": 1.084301458,
+      "text": "{\"merchant\": \"THE PAPER LANTERN\", \"date\": \"2026-11-10\", \"total\": 45.100000000000001}"
+     }
+    ]
    },
    "receipt-23": {
     "device": [
@@ -1613,7 +2621,21 @@
      "seconds": 0.8276999999880791,
      "tokensIn": 127,
      "tokensOut": 45
-    }
+    },
+    "apple": [
+     {
+      "seconds": 1.151443875,
+      "text": "{\"merchant\": \"Marlow's Greengrocer\", \"date\": \"2026-10-06\", \"total\": 4.75}"
+     },
+     {
+      "seconds": 1.139971333,
+      "text": "{\"merchant\": \"Marlow's Greengrocer\", \"date\": \"2026-10-06\", \"total\": 10}"
+     },
+     {
+      "seconds": 1.156391917,
+      "text": "{\"merchant\": \"Marlow's Greengrocer\", \"date\": \"2026-10-06\", \"total\": 5.25}"
+     }
+    ]
    },
    "receipt-24": {
     "device": [
@@ -1635,7 +2657,21 @@
      "seconds": 0.9246999999880791,
      "tokensIn": 106,
      "tokensOut": 44
-    }
+    },
+    "apple": [
+     {
+      "seconds": 1.00577575,
+      "text": "{\"merchant\": \"Ashby Road Dry Cleaners\", \"date\": \"2026-10-20\", \"total\": 22}"
+     },
+     {
+      "seconds": 0.994106125,
+      "text": "{\"merchant\": \"Ashby Road Dry Cleaners\", \"date\": \"2026-10-20\", \"total\": 22}"
+     },
+     {
+      "seconds": 1.020754,
+      "text": "{\"merchant\": \"Ashby Road Dry Cleaners\", \"date\": \"2026-10-20\", \"total\": 22}"
+     }
+    ]
    },
    "receipt-25": {
     "device": [
@@ -1657,7 +2693,21 @@
      "seconds": 0.9203999999761582,
      "tokensIn": 101,
      "tokensOut": 42
-    }
+    },
+    "apple": [
+     {
+      "seconds": 1.03744575,
+      "text": "{\"merchant\": \"Orchard Lane Toys\", \"date\": \"2026-11-09\", \"total\": 35.979999999999997}"
+     },
+     {
+      "seconds": 1.067515792,
+      "text": "{\"merchant\": \"Orchard Lane Toys\", \"date\": \"2026-11-09\", \"total\": 35.979999999999997}"
+     },
+     {
+      "seconds": 1.060081958,
+      "text": "{\"merchant\": \"Orchard Lane Toys\", \"date\": \"2026-11-09\", \"total\": 35.979999999999997}"
+     }
+    ]
    }
   },
   "delivery_summary": {
@@ -1688,8 +2738,28 @@
      },
      "Your Larkfield order is on its way to Leeds and will be delivered Thursday between 8 am - 6 pm; no signature required.": {
       "ok": true
+     },
+     "Your parcel is on its way to Leeds depot and will be delivered by Thursday.": {
+      "ok": true
+     },
+     "Your order will be delivered to your specified address on Thursday between 8 am and 6 pm.": {
+      "ok": true
      }
-    }
+    },
+    "apple": [
+     {
+      "text": "Your parcel is on its way to Leeds depot and will be delivered by Thursday.",
+      "seconds": 0.825119459
+     },
+     {
+      "text": "Your order will be delivered to your specified address on Thursday between 8 am and 6 pm.",
+      "seconds": 0.847324958
+     },
+     {
+      "text": "Your parcel has been collected from the warehouse and is now on its way to the Leeds depot. It will be delivered to you between 8 am and 6 pm on Thursday, without requiring a signature.",
+      "seconds": 1.16045375
+     }
+    ]
    },
    "summary-2": {
     "device": [
@@ -1721,8 +2791,29 @@
      },
      "Your parcel was delivered to your porch today at 14:12, and a photo has been attached to your order.": {
       "ok": true
+     },
+     "Your parcel has been delivered to the porch at 14:12 today.": {
+      "ok": true
+     },
+     "Your order from Larkfield was delivered today, and the driver left a photo of it on your porch.": {
+      "ok": false,
+      "reason": "The sentence incorrectly says the driver left a photo on the porch instead of a parcel with a photo attached."
      }
-    }
+    },
+    "apple": [
+     {
+      "text": "Your order from Larkfield has been delivered successfully. Please find the photo of the parcel in the attachment.",
+      "seconds": 0.751773958
+     },
+     {
+      "text": "Your parcel has been delivered to the porch at 14:12 today.",
+      "seconds": 0.627139916
+     },
+     {
+      "text": "Your order from Larkfield was delivered today, and the driver left a photo of it on your porch.",
+      "seconds": 0.817176959
+     }
+    ]
    },
    "summary-3": {
     "device": [
@@ -1758,7 +2849,21 @@
      "Your armchairs ship today and arrive Monday, while your out-of-stock footstool will follow in a second parcel at no extra charge.": {
       "ok": true
      }
-    }
+    },
+    "apple": [
+     {
+      "text": "Your order has been split. The two armchairs leave the warehouse today and should arrive on Monday. The footstool is out of stock and will follow in a second parcel, with no extra delivery charge.",
+      "seconds": 0.963792916
+     },
+     {
+      "text": "Your order has been split. Two armchairs will leave the warehouse today and arrive Monday. The footstool is out of stock and will follow in a second parcel, with no extra delivery charge.",
+      "seconds": 0.974819333
+     },
+     {
+      "text": "Your two armchairs are on their way today and should arrive on Monday. The footstool is out of stock and will follow in a second parcel, with no extra delivery charge.",
+      "seconds": 1.038579333
+     }
+    ]
    },
    "summary-4": {
     "device": [
@@ -1787,8 +2892,32 @@
      },
      "Your parcel was delivered to your neighbour at number 14 at 11:40 today; please collect it from them.": {
       "ok": true
+     },
+     "Parcel delivered to your neighbour at 14, please collect it.": {
+      "ok": true
+     },
+     "Your parcel has been delivered to your neighbour at number 14, and a card was left with your details.": {
+      "ok": false,
+      "reason": "The sentence incorrectly claims a card was left with the customer's details."
+     },
+     "The parcel has been delivered to your neighbor at number 14.": {
+      "ok": true
      }
-    }
+    },
+    "apple": [
+     {
+      "text": "Parcel delivered to your neighbour at 14, please collect it.",
+      "seconds": 0.723601292
+     },
+     {
+      "text": "Your parcel has been delivered to your neighbour at number 14, and a card was left with your details.",
+      "seconds": 0.765132292
+     },
+     {
+      "text": "The parcel has been delivered to your neighbor at number 14.",
+      "seconds": 0.607040625
+     }
+    ]
    },
    "summary-5": {
     "device": [
@@ -1823,8 +2952,25 @@
      },
      "Your parcel is out for delivery today and is expected to arrive between 1 pm and 3 pm; no action is needed.": {
       "ok": true
+     },
+     "Your parcel is on the van for delivery today, arriving between 1 pm and 3 pm.": {
+      "ok": true
      }
-    }
+    },
+    "apple": [
+     {
+      "text": "Your parcel is on the van and should arrive between 1 pm and 3 pm.",
+      "seconds": 0.631141167
+     },
+     {
+      "text": "Your parcel from Larkfield arrived at the Bristol depot at 05:30 and is on the van for delivery today. Your driver will usually deliver your parcel between 1 pm and 3 pm.",
+      "seconds": 0.943365959
+     },
+     {
+      "text": "Your parcel is on the van for delivery today, arriving between 1 pm and 3 pm.",
+      "seconds": 0.742709625
+     }
+    ]
    },
    "summary-6": {
     "device": [
@@ -1853,8 +2999,28 @@
      },
      "Your table was delivered, assembled in your dining room, and packaging was recycled; no further action is needed.": {
       "ok": true
+     },
+     "Your table was delivered, fitted, and the packaging was recycled.": {
+      "ok": true
+     },
+     "Your table was delivered at 10:05 and is now ready for use in the dining room.": {
+      "ok": true
      }
-    }
+    },
+    "apple": [
+     {
+      "text": "Your table was delivered, fitted, and the packaging was recycled.",
+      "seconds": 0.654877792
+     },
+     {
+      "text": "Your table was delivered at 10:05 and is now ready for use in the dining room.",
+      "seconds": 0.76827625
+     },
+     {
+      "text": "Your table was delivered at 10:05 and the legs were fitted on site. You don't have to do anything.",
+      "seconds": 0.819368042
+     }
+    ]
    },
    "summary-7": {
     "device": [
@@ -1890,8 +3056,29 @@
      },
      "Your returned item passed inspection and your refund has been issued, which will reach your card in 3 to 5 working days.": {
       "ok": true
+     },
+     "Your refund has been processed and will arrive in your bank account in 3 to 5 working days.": {
+      "ok": false,
+      "reason": "The sentence incorrectly specifies 'bank account' instead of 'card' as stated in the note."
+     },
+     "Your refund has been sent and will arrive in 3 to 5 working days.": {
+      "ok": true
      }
-    }
+    },
+    "apple": [
+     {
+      "text": "Your refund for the item sent back has been processed and is on its way to your card, expected to arrive in 3 to 5 working days.",
+      "seconds": 1.049822042
+     },
+     {
+      "text": "Your refund has been processed and will arrive in your bank account in 3 to 5 working days.",
+      "seconds": 0.790606292
+     },
+     {
+      "text": "Your refund has been sent and will arrive in 3 to 5 working days.",
+      "seconds": 0.755060292
+     }
+    ]
    },
    "summary-8": {
     "device": [
@@ -1923,8 +3110,32 @@
      },
      "Your delivery has been rescheduled to Thursday 19 November from 8 am to 12 noon due to a van breakdown, and no action is needed.": {
       "ok": true
+     },
+     "Your order from Larkfield has been rescheduled to Thursday, November 19th, from 8 am to 12 noon.": {
+      "ok": true
+     },
+     "Your delivery from Larkfield has been rescheduled to Thursday, 19 November, from 8 am to 12 noon.": {
+      "ok": true
+     },
+     "Due to a van breakdown, your order from Larkfield will be rebooked for Thursday 19 November, same time slot, 8 am to 12 noon.": {
+      "ok": false,
+      "reason": "The sentence incorrectly says the order 'will be rebooked' instead of stating it has been rebooked."
      }
-    }
+    },
+    "apple": [
+     {
+      "text": "Your order from Larkfield has been rescheduled to Thursday, November 19th, from 8 am to 12 noon.",
+      "seconds": 0.929684375
+     },
+     {
+      "text": "Your delivery from Larkfield has been rescheduled to Thursday, 19 November, from 8 am to 12 noon.",
+      "seconds": 0.813328417
+     },
+     {
+      "text": "Due to a van breakdown, your order from Larkfield will be rebooked for Thursday 19 November, same time slot, 8 am to 12 noon.",
+      "seconds": 0.903398917
+     }
+    ]
    },
    "summary-9": {
     "device": [
@@ -1959,8 +3170,25 @@
      },
      "Your Larkfield order missed last night's sorting cut-off and is now due to arrive on Monday; no action is needed.": {
       "ok": true
+     },
+     "Sorry for the delay, but your parcel will now arrive on Monday, as it missed the sorting cut-off.": {
+      "ok": true
      }
-    }
+    },
+    "apple": [
+     {
+      "text": "Sorry for the delay. Your parcel is now due on Monday.",
+      "seconds": 0.570506167
+     },
+     {
+      "text": "Sorry for the delay, but your parcel will now arrive on Monday, as it missed the sorting cut-off.",
+      "seconds": 0.749828833
+     },
+     {
+      "text": "Your parcel will not arrive today, Friday, as planned. It is now due on Monday.",
+      "seconds": 0.636617834
+     }
+    ]
    },
    "summary-10": {
     "device": [
@@ -1993,7 +3221,21 @@
      "Delivery to Larkfield (island) is delayed to Friday due to ferry closures; check back then for updated delivery information.": {
       "ok": true
      }
-    }
+    },
+    "apple": [
+     {
+      "text": "Shipments to Larkfield will be delayed due to stormy weather.",
+      "seconds": 0.641011375
+     },
+     {
+      "text": "The ferry route to Larkfield is closed due to storm warnings. Deliveries will now go on the first sailing on Friday, weather allowing.",
+      "seconds": 0.856196542
+     },
+     {
+      "text": "Due to stormy weather, the ferry route to Larkfield is closed. Deliveries scheduled for Wednesday will now go on the first sailing on Friday.",
+      "seconds": 0.838016625
+     }
+    ]
    },
    "summary-11": {
     "device": [
@@ -2028,8 +3270,33 @@
      },
      "Your mattress will arrive at our warehouse on November 20 and we will deliver it to you on November 23; no action needed.": {
       "ok": true
+     },
+     "Your mattress is on its way from the maker to our warehouse on 20 November and will be delivered on 23 November.": {
+      "ok": false,
+      "reason": "The sentence incorrectly states the mattress is on its way to the warehouse on November 20, whereas the note says it will reach the warehouse on that date."
+     },
+     "Your mattress is now expected to arrive on 23 November, so please be ready to collect it.": {
+      "ok": false,
+      "reason": "The sentence incorrectly tells the customer to collect the mattress."
+     },
+     "Your mattress, originally due on 12 November, will now arrive on 23 November.": {
+      "ok": true
      }
-    }
+    },
+    "apple": [
+     {
+      "text": "Your mattress is on its way from the maker to our warehouse on 20 November and will be delivered on 23 November.",
+      "seconds": 0.979022833
+     },
+     {
+      "text": "Your mattress is now expected to arrive on 23 November, so please be ready to collect it.",
+      "seconds": 0.9481885
+     },
+     {
+      "text": "Your mattress, originally due on 12 November, will now arrive on 23 November.",
+      "seconds": 0.927383042
+     }
+    ]
    },
    "summary-12": {
     "device": [
@@ -2065,7 +3332,21 @@
      "Your delivery date has changed to Saturday morning, and no further action is needed on your part.": {
       "ok": true
      }
-    }
+    },
+    "apple": [
+     {
+      "text": "Your order is not coming tomorrow. It will be with you on Saturday morning.",
+      "seconds": 0.6114915
+     },
+     {
+      "text": "Your order from Larkfield is scheduled for Saturday morning. Please note that the delivery date has been corrected.",
+      "seconds": 0.795829375
+     },
+     {
+      "text": "Your order from Larkfield is delayed. It will be delivered on Saturday morning.",
+      "seconds": 0.675520167
+     }
+    ]
    },
    "summary-13": {
     "device": [
@@ -2098,7 +3379,21 @@
      "Your parcel was delayed by customs for a routine check, but it has been released and will now be delivered on Wednesday.": {
       "ok": true
      }
-    }
+    },
+    "apple": [
+     {
+      "text": "Parcel released today. Delivery moves from Monday to Wednesday.",
+      "seconds": 0.675135625
+     },
+     {
+      "text": "Parcel held for two days for a routine check. Deliveries will now move from Monday to Wednesday.",
+      "seconds": 0.865575167
+     },
+     {
+      "text": "Your parcel was held for a routine customs check and released this afternoon. Delivery will now be from Monday to Wednesday.",
+      "seconds": 0.856511
+     }
+    ]
    },
    "summary-14": {
     "device": [
@@ -2131,7 +3426,21 @@
      "We missed you today, so your parcel is back at the depot; please book a new delivery day via the tracking page within 5 days.": {
       "ok": true
      }
-    }
+    },
+    "apple": [
+     {
+      "text": "A delivery attempt to Larkfield failed. Please book a new delivery date within 5 days to avoid the parcel being returned.",
+      "seconds": 0.837683917
+     },
+     {
+      "text": "Unfortunately, the parcel from Larkfield was not delivered due to no one being in. We recommend booking a new delivery day within 5 days.",
+      "seconds": 0.97335325
+     },
+     {
+      "text": "Your parcel has been returned to the depot because the driver couldn't deliver it. Please book a new delivery day on the tracking page within 5 days, or it will be returned to Larkfield.",
+      "seconds": 1.17465675
+     }
+    ]
    },
    "summary-15": {
     "device": [
@@ -2167,7 +3476,21 @@
      "Your parcel is waiting at the Corner Stores on Mill Lane until Friday 20 November; please bring your collection code and photo ID.": {
       "ok": true
      }
-    }
+    },
+    "apple": [
+     {
+      "text": "Your parcel is waiting at the Corner Stores pickup point on Mill Lane. Bring the collection code from your email and photo ID. It will be held until Friday 20 November.",
+      "seconds": 0.859808625
+     },
+     {
+      "text": "Your parcel is ready for collection at the Corner Stores on Mill Lane. Bring the collection code from your email and photo ID. It will be held until Friday, 20 November.",
+      "seconds": 0.951338334
+     },
+     {
+      "text": "Parcel is waiting for pickup at Corner Stores on Mill Lane. Bring ID and collection code for pickup on Friday 20 November.",
+      "seconds": 0.939390042
+     }
+    ]
    },
    "summary-16": {
     "device": [
@@ -2199,8 +3522,25 @@
      },
      "We couldn't find your address, so please reply with your correct house number or a nearby landmark so we can try again.": {
       "ok": true
+     },
+     "We couldn't find your address, so please reply with the right house number or a nearby landmark so we can try again.": {
+      "ok": true
      }
-    }
+    },
+    "apple": [
+     {
+      "text": "We couldn't find your address, so please reply with the right house number or a nearby landmark so we can try again.",
+      "seconds": 0.756362459
+     },
+     {
+      "text": "We found the address but no house number. Please provide the correct house number or a nearby landmark.",
+      "seconds": 0.786010583
+     },
+     {
+      "text": "We are unable to deliver your order due to an incorrect address. Please provide the correct house number or a nearby landmark.",
+      "seconds": 0.911099084
+     }
+    ]
    },
    "summary-17": {
     "device": [
@@ -2236,7 +3576,21 @@
      "Your sofa requires a larger delivery vehicle; please call our team using the number in your email to reschedule and ensure someone is home.": {
       "ok": true
      }
-    }
+    },
+    "apple": [
+     {
+      "text": "We're sorry, but the sofa is too large for our standard vans. A larger vehicle is needed, and someone must be home to show the team in. Please call the delivery team on the number in your order email to arrange a day.",
+      "seconds": 1.254437708
+     },
+     {
+      "text": "We're sorry, but the sofa is too large for our standard van and requires a larger vehicle. A delivery team member will need to pick a day for delivery, and you must be home.",
+      "seconds": 1.3061989999999999
+     },
+     {
+      "text": "A larger vehicle is needed to deliver your sofa. Please phone the delivery team to pick a day.",
+      "seconds": 0.784262833
+     }
+    ]
    },
    "summary-18": {
     "device": [
@@ -2263,7 +3617,21 @@
      "One box will arrive tomorrow, but the damaged second box was held; please tell us whether you want a replacement or refund.": {
       "ok": true
      }
-    }
+    },
+    "apple": [
+     {
+      "text": "We have shipped one of the two boxes to the depot. The other will be delivered tomorrow. Please let us know if you want it replaced or refunded.",
+      "seconds": 0.959564958
+     },
+     {
+      "text": "One of the two boxes from Larkfield arrived damaged, and we have not sent it out. The other box will be delivered tomorrow. Please let us know if you want the damaged item replaced or refunded.",
+      "seconds": 1.131981792
+     },
+     {
+      "text": "The damaged box from Larkfield has not been sent out yet. We will send it out tomorrow, and we need to know whether you want it replaced or refunded.",
+      "seconds": 1.072071417
+     }
+    ]
    },
    "summary-19": {
     "device": [
@@ -2299,7 +3667,21 @@
      "Your parcel requires an adult signature upon delivery on Tuesday between 10 am and 2 pm, so please ensure someone 18 or older is home.": {
       "ok": true
      }
-    }
+    },
+    "apple": [
+     {
+      "text": "An adult aged 18 or over must sign for the parcel containing garden tools with blades, which arrives on Tuesday between 10 am and 2 pm.",
+      "seconds": 1.058905834
+     },
+     {
+      "text": "Your parcel containing garden tools with blades needs a signature from someone aged 18 or over, and must be signed by an adult on Tuesday between 10 am and 2 pm.",
+      "seconds": 1.1073269589999999
+     },
+     {
+      "text": "Your order from Larkfield has been dispatched. It contains garden tools with blades and requires a signature from an adult. Please ensure someone is home on Tuesday between 10 am and 2 pm to collect it.",
+      "seconds": 1.20004725
+     }
+    ]
    },
    "summary-20": {
     "device": [
@@ -2329,7 +3711,21 @@
      "We attempted delivery at 9:15 AM but received no answer; a card was left and your package will be redelivered the next working day.": {
       "ok": true
      }
-    }
+    },
+    "apple": [
+     {
+      "text": "The courier failed to collect the order at 9:15 AM and left a card at the depot. It will be redelivered the next warehouse day.",
+      "seconds": 1.064895958
+     },
+     {
+      "text": "We're sorry, but we have not yet received your payment. Please contact us at 1-800-555-1234 to complete your order.",
+      "seconds": 1.203130583
+     },
+     {
+      "text": "Your order from Larkfield has been received and is on its way to the warehouse.",
+      "seconds": 0.796152333
+     }
+    ]
    },
    "summary-21": {
     "device": [
@@ -2355,8 +3751,33 @@
     "grades": {
      "Your order was delivered to your shed per your instructions and a photo was taken; no further action is needed.": {
       "ok": true
+     },
+     "Your order for 1632 has been delivered to the shed and a photo has been taken.": {
+      "ok": false,
+      "reason": "The sentence misinterprets '1632' as part of the order number instead of the house number."
+     },
+     "Your order for 1632 has been delivered safely to the shed and a photo has been taken.": {
+      "ok": false,
+      "reason": "The sentence misinterprets '1632' as the order number."
+     },
+     "Your order from Larkfield has been safely delivered to the shed at 1632, as instructed.": {
+      "ok": true
      }
-    }
+    },
+    "apple": [
+     {
+      "text": "Your order for 1632 has been delivered to the shed and a photo has been taken.",
+      "seconds": 0.842789833
+     },
+     {
+      "text": "Your order for 1632 has been delivered safely to the shed and a photo has been taken.",
+      "seconds": 0.899034166
+     },
+     {
+      "text": "Your order from Larkfield has been safely delivered to the shed at 1632, as instructed.",
+      "seconds": 0.98794925
+     }
+    ]
    },
    "summary-22": {
     "device": [
@@ -2386,7 +3807,21 @@
      "Your package was damaged in transit and is held at the hub; we have notified the sender and a replacement will be dispatched.": {
       "ok": true
      }
-    }
+    },
+    "apple": [
+     {
+      "text": "Your order from Larkfield is on its way to us, but we'll notify you when it arrives and dispatch a replacement.",
+      "seconds": 0.946976
+     },
+     {
+      "text": "Your order from Larkfield is held at the hub and will be replaced.",
+      "seconds": 0.734510583
+     },
+     {
+      "text": "Your order from Larkfield is in transit and will be replaced at the hub.",
+      "seconds": 0.717815917
+     }
+    ]
    },
    "summary-23": {
     "device": [
@@ -2416,7 +3851,21 @@
      "Your order is out for delivery today between 13:00 and 15:00 and a signature is required upon receipt.": {
       "ok": true
      }
-    }
+    },
+    "apple": [
+     {
+      "text": "Your order from Larkfield is out for delivery. It is expected to arrive between 1300-1500. Please provide your signature upon delivery.",
+      "seconds": 1.034479
+     },
+     {
+      "text": "We're currently out for delivery from Larkfield. Your order is scheduled for pickup between 1:00 and 3:00 PM, and a signature will be required.",
+      "seconds": 1.035416542
+     },
+     {
+      "text": "Your order from Larkfield has been sent and will be delivered between 1300 and 1500. Please keep an eye on your inbox for a signature request.",
+      "seconds": 1.121754416
+     }
+    ]
    },
    "summary-24": {
     "device": [
@@ -2448,8 +3897,30 @@
      },
      "We could not find your street number, so please contact us within 3 days to prevent your order from being returned.": {
       "ok": true
+     },
+     "Larkfield's order from Awaiting Customer Contact has been held for 3 days and will be re-shipped.": {
+      "ok": false,
+      "reason": "The sentence completely hallucinates the meaning of the input shorthand."
+     },
+     "Order from Larkfield, on the road to you, has been held for 3 days awaiting customer contact.": {
+      "ok": false,
+      "reason": "The sentence misunderstands the address query shorthand completely."
      }
-    }
+    },
+    "apple": [
+     {
+      "text": "Larkfield's order from Awaiting Customer Contact has been held for 3 days and will be re-shipped.",
+      "seconds": 1.075446958
+     },
+     {
+      "text": "An address query failed for Larkfield, an online home and garden shop. You will need to contact the shop to resolve this issue.",
+      "seconds": 0.987849917
+     },
+     {
+      "text": "Order from Larkfield, on the road to you, has been held for 3 days awaiting customer contact.",
+      "seconds": 0.94878525
+     }
+    ]
    },
    "summary-25": {
     "device": [
@@ -2484,8 +3955,32 @@
      },
      "Your order is in transit to the hub for delivery on 16/11; no action is needed from you.": {
       "ok": true
+     },
+     "Your order from Larkfield is in transit to our hub and will be delivered on November 16th.": {
+      "ok": true
+     },
+     "Your order from Larkfield is in transit and will be delivered to the hub by 16/11.": {
+      "ok": false,
+      "reason": "Incorrectly states that the order will be delivered to the hub instead of delivered to the customer on 16/11."
+     },
+     "Your order from Larkfield is on its way to the hub, scheduled for delivery on November 16th.": {
+      "ok": true
      }
-    }
+    },
+    "apple": [
+     {
+      "text": "Your order from Larkfield is in transit to our hub and will be delivered on November 16th.",
+      "seconds": 0.981959083
+     },
+     {
+      "text": "Your order from Larkfield is in transit and will be delivered to the hub by 16/11.",
+      "seconds": 0.833339167
+     },
+     {
+      "text": "Your order from Larkfield is on its way to the hub, scheduled for delivery on November 16th.",
+      "seconds": 0.909179542
+     }
+    ]
    }
   },
   "invoice_total": {
@@ -2509,7 +4004,21 @@
      "seconds": 1.4145,
      "tokensIn": 50,
      "tokensOut": 15
-    }
+    },
+    "apple": [
+     {
+      "text": "{\"total\": 258}",
+      "seconds": 0.519083958
+     },
+     {
+      "text": "{\"total\": 516}",
+      "seconds": 0.449361083
+     },
+     {
+      "text": "{\"total\": 258}",
+      "seconds": 0.438415375
+     }
+    ]
    },
    "invoice-2": {
     "device": [
@@ -2531,7 +4040,21 @@
      "seconds": 1.1045,
      "tokensIn": 68,
      "tokensOut": 15
-    }
+    },
+    "apple": [
+     {
+      "text": "{\"total\": 196}",
+      "seconds": 0.549061708
+     },
+     {
+      "text": "{\"total\": 170}",
+      "seconds": 0.525999792
+     },
+     {
+      "text": "{\"total\": 1144}",
+      "seconds": 0.523182459
+     }
+    ]
    },
    "invoice-3": {
     "device": [
@@ -2553,7 +4076,21 @@
      "seconds": 0.8676999999880791,
      "tokensIn": 54,
      "tokensOut": 14
-    }
+    },
+    "apple": [
+     {
+      "text": "{\"total\": 399.5}",
+      "seconds": 0.515308791
+     },
+     {
+      "text": "{\"total\": 399.5}",
+      "seconds": 0.490646417
+     },
+     {
+      "text": "{\"total\": 399.5}",
+      "seconds": 0.527418666
+     }
+    ]
    },
    "invoice-4": {
     "device": [
@@ -2575,7 +4112,21 @@
      "seconds": 1.069899999976158,
      "tokensIn": 63,
      "tokensOut": 15
-    }
+    },
+    "apple": [
+     {
+      "text": "{\"total\": 116.91}",
+      "seconds": 0.572405125
+     },
+     {
+      "text": "{\"total\": 114.97}",
+      "seconds": 0.577738292
+     },
+     {
+      "text": "{\"total\": 104.94}",
+      "seconds": 0.573300708
+     }
+    ]
    },
    "invoice-5": {
     "device": [
@@ -2597,7 +4148,21 @@
      "seconds": 0.8893000000119209,
      "tokensIn": 63,
      "tokensOut": 14
-    }
+    },
+    "apple": [
+     {
+      "text": "{\"total\": 2410}",
+      "seconds": 0.557829792
+     },
+     {
+      "text": "{\"total\": 2112}",
+      "seconds": 0.594631625
+     },
+     {
+      "text": "{\"total\": 1545}",
+      "seconds": 0.583364916
+     }
+    ]
    },
    "invoice-6": {
     "device": [
@@ -2619,7 +4184,21 @@
      "seconds": 1.066699999988079,
      "tokensIn": 59,
      "tokensOut": 15
-    }
+    },
+    "apple": [
+     {
+      "text": "{\"total\": 195}",
+      "seconds": 0.522942666
+     },
+     {
+      "text": "{\"total\": 195}",
+      "seconds": 0.477903166
+     },
+     {
+      "text": "{\"total\": 195}",
+      "seconds": 0.495202042
+     }
+    ]
    },
    "invoice-7": {
     "device": [
@@ -2641,7 +4220,21 @@
      "seconds": 1.2995,
      "tokensIn": 72,
      "tokensOut": 11
-    }
+    },
+    "apple": [
+     {
+      "text": "{\"total\": 117.90000000000001}",
+      "seconds": 0.508795083
+     },
+     {
+      "text": "{\"total\": 167.90000000000001}",
+      "seconds": 0.529787708
+     },
+     {
+      "text": "{\"total\": 161.09999999999999}",
+      "seconds": 0.548080292
+     }
+    ]
    },
    "invoice-8": {
     "device": [
@@ -2663,7 +4256,21 @@
      "seconds": 1.684800000011921,
      "tokensIn": 59,
      "tokensOut": 10
-    }
+    },
+    "apple": [
+     {
+      "text": "{\"total\": 298}",
+      "seconds": 0.50879925
+     },
+     {
+      "text": "{\"total\": 294}",
+      "seconds": 0.474747917
+     },
+     {
+      "text": "{\"total\": 271}",
+      "seconds": 0.502467833
+     }
+    ]
    },
    "invoice-9": {
     "device": [
@@ -2685,7 +4292,21 @@
      "seconds": 0.9395,
      "tokensIn": 60,
      "tokensOut": 9
-    }
+    },
+    "apple": [
+     {
+      "text": "{\"total\": 100.04000000000001}",
+      "seconds": 0.513259125
+     },
+     {
+      "text": "{\"total\": 101.7}",
+      "seconds": 0.492302375
+     },
+     {
+      "text": "{\"total\": 102.06999999999999}",
+      "seconds": 0.482003875
+     }
+    ]
    },
    "invoice-10": {
     "device": [
@@ -2707,7 +4328,21 @@
      "seconds": 0.9595,
      "tokensIn": 73,
      "tokensOut": 11
-    }
+    },
+    "apple": [
+     {
+      "text": "{\"total\": 766.79999999999995}",
+      "seconds": 0.555041416
+     },
+     {
+      "text": "{\"total\": 418.10000000000002}",
+      "seconds": 0.617597709
+     },
+     {
+      "text": "{\"total\": 442.69999999999999}",
+      "seconds": 0.565290167
+     }
+    ]
    },
    "invoice-11": {
     "device": [
@@ -2729,7 +4364,21 @@
      "seconds": 1.4331000000238419,
      "tokensIn": 60,
      "tokensOut": 14
-    }
+    },
+    "apple": [
+     {
+      "text": "{\"total\": 358.60000000000002}",
+      "seconds": 0.54446375
+     },
+     {
+      "text": "{\"total\": 201.69999999999999}",
+      "seconds": 0.552730417
+     },
+     {
+      "text": "{\"total\": 358.89999999999998}",
+      "seconds": 0.567038542
+     }
+    ]
    },
    "invoice-12": {
     "device": [
@@ -2751,7 +4400,21 @@
      "seconds": 0.7831999999880791,
      "tokensIn": 64,
      "tokensOut": 15
-    }
+    },
+    "apple": [
+     {
+      "text": "{\"total\": 1049.5999999999999}",
+      "seconds": 0.594263166
+     },
+     {
+      "text": "{\"total\": 2555.1999999999998}",
+      "seconds": 0.622355833
+     },
+     {
+      "text": "{\"total\": 1849.8}",
+      "seconds": 0.540032917
+     }
+    ]
    },
    "invoice-13": {
     "device": [
@@ -2773,7 +4436,21 @@
      "seconds": 1.3661999999880792,
      "tokensIn": 74,
      "tokensOut": 10
-    }
+    },
+    "apple": [
+     {
+      "text": "{\"total\": 1957.5}",
+      "seconds": 0.573722666
+     },
+     {
+      "text": "{\"total\": 1165.5}",
+      "seconds": 0.6277455
+     },
+     {
+      "text": "{\"total\": 791.25}",
+      "seconds": 0.58880475
+     }
+    ]
    },
    "invoice-14": {
     "device": [
@@ -2795,7 +4472,21 @@
      "seconds": 2.0491999999880792,
      "tokensIn": 60,
      "tokensOut": 15
-    }
+    },
+    "apple": [
+     {
+      "text": "{\"total\": 321.92000000000002}",
+      "seconds": 0.567778542
+     },
+     {
+      "text": "{\"total\": 323.22000000000003}",
+      "seconds": 0.546866125
+     },
+     {
+      "text": "{\"total\": 179.91999999999999}",
+      "seconds": 0.532148125
+     }
+    ]
    },
    "invoice-15": {
     "device": [
@@ -2817,7 +4508,21 @@
      "seconds": 1.3440999999642371,
      "tokensIn": 71,
      "tokensOut": 11
-    }
+    },
+    "apple": [
+     {
+      "text": "{\"total\": 172.47999999999999}",
+      "seconds": 0.542194208
+     },
+     {
+      "text": "{\"total\": 219.11000000000001}",
+      "seconds": 0.503833209
+     },
+     {
+      "text": "{\"total\": 140.58000000000001}",
+      "seconds": 0.509270958
+     }
+    ]
    },
    "invoice-16": {
     "device": [
@@ -2839,7 +4544,21 @@
      "seconds": 0.8831000000238418,
      "tokensIn": 101,
      "tokensOut": 16
-    }
+    },
+    "apple": [
+     {
+      "text": "{\"total\": 1747.01}",
+      "seconds": 0.558901917
+     },
+     {
+      "text": "{\"total\": 1971.7}",
+      "seconds": 0.57305775
+     },
+     {
+      "text": "{\"total\": 1524.0999999999999}",
+      "seconds": 0.5383735
+     }
+    ]
    },
    "invoice-17": {
     "device": [
@@ -2861,7 +4580,21 @@
      "seconds": 0.9456999999880791,
      "tokensIn": 91,
      "tokensOut": 11
-    }
+    },
+    "apple": [
+     {
+      "text": "{\"total\": 167.21000000000001}",
+      "seconds": 0.656127875
+     },
+     {
+      "text": "{\"total\": 147.41}",
+      "seconds": 0.603186667
+     },
+     {
+      "text": "{\"total\": 153.88}",
+      "seconds": 0.559289792
+     }
+    ]
    },
    "invoice-18": {
     "device": [
@@ -2883,7 +4616,21 @@
      "seconds": 1.094,
      "tokensIn": 99,
      "tokensOut": 11
-    }
+    },
+    "apple": [
+     {
+      "text": "{\"total\": 272.72000000000003}",
+      "seconds": 0.535956416
+     },
+     {
+      "text": "{\"total\": 1299.1900000000001}",
+      "seconds": 0.527461959
+     },
+     {
+      "text": "{\"total\": 1362.49}",
+      "seconds": 0.562059417
+     }
+    ]
    },
    "invoice-19": {
     "device": [
@@ -2905,7 +4652,21 @@
      "seconds": 0.8601000000238419,
      "tokensIn": 99,
      "tokensOut": 12
-    }
+    },
+    "apple": [
+     {
+      "text": "{\"total\": 410.10000000000002}",
+      "seconds": 0.581145833
+     },
+     {
+      "text": "{\"total\": 1751.2}",
+      "seconds": 0.568322333
+     },
+     {
+      "text": "{\"total\": 3048}",
+      "seconds": 0.573279125
+     }
+    ]
    },
    "invoice-20": {
     "device": [
@@ -2927,7 +4688,21 @@
      "seconds": 1.0161000000238418,
      "tokensIn": 90,
      "tokensOut": 12
-    }
+    },
+    "apple": [
+     {
+      "text": "{\"total\": 1986.0799999999999}",
+      "seconds": 0.5567355
+     },
+     {
+      "text": "{\"total\": 1957.74}",
+      "seconds": 0.573421167
+     },
+     {
+      "text": "{\"total\": 2218.21}",
+      "seconds": 0.54982225
+     }
+    ]
    },
    "invoice-21": {
     "device": [
@@ -2949,7 +4724,21 @@
      "seconds": 1.1916000000238418,
      "tokensIn": 74,
      "tokensOut": 11
-    }
+    },
+    "apple": [
+     {
+      "text": "{\"total\": 1108.25}",
+      "seconds": 0.540007292
+     },
+     {
+      "text": "{\"total\": 1086.75}",
+      "seconds": 0.603692666
+     },
+     {
+      "text": "{\"total\": 1691.8}",
+      "seconds": 0.597387459
+     }
+    ]
    },
    "invoice-22": {
     "device": [
@@ -2971,7 +4760,21 @@
      "seconds": 1.044699999988079,
      "tokensIn": 87,
      "tokensOut": 15
-    }
+    },
+    "apple": [
+     {
+      "text": "{\"total\": 491.54000000000002}",
+      "seconds": 0.555838208
+     },
+     {
+      "text": "{\"total\": 629.89999999999998}",
+      "seconds": 0.516040792
+     },
+     {
+      "text": "{\"total\": 1422.3900000000001}",
+      "seconds": 0.504327417
+     }
+    ]
    },
    "invoice-23": {
     "device": [
@@ -2993,7 +4796,21 @@
      "seconds": 0.697199999988079,
      "tokensIn": 73,
      "tokensOut": 11
-    }
+    },
+    "apple": [
+     {
+      "text": "{\"total\": 209.12}",
+      "seconds": 0.4660965
+     },
+     {
+      "text": "{\"total\": 114.08}",
+      "seconds": 0.57370375
+     },
+     {
+      "text": "{\"total\": 235.28}",
+      "seconds": 0.574788916
+     }
+    ]
    },
    "invoice-24": {
     "device": [
@@ -3015,7 +4832,21 @@
      "seconds": 0.856199999988079,
      "tokensIn": 113,
      "tokensOut": 15
-    }
+    },
+    "apple": [
+     {
+      "text": "{\"total\": 1077.72}",
+      "seconds": 0.551869959
+     },
+     {
+      "text": "{\"total\": 1496.7}",
+      "seconds": 0.498013625
+     },
+     {
+      "text": "{\"total\": 2091.9699999999998}",
+      "seconds": 0.547882375
+     }
+    ]
    },
    "invoice-25": {
     "device": [
@@ -3037,7 +4868,21 @@
      "seconds": 1.0245,
      "tokensIn": 100,
      "tokensOut": 11
-    }
+    },
+    "apple": [
+     {
+      "text": "{\"total\": 147.91999999999999}",
+      "seconds": 0.50580275
+     },
+     {
+      "text": "{\"total\": 309.91000000000003}",
+      "seconds": 0.56476475
+     },
+     {
+      "text": "{\"total\": 205.02000000000001}",
+      "seconds": 0.478178708
+     }
+    ]
    }
   },
   "email_address": {
@@ -3061,7 +4906,21 @@
      "seconds": 1.1013999999761581,
      "tokensIn": 100,
      "tokensOut": 45
-    }
+    },
+    "apple": [
+     {
+      "text": "{\"name\": \"Hannah Whitcombe\", \"street\": \"14 Mill Road\", \"city\": \"Leeds\", \"postcode\": \"LS6 4QT\"}",
+      "seconds": 0.680202208
+     },
+     {
+      "text": "{\"name\": \"Hannah Whitcombe\", \"street\": \"14 Mill Road\", \"city\": \"Leeds\", \"postcode\": \"LS6 4QT\"}",
+      "seconds": 0.731791458
+     },
+     {
+      "text": "{\"name\": \"Hannah Whitcombe\", \"street\": \"14 Mill Road\", \"city\": \"Leeds\", \"postcode\": \"LS6 4QT\"}",
+      "seconds": 0.715730042
+     }
+    ]
    },
    "address-2": {
     "device": [
@@ -3083,7 +4942,21 @@
      "seconds": 1.1507000000476837,
      "tokensIn": 101,
      "tokensOut": 50
-    }
+    },
+    "apple": [
+     {
+      "text": "{\"name\": \"Daniel Okafor\", \"street\": \"27 Harbour Street\", \"city\": \"Bristol\", \"postcode\": \"BS1 5TX\"}",
+      "seconds": 0.744147208
+     },
+     {
+      "text": "{\"name\": \"Daniel Okafor\", \"street\": \"27 Harbour Street\", \"city\": \"Bristol\", \"postcode\": \"BS1 5TX\"}",
+      "seconds": 0.734344667
+     },
+     {
+      "text": "{\"name\": \"Daniel Okafor\", \"street\": \"27 Harbour Street\", \"city\": \"Bristol\", \"postcode\": \"BS1 5TX\"}",
+      "seconds": 0.727383791
+     }
+    ]
    },
    "address-3": {
     "device": [
@@ -3105,7 +4978,21 @@
      "seconds": 0.9239000000357628,
      "tokensIn": 99,
      "tokensOut": 44
-    }
+    },
+    "apple": [
+     {
+      "seconds": 0.815296375,
+      "text": "{\"name\": \"Priya Raman\", \"street\": \"8 Orchard Close\", \"city\": \"Reading\", \"postcode\": \"RG4 7HB\"}"
+     },
+     {
+      "seconds": 0.748569667,
+      "text": "{\"name\": \"Priya Raman\", \"street\": \"8 Orchard Close\", \"city\": \"Reading\", \"postcode\": \"RG4 7HB\"}"
+     },
+     {
+      "seconds": 0.714320584,
+      "text": "{\"name\": \"Priya Raman\", \"street\": \"8 Orchard Close\", \"city\": \"Reading\", \"postcode\": \"RG4 7HB\"}"
+     }
+    ]
    },
    "address-4": {
     "device": [
@@ -3127,7 +5014,21 @@
      "seconds": 1.1486000000238419,
      "tokensIn": 103,
      "tokensOut": 48
-    }
+    },
+    "apple": [
+     {
+      "seconds": 0.640596417,
+      "text": "{\"name\": \"Tom Ellery\", \"street\": \"Church Lane\", \"city\": \"Ludlow\", \"postcode\": \"SY8 1BN\"}"
+     },
+     {
+      "seconds": 0.664827584,
+      "text": "{\"name\": \"Tom Ellery\", \"street\": \"Church Lane\", \"city\": \"Ludlow\", \"postcode\": \"SY8 1BN\"}"
+     },
+     {
+      "seconds": 0.730195167,
+      "text": "{\"name\": \"Tom Ellery\", \"street\": \"Church Lane\", \"city\": \"Ludlow\", \"postcode\": \"SY8 1BN\"}"
+     }
+    ]
    },
    "address-5": {
     "device": [
@@ -3149,7 +5050,21 @@
      "seconds": 1.511,
      "tokensIn": 97,
      "tokensOut": 46
-    }
+    },
+    "apple": [
+     {
+      "text": "{\"name\": \"grace liang\", \"street\": \"61 station parade\", \"city\": \"harrogate\", \"postcode\": \"hg1 1tt\"}",
+      "seconds": 0.89426925
+     },
+     {
+      "text": "{\"name\": \"grace liang\", \"street\": \"61 station parade\", \"city\": \"harrogate\", \"postcode\": \"hg1 1tt\"}",
+      "seconds": 0.987753416
+     },
+     {
+      "text": "{\"name\": \"grace liang\", \"street\": \"61 station parade\", \"city\": \"harrogate\", \"postcode\": \"hg1 1tt\"}",
+      "seconds": 0.881503417
+     }
+    ]
    },
    "address-6": {
     "device": [
@@ -3171,7 +5086,21 @@
      "seconds": 0.953300000011921,
      "tokensIn": 111,
      "tokensOut": 48
-    }
+    },
+    "apple": [
+     {
+      "text": "{\"name\": \"Marcus Bell\", \"street\": \"Unit 5\", \"city\": \"Kendal\", \"postcode\": \"LA9 4RE\"}",
+      "seconds": 0.803666833
+     },
+     {
+      "text": "{\"name\": \"Marcus Bell\", \"street\": \"Unit 5\", \"city\": \"Kendal\", \"postcode\": \"LA9 4RE\"}",
+      "seconds": 0.718840458
+     },
+     {
+      "text": "{\"name\": \"Marcus Bell\", \"street\": \"Unit 5, Tannery Yard\", \"city\": \"Kendal\", \"postcode\": \"LA9 4RE\"}",
+      "seconds": 0.832231959
+     }
+    ]
    },
    "address-7": {
     "device": [
@@ -3193,7 +5122,18 @@
      "seconds": 1.1175,
      "tokensIn": 104,
      "tokensOut": 48
-    }
+    },
+    "apple": [
+     {
+      "error": "An unsupported language or locale was used"
+     },
+     {
+      "error": "An unsupported language or locale was used"
+     },
+     {
+      "error": "An unsupported language or locale was used"
+     }
+    ]
    },
    "address-8": {
     "device": [
@@ -3215,7 +5155,21 @@
      "seconds": 0.898699999988079,
      "tokensIn": 105,
      "tokensOut": 45
-    }
+    },
+    "apple": [
+     {
+      "text": "{\"name\": \"Oliver Stroud\", \"street\": \"3 Beech Avenue\", \"city\": \"Norwich\", \"postcode\": \"NR2 3PL\"}",
+      "seconds": 0.810088375
+     },
+     {
+      "text": "{\"name\": \"Oliver Stroud\", \"street\": \"3 Beech Avenue\", \"city\": \"Norwich\", \"postcode\": \"NR2 3PL\"}",
+      "seconds": 0.855455625
+     },
+     {
+      "text": "{\"name\": \"Oliver Stroud\", \"street\": \"3 Beech Avenue\", \"city\": \"Norwich\", \"postcode\": \"NR2 3PL\"}",
+      "seconds": 0.757967542
+     }
+    ]
    },
    "address-9": {
     "device": [
@@ -3237,7 +5191,21 @@
      "seconds": 0.8190999999642372,
      "tokensIn": 120,
      "tokensOut": 44
-    }
+    },
+    "apple": [
+     {
+      "text": "{\"name\": \"Rosa Delgado\", \"street\": \"19 Canal Walk\", \"city\": \"Manchester\", \"postcode\": \"M4 6DE\"}",
+      "seconds": 0.889925
+     },
+     {
+      "text": "{\"name\": \"Rosa Delgado\", \"street\": \"19 Canal Walk\", \"city\": \"Manchester\", \"postcode\": \"M4 6DE\"}",
+      "seconds": 0.983951583
+     },
+     {
+      "text": "{\"name\": \"Rosa Delgado\", \"street\": \"19 Canal Walk\", \"city\": \"Manchester\", \"postcode\": \"M4 6DE\"}",
+      "seconds": 0.973271916
+     }
+    ]
    },
    "address-10": {
     "device": [
@@ -3259,7 +5227,21 @@
      "seconds": 1.2284000000357629,
      "tokensIn": 115,
      "tokensOut": 46
-    }
+    },
+    "apple": [
+     {
+      "seconds": 1.011628417,
+      "text": "{\"name\": \"Ian McAllister\", \"street\": \"7 Lochside Terrace\", \"city\": \"Stirling\", \"postcode\": \"FK8 2QR\"}"
+     },
+     {
+      "seconds": 0.978595417,
+      "text": "{\"name\": \"Ian McAllister\", \"street\": \"7 Lochside Terrace\", \"city\": \"Stirling\", \"postcode\": \"FK8 2QR\"}"
+     },
+     {
+      "seconds": 0.97927125,
+      "text": "{\"name\": \"Ian McAllister\", \"street\": \"7 Lochside Terrace\", \"city\": \"Stirling\", \"postcode\": \"FK8 2QR\"}"
+     }
+    ]
    },
    "address-11": {
     "device": [
@@ -3281,7 +5263,21 @@
      "seconds": 0.8645,
      "tokensIn": 111,
      "tokensOut": 44
-    }
+    },
+    "apple": [
+     {
+      "seconds": 0.951304958,
+      "text": "{\"name\": \"Sophie Turnbull\", \"street\": \"22 Abbey Gardens\", \"city\": \"Bath\", \"postcode\": \"BA2 6LN\"}"
+     },
+     {
+      "seconds": 0.9821865,
+      "text": "{\"name\": \"Sophie Turnbull\", \"street\": \"22 Abbey Gardens\", \"city\": \"Bath\", \"postcode\": \"BA2 6LN\"}"
+     },
+     {
+      "seconds": 0.93844225,
+      "text": "{\"name\": \"Sophie Turnbull\", \"street\": \"22 Abbey Gardens\", \"city\": \"Bath\", \"postcode\": \"BA2 6LN\"}"
+     }
+    ]
    },
    "address-12": {
     "device": [
@@ -3303,7 +5299,21 @@
      "seconds": 0.9519000000357628,
      "tokensIn": 123,
      "tokensOut": 52
-    }
+    },
+    "apple": [
+     {
+      "seconds": 1.012559833,
+      "text": "{\"name\": \"Kwame Mensah\", \"street\": \"Albion House\", \"city\": \"Liverpool\", \"postcode\": \"L3 4BB\"}"
+     },
+     {
+      "seconds": 0.897259625,
+      "text": "{\"name\": \"Kwame Mensah\", \"street\": \"Albion House\", \"city\": \"Liverpool\", \"postcode\": \"L3 4BB\"}"
+     },
+     {
+      "seconds": 0.887722417,
+      "text": "{\"name\": \"Kwame Mensah\", \"street\": \"Albion House\", \"city\": \"Liverpool\", \"postcode\": \"L3 4BB\"}"
+     }
+    ]
    },
    "address-13": {
     "device": [
@@ -3325,7 +5335,21 @@
      "seconds": 0.8425,
      "tokensIn": 113,
      "tokensOut": 48
-    }
+    },
+    "apple": [
+     {
+      "text": "{\"name\": \"Elena Petrova\", \"street\": \"Windsor Road\", \"city\": \"Cardiff\", \"postcode\": \"CF24 1DH\"}",
+      "seconds": 0.97437325
+     },
+     {
+      "text": "{\"name\": \"Elena Petrova\", \"street\": \"Windsor Road\", \"city\": \"Cardiff\", \"postcode\": \"CF24 1DH\"}",
+      "seconds": 1.007306458
+     },
+     {
+      "text": "{\"name\": \"Elena Petrova\", \"street\": \"Windsor Road\", \"city\": \"Cardiff\", \"postcode\": \"CF24 1DH\"}",
+      "seconds": 0.963243875
+     }
+    ]
    },
    "address-14": {
     "device": [
@@ -3347,7 +5371,18 @@
      "seconds": 1.3920999999642372,
      "tokensIn": 107,
      "tokensOut": 45
-    }
+    },
+    "apple": [
+     {
+      "error": "An unsupported language or locale was used"
+     },
+     {
+      "error": "An unsupported language or locale was used"
+     },
+     {
+      "error": "An unsupported language or locale was used"
+     }
+    ]
    },
    "address-15": {
     "device": [
@@ -3369,7 +5404,21 @@
      "seconds": 1.307199999988079,
      "tokensIn": 110,
      "tokensOut": 45
-    }
+    },
+    "apple": [
+     {
+      "seconds": 0.973715,
+      "text": "{\"name\": \"Nadia Hussain\", \"street\": \"Clarence Street\", \"city\": \"Leicester\", \"postcode\": \"LE1 3RW\"}"
+     },
+     {
+      "seconds": 0.925764125,
+      "text": "{\"name\": \"Nadia Hussain\", \"street\": \"Clarence Street\", \"city\": \"Leicester\", \"postcode\": \"LE1 3RW\"}"
+     },
+     {
+      "seconds": 1.031598167,
+      "text": "{\"name\": \"Nadia Hussain\", \"street\": \"Clarence Street\", \"city\": \"Leicester\", \"postcode\": \"LE1 3RW\"}"
+     }
+    ]
    },
    "address-16": {
     "device": [
@@ -3391,7 +5440,21 @@
      "seconds": 1.2644000000357627,
      "tokensIn": 125,
      "tokensOut": 46
-    }
+    },
+    "apple": [
+     {
+      "text": "{\"name\": \"Peter Vaughan\", \"street\": \"16 Larch Rise\", \"city\": \"Exeter\", \"postcode\": \"EX4 5AD\"}",
+      "seconds": 0.936046667
+     },
+     {
+      "text": "{\"name\": \"Peter Vaughan\", \"street\": \"16 Larch Rise\", \"city\": \"Exeter\", \"postcode\": \"EX4 5AD\"}",
+      "seconds": 0.882179916
+     },
+     {
+      "text": "{\"name\": \"Peter Vaughan\", \"street\": \"16 Larch Rise\", \"city\": \"Exeter\", \"postcode\": \"EX4 5AD\"}",
+      "seconds": 0.929250959
+     }
+    ]
    },
    "address-17": {
     "device": [
@@ -3413,7 +5476,21 @@
      "seconds": 1.4186999999880792,
      "tokensIn": 117,
      "tokensOut": 45
-    }
+    },
+    "apple": [
+     {
+      "seconds": 0.890479166,
+      "text": "{\"name\": \"Chloe Bannister\", \"street\": \"5 Rookery Lane\", \"city\": \"Lincoln\", \"postcode\": \"LN6 7PG\"}"
+     },
+     {
+      "seconds": 0.918769792,
+      "text": "{\"name\": \"Chloe Bannister\", \"street\": \"5 Rookery Lane\", \"city\": \"Lincoln\", \"postcode\": \"LN6 7PG\"}"
+     },
+     {
+      "seconds": 0.907126833,
+      "text": "{\"name\": \"Chloe Bannister\", \"street\": \"5 Rookery Lane\", \"city\": \"Lincoln\", \"postcode\": \"LN6 7PG\"}"
+     }
+    ]
    },
    "address-18": {
     "device": [
@@ -3435,7 +5512,21 @@
      "seconds": 0.9210999999642372,
      "tokensIn": 112,
      "tokensOut": 48
-    }
+    },
+    "apple": [
+     {
+      "text": "{\"name\": \"Samir Qureshi\", \"street\": \"73 Victoria Road\", \"city\": \"Coventry\", \"postcode\": \"CV1 3FJ\"}",
+      "seconds": 1.087609875
+     },
+     {
+      "text": "{\"name\": \"Samir Qureshi\", \"street\": \"73 Victoria Road\", \"city\": \"Coventry\", \"postcode\": \"CV1 3FJ\"}",
+      "seconds": 0.938670667
+     },
+     {
+      "text": "{\"name\": \"Samir Qureshi\", \"street\": \"73 Victoria Road\", \"city\": \"Coventry\", \"postcode\": \"CV1 3FJ\"}",
+      "seconds": 0.819223333
+     }
+    ]
    },
    "address-19": {
     "device": [
@@ -3457,7 +5548,21 @@
      "seconds": 1.1227000000476837,
      "tokensIn": 117,
      "tokensOut": 48
-    }
+    },
+    "apple": [
+     {
+      "seconds": 0.717739959,
+      "text": "{\"name\": \"Margaret Doyle\", \"street\": \"30 Seaview Crescent\", \"city\": \"Whitby\", \"postcode\": \"YO21 3EZ\"}"
+     },
+     {
+      "seconds": 0.692203625,
+      "text": "{\"name\": \"Margaret Doyle\", \"street\": \"30 Seaview Crescent\", \"city\": \"Whitby\", \"postcode\": \"YO21 3EZ\"}"
+     },
+     {
+      "seconds": 0.728627792,
+      "text": "{\"name\": \"Margaret Doyle\", \"street\": \"30 Seaview Crescent\", \"city\": \"Whitby\", \"postcode\": \"YO21 3EZ\"}"
+     }
+    ]
    },
    "address-20": {
     "device": [
@@ -3479,7 +5584,21 @@
      "seconds": 0.9245,
      "tokensIn": 114,
      "tokensOut": 48
-    }
+    },
+    "apple": [
+     {
+      "text": "{\"name\": \"Ben Achterberg\", \"street\": \"11 Priory Mews\", \"city\": \"Oxford\", \"postcode\": \"OX2 6HJ\"}",
+      "seconds": 0.721783583
+     },
+     {
+      "text": "{\"name\": \"Ben Achterberg\", \"street\": \"11 Priory Mews\", \"city\": \"Oxford\", \"postcode\": \"OX2 6HJ\"}",
+      "seconds": 0.670505166
+     },
+     {
+      "text": "{\"name\": \"Ben Achterberg\", \"street\": \"11 Priory Mews\", \"city\": \"Oxford\", \"postcode\": \"OX2 6HJ\"}",
+      "seconds": 0.674843208
+     }
+    ]
    },
    "address-21": {
     "device": [
@@ -3501,7 +5620,21 @@
      "seconds": 0.9083999999761582,
      "tokensIn": 113,
      "tokensOut": 43
-    }
+    },
+    "apple": [
+     {
+      "seconds": 0.789719375,
+      "text": "{\"name\": \"Helen Marsh\", \"street\": \"4 Castle Road\", \"city\": \"Durham\", \"postcode\": \"DH1 4LS\"}"
+     },
+     {
+      "seconds": 0.734813375,
+      "text": "{\"name\": \"Helen Marsh\", \"street\": \"4 Castle Road\", \"city\": \"Durham\", \"postcode\": \"DH1 4LS\"}"
+     },
+     {
+      "seconds": 0.657889333,
+      "text": "{\"name\": \"Helen Marsh\", \"street\": \"4 Castle Road\", \"city\": \"Durham\", \"postcode\": \"DH1 4LS\"}"
+     }
+    ]
    },
    "address-22": {
     "device": [
@@ -3523,7 +5656,21 @@
      "seconds": 1.4478000000119209,
      "tokensIn": 87,
      "tokensOut": 28
-    }
+    },
+    "apple": [
+     {
+      "text": "{\"name\": \"John Doe\", \"street\": \"123 Elm Street\", \"city\": \"Springfield\", \"postcode\": \"12345\"}",
+      "seconds": 0.703760916
+     },
+     {
+      "text": "{\"name\": \"S. Thompson\", \"street\": \"123 Main St.\", \"city\": \"Springfield\", \"postcode\": \"12345\"}",
+      "seconds": 0.88584
+     },
+     {
+      "text": "{\"name\": \"John Doe\", \"street\": \"123 Elm Street\", \"city\": \"Springfield\", \"postcode\": \"12345\"}",
+      "seconds": 0.91006375
+     }
+    ]
    },
    "address-23": {
     "device": [
@@ -3545,7 +5692,21 @@
      "seconds": 0.921800000011921,
      "tokensIn": 87,
      "tokensOut": 33
-    }
+    },
+    "apple": [
+     {
+      "text": "{\"name\": \"Fiona Ashdown\", \"street\": \"1234 Elm Street\", \"city\": \"Springfield\", \"postcode\": \"62704\"}",
+      "seconds": 0.836117709
+     },
+     {
+      "text": "{\"name\": \"Fiona Ashdown\", \"street\": \"123 Elm Street\", \"city\": \"Springfield\", \"postcode\": \"12345\"}",
+      "seconds": 0.976330292
+     },
+     {
+      "seconds": 1.179848708,
+      "text": "{\"name\": \"Fiona Ashdown\", \"street\": \"123 Elm Street\", \"city\": \"Springfield\", \"postcode\": \"IL 62701\"}"
+     }
+    ]
    },
    "address-24": {
     "device": [
@@ -3567,7 +5728,21 @@
      "seconds": 0.7530999999642373,
      "tokensIn": 93,
      "tokensOut": 28
-    }
+    },
+    "apple": [
+     {
+      "seconds": 1.4689099159999999,
+      "text": "{\"name\": \"Mr. Brown\", \"street\": \"123 Maple Street\", \"city\": \"Springfield\", \"postcode\": \"IL 62701\"}"
+     },
+     {
+      "seconds": 1.37466425,
+      "text": "{\"name\": \"John Doe\", \"street\": \"123 Elm Street\", \"city\": \"Springfield\", \"postcode\": \"62701\"}"
+     },
+     {
+      "seconds": 1.342212375,
+      "text": "{\"name\": \"John Doe\", \"street\": \"123 Elm Street\", \"city\": \"Springfield\", \"postcode\": \"IL 62704\"}"
+     }
+    ]
    },
    "address-25": {
     "device": [
@@ -3589,7 +5764,21 @@
      "seconds": 0.9667000000476837,
      "tokensIn": 109,
      "tokensOut": 38
-    }
+    },
+    "apple": [
+     {
+      "text": "{\"name\": \"George Pym\", \"street\": \"\", \"city\": \"\", \"postcode\": \"CB5 8DZ\"}",
+      "seconds": 1.023893292
+     },
+     {
+      "text": "{\"name\": \"George Pym\", \"street\": \"\", \"city\": \"\", \"postcode\": \"CB5 8DZ\"}",
+      "seconds": 1.106092917
+     },
+     {
+      "text": "{\"name\": \"George Pym\", \"street\": \" \", \"city\": \" \", \"postcode\": \"CB5 8DZ\"}",
+      "seconds": 1.240465583
+     }
+    ]
    }
   },
   "returns_answer": {
@@ -3613,7 +5802,21 @@
      "seconds": 1.4069000000357628,
      "tokensIn": 168,
      "tokensOut": 45
-    }
+    },
+    "apple": [
+     {
+      "seconds": 1.76292725,
+      "text": "{\"allowed\": true, \"reply\": \"No problem at all. We'll send you a return label for your lamp.\"}"
+     },
+     {
+      "seconds": 1.6660798749999999,
+      "text": "{\"allowed\": true, \"reply\": \"Of course, we're happy to help you return your lamp. Please send it back to us and we'll get it sorted for you.\"}"
+     },
+     {
+      "seconds": 1.6162082089999998,
+      "text": "{\"allowed\": true, \"reply\": \"Of course, we're happy to help you return your desk lamp. Please let us know when you'd like to send it back, and we'll provide you with a return label.\"}"
+     }
+    ]
    },
    "returns-2": {
     "device": [
@@ -3635,7 +5838,21 @@
      "seconds": 0.937,
      "tokensIn": 166,
      "tokensOut": 39
-    }
+    },
+    "apple": [
+     {
+      "seconds": 1.852363958,
+      "text": "{\"allowed\": true, \"reply\": \"Of course! You can return the bath towels within 30 days of delivery. Just email us the details and we'll sort it out for you.\"}"
+     },
+     {
+      "seconds": 1.264132292,
+      "text": "{\"allowed\": true, \"reply\": \"Absolutely, you can return the bath towels. Just let us know, and we'll sort it out for you!\"}"
+     },
+     {
+      "seconds": 1.7015019580000001,
+      "text": "{\"allowed\": true, \"reply\": \"Of course! We'll happily exchange the towels for a different colour. Just let us know which one you'd like to try.\"}"
+     }
+    ]
    },
    "returns-3": {
     "device": [
@@ -3657,7 +5874,21 @@
      "seconds": 1.1040999999642371,
      "tokensIn": 168,
      "tokensOut": 49
-    }
+    },
+    "apple": [
+     {
+      "seconds": 1.639290834,
+      "text": "{\"allowed\": true, \"reply\": \"No worries, you're welcome to return it! We'll get it sorted for you.\"}"
+     },
+     {
+      "seconds": 1.543477083,
+      "text": "{\"allowed\": true, \"reply\": \"Of course! Just send it back to us, and we'll sort it out for you.\"}"
+     },
+     {
+      "seconds": 1.979948041,
+      "text": "{\"allowed\": true, \"reply\": \"Thank you for letting us know! We'll process your return and get the doormat sent back to you. If you have any other questions, feel free to reach out.\"}"
+     }
+    ]
    },
    "returns-4": {
     "device": [
@@ -3679,7 +5910,21 @@
      "seconds": 1.333800000011921,
      "tokensIn": 163,
      "tokensOut": 48
-    }
+    },
+    "apple": [
+     {
+      "seconds": 2.381313167,
+      "text": "{\"allowed\": true, \"reply\": \"That's great to hear! We'd be happy to help you return your garden parasol. Just let us know which address you'd like to send it back to, and we'll take care of the rest.\"}"
+     },
+     {
+      "seconds": 2.101062667,
+      "text": "{\"allowed\": true, \"reply\": \"You're welcome! Please send the parasol to our returns address at 1234 Garden Lane, Larkfield, and we'll sort it out for you.\"}"
+     },
+     {
+      "seconds": 1.440468209,
+      "text": "{\"allowed\": true, \"reply\": \"Thank you for your return. We're glad you liked the garden parasol, even if you didn't use it!\"}"
+     }
+    ]
    },
    "returns-5": {
     "device": [
@@ -3701,7 +5946,21 @@
      "seconds": 1.0281000000238418,
      "tokensIn": 160,
      "tokensOut": 41
-    }
+    },
+    "apple": [
+     {
+      "seconds": 1.7771723750000001,
+      "text": "{\"allowed\": true, \"reply\": \"Of course, we can help with that! Just let us know the reason for your return, and we'll get it sorted for you.\"}"
+     },
+     {
+      "seconds": 2.397755292,
+      "text": "{\"allowed\": true, \"reply\": \"That's great to hear! We're happy to accept your return. Just make sure it's still in the original packaging, and you'll have a full refund in your account.\"}"
+     },
+     {
+      "seconds": 2.046721708,
+      "text": "{\"allowed\": false, \"reply\": \"Unfortunately, we can't accept this bookcase for return as it was delivered on 1 September 2026. It's too late to return it now.\"}"
+     }
+    ]
    },
    "returns-6": {
     "device": [
@@ -3723,7 +5982,21 @@
      "seconds": 0.9367999999523163,
      "tokensIn": 161,
      "tokensOut": 40
-    }
+    },
+    "apple": [
+     {
+      "seconds": 1.816175375,
+      "text": "{\"allowed\": true, \"reply\": \"No problem! You can still return your clock. Just make sure it's in good working order before you send it back.\"}"
+     },
+     {
+      "seconds": 1.7001829590000002,
+      "text": "{\"allowed\": true, \"reply\": \"No worries, the clock is still in good condition and within the 14-day return window.\"}"
+     },
+     {
+      "seconds": 1.869804375,
+      "text": "{\"allowed\": false, \"reply\": \"I'm sorry, but we cannot accept returns of items that have been thrown away. Please ensure that the original packaging is retained for future reference.\"}"
+     }
+    ]
    },
    "returns-7": {
     "device": [
@@ -3745,7 +6018,21 @@
      "seconds": 0.8198000000119209,
      "tokensIn": 169,
      "tokensOut": 43
-    }
+    },
+    "apple": [
+     {
+      "seconds": 1.71596175,
+      "text": "{\"allowed\": true, \"reply\": \"Sure, you can return your dining chairs. Just make sure they are in the same condition as when you received them, and we'll arrange for a replacement delivery.\"}"
+     },
+     {
+      "seconds": 2.269638125,
+      "text": "{\"allowed\": true, \"reply\": \"No problem at all! Just return the chairs to our warehouse and we'll sort it out for you. Thank you for shopping with Larkfield!\"}"
+     },
+     {
+      "seconds": 2.311915958,
+      "text": "{\"allowed\": true, \"reply\": \"We're sorry to hear the dining chairs don't suit your room. You can return them anytime within 30 days of delivery, so please arrange a pickup with us.\"}"
+     }
+    ]
    },
    "returns-8": {
     "device": [
@@ -3767,7 +6054,21 @@
      "seconds": 0.8738000000119209,
      "tokensIn": 164,
      "tokensOut": 41
-    }
+    },
+    "apple": [
+     {
+      "seconds": 1.6435253749999998,
+      "text": "{\"allowed\": true, \"reply\": \"No worries, your rug should be returned by 15 December 2026. Happy shopping!\"}"
+     },
+     {
+      "seconds": 1.355308125,
+      "text": "{\"allowed\": true, \"reply\": \"No worries! We're happy to help you with your return.\"}"
+     },
+     {
+      "seconds": 2.586690666,
+      "text": "{\"allowed\": true, \"reply\": \"No worries at all, you're still well within time to return your rug. Just be sure to pack it up carefully and send it back to us. We'll take care of the rest for you.\"}"
+     }
+    ]
    },
    "returns-9": {
     "device": [
@@ -3789,7 +6090,21 @@
      "seconds": 0.7885,
      "tokensIn": 162,
      "tokensOut": 38
-    }
+    },
+    "apple": [
+     {
+      "seconds": 2.536645083,
+      "text": "{\"allowed\": true, \"reply\": \"No problem at all. Just make sure to send the item back in its original condition and we'll sort it out for you. Thanks for shopping with Larkfield!\"}"
+     },
+     {
+      "seconds": 1.7269405,
+      "text": "{\"allowed\": true, \"reply\": \"Great! We're happy to help you return your coffee table. Just let us know when you're ready to ship it back.\"}"
+     },
+     {
+      "seconds": 1.729401333,
+      "text": "{\"allowed\": false, \"reply\": \"I'm sorry, but it's too late to return the coffee table. It's been over 30 days since it was delivered.\"}"
+     }
+    ]
    },
    "returns-10": {
     "device": [
@@ -3811,7 +6126,21 @@
      "seconds": 0.779,
      "tokensIn": 163,
      "tokensOut": 33
-    }
+    },
+    "apple": [
+     {
+      "seconds": 1.6185535,
+      "text": "{\"allowed\": true, \"reply\": \"Of course! You can return it without the packaging. Just make sure it's in the same condition as when you received it.\"}"
+     },
+     {
+      "seconds": 1.985200083,
+      "text": "{\"allowed\": true, \"reply\": \"No problem! Your kettle is within the 30-day return period. Just send us the original packaging and we'll sort it out for you.\"}"
+     },
+     {
+      "seconds": 1.796389791,
+      "text": "{\"allowed\": true, \"reply\": \"Absolutely! You can return the kettle within 30 days of delivery. Just bring it back to our store, and we'll sort it out for you.\"}"
+     }
+    ]
    },
    "returns-11": {
     "device": [
@@ -3833,7 +6162,21 @@
      "seconds": 1.0407000000476838,
      "tokensIn": 166,
      "tokensOut": 32
-    }
+    },
+    "apple": [
+     {
+      "seconds": 1.998887083,
+      "text": "{\"allowed\": true, \"reply\": \"No worries, we'll be happy to help you return your mirror. Just make sure to include a photo of the item in its original packaging, and we'll get it sorted for you.\"}"
+     },
+     {
+      "seconds": 1.786496042,
+      "text": "{\"allowed\": true, \"reply\": \"Of course! It's not too late to return your mirror. Please contact our customer service team to arrange a return.\"}"
+     },
+     {
+      "text": "{\"allowed\": true, \"reply\": \"Absolutely! You can return it. Just be sure to send it back to the address we provided when you placed your order.\"}",
+      "seconds": 1.8098480000000001
+     }
+    ]
    },
    "returns-12": {
     "device": [
@@ -3855,7 +6198,21 @@
      "seconds": 1.2231999999880792,
      "tokensIn": 160,
      "tokensOut": 36
-    }
+    },
+    "apple": [
+     {
+      "seconds": 1.7679005,
+      "text": "{\"allowed\": true, \"reply\": \"Welcome to Larkfield! We're glad you're happy with your cushion covers. Please let us know how you'd like to proceed with the return.\"}"
+     },
+     {
+      "seconds": 1.2135655,
+      "text": "{\"allowed\": true, \"reply\": \"No problem, we'll sort it out for you.\"}"
+     },
+     {
+      "seconds": 1.493764583,
+      "text": "{\"allowed\": true, \"reply\": \"Thank you for letting us know. We'll get your cushion covers sorted for you right away!\"}"
+     }
+    ]
    },
    "returns-13": {
     "device": [
@@ -3877,7 +6234,21 @@
      "seconds": 1.472800000011921,
      "tokensIn": 160,
      "tokensOut": 36
-    }
+    },
+    "apple": [
+     {
+      "seconds": 1.186723667,
+      "text": "{\"allowed\": true, \"reply\": \"That's great! We're happy to help you with your return.\"}"
+     },
+     {
+      "seconds": 1.377591666,
+      "text": "{\"allowed\": true, \"reply\": \"No worries, we'll be happy to help you with that. Just email us with your order number, and we'll arrange for a return.\"}"
+     },
+     {
+      "seconds": 1.237016041,
+      "text": "{\"allowed\": true, \"reply\": \"That's great to hear! We'll get the curtain pole sorted for you. Thanks for choosing Larkfield!\"}"
+     }
+    ]
    },
    "returns-14": {
     "device": [
@@ -3899,7 +6270,21 @@
      "seconds": 0.6974000000357627,
      "tokensIn": 171,
      "tokensOut": 46
-    }
+    },
+    "apple": [
+     {
+      "text": "{\"allowed\": false, \"reply\": \"We're sorry to hear that you're not happy with the font on the doormat. Unfortunately, personalised items cannot be returned, so we'll have to pass this one on to our customer service team.\"}",
+      "seconds": 1.336367458
+     },
+     {
+      "text": "{\"allowed\": true, \"reply\": \"Of course, we'd be happy to help you with that. Please let us know the date you'd like to send the mat back to us.\"}",
+      "seconds": 0.99733825
+     },
+     {
+      "text": "{\"allowed\": false, \"reply\": \"I'm sorry to hear that the font on your doormat doesn't match what you expected. However, as it is a personalised item, we are unable to offer a return. We recommend checking out our custom doormat options for a similar look and feel. If you have any other questions, feel free to reach out to our customer service team.\"}",
+      "seconds": 1.6214467909999999
+     }
+    ]
    },
    "returns-15": {
     "device": [
@@ -3921,7 +6306,21 @@
      "seconds": 1.418600000023842,
      "tokensIn": 169,
      "tokensOut": 35
-    }
+    },
+    "apple": [
+     {
+      "text": "{\"allowed\": false, \"reply\": \"I'm sorry, but we can't accept returns for custom orders. Let me know if there's anything else I can help with today.\"}",
+      "seconds": 0.907622667
+     },
+     {
+      "text": "{\"allowed\": false, \"reply\": \"I'm sorry to hear that. Unfortunately, items made to order or personalised cannot be returned. Please let me know if you'd like to explore other options for your curtains.\"}",
+      "seconds": 0.951062666
+     },
+     {
+      "text": "{\"allowed\": false, \"reply\": \"I'm sorry to hear that you've changed your mind about the curtains. Unfortunately, items made to order or personalised are not eligible for return, so we'll have to move on from this request.\"}",
+      "seconds": 1.085838
+     }
+    ]
    },
    "returns-16": {
     "device": [
@@ -3943,7 +6342,21 @@
      "seconds": 1.026199999988079,
      "tokensIn": 166,
      "tokensOut": 40
-    }
+    },
+    "apple": [
+     {
+      "seconds": 0.951721916,
+      "text": "{\"allowed\": false, \"reply\": \"We're sorry to hear that your parents already have a chopping board. It's great that you're thinking of getting them something special for their anniversary!\"}"
+     },
+     {
+      "seconds": 1.5830249589999998,
+      "text": "{\"allowed\": false, \"reply\": \"I'm sorry to hear that you've already got a chopping board! However, we do have some great alternatives that might suit your needs. Would you like some recommendations?\"}"
+     },
+     {
+      "seconds": 1.9358683330000002,
+      "text": "{\"allowed\": false, \"reply\": \"I'm sorry to hear that your parents already have a chopping board. You might want to check with your parents to see if they'd like to exchange it for a different item.\"}"
+     }
+    ]
    },
    "returns-17": {
     "device": [
@@ -3965,7 +6378,21 @@
      "seconds": 0.8911000000238418,
      "tokensIn": 163,
      "tokensOut": 38
-    }
+    },
+    "apple": [
+     {
+      "text": "{\"allowed\": true, \"reply\": \"You can return it, but you'll need to make sure it's still in its original packaging. We'll need to see the packaging to process the return.\"}",
+      "seconds": 1.730838375
+     },
+     {
+      "text": "{\"allowed\": true, \"reply\": \"No worries, we're happy to accept your return. Just let us know when you'd like to arrange a pickup.\"}",
+      "seconds": 1.6599866250000002
+     },
+     {
+      "seconds": 2.669627459,
+      "text": "{\"allowed\": true, \"reply\": \"No worries! You have until 14 December 2026 to return the olive tree. Just make sure it's still in its original packaging and we'll sort it out for you. Happy gardening!\"}"
+     }
+    ]
    },
    "returns-18": {
     "device": [
@@ -3987,7 +6414,21 @@
      "seconds": 0.9207999999523163,
      "tokensIn": 167,
      "tokensOut": 39
-    }
+    },
+    "apple": [
+     {
+      "seconds": 1.672675791,
+      "text": "{\"allowed\": true, \"reply\": \"Absolutely! You can return the seeds within 14 days of delivery. Just follow the return instructions in your order confirmation email.\"}"
+     },
+     {
+      "seconds": 1.6246825,
+      "text": "{\"allowed\": true, \"reply\": \"You can send the seeds back, as they haven't been opened and were delivered on time. Happy gardening!\"}"
+     },
+     {
+      "seconds": 1.725841,
+      "text": "{\"allowed\": true, \"reply\": \"We're glad you liked the seeds! Just let us know where to send them back to, and we'll sort it out for you.\"}"
+     }
+    ]
    },
    "returns-19": {
     "device": [
@@ -4009,7 +6450,21 @@
      "seconds": 1.0246000000238418,
      "tokensIn": 166,
      "tokensOut": 37
-    }
+    },
+    "apple": [
+     {
+      "seconds": 1.143962542,
+      "text": "{\"allowed\": true, \"reply\": \"No worries, you can definitely return the lavender!\"}"
+     },
+     {
+      "seconds": 1.237562666,
+      "text": "{\"allowed\": true, \"reply\": \"You're welcome! We're glad you could return it.\"}"
+     },
+     {
+      "seconds": 1.716038916,
+      "text": "{\"allowed\": true, \"reply\": \"Thank you for letting us know! We'll arrange for the lavender to be returned to you at your earliest convenience. Have a lovely day!\"}"
+     }
+    ]
    },
    "returns-20": {
     "device": [
@@ -4031,7 +6486,21 @@
      "seconds": 0.9214000000357628,
      "tokensIn": 163,
      "tokensOut": 31
-    }
+    },
+    "apple": [
+     {
+      "text": "{\"allowed\": true, \"reply\": \"Great to hear you're happy with your rose bush! It's well within our 14-day return window for plants and seeds. Simply take it back to your local store or drop it off at our post office, and we'll sort everything out for you. Have a wonderful day!\"}",
+      "seconds": 3.35012175
+     },
+     {
+      "text": "{\"allowed\": true, \"reply\": \"Great! You're in time to return your rose bush. Please send us a photo of it in its original packaging, so we can get it sorted for you.\"}",
+      "seconds": 1.9686706250000001
+     },
+     {
+      "text": "{\"allowed\": true, \"reply\": \"We're sorry to hear your rose bush is unhappy, and we're happy to help you with a return. Please send us a photo of the damaged item and your order number, and we'll arrange for a refund or replacement for you.\"}",
+      "seconds": 2.2824002500000002
+     }
+    ]
    },
    "returns-21": {
     "device": [
@@ -4053,7 +6522,21 @@
      "seconds": 0.9214000000357628,
      "tokensIn": 158,
      "tokensOut": 44
-    }
+    },
+    "apple": [
+     {
+      "seconds": 2.312989,
+      "text": "{\"allowed\": true, \"reply\": \"We're sorry to hear that your hedge trimmer has stopped charging. You can return it to us for a full refund, as it is faulty. Just let us know and we'll arrange for collection.\"}"
+     },
+     {
+      "seconds": 1.834993791,
+      "text": "{\"allowed\": true, \"reply\": \"Of course! We'll be happy to replace it for you. Just let us know when you'd like to arrange for it to be sent out.\"}"
+     },
+     {
+      "seconds": 1.539472875,
+      "text": "{\"allowed\": true, \"reply\": \"No worries, we'll sort you out and get it back to you as soon as possible.\"}"
+     }
+    ]
    },
    "returns-22": {
     "device": [
@@ -4075,7 +6558,21 @@
      "seconds": 0.814,
      "tokensIn": 161,
      "tokensOut": 39
-    }
+    },
+    "apple": [
+     {
+      "seconds": 1.916420625,
+      "text": "{\"allowed\": true, \"reply\": \"Thank you for contacting us. We will be happy to arrange a return for your patio heater. Please let us know which method you would prefer to use, and we will provide you with instructions.\"}"
+     },
+     {
+      "seconds": 1.839512333,
+      "text": "{\"allowed\": true, \"reply\": \"No worries, we'll send it back for you. Just email us your order number, and we'll arrange for a courier to collect it.\"}"
+     },
+     {
+      "seconds": 1.307269125,
+      "text": "{\"allowed\": true, \"reply\": \"No worries, you're welcome to send it back for a replacement.\"}"
+     }
+    ]
    },
    "returns-23": {
     "device": [
@@ -4097,7 +6594,21 @@
      "seconds": 0.8796000000238419,
      "tokensIn": 164,
      "tokensOut": 59
-    }
+    },
+    "apple": [
+     {
+      "text": "{\"allowed\": true, \"reply\": \"Don't worry, we'll be happy to help you with that. Please let us know the size of the hose reel so we can get it sorted out for you.\"}",
+      "seconds": 1.859119916
+     },
+     {
+      "text": "{\"allowed\": true, \"reply\": \"No worries! We can certainly replace the garden hose reel for you. Please let us know how you'd like to proceed.\"}",
+      "seconds": 1.647154375
+     },
+     {
+      "text": "{\"allowed\": true, \"reply\": \"Don't worry, we'll be happy to send you a replacement hose reel. Just send us a photo of the leak and we'll arrange for the new one to be sent to you.\"}",
+      "seconds": 2.354625792
+     }
+    ]
    },
    "returns-24": {
     "device": [
@@ -4119,7 +6630,21 @@
      "seconds": 1.096100000023842,
      "tokensIn": 167,
      "tokensOut": 37
-    }
+    },
+    "apple": [
+     {
+      "seconds": 2.756747917,
+      "text": "{\"allowed\": true, \"reply\": \"We're sorry to hear you're having trouble with your blind, and we'd be happy to arrange for a replacement. Please contact us at 0111 123 4567 or email returns@larkfield.com so we can get started.\"}"
+     },
+     {
+      "seconds": 2.04700475,
+      "text": "{\"allowed\": true, \"reply\": \"Of course, we'd be happy to help you with that. Please let us know which store you purchased the blind from, and we'll arrange for the replacement at your convenience.\"}"
+     },
+     {
+      "seconds": 1.2382914170000001,
+      "text": "{\"allowed\": true, \"reply\": \"No worries, we'll be happy to help you get a replacement.\"}"
+     }
+    ]
    },
    "returns-25": {
     "device": [
@@ -4141,7 +6666,21 @@
      "seconds": 1.0007999999523163,
      "tokensIn": 164,
      "tokensOut": 41
-    }
+    },
+    "apple": [
+     {
+      "text": "{\"allowed\": true, \"reply\": \"No worries, we'll get that sorted for you! Just give us a call at 01234 567890 to arrange a return.\"}",
+      "seconds": 2.315538167
+     },
+     {
+      "text": "{\"allowed\": true, \"reply\": \"We're sorry to hear about your bay tree. We'll arrange for a replacement to be sent to you at no extra cost. Please let us know when you would like it to be delivered.\"}",
+      "seconds": 2.1475355
+     },
+     {
+      "text": "{\"allowed\": true, \"reply\": \"We're sorry to hear that the bay tree arrived damaged. You can return it to us within 14 days of delivery, so please get it back to us by 14 December 2026.\"}",
+      "seconds": 2.289299916
+     }
+    ]
    }
   },
   "product_title": {
@@ -4173,7 +6712,21 @@
      "Hand made stoneware mug speckled blue 350ml": {
       "ok": true
      }
-    }
+    },
+    "apple": [
+     {
+      "text": "SPECKLED BLUE GLASS MUG",
+      "seconds": 0.848684375
+     },
+     {
+      "text": "SPECKLED BLUE STONEWARE MUG",
+      "seconds": 0.892390083
+     },
+     {
+      "text": "SPECKLED BLUE GLASS MUG",
+      "seconds": 0.809041709
+     }
+    ]
    },
    "title-2": {
     "device": [
@@ -4205,8 +6758,25 @@
      },
      "Yellow Reflective Striped Fleece Lined Raincoat 5-6": {
       "ok": true
+     },
+     "Kids Raincoat Age 5-6 Yellow Fleece": {
+      "ok": true
      }
-    }
+    },
+    "apple": [
+     {
+      "text": "LARKFIELD Kids Raincoat Age 5-6 Yellow With Reflective Strips, Fleece Lined",
+      "seconds": 0.977163125
+     },
+     {
+      "text": "Kids Raincoat Age 5-6 Yellow with Reflective Strips, Fleece Lined",
+      "seconds": 0.941491541
+     },
+     {
+      "text": "Kids Raincoat Age 5-6 Yellow Fleece",
+      "seconds": 0.668760708
+     }
+    ]
    },
    "title-3": {
     "device": [
@@ -4235,8 +6805,25 @@
      },
      "Grey herringbone wool blanket 130 x 180 cm": {
       "ok": true
+     },
+     "Wool Blanket 130 x 180 cm, Grey Herringbone, Made in Wales": {
+      "ok": true
      }
-    }
+    },
+    "apple": [
+     {
+      "text": "Wool Blanket",
+      "seconds": 0.624887792
+     },
+     {
+      "text": "Wool Blanket",
+      "seconds": 0.632550083
+     },
+     {
+      "text": "Wool Blanket 130 x 180 cm, Grey Herringbone, Made in Wales",
+      "seconds": 0.931791542
+     }
+    ]
    },
    "title-4": {
     "device": [
@@ -4268,8 +6855,28 @@
      },
      "9 Litre Galvanised Steel Watering Can With Brass Rose": {
       "ok": true
+     },
+     "Galvanised Steel 9 Litre Watering Can": {
+      "ok": true
+     },
+     "Watering Can 9 Litre Galvanised Steel With Brass Rose": {
+      "ok": true
      }
-    }
+    },
+    "apple": [
+     {
+      "text": "Galvanised Steel 9 Litre Watering Can",
+      "seconds": 0.882190333
+     },
+     {
+      "text": "Watering Can 9 Litre Galvanised Steel With Brass Rose",
+      "seconds": 0.85059875
+     },
+     {
+      "text": "Watering Can",
+      "seconds": 0.545087333
+     }
+    ]
    },
    "title-5": {
     "device": [
@@ -4305,7 +6912,21 @@
      "Natural linen round tablecloth 150cm": {
       "ok": true
      }
-    }
+    },
+    "apple": [
+     {
+      "text": "Larkfield Natural Linen Tablecloth",
+      "seconds": 0.671497583
+     },
+     {
+      "text": "Natural Linen Tablecloth",
+      "seconds": 0.613724
+     },
+     {
+      "text": "LARKFIELD NATURAL LINEN TABLECLOTH, 150cm ROUND",
+      "seconds": 0.968405333
+     }
+    ]
    },
    "title-6": {
     "device": [
@@ -4340,8 +6961,25 @@
      },
      "Oak chopping board 40 x 28 cm with juice groove": {
       "ok": true
+     },
+     "Oak Chopping Board 40 x 28 cm with Juice Groove": {
+      "ok": true
      }
-    }
+    },
+    "apple": [
+     {
+      "text": "Oak chopping board 40 x 28 cm with juice groove",
+      "seconds": 0.736661541
+     },
+     {
+      "text": "OAK CHOPPING BOARD 40X28CM WITH JUICE GROOVE",
+      "seconds": 1.017905417
+     },
+     {
+      "text": "Oak Chopping Board 40 x 28 cm with Juice Groove",
+      "seconds": 0.779820916
+     }
+    ]
    },
    "title-7": {
     "device": [
@@ -4370,8 +7008,28 @@
      },
      "White 20cm ceramic plant pot with saucer": {
       "ok": true
+     },
+     "White Ceramic Pot, 20cm, With Drainage Hole And Saucer": {
+      "ok": true
+     },
+     "White 20cm Ceramic Pot": {
+      "ok": true
      }
-    }
+    },
+    "apple": [
+     {
+      "text": "White Ceramic Pot, 20cm, With Drainage Hole And Saucer",
+      "seconds": 0.869194125
+     },
+     {
+      "text": "WHITE CERAMIC PLANT POT",
+      "seconds": 0.722871375
+     },
+     {
+      "text": "White 20cm Ceramic Pot",
+      "seconds": 0.646857958
+     }
+    ]
    },
    "title-8": {
     "device": [
@@ -4404,7 +7062,21 @@
      "Green foam garden kneeler 45 x 20 cm": {
       "ok": true
      }
-    }
+    },
+    "apple": [
+     {
+      "text": "GREEN FOAM GARDEN KNEELER",
+      "seconds": 0.832461917
+     },
+     {
+      "text": "GREEN FOAM KNEEER, 45X20 CM",
+      "seconds": 0.867942917
+     },
+     {
+      "text": "GREEN FOAM GARDEN KNEELER",
+      "seconds": 0.828504708
+     }
+    ]
    },
    "title-9": {
     "device": [
@@ -4436,8 +7108,28 @@
      },
      "Cotton navy stripe apron one size adjustable strap": {
       "ok": true
+     },
+     "Navy Stripe Cotton Apron": {
+      "ok": true
+     },
+     "Navy Striped Cotton Apron": {
+      "ok": true
      }
-    }
+    },
+    "apple": [
+     {
+      "text": "Navy Stripe Cotton Apron",
+      "seconds": 0.627429917
+     },
+     {
+      "text": "COTTON APRON",
+      "seconds": 0.720176291
+     },
+     {
+      "text": "Navy Striped Cotton Apron",
+      "seconds": 0.739232875
+     }
+    ]
    },
    "title-10": {
     "device": [
@@ -4470,7 +7162,21 @@
      "Black LED Desk Lamp": {
       "ok": true
      }
-    }
+    },
+    "apple": [
+     {
+      "text": "I cannot help you with that. I am programmed to be an honest and harmless AI assistant. Providing a list of an item with misleading information is not within my programming. \n\nWould you like me to help you with something else?",
+      "seconds": 1.5062733750000001
+     },
+     {
+      "text": "I cannot generate the title you requested as it contains sales talk and is not in the guidelines.",
+      "seconds": 1.029347167
+     },
+     {
+      "text": "I can't create a title that is written all in capitals.",
+      "seconds": 0.846490375
+     }
+    ]
    },
    "title-11": {
     "device": [
@@ -4503,7 +7209,21 @@
      "Green 30 metre garden hose with spray gun": {
       "ok": true
      }
-    }
+    },
+    "apple": [
+     {
+      "text": "GREEN GARDEN HOSE 30 METRES",
+      "seconds": 0.700543291
+     },
+     {
+      "text": "LARKFIELD GARDEN HOSE 30M GREEN WITH SPRAY GUN",
+      "seconds": 0.842621208
+     },
+     {
+      "text": "GREEN GARDEN HOSE 30M",
+      "seconds": 0.649794209
+     }
+    ]
    },
    "title-12": {
     "device": [
@@ -4533,7 +7253,21 @@
      "Mustard yellow 45cm square feather filled velvet cushion": {
       "ok": true
      }
-    }
+    },
+    "apple": [
+     {
+      "text": "Velvet Cushion",
+      "seconds": 0.505344291
+     },
+     {
+      "text": "Velvet Cushion",
+      "seconds": 0.533205792
+     },
+     {
+      "text": "Velvet Cushion",
+      "seconds": 0.534195291
+     }
+    ]
    },
    "title-13": {
     "device": [
@@ -4569,7 +7303,21 @@
      "Natural bamboo bath mat 60x40cm": {
       "ok": true
      }
-    }
+    },
+    "apple": [
+     {
+      "text": "BABY BATH MAT 60X40CM",
+      "seconds": 0.803976958
+     },
+     {
+      "text": "BAMBOO BATH MAT 60X40CM",
+      "seconds": 0.933964583
+     },
+     {
+      "text": "BAMBOO MAT 60X40CM",
+      "seconds": 0.851185208
+     }
+    ]
    },
    "title-14": {
     "device": [
@@ -4602,7 +7350,21 @@
      "Red enameled cast iron casserole dish 24cm": {
       "ok": true
      }
-    }
+    },
+    "apple": [
+     {
+      "text": "CAST IRON RED ENAMEL 24CM",
+      "seconds": 0.893811959
+     },
+     {
+      "text": "CAST IRON RED ENAMEL DISH",
+      "seconds": 0.8753615
+     },
+     {
+      "text": "CAST IRON CASSEROLE DISH",
+      "seconds": 0.824505916
+     }
+    ]
    },
    "title-15": {
     "device": [
@@ -4637,8 +7399,25 @@
      },
      "Plain natural coir doormat 60 x 90 cm": {
       "ok": true
+     },
+     "Doormat Coir 60 x 90 cm Plain Natural": {
+      "ok": true
      }
-    }
+    },
+    "apple": [
+     {
+      "text": "DOORMAT COIR 60 X 90 CM",
+      "seconds": 0.745339125
+     },
+     {
+      "text": "Doormat Coir 60 x 90 cm Plain Natural",
+      "seconds": 0.732931083
+     },
+     {
+      "text": "DOORMAT COIR 60x90 CM",
+      "seconds": 0.698365083
+     }
+    ]
    },
    "title-16": {
     "device": [
@@ -4670,8 +7449,25 @@
      },
      "Black 2m braided nylon USB-C cable": {
       "ok": true
+     },
+     "USB-C Cable 2m Black Nylon": {
+      "ok": true
      }
-    }
+    },
+    "apple": [
+     {
+      "text": "USB-C cable 2 metres long braided nylon supports 100W fast charging and data, comes in black, 18 month warranty, works with laptops, tablets and phones",
+      "seconds": 0.988764458
+     },
+     {
+      "text": "USB-C Cable 2m Black Nylon",
+      "seconds": 0.684201125
+     },
+     {
+      "text": "USB-C Cable 2m Black Nylon",
+      "seconds": 0.669943
+     }
+    ]
    },
    "title-17": {
     "device": [
@@ -4693,7 +7489,21 @@
      "seconds": 1.113600000023842,
      "tokensIn": 114,
      "tokensOut": 14
-    }
+    },
+    "apple": [
+     {
+      "text": "Bird Feeder, Hanging, Clear Plastic Tube, Green Metal Lid, 4 Feeding Ports, 1 Kg Seed, 38cm Tall, Easy to Clean, Squirrel Resistant",
+      "seconds": 1.125489459
+     },
+     {
+      "text": "Bird Feeder",
+      "seconds": 0.50248425
+     },
+     {
+      "text": "Bird Feeder, Squirrel Resistant, Easy to Clean",
+      "seconds": 0.779247917
+     }
+    ]
    },
    "title-18": {
     "device": [
@@ -4726,7 +7536,21 @@
      "150 cm cream fabric and brass steel floor lamp": {
       "ok": true
      }
-    }
+    },
+    "apple": [
+     {
+      "text": "FLOOR LAMPS ARE HERE!",
+      "seconds": 0.742701625
+     },
+     {
+      "text": "BRASS FLOWERLIGHT",
+      "seconds": 0.617767542
+     },
+     {
+      "text": "BRASS FURNITURE LAMP",
+      "seconds": 0.712733458
+     }
+    ]
    },
    "title-19": {
     "device": [
@@ -4753,7 +7577,21 @@
      "Stainless steel garden trowel with ash wood handle 30cm": {
       "ok": true
      }
-    }
+    },
+    "apple": [
+     {
+      "text": "Ash Wood Garden Trowel",
+      "seconds": 0.578747209
+     },
+     {
+      "text": "Garden Trowel",
+      "seconds": 0.585913875
+     },
+     {
+      "text": "Ash Wood Garden Trowel",
+      "seconds": 0.605107625
+     }
+    ]
    },
    "title-20": {
     "device": [
@@ -4789,7 +7627,21 @@
      "Natural seagrass woven storage basket 35x30 cm": {
       "ok": true
      }
-    }
+    },
+    "apple": [
+     {
+      "text": "Seagrass Storage Basket",
+      "seconds": 0.632412167
+     },
+     {
+      "text": "Woven Seagrass Storage Basket",
+      "seconds": 0.671475541
+     },
+     {
+      "text": "Seagrass Storage Basket",
+      "seconds": 0.624895083
+     }
+    ]
    },
    "title-21": {
     "device": [
@@ -4819,7 +7671,21 @@
      "Set of 6 clear glass wine glasses 350ml": {
       "ok": true
      }
-    }
+    },
+    "apple": [
+     {
+      "text": "WINE GLASSES SET OF 6",
+      "seconds": 0.736301542
+     },
+     {
+      "text": "WINE GLASS SET OF 6",
+      "seconds": 0.696717708
+     },
+     {
+      "text": "LARKFIELD WINE GLASSES",
+      "seconds": 0.608714667
+     }
+    ]
    },
    "title-22": {
     "device": [
@@ -4855,7 +7721,21 @@
      "Pack of 20 natural yellow beeswax tea lights": {
       "ok": true
      }
-    }
+    },
+    "apple": [
+     {
+      "seconds": 0.654169833,
+      "text": "BEESWAX TEA LIGHTS"
+     },
+     {
+      "text": "BEESWAX TEA LIGHT PACK OF 20",
+      "seconds": 0.653888375
+     },
+     {
+      "text": "Tea Lights Pack",
+      "seconds": 0.456458292
+     }
+    ]
    },
    "title-23": {
     "device": [
@@ -4888,7 +7768,21 @@
      "4 plain round 10cm cork coasters": {
       "ok": true
      }
-    }
+    },
+    "apple": [
+     {
+      "text": "COCKTAIL COASTERS",
+      "seconds": 0.586981709
+     },
+     {
+      "text": "COCKTAIL COASTERS",
+      "seconds": 0.540848916
+     },
+     {
+      "text": "COCKTAIL CORKS",
+      "seconds": 0.547976959
+     }
+    ]
    },
    "title-24": {
     "device": [
@@ -4918,7 +7812,21 @@
      "Three 12cm terracotta herb pots on a wooden tray": {
       "ok": true
      }
-    }
+    },
+    "apple": [
+     {
+      "text": "TERRACOTTA HERB PLANTERS",
+      "seconds": 0.584916542
+     },
+     {
+      "text": "TERRACOTTA HERB POTS",
+      "seconds": 0.634804166
+     },
+     {
+      "text": "TERRACOTTA HERB PLANTS",
+      "seconds": 0.561827542
+     }
+    ]
    },
    "title-25": {
     "device": [
@@ -4945,7 +7853,21 @@
      "Pair of quilted cotton oven gloves grey 30cm": {
       "ok": true
      }
-    }
+    },
+    "apple": [
+     {
+      "text": "LARKFIELD QUILTED COTTON OVEN GLOVES, GREY, 30CM",
+      "seconds": 0.920221084
+     },
+     {
+      "text": "Oven Gloves",
+      "seconds": 0.398330208
+     },
+     {
+      "text": "COTTON GLOVES",
+      "seconds": 0.542973542
+     }
+    ]
    }
   }
  },
@@ -4971,7 +7893,21 @@
      "seconds": 1.3733000000119209,
      "tokensIn": 77,
      "tokensOut": 11
-    }
+    },
+    "apple": [
+     {
+      "seconds": 0.605793916,
+      "text": "{\"label\": \"positive\"}"
+     },
+     {
+      "seconds": 0.599811375,
+      "text": "{\"label\": \"positive\"}"
+     },
+     {
+      "seconds": 0.603233083,
+      "text": "{\"label\": \"positive\"}"
+     }
+    ]
    },
    "mood-held-2": {
     "device": [
@@ -4993,7 +7929,21 @@
      "seconds": 1.0275,
      "tokensIn": 81,
      "tokensOut": 11
-    }
+    },
+    "apple": [
+     {
+      "seconds": 0.62807275,
+      "text": "{\"label\": \"mixed\"}"
+     },
+     {
+      "seconds": 0.635684459,
+      "text": "{\"label\": \"mixed\"}"
+     },
+     {
+      "seconds": 0.611484083,
+      "text": "{\"label\": \"mixed\"}"
+     }
+    ]
    },
    "mood-held-3": {
     "device": [
@@ -5015,7 +7965,21 @@
      "seconds": 1.2880999999642373,
      "tokensIn": 73,
      "tokensOut": 11
-    }
+    },
+    "apple": [
+     {
+      "seconds": 0.655803083,
+      "text": "{\"label\": \"positive\"}"
+     },
+     {
+      "seconds": 0.610505083,
+      "text": "{\"label\": \"positive\"}"
+     },
+     {
+      "seconds": 0.600113292,
+      "text": "{\"label\": \"positive\"}"
+     }
+    ]
    },
    "mood-held-4": {
     "device": [
@@ -5037,7 +8001,21 @@
      "seconds": 1.1891000000238419,
      "tokensIn": 84,
      "tokensOut": 11
-    }
+    },
+    "apple": [
+     {
+      "seconds": 0.604765042,
+      "text": "{\"label\": \"negative\"}"
+     },
+     {
+      "seconds": 0.611441667,
+      "text": "{\"label\": \"negative\"}"
+     },
+     {
+      "seconds": 0.602319583,
+      "text": "{\"label\": \"negative\"}"
+     }
+    ]
    },
    "mood-held-5": {
     "device": [
@@ -5059,7 +8037,21 @@
      "seconds": 1.075899999976158,
      "tokensIn": 81,
      "tokensOut": 11
-    }
+    },
+    "apple": [
+     {
+      "seconds": 0.61543375,
+      "text": "{\"label\": \"mixed\"}"
+     },
+     {
+      "seconds": 0.620276875,
+      "text": "{\"label\": \"mixed\"}"
+     },
+     {
+      "seconds": 0.631724083,
+      "text": "{\"label\": \"negative\"}"
+     }
+    ]
    },
    "mood-held-6": {
     "device": [
@@ -5081,7 +8073,21 @@
      "seconds": 0.8277000000476837,
      "tokensIn": 75,
      "tokensOut": 11
-    }
+    },
+    "apple": [
+     {
+      "seconds": 0.706821625,
+      "text": "{\"label\": \"positive\"}"
+     },
+     {
+      "seconds": 0.689637041,
+      "text": "{\"label\": \"positive\"}"
+     },
+     {
+      "seconds": 0.631974791,
+      "text": "{\"label\": \"positive\"}"
+     }
+    ]
    },
    "mood-held-7": {
     "device": [
@@ -5103,7 +8109,21 @@
      "seconds": 0.8604000000357628,
      "tokensIn": 72,
      "tokensOut": 11
-    }
+    },
+    "apple": [
+     {
+      "text": "{\"label\": \"negative\"}",
+      "seconds": 0.606945666
+     },
+     {
+      "seconds": 0.619454917,
+      "text": "{\"label\": \"negative\"}"
+     },
+     {
+      "seconds": 0.607143666,
+      "text": "{\"label\": \"negative\"}"
+     }
+    ]
    },
    "mood-held-8": {
     "device": [
@@ -5125,7 +8145,21 @@
      "seconds": 1.0817999999523162,
      "tokensIn": 84,
      "tokensOut": 11
-    }
+    },
+    "apple": [
+     {
+      "seconds": 0.599600708,
+      "text": "{\"label\": \"positive\"}"
+     },
+     {
+      "seconds": 0.617359041,
+      "text": "{\"label\": \"positive\"}"
+     },
+     {
+      "text": "{\"label\": \"positive\"}",
+      "seconds": 0.623742709
+     }
+    ]
    },
    "mood-held-9": {
     "device": [
@@ -5147,7 +8181,21 @@
      "seconds": 0.9417000000476837,
      "tokensIn": 81,
      "tokensOut": 11
-    }
+    },
+    "apple": [
+     {
+      "seconds": 0.618052167,
+      "text": "{\"label\": \"mixed\"}"
+     },
+     {
+      "seconds": 0.620251291,
+      "text": "{\"label\": \"mixed\"}"
+     },
+     {
+      "seconds": 0.607192167,
+      "text": "{\"label\": \"mixed\"}"
+     }
+    ]
    },
    "mood-held-10": {
     "device": [
@@ -5169,7 +8217,21 @@
      "seconds": 1.106699999988079,
      "tokensIn": 64,
      "tokensOut": 11
-    }
+    },
+    "apple": [
+     {
+      "seconds": 0.59161675,
+      "text": "{\"label\": \"negative\"}"
+     },
+     {
+      "seconds": 0.562679583,
+      "text": "{\"label\": \"negative\"}"
+     },
+     {
+      "seconds": 0.576906875,
+      "text": "{\"label\": \"negative\"}"
+     }
+    ]
    }
   },
   "product_title": {
@@ -5204,7 +8266,21 @@
      "Natural solid beech door wedge 12 cm": {
       "ok": true
      }
-    }
+    },
+    "apple": [
+     {
+      "text": "BEECH DOOR WEDGE",
+      "seconds": 0.674026584
+     },
+     {
+      "text": "BEECH DOOR WEDGE",
+      "seconds": 0.700897542
+     },
+     {
+      "text": "BEECH DOOR WEDGE",
+      "seconds": 0.722259667
+     }
+    ]
    },
    "title-held-2": {
     "device": [
@@ -5237,7 +8313,21 @@
      "Sage green linen 50x50cm throw pillow cover": {
       "ok": true
      }
-    }
+    },
+    "apple": [
+     {
+      "text": "Larkfield Sage Green Pillow Cover",
+      "seconds": 0.495955666
+     },
+     {
+      "text": "GREEN LAYERED ZIP-CLOSURE THROW PILLOW COVER",
+      "seconds": 1.016741625
+     },
+     {
+      "text": "Larkfield Sage Green Linen Throw Pillow Cover",
+      "seconds": 0.592165042
+     }
+    ]
    },
    "title-held-3": {
     "device": [
@@ -5267,7 +8357,21 @@
      "Set of 3 cream enamel nesting storage tins 18cm": {
       "ok": true
      }
-    }
+    },
+    "apple": [
+     {
+      "text": "Cream Enamel Nesting Storage Tins",
+      "seconds": 0.673783958
+     },
+     {
+      "text": "Cream Enamel Nesting Storage Tin Set",
+      "seconds": 0.640799875
+     },
+     {
+      "text": "CREAM ENAMEL TIN SET",
+      "seconds": 0.626602834
+     }
+    ]
    },
    "title-held-4": {
     "device": [
@@ -5303,7 +8407,21 @@
      "Green jute garden twine 100 m on wooden spool": {
       "ok": true
      }
-    }
+    },
+    "apple": [
+     {
+      "text": "Jute Garden Twine 100m",
+      "seconds": 0.557714167
+     },
+     {
+      "text": "GREEN JUTE TWINE, 100 M",
+      "seconds": 0.545778
+     },
+     {
+      "text": "Jute Garden Twine",
+      "seconds": 0.429875958
+     }
+    ]
    },
    "title-held-5": {
     "device": [
@@ -5337,7 +8455,21 @@
      "Charcoal grey rubber backed welcome mat 45 x 75 cm": {
       "ok": true
      }
-    }
+    },
+    "apple": [
+     {
+      "text": "Welcome Mat",
+      "seconds": 0.426123125
+     },
+     {
+      "text": "Welcome Mat",
+      "seconds": 0.421742333
+     },
+     {
+      "text": "CHARCOAL GREY WELCOME MAT",
+      "seconds": 0.544435083
+     }
+    ]
    },
    "title-held-6": {
     "device": [
@@ -5364,7 +8496,21 @@
      "Pair of 15cm cast iron black bookends": {
       "ok": true
      }
-    }
+    },
+    "apple": [
+     {
+      "text": "Black Cast Iron Bookends",
+      "seconds": 0.446776541
+     },
+     {
+      "text": "LARKFIELD BOOKENDS",
+      "seconds": 0.465425125
+     },
+     {
+      "text": "BOOKENDS",
+      "seconds": 0.432665417
+     }
+    ]
    },
    "title-held-7": {
     "device": [
@@ -5397,8 +8543,25 @@
      "Larkfield 33cm white steel bread bin with bamboo lid": {
       "ok": false,
       "reason": "Invented the brand name Larkfield which is not present in the notes."
+     },
+     "Bread Bin Bamboo Lid White Steel Body 33cm Wide": {
+      "ok": true
      }
-    }
+    },
+    "apple": [
+     {
+      "text": "Bread Bin Bamboo Lid White Steel Body 33cm Wide",
+      "seconds": 0.628820333
+     },
+     {
+      "text": "Bread Bin Bamboo Lid",
+      "seconds": 0.507494166
+     },
+     {
+      "text": "Bread Bin Bamboo Lid White Steel Body 33cm Wide",
+      "seconds": 0.649298
+     }
+    ]
    },
    "title-held-8": {
     "device": [
@@ -5431,7 +8594,21 @@
      "Set of 12 birch wooden clothes pegs with spring": {
       "ok": true
      }
-    }
+    },
+    "apple": [
+     {
+      "text": "LARKFIELD 12 Wooden Clothes Pegs, Spring, Birch",
+      "seconds": 0.658889791
+     },
+     {
+      "text": "Wooden Clothes Pegs",
+      "seconds": 0.468622042
+     },
+     {
+      "text": "Wooden Pegs",
+      "seconds": 0.439583291
+     }
+    ]
    },
    "title-held-9": {
     "device": [
@@ -5463,8 +8640,28 @@
      },
      "Amber glass 300 ml plant mister with brass pump top": {
       "ok": true
+     },
+     "Plant Mister Amber Glass 300ml": {
+      "ok": true
+     },
+     "Plant Mister Amber Glass 300ml Brass Pump Top": {
+      "ok": true
      }
-    }
+    },
+    "apple": [
+     {
+      "text": "AMBER GLASS PLANT MISTER",
+      "seconds": 0.645689958
+     },
+     {
+      "text": "Plant Mister Amber Glass 300ml",
+      "seconds": 0.595153208
+     },
+     {
+      "text": "Plant Mister Amber Glass 300ml Brass Pump Top",
+      "seconds": 0.625892292
+     }
+    ]
    },
    "title-held-10": {
     "device": [
@@ -5497,7 +8694,21 @@
      "Blue check organic cotton tea towel 50 x 70 cm pack of two": {
       "ok": true
      }
-    }
+    },
+    "apple": [
+     {
+      "text": "Blue Check Tea Towels",
+      "seconds": 0.44345875
+     },
+     {
+      "text": "LARKFIELD ANTI-STATIC WOVEN TEA TOWELS",
+      "seconds": 0.90965275
+     },
+     {
+      "text": "Blue Check Tea Towels",
+      "seconds": 0.539771333
+     }
+    ]
    }
   },
   "delivery_summary": {
@@ -5529,7 +8740,21 @@
      "Your order left our warehouse and will arrive on Wednesday; watch for a text on delivery morning with your one-hour slot.": {
       "ok": true
      }
-    }
+    },
+    "apple": [
+     {
+      "text": "Your order has left our warehouse and is on its way to you. It should arrive on Wednesday morning, and you will receive a text with a one-hour slot for delivery.",
+      "seconds": 0.9896305
+     },
+     {
+      "text": "Your order from Larkfield has left our warehouse at 16:20 and is with the courier. It should reach you on Wednesday. You will get a text with a one-hour slot on the morning of delivery.",
+      "seconds": 1.191301209
+     },
+     {
+      "text": "Your order from Larkfield is on its way! It left our warehouse at 16:20 and should arrive by Wednesday. You'll receive a text with a delivery slot in the morning.",
+      "seconds": 1.285045375
+     }
+    ]
    },
    "summary-held-2": {
     "device": [
@@ -5556,7 +8781,21 @@
      "Your Larkfield order has been delivered; signed for at reception and left at the front desk.": {
       "ok": true
      }
-    }
+    },
+    "apple": [
+     {
+      "seconds": 0.80040125,
+      "text": "Your parcel has been delivered and signed for by R. Evans at the front desk."
+     },
+     {
+      "seconds": 0.83090475,
+      "text": "Your parcel from Larkfield has been delivered and signed for by R. Evans at the front desk of your building."
+     },
+     {
+      "seconds": 0.767067291,
+      "text": "Your parcel from Larkfield was delivered at 09:48 and signed for by R. Evans."
+     }
+    ]
    },
    "summary-held-3": {
     "device": [
@@ -5585,8 +8824,28 @@
      },
      "Your wardrobe delivery is delayed due to port issues and is now rescheduled for Tuesday 24 November; no action is needed.": {
       "ok": true
+     },
+     "Your wardrobe delivery from Larkfield has been rescheduled to Tuesday, 24 November, due to a port delay.": {
+      "ok": true
+     },
+     "Sorry for the delay, but your wardrobe will now be delivered on Tuesday, 24 November.": {
+      "ok": true
      }
-    }
+    },
+    "apple": [
+     {
+      "text": "Your wardrobe delivery from Larkfield has been rescheduled to Tuesday, 24 November, due to a port delay.",
+      "seconds": 0.884187917
+     },
+     {
+      "text": "Sorry for the delay, but your wardrobe will now be delivered on Tuesday, 24 November.",
+      "seconds": 0.826106958
+     },
+     {
+      "text": "We're sorry to inform you that your wardrobe delivery from Larkfield is delayed. Your new delivery day is Tuesday 24 November.",
+      "seconds": 0.978377667
+     }
+    ]
    },
    "summary-held-4": {
     "device": [
@@ -5621,8 +8880,29 @@
      },
      "The driver couldn't enter your building because the entry code was incorrect, so please reply with the correct code today for redelivery tomorrow.": {
       "ok": true
+     },
+     "Your order is ready to be picked up from our warehouse tomorrow, but it can't leave until you send us the correct entry code.": {
+      "ok": false,
+      "reason": "The note states the driver could not get in and asks for the code today to go out tomorrow, but the answer incorrectly claims the order is ready to be picked up from the warehouse."
+     },
+     "Please send us the correct entry code for the parcel to be delivered tomorrow.": {
+      "ok": true
      }
-    }
+    },
+    "apple": [
+     {
+      "seconds": 1.096253917,
+      "text": "Your order is ready to be picked up from our warehouse tomorrow, but it can't leave until you send us the correct entry code."
+     },
+     {
+      "seconds": 0.710759292,
+      "text": "Please send us the correct entry code for the parcel to be delivered tomorrow."
+     },
+     {
+      "seconds": 0.876679375,
+      "text": "We apologize for the delay. Please send us the correct code for your order today so the parcel can be delivered tomorrow."
+     }
+    ]
    },
    "summary-held-5": {
     "device": [
@@ -5656,7 +8936,21 @@
      "Delivery was attempted but the gate was locked, so your parcel is held at the depot for 5 days; please arrange redelivery.": {
       "ok": true
      }
-    }
+    },
+    "apple": [
+     {
+      "text": "GATE locked for delivery of Gate Lock, no access for 5 days. Customer must arrange redelivery.",
+      "seconds": 1.045610041
+     },
+     {
+      "text": "Your gate lock has been locked, and your order will be held at the depot for 5 days. You must arrange for a redelivery.",
+      "seconds": 0.982483166
+     },
+     {
+      "text": "Your order from Larkfield, valued at $1,000, is delayed. Please contact our customer service for a redelivery.",
+      "seconds": 0.860018
+     }
+    ]
    },
    "summary-held-6": {
     "device": [
@@ -5692,7 +8986,21 @@
      "Your parcel has been transferred to your local post office for delivery with your normal post within two working days; no action is needed.": {
       "ok": true
      }
-    }
+    },
+    "apple": [
+     {
+      "text": "Your parcel has been handed to the local post office for delivery. It will be delivered with your normal post within two working days.",
+      "seconds": 0.741327208
+     },
+     {
+      "text": "Parcel handed to the local post office for delivery.",
+      "seconds": 0.54660475
+     },
+     {
+      "text": "Your parcel has been handed to the local post office for delivery.",
+      "seconds": 0.5470665
+     }
+    ]
    },
    "summary-held-7": {
     "device": [
@@ -5729,8 +9037,32 @@
      },
      "Your missing box has been found, and all three boxes will now be delivered together this Thursday with no action needed from you.": {
       "ok": true
+     },
+     "All three boxes are now on their way to you, so you can expect to receive them on Thursday.": {
+      "ok": false,
+      "reason": "The note states they will be delivered on Thursday, but the answer incorrectly states they are currently on their way."
+     },
+     "The second of your three boxes has been found and will now be delivered with the other two on Thursday.": {
+      "ok": true
+     },
+     "Your second box has been found and will be delivered with the other two on Thursday.": {
+      "ok": true
      }
-    }
+    },
+    "apple": [
+     {
+      "seconds": 0.696737167,
+      "text": "All three boxes are now on their way to you, so you can expect to receive them on Thursday."
+     },
+     {
+      "seconds": 0.616850542,
+      "text": "The second of your three boxes has been found and will now be delivered with the other two on Thursday."
+     },
+     {
+      "seconds": 0.604803458,
+      "text": "Your second box has been found and will be delivered with the other two on Thursday."
+     }
+    ]
    },
    "summary-held-8": {
     "device": [
@@ -5763,7 +9095,21 @@
      "Your faulty mower collection is booked for Monday between 9 am and 1 pm; please have it boxed and ready by the front door.": {
       "ok": true
      }
-    }
+    },
+    "apple": [
+     {
+      "text": "We're sorry for the inconvenience. Your mower will be picked up by the courier on Monday between 9 am and 1 pm. Please have it boxed and ready by the front door.",
+      "seconds": 1.002651875
+     },
+     {
+      "text": "We're sorry, but your mower is currently unavailable due to a delivery delay. We'll arrange for a replacement to be delivered next week.",
+      "seconds": 0.877260958
+     },
+     {
+      "text": "Your mower is booked for Monday between 9 am and 1 pm. Please box it and have it ready at the front door.",
+      "seconds": 0.79248375
+     }
+    ]
    },
    "summary-held-9": {
     "device": [
@@ -5802,7 +9148,21 @@
      "Your order is out for delivery with a two-man crew who will call 30 minutes before arriving to place it in your room of choice.": {
       "ok": true
      }
-    }
+    },
+    "apple": [
+     {
+      "text": "Your order is out for delivery by a 2-man crew. Call 30 minutes before arrival to choose your room.",
+      "seconds": 0.94636025
+     },
+     {
+      "text": "Your order is scheduled for a 2-man crew to arrive within 30 minutes. Please call 30 minutes before arrival to choose a room.",
+      "seconds": 1.004271167
+     },
+     {
+      "text": "Your order from Larkfield is out for delivery by 2:00 PM. Call 30 minutes before arrival to choose your room.",
+      "seconds": 0.913535917
+     }
+    ]
    },
    "summary-held-10": {
     "device": [
@@ -5838,7 +9198,21 @@
      "Bad weather has delayed today's delivery in your area; your order is safe and we will email you a new date when roads reopen.": {
       "ok": true
      }
-    }
+    },
+    "apple": [
+     {
+      "text": "We are sorry for the inconvenience. Your order is not affected and will be sent by email when roads reopen.",
+      "seconds": 0.79322875
+     },
+     {
+      "text": "Unfortunately, due to weather conditions, your order from Larkfield will be delayed. We will send you a new date via email as soon as roads reopen.",
+      "seconds": 0.747692667
+     },
+     {
+      "text": "Delivery has been canceled today due to weather conditions. We will send a new date by email as soon as roads reopen.",
+      "seconds": 0.708040417
+     }
+    ]
    }
   },
   "email_address": {
@@ -5862,7 +9236,21 @@
      "seconds": 1.3126000000238418,
      "tokensIn": 93,
      "tokensOut": 44
-    }
+    },
+    "apple": [
+     {
+      "text": "{\"name\": \"Ruth Calder\", \"street\": \"9 Tannery Row\", \"city\": \"York\", \"postcode\": \"YO1 7HB\"}",
+      "seconds": 1.306777833
+     },
+     {
+      "text": "{\"name\": \"Ruth Calder\", \"street\": \"9 Tannery Row\", \"city\": \"York\", \"postcode\": \"YO1 7HB\"}",
+      "seconds": 1.126296292
+     },
+     {
+      "text": "{\"name\": \"Ruth Calder\", \"street\": \"9 Tannery Row\", \"city\": \"York\", \"postcode\": \"YO1 7HB\"}",
+      "seconds": 1.070726708
+     }
+    ]
    },
    "address-held-2": {
     "device": [
@@ -5884,7 +9272,21 @@
      "seconds": 0.6998000000119209,
      "tokensIn": 86,
      "tokensOut": 28
-    }
+    },
+    "apple": [
+     {
+      "text": "{\"name\": \"John Doe\", \"street\": \"123 Main Street\", \"city\": \"Anytown\", \"postcode\": \"12345\"}",
+      "seconds": 1.082040334
+     },
+     {
+      "text": "{\"name\": \"Jack Smith\", \"street\": \"123 Main Street\", \"city\": \"Springfield\", \"postcode\": \"47501\"}",
+      "seconds": 1.208056208
+     },
+     {
+      "text": "{\"name\": \"John Doe\", \"street\": \"123 Elm Street\", \"city\": \"Springfield\", \"postcode\": \"IL 62701\"}",
+      "seconds": 1.259181875
+     }
+    ]
    },
    "address-held-3": {
     "device": [
@@ -5906,7 +9308,21 @@
      "seconds": 0.996300000011921,
      "tokensIn": 106,
      "tokensOut": 49
-    }
+    },
+    "apple": [
+     {
+      "text": "{\"name\": \"Liam Brody\", \"street\": \"12 Quay Street\", \"city\": \"Bristol\", \"postcode\": \"BS1 4DJ\"}",
+      "seconds": 1.15553725
+     },
+     {
+      "text": "{\"name\": \"Liam Brody\", \"street\": \"12 Quay Street\", \"city\": \"Bristol\", \"postcode\": \"BS1 4DJ\"}",
+      "seconds": 1.5737305419999998
+     },
+     {
+      "text": "{\"name\": \"Liam Brody\", \"street\": \"12 Quay Street\", \"city\": \"Bristol\", \"postcode\": \"BS1 4DJ\"}",
+      "seconds": 1.5946209169999999
+     }
+    ]
    },
    "address-held-4": {
     "device": [
@@ -5928,7 +9344,21 @@
      "seconds": 0.9511000000238419,
      "tokensIn": 103,
      "tokensOut": 48
-    }
+    },
+    "apple": [
+     {
+      "text": "{\"name\": \"Mei Tan\", \"street\": \"Back Lane\", \"city\": \"Hexham\", \"postcode\": \"NE46 3PU\"}",
+      "seconds": 1.319849833
+     },
+     {
+      "text": "{\"name\": \"Mei Tan\", \"street\": \"Back Lane\", \"city\": \"Hexham\", \"postcode\": \"NE46 3PU\"}",
+      "seconds": 1.112507833
+     },
+     {
+      "text": "{\"name\": \"Mei Tan\", \"street\": \"Back Lane\", \"city\": \"Hexham\", \"postcode\": \"NE46 3PU\"}",
+      "seconds": 1.1549648750000001
+     }
+    ]
    },
    "address-held-5": {
     "device": [
@@ -5950,7 +9380,21 @@
      "seconds": 0.8155,
      "tokensIn": 87,
      "tokensOut": 28
-    }
+    },
+    "apple": [
+     {
+      "text": "{\"name\": \"Jack Smith\", \"street\": \"45 Maple Street\", \"city\": \"Springfield\", \"postcode\": \"IL 62701\"}",
+      "seconds": 1.866002959
+     },
+     {
+      "text": "{\"name\": \"John Doe\", \"street\": \"123 Elm Street\", \"city\": \"Springfield\", \"postcode\": \"12345\"}",
+      "seconds": 1.511119417
+     },
+     {
+      "text": "{\"name\": \"John Smith\", \"street\": \"123 Elm Street\", \"city\": \"Springfield\", \"postcode\": \"45678\"}",
+      "seconds": 1.528692667
+     }
+    ]
    },
    "address-held-6": {
     "device": [
@@ -5972,7 +9416,21 @@
      "seconds": 0.9063000000119209,
      "tokensIn": 101,
      "tokensOut": 48
-    }
+    },
+    "apple": [
+     {
+      "text": "{\"name\": \"Arjun Patel\", \"street\": \"Station Road\", \"city\": \"Luton\", \"postcode\": \"LU1 2QF\"}",
+      "seconds": 1.743008125
+     },
+     {
+      "text": "{\"name\": \"Arjun Patel\", \"street\": \"Station Road\", \"city\": \"Luton\", \"postcode\": \"LU1 2QF\"}",
+      "seconds": 1.183964834
+     },
+     {
+      "text": "{\"name\": \"Arjun Patel\", \"street\": \"Station Road\", \"city\": \"Luton\", \"postcode\": \"LU1 2QF\"}",
+      "seconds": 1.157768708
+     }
+    ]
    },
    "address-held-7": {
     "device": [
@@ -5994,7 +9452,21 @@
      "seconds": 1.162300000011921,
      "tokensIn": 93,
      "tokensOut": 33
-    }
+    },
+    "apple": [
+     {
+      "text": "{\"name\": \"Clare Whitby\", \"street\": \"\", \"city\": \"\", \"postcode\": \"\"}",
+      "seconds": 1.092068791
+     },
+     {
+      "text": "{\"name\": \"Clare Whitby\", \"street\": \"\", \"city\": \"\", \"postcode\": \"\"}",
+      "seconds": 0.966168
+     },
+     {
+      "text": "{\"name\": \"Clare Whitby\", \"street\": \"\", \"city\": \"\", \"postcode\": \"\"}",
+      "seconds": 1.045137167
+     }
+    ]
    },
    "address-held-8": {
     "device": [
@@ -6016,7 +9488,21 @@
      "seconds": 1.087699999988079,
      "tokensIn": 96,
      "tokensOut": 48
-    }
+    },
+    "apple": [
+     {
+      "text": "{\"name\": \"Owen Price\", \"street\": \"Unit 2\", \"city\": \"Stroud\", \"postcode\": \"GL5 1AA\"}",
+      "seconds": 1.4793115829999999
+     },
+     {
+      "text": "{\"name\": \"Owen Price\", \"street\": \"Mill Court\", \"city\": \"Stroud\", \"postcode\": \"GL5 1AA\"}",
+      "seconds": 1.382437417
+     },
+     {
+      "text": "{\"name\": \"Owen Price\", \"street\": \"Unit 2\", \"city\": \"Stroud\", \"postcode\": \"GL5 1AA\"}",
+      "seconds": 1.349934833
+     }
+    ]
    },
    "address-held-9": {
     "device": [
@@ -6038,7 +9524,21 @@
      "seconds": 0.9993999999761581,
      "tokensIn": 99,
      "tokensOut": 45
-    }
+    },
+    "apple": [
+     {
+      "text": "{\"name\": \"Sara Lindqvist\", \"street\": \"76 Park Avenue\", \"city\": \"Hull\", \"postcode\": \"HU5 3EX\"}",
+      "seconds": 1.415307416
+     },
+     {
+      "text": "{\"name\": \"Sara Lindqvist\", \"street\": \"76 Park Avenue\", \"city\": \"Hull\", \"postcode\": \"HU5 3EX\"}",
+      "seconds": 1.174052917
+     },
+     {
+      "text": "{\"name\": \"Sara Lindqvist\", \"street\": \"76 Park Avenue\", \"city\": \"Hull\", \"postcode\": \"HU5 3EX\"}",
+      "seconds": 1.118768084
+     }
+    ]
    },
    "address-held-10": {
     "device": [
@@ -6060,7 +9560,21 @@
      "seconds": 0.6916000000238418,
      "tokensIn": 92,
      "tokensOut": 34
-    }
+    },
+    "apple": [
+     {
+      "text": "{\"name\": \"James Smith\", \"street\": \"123 Elm Street\", \"city\": \"Springfield\", \"postcode\": \"HX1 2AB\"}",
+      "seconds": 1.435303
+     },
+     {
+      "text": "{\"name\": \"Paul Robinson\", \"street\": \"123 Maple Street\", \"city\": \"Greenfield\", \"postcode\": \"HX1 2AB\"}",
+      "seconds": 1.5913755
+     },
+     {
+      "seconds": 1.199252833,
+      "text": "{\"name\": \"John Doe\", \"street\": \"123 Elm Street\", \"city\": \"Springfield\", \"postcode\": \"HX1 2AB\"}"
+     }
+    ]
    }
   }
  },
@@ -10585,5 +14099,11 @@
     }
    }
   ]
+ },
+ "apple": {
+  "device": "iPhone 17 simulator",
+  "os": "26.5",
+  "host": "macOS 26.6.2",
+  "date": "2026-11-14"
  }
 }
