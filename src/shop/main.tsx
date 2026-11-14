@@ -24,7 +24,7 @@ function modes(): Record<string, Mode> {
 
 const ON_DEVICE: Mode[] = ["prefer_on_device", "only_on_device"];
 
-function Card({ feature, mode }: { feature: Feature; mode: Mode }) {
+function Card({ feature, mode, device }: { feature: Feature; mode: Mode; device?: DeviceState }) {
   const shown = SHOWN[feature.id];
   const [input, setInput] = useState(feature.cases[0].input);
   const [busy, setBusy] = useState(false);
@@ -45,6 +45,12 @@ function Card({ feature, mode }: { feature: Feature; mode: Mode }) {
 
   const source = answer?.source;
   const where = source ?? (ON_DEVICE.includes(mode) ? "on_device" : "in_cloud");
+  // What a card says before it has answered: where it is set to run, and what that means on this computer.
+  const [set, means] =
+    where === "in_cloud" ? ["Set to run in the cloud", "needs a connection"]
+    : device === "available" ? ["Set to run on this computer", "works offline"]
+    : device === "downloadable" || device === "downloading" ? ["Set to run on this computer once Chrome's model is here", "in the cloud until then"]
+    : ["Set to run on a computer that has Chrome's model", "in the cloud here"];
   return (
     <article className="card" data-feature={feature.id}>
       <p className="label">{shown.label}</p>
@@ -61,11 +67,8 @@ function Card({ feature, mode }: { feature: Feature; mode: Mode }) {
         {problem && <p className="wrong">{problem}</p>}
       </div>
       <p className="badge" data-source={where} data-ran={Boolean(source)}>
-        <span>{source ? SOURCE_LABEL[source] : where === "on_device" ? "Set to run on this computer" : "Set to run in the cloud"}</span>
-        <span>
-          {answer && `${answer.seconds.toFixed(1)} s · `}
-          {where === "on_device" ? "works offline" : "needs a connection"}
-        </span>
+        <span>{source ? SOURCE_LABEL[source] : set}</span>
+        <span>{answer ? `${answer.seconds.toFixed(1)} s · ${source === "on_device" ? "works offline" : "needs a connection"}` : means}</span>
       </p>
     </article>
   );
@@ -99,9 +102,16 @@ function Shop() {
           feature that runs on this computer sends nothing.
         </p>
       </header>
-      {device && <DownloadPanel state={device} onState={setDevice} meanwhile="every feature here runs in the cloud" />}
+      {device && (
+        <DownloadPanel
+          state={device}
+          onState={setDevice}
+          now="Without Chrome's built-in model, every feature here runs in the cloud."
+          toGetIt="To run the device features on this computer, Chrome downloads it once: about 4 GB, 12 minutes on our laptop."
+        />
+      )}
       <div className="cards">
-        {mode && FEATURES.map((f) => <Card key={f.id} feature={f} mode={mode[f.id]} />)}
+        {mode && FEATURES.map((f) => <Card key={f.id} feature={f} mode={mode[f.id]} device={device} />)}
       </div>
     </main>
   );

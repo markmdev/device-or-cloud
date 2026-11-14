@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import type { Feature } from "../features";
 import { OutOfRequests, outOfRequests } from "./ask";
 import { missesOf, proposeLine, tryLine, type Tried } from "./fix";
-import { moves, RUNS, tally, type FixRecord } from "./record";
+import { moves, RUNS, shortOn, tally, type FixRecord } from "./record";
 import type { Cases } from "./run";
 
 function Counts({ feature, base, heldBase, tried, cloud }: { feature: Feature; base: Cases; heldBase?: Cases; tried: Tried; cloud: boolean }) {
@@ -17,6 +17,22 @@ function Counts({ feature, base, heldBase, tried, cloud }: { feature: Feature; b
       {cloud ? `; the cloud model, on ${heldAfter.cloudRight} of ${heldAfter.cloud} with it.` : ". The cloud model wasn't asked again."}
     </p>
   );
+}
+
+/** Whether a line moves the feature to the device, and when it doesn't, the count that kept it back. */
+function outcome(feature: Feature, heldBase: Cases, fix: FixRecord, allowed: number): string {
+  const held = feature.heldBack ?? [];
+  const own = tally(feature, fix.cases), kept = tally(feature, fix.held, held), before = tally(feature, heldBase, held);
+  switch (shortOn(feature, fix, allowed)) {
+    case undefined: return "Moves to the device.";
+    case "answers": return "Doesn't move: not all of its answers are in.";
+    case "check": return `Doesn't move: on the check's ${feature.cases.length} inputs Chrome's model is still outside the bar, right on ${own.runsRight} of ${own.runs} runs.`;
+    case "held":
+      return kept.runsRight < before.runsRight
+        ? `Doesn't move: on the ${held.length} held-back inputs it got worse, ${before.runsRight} to ${kept.runsRight} of ${kept.runs} runs.`
+        : `Doesn't move: on the ${held.length} held-back inputs Chrome's model is still outside the bar, right on ${kept.runsRight} of ${kept.runs} runs.`;
+    case "cloud": return `Doesn't move: with the line, the cloud model falls outside the bar on the ${held.length} held-back inputs, right on ${kept.cloudRight} of ${kept.cloud}.`;
+  }
 }
 
 const BY: Record<FixRecord["by"], string> = {
@@ -96,7 +112,7 @@ export function Fixes({ feature, base, heldBase, fixes, allowed, canRun, onFix }
           <blockquote>{fix.line}</blockquote>
           <Counts feature={feature} base={base} heldBase={heldBase} tried={fix} cloud />
           <p>
-            <b>{moves(feature, fix, allowed) ? "Moves to the device." : "Doesn't move."}</b>
+            <b>{outcome(feature, heldBase, fix, allowed)}</b>
           </p>
         </article>
       ))}

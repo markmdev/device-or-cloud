@@ -56,7 +56,7 @@
       "defaultValue": {
         "value": "only_in_cloud"
       },
-      "description": "Work out an invoice total. Fix the prompt first. The cloud was right on 14 of 25; Chrome's model, on 8 of 75 runs.",
+      "description": "Work out an invoice total. Neither model is good enough. Change the prompt, or don't use a model for this: work it out in code. The cloud was right on 14 of 25; Chrome's model, on 8 of 75 runs.",
       "valueType": "STRING"
     },
     "mode_email_address": {
@@ -70,7 +70,7 @@
       "defaultValue": {
         "value": "only_in_cloud"
       },
-      "description": "Answer a returns question. Fix the prompt first. The cloud was right on 19 of 25; Chrome's model, on 45 of 75 runs.",
+      "description": "Answer a returns question. Neither model is good enough. Change the prompt, or don't use a model for this: work it out in code. The cloud was right on 19 of 25; Chrome's model, on 45 of 75 runs.",
       "valueType": "STRING"
     }
   }

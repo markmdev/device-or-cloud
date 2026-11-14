@@ -45,7 +45,7 @@ export function printed(record: CheckRecord): string {
   const all = numbers(record);
   const sum = (pick: (v: Verdict) => number) => all.reduce((n, f) => n + pick(f.verdict), 0);
   const lines = [
-    `Recorded on a ${record.machine}, Chrome ${record.chrome}, ${record.date}. Cloud model: ${record.cloudModel}.`,
+    `Recorded on ${record.machine}, Chrome ${record.chrome}, ${record.date}. Cloud model: ${record.cloudModel}.`,
     `Bar: up to ${DEFAULT_ALLOWED} wrong answers in 100.`,
     "",
     `All ${all.length} features, ${sum((v) => v.inputs)} inputs: Chrome's model right on ${sum((v) => v.runsRight)} of ${sum((v) => v.runs)} runs, the cloud on ${sum((v) => v.cloudRight)} of ${sum((v) => v.inputs)}.`,

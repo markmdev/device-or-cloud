@@ -39,7 +39,7 @@ All three are open licence, loaded from Google Fonts in `index.html` and `shop/i
    - Features that are on neither side (fix the prompt first, not enough inputs, still running) sit in one white panel across the line, each with its verdict in amber.
    - **The proof** is a white panel across the line: Chrome's answer under the device side, the cloud's under the cloud side, the input between them. The field that tells the two answers apart is shown large, both at the same size; the full answers are below it in mono. The plainest failure opens first: only Chrome's model wrong, on every run, with the same answer each time. The page opens on the address feature, whose dropped house number reads in a second.
    - **One more line in the prompt** follows the proof for a feature kept in the cloud: a white panel across the line. A line that moves the feature to the device is a lime card with a solid "Moves to the device"; one that doesn't is a quiet wash card. The reader's own line is the dashed card under them.
-5. **The bottom line:** what moving gives the users first, in lime. The money is smaller and to the right.
+5. **The bottom line:** the count in one sentence, then what moving gives the users, in lime.
 6. **The footer:** how answers are judged and what leaves the computer, small, on wash.
 
 ## Check your own prompts

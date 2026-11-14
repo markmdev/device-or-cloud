@@ -6,7 +6,7 @@ import { parse, plain } from "../features/types";
 import { CLOUD_MODEL } from "../firebase";
 import { appCode, CHROME, DEPLOY, TEMPLATE_FILE, templateText } from "./apply";
 import { Fixes } from "./fixes";
-import { barInWords, DEFAULT_ALLOWED, dollarsPerRequest, graded, moves, RUNS, VERDICT_NAME, verdictFor, verdictLine, type Failure, type FixRecord, type Run, type Verdict } from "./record";
+import { barInWords, DEFAULT_ALLOWED, graded, moves, NEITHER_ADVICE, RUNS, VERDICT_NAME, verdictFor, verdictLine, type Failure, type FixRecord, type Run, type Verdict } from "./record";
 import type { Cases } from "./run";
 
 /** One model's share of right answers, with the bar marked on it. */
@@ -35,6 +35,7 @@ function FeatureRow({ v, mine, selected, onSelect, allowed, named }: { v: Verdic
             <Meter who="Chrome's model" right={v.runsRight} of={v.runs} unit=" runs" allowed={allowed} />
             <Meter who="The cloud" right={v.cloudRight} of={v.inputs} unit="" allowed={allowed} />
             {v.kind === "cloud" && v.pattern && <small>Its misses: {v.pattern}.</small>}
+            {v.kind === "fix" && <small>{NEITHER_ADVICE}</small>}
           </>
         ) : (
           <span>{verdictLine(v)}</span>
@@ -103,7 +104,7 @@ function RunAnswer({ run, check, telling, size, children }: { run?: Run; check?:
   );
 }
 
-function Proof({ v, cases }: { v: Verdict; cases: Cases }) {
+function Proof({ v, cases, recordedOn }: { v: Verdict; cases: Cases; recordedOn?: string }) {
   const [at, setAt] = useState(0);
   useEffect(() => setAt(0), [v.feature.id]);
   if (v.kind === "pending") return <section className="proof"><p className="quiet">{v.feature.name}: waiting for answers.</p></section>;
@@ -135,7 +136,7 @@ function Proof({ v, cases }: { v: Verdict; cases: Cases }) {
     <section className="proof">
       <div className="side device">
         <p className="badge" data-source="on_device">
-          {SOURCE_LABEL.on_device}
+          {recordedOn ? `Chrome's model, on ${recordedOn}` : SOURCE_LABEL.on_device}
           {"seconds" in run && ` · ${run.seconds.toFixed(1)} s`}
         </p>
         <p className="who">Chrome's model answered</p>
@@ -174,40 +175,35 @@ function Proof({ v, cases }: { v: Verdict; cases: Cases }) {
   );
 }
 
-function BottomLine({ verdicts, allowed, afterFixes }: { verdicts: Verdict[]; allowed: number; afterFixes: number }) {
-  const [requests, setRequests] = useState(100_000);
-  const [share, setShare] = useState(30);
-  const onDevice = verdicts.filter((v) => v.kind === "device");
-  const seconds = onDevice.map((v) => v.deviceSeconds ?? 0).sort((a, b) => a - b);
-  const fastest = seconds[0]?.toFixed(1), slowest = seconds.at(-1)?.toFixed(1);
-  const saved = onDevice.reduce((sum, v) => sum + dollarsPerRequest(v), 0) * requests * (share / 100);
+const NEXT = ["a first", "a second", "a third", "a fourth", "a fifth", "a sixth", "a seventh", "an eighth"];
+
+function BottomLine({ verdicts, allowed, afterFixes, shop }: { verdicts: Verdict[]; allowed: number; afterFixes: number; shop: boolean }) {
+  const onDevice = verdicts.filter((v) => v.kind === "device").length, more = afterFixes - onDevice;
+  const whose = shop ? "its" : "your";
   return (
     <section className="bottom">
       <h2>
         {barInWords(allowed)},{" "}
         {verdicts.length === 1
-          ? onDevice.length
+          ? onDevice
             ? "this feature can run on your users' own devices."
-            : afterFixes
-              ? "this feature stays in the cloud today, and can run on your users' own devices after a one-line fix."
+            : more
+              ? "this feature stays in the cloud today, and can run on your users' own devices after one added line in its prompt."
               : "this feature can't run on your users' own devices yet."
-          : `${onDevice.length} of ${verdicts.length} features can run on your users' own devices${
-              afterFixes > onDevice.length ? ` today, and ${afterFixes} of ${verdicts.length} after one-line fixes.` : "."
+          : `${onDevice} of ${shop ? "the shop's" : "your"} ${verdicts.length} AI features can run on ${whose} users' own devices${
+              more === 1
+                ? ` today, and ${NEXT[onDevice] ?? "one more"} after one added line in its prompt.`
+                : more > 1
+                  ? ` today, and ${more} more after one added line in each one's prompt.`
+                  : "."
             }`}
       </h2>
-      {onDevice.length > 0 && (
+      {onDevice > 0 && (
         <p className="gains">
-          Those requests <b>never leave the device</b>, <b>work offline</b> and <b>answer in {fastest === slowest ? fastest : `${fastest} to ${slowest}`} s</b>.
+          On a computer that has Chrome's model, those requests <b>stay on it</b> and <b>work offline</b>. Everywhere else they go to the cloud, as
+          before.
         </p>
       )}
-      <p className="money">
-        At{" "}
-        <input type="number" min={0} step={10000} value={requests} onChange={(e) => setRequests(Number(e.target.value))} aria-label="Requests a month for each feature" />{" "}
-        requests a month for each feature, with{" "}
-        <input type="number" min={0} max={100} value={share} onChange={(e) => setShare(Number(e.target.value))} aria-label="Share of users whose device has the model" />
-        % of your users on a device that has the model, the cloud bill drops by about <b>${saved.toFixed(2)} a month</b>, at {CLOUD_MODEL}'s
-        published price and the token counts measured here.
-      </p>
     </section>
   );
 }
@@ -224,7 +220,7 @@ function Copy({ text }: { text: string }) {
 
 /** The verdicts handed over as Remote Config: the template, the app code that reads it, and the command that deploys it. */
 function Apply({ verdicts, children }: { verdicts: Verdict[]; children?: ReactNode }) {
-  const text = templateText(verdicts), code = appCode(verdicts);
+  const text = templateText(verdicts), code = appCode(verdicts, CLOUD_MODEL);
   const moved = verdicts.filter((v) => v.kind === "device").length;
   return (
     <section className="apply">
@@ -251,6 +247,9 @@ function Apply({ verdicts, children }: { verdicts: Verdict[]; children?: ReactNo
       </article>
       <article>
         <h3>2. Read each feature's mode in your app</h3>
+        <p>
+          Chrome's model reads the instruction and the answer's shape only from <code>onDeviceParams</code>, so both are set twice.
+        </p>
         <pre>{code}</pre>
         <p className="actions">
           <Copy text={code} />
@@ -271,11 +270,13 @@ function Apply({ verdicts, children }: { verdicts: Verdict[]; children?: ReactNo
 /**
  * The verdicts for a list of features: the bar, the two sides, the proof for one feature, its one-line fixes and the bottom line.
  */
-export function Board({ features, cases, mine = [], held, fixes, opensOn, canRun, onFix, children }: {
+export function Board({ features, cases, mine = [], recordedOn, held, fixes, opensOn, canRun, onFix, below, children }: {
   features: Feature[];
   cases: Record<string, Cases>;
   /** Features whose device answers were made on this computer just now. */
   mine?: string[];
+  /** Where the other answers were recorded, for the shop's check: "our laptop". Without it, every answer was made on this computer. */
+  recordedOn?: string;
   /** The held-back inputs' answers as each instruction stands, by feature. */
   held?: Record<string, Cases>;
   fixes?: Record<string, FixRecord[]>;
@@ -284,6 +285,8 @@ export function Board({ features, cases, mine = [], held, fixes, opensOn, canRun
   canRun: boolean;
   /** Given where a line tried on the page is also run in the cloud and kept: a developer's own feature. */
   onFix?: (featureId: string, fix: FixRecord) => void;
+  /** Shown right under the board, above the bottom line. */
+  below?: ReactNode;
   /** A note under "Apply it" about where this template is in use. */
   children?: ReactNode;
 }) {
@@ -347,7 +350,7 @@ export function Board({ features, cases, mine = [], held, fixes, opensOn, canRun
           </section>
         )}
 
-        <Proof v={shown} cases={cases[shown.feature.id] ?? {}} />
+        <Proof v={shown} cases={cases[shown.feature.id] ?? {}} recordedOn={mine.includes(shown.feature.id) ? undefined : recordedOn} />
         {shown.kind === "cloud" && shown.feature.heldBack?.length && held?.[shown.feature.id] && (
           <Fixes
             feature={shown.feature}
@@ -360,9 +363,11 @@ export function Board({ features, cases, mine = [], held, fixes, opensOn, canRun
           />
         )}
       </div>
+      {below}
       <BottomLine
         verdicts={verdicts}
         allowed={allowed}
+        shop={!!recordedOn}
         afterFixes={verdicts.filter((v) => v.kind === "device" || (v.kind === "cloud" && fixes?.[v.feature.id]?.some((fix) => moves(v.feature, fix, allowed)))).length}
       />
       {verdicts.every((v) => v.kind !== "pending") && <Apply verdicts={verdicts}>{children}</Apply>}
