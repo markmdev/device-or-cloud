@@ -236,6 +236,7 @@ p.answer { white-space: pre-wrap; }
 .card .badge[data-ran="false"]::before { background: transparent; box-shadow: inset 0 0 0 2px var(--ink); }
 
 @media (min-width: 901px) {
+  .cards .badge span:last-child { flex-basis: 100%; margin-left: 19px; }
   .sides h2 { height: 100px; }
   .sides h2 b { font-size: 108px; }
   .sides .feature { grid-template-columns: minmax(0, 0.6fr) minmax(0, 1fr); gap: 5px 18px; padding: 11px 18px 12px; }
@@ -290,6 +291,7 @@ p.answer { white-space: pre-wrap; }
   .shelf .drawn { height: 180px; }
   .order + .order { margin-top: 16px; }
   .card .result { min-height: 56px; }
+  .card .badge span:last-child { flex-basis: 100%; margin-left: 19px; }
   .order-line i { margin-left: 78px; }
 }
 
