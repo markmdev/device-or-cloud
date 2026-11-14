@@ -42,6 +42,10 @@ All three are open licence, loaded from Google Fonts in `index.html` and `shop/i
 5. **The bottom line:** what moving gives the users first, in lime. The money is smaller and to the right.
 6. **The footer:** how answers are judged and what leaves the computer, small, on wash.
 
+## Check your own prompts
+
+The same top line, question and board as the shop's check, with the paste form between the question and the board, on wash. Each feature is a white card. Its inputs are one compact row each, on wash, with the column names said once above the rows: the input, the right answer, and for an input the cloud model wrote, a tick box before it and its kind after it. An unticked row loses its fill, since it isn't in the check. What's still missing before a check can run is said in ink, not red: nothing is wrong yet.
+
 ## Motion
 
 - Buttons and cards press in slightly (`scale(0.97)` to `0.99`, 140 ms).

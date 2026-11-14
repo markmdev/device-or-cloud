@@ -45,23 +45,21 @@ function InputRow({ input, shaped, onChange, onRemove }: { input: OwnInput; shap
   return (
     <li className="own-input" data-by={input.by} data-ticked={input.ticked}>
       {written && (
-        <p className="tick">
-          <label>
-            <input type="checkbox" checked={input.ticked} onChange={(e) => onChange({ ...input, ticked: e.target.checked })} />
-            A real user could send this
-          </label>
-          <small>{input.kind}</small>
-        </p>
+        <label className="tick" title="A real user could send this">
+          <input type="checkbox" checked={input.ticked} onChange={(e) => onChange({ ...input, ticked: e.target.checked })} />
+          <span>A real user could send this</span>
+        </label>
       )}
       <label>
-        Input
+        <span>Input</span>
         {/* New text is a new input: answers given for the old text don't carry over. */}
-        <textarea value={input.input} onChange={(e) => onChange({ ...input, id: newId("input"), input: e.target.value })} rows={2} />
+        <textarea value={input.input} onChange={(e) => onChange({ ...input, id: newId("input"), input: e.target.value })} rows={1} />
       </label>
       <label>
-        Right answer, if there is one
-        <textarea value={input.expect} onChange={(e) => onChange({ ...input, expect: e.target.value })} rows={2} placeholder={shaped ? "As JSON, like the answer's shape" : ""} />
+        <span>Right answer, if there is one</span>
+        <textarea value={input.expect} onChange={(e) => onChange({ ...input, expect: e.target.value })} rows={1} placeholder={shaped ? "As JSON, like the answer's shape" : ""} />
       </label>
+      {written && <small className="kind">{input.kind}</small>}
       <button className="plain" onClick={onRemove} aria-label="Remove this input">
         Remove
       </button>
@@ -117,6 +115,10 @@ function FeatureForm({ own, onChange, onRemove, onProblem }: { own: OwnFeature; 
         With a right answer, code compares each answer to it: capitals, punctuation and spacing don't count. Without one, {CLOUD_MODEL} judges the
         answer against your instruction, and the report says so.
       </p>
+      <p className="own-columns" aria-hidden="true">
+        <span>Input</span>
+        <span>Right answer, if there is one</span>
+      </p>
       <ul>
         {yours.map((i) => (
           <InputRow key={own.inputs.indexOf(i)} input={i} shaped={shaped} onChange={(next) => setInput(next, i)} onRemove={() => remove(i)} />
@@ -137,6 +139,10 @@ function FeatureForm({ own, onChange, onRemove, onProblem }: { own: OwnFeature; 
           <p className="quiet">
             Hard ones included. Tick the ones a real user could send, and correct or clear any right answer that's wrong: the cloud model wrote those
             too. One ticked input in four is kept out of the check, to prove a prompt fix on inputs it wasn't written from.
+          </p>
+          <p className="own-columns" data-by="cloud" aria-hidden="true">
+            <span>Input</span>
+            <span>Right answer, if there is one</span>
           </p>
           <ul>
             {written.map((i) => (
