@@ -14,7 +14,7 @@ function Counts({ feature, who, base, heldBase, tried, cloud }: { feature: Featu
       On the check's {feature.cases.length} inputs, {who} went from {before.runsRight} to {after.runsRight} of {after.runs} runs right. On{" "}
       {held.length} inputs held back from the check, it was right on {heldBefore.runsRight} of {heldBefore.runs} runs before and {heldAfter.runsRight} of{" "}
       {heldAfter.runs} with {HOW[kindOf(tried)]}
-      {cloud ? `; the cloud model, on ${heldAfter.cloudRight} of ${heldAfter.cloud} with it.` : ". The cloud model wasn't asked again."}
+      {cloud && heldAfter.cloud ? `; the cloud model, on ${heldAfter.cloudRight} of ${heldAfter.cloud} with it.` : ". The cloud model wasn't asked again."}
     </p>
   );
 }

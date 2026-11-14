@@ -108,10 +108,10 @@ export type Verdict = {
   range: Range;
   cloudRange: Range;
   /**
-   * Set when a range the verdict rests on crosses the bar, so more inputs could change it: whose range it is, and about
-   * how many more inputs would settle it (none: more than 200).
+   * Set when the on-device model's range crosses the bar, so more inputs could change whether the feature can run on the
+   * device: about how many more would settle it (none: more than 200).
    */
-  unsure?: { device: boolean; cloud: boolean; more?: number };
+  unsure?: { more?: number };
   failures: Failure[];
   /** What the failing inputs have in common, when they all share it. */
   pattern?: string;
@@ -177,9 +177,6 @@ export function verdictFor(feature: Feature, cases: Record<string, CaseRecord> =
   const kind = pending ? "pending" : inputs < ENOUGH_INPUTS ? "more" : within(runsRight, runs, allowed) ? "device" : within(cloudRight, inputs, allowed) ? "cloud" : "fix";
   const wrong = (runs - runsRight) / RUNS, cloudWrong = inputs - cloudRight;
   const range = rangeOf(wrong, inputs), cloudRange = rangeOf(cloudWrong, inputs);
-  // A device verdict rests on the on-device model's count alone; the other two rest on the cloud model's too.
-  const device = crosses(range, allowed), cloud = kind !== "device" && crosses(cloudRange, allowed);
-  const more = [device && moreToTell(wrong, inputs, allowed), cloud && moreToTell(cloudWrong, inputs, allowed)].filter((n) => n !== false);
   return {
     feature,
     kind,
@@ -190,7 +187,7 @@ export function verdictFor(feature: Feature, cases: Record<string, CaseRecord> =
     cloudRight,
     range,
     cloudRange,
-    unsure: (kind === "device" || kind === "cloud" || kind === "fix") && (device || cloud) ? { device, cloud, more: more.includes(undefined) ? undefined : Math.max(...(more as number[])) } : undefined,
+    unsure: (kind === "device" || kind === "cloud" || kind === "fix") && crosses(range, allowed) ? { more: moreToTell(wrong, inputs, allowed) } : undefined,
     failures,
     pattern: kinds.size === 1 ? [...kinds][0] : undefined,
   };
@@ -237,10 +234,8 @@ export function countLine(v: Verdict, who = CHROMES): string {
 /** Why a verdict could still change, and what would settle it. */
 export function unsureLine(v: Verdict, who = CHROMES): string | undefined {
   if (!v.unsure) return undefined;
-  const both = v.unsure.device && v.unsure.cloud;
-  const whose = both ? `${who}'s range and the cloud model's cross` : `${v.unsure.device ? `${who}'s` : "the cloud model's"} range crosses`;
   const settle = v.unsure.more ? `About ${v.unsure.more} more inputs would settle it.` : "The rate sits on the bar, so it would take hundreds more inputs to settle it.";
-  return `${UNSURE}: ${whose} the bar. ${settle}`;
+  return `${UNSURE}: ${who}'s range crosses the bar. ${settle}`;
 }
 
 /** What moving a feature to the device costs: the inputs the cloud model gets right and the on-device model doesn't. */
