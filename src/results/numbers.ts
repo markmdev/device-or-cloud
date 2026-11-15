@@ -19,8 +19,8 @@ export type FeatureNumbers = {
 };
 
 /** Every count the results page shows, from the record alone. */
-export function numbers(record: CheckRecord): FeatureNumbers[] {
-  return FEATURES.map((feature) => {
+export function numbers(record: CheckRecord, features: Feature[] = FEATURES): FeatureNumbers[] {
+  return features.map((feature) => {
     const cases = record.features[feature.id] ?? {};
     const kinds = [...new Set(feature.cases.map((c) => c.kind))];
     const heldBack = feature.heldBack ?? [];

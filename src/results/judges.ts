@@ -12,8 +12,8 @@ export const markKey = (featureId: string, inputId: string, answer: string) => `
 export type Mark = { good: boolean; by: string };
 
 /** Every distinct answer to the check's own inputs that the cloud model judged: the ones people are asked to mark. */
-export const judgedInCheck = (record: CheckRecord): Judged[] =>
-  FEATURES.filter((f) => f.graded).flatMap((feature) =>
+export const judgedInCheck = (record: CheckRecord, features: Feature[] = FEATURES): Judged[] =>
+  features.filter((f) => f.graded).flatMap((feature) =>
     feature.cases.flatMap((c) => Object.keys(record.features[feature.id]?.[c.id]?.grades ?? {}).map((answer) => ({ feature, c, answer }))),
   );
 
@@ -32,10 +32,10 @@ export type Judges = {
   secondAgreesWithPeople: number;
 };
 
-export function judges(record: CheckRecord, marks: Map<string, Mark> = new Map()): Judges {
+export function judges(record: CheckRecord, marks: Map<string, Mark> = new Map(), features: Feature[] = FEATURES): Judges {
   const j: Judges = { judged: 0, second: 0, secondAgrees: 0, secondStricter: 0, marked: 0, cloudAgrees: 0, markedAndSecond: 0, secondAgreesWithPeople: 0 };
   const everywhere = (id: string): Cases[] => [record.features[id] ?? {}, record.held?.[id] ?? {}, ...(record.fixes?.[id] ?? []).flatMap((fix) => [fix.cases, fix.held])];
-  for (const feature of FEATURES.filter((f) => f.graded)) {
+  for (const feature of features.filter((f) => f.graded)) {
     for (const cases of everywhere(feature.id)) {
       for (const r of Object.values(cases)) {
         for (const [answer, grade] of Object.entries(r.grades ?? {})) {
@@ -49,7 +49,7 @@ export function judges(record: CheckRecord, marks: Map<string, Mark> = new Map()
       }
     }
   }
-  for (const { feature, c, answer } of judgedInCheck(record)) {
+  for (const { feature, c, answer } of judgedInCheck(record, features)) {
     const mark = marks.get(markKey(feature.id, c.id, answer)), r = record.features[feature.id][c.id];
     if (!mark) continue;
     j.marked++;

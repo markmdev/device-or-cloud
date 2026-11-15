@@ -554,3 +554,11 @@ article.result .given .also span[data-ok="false"] { color: var(--wrong); }
   .results .judges ul { grid-template-columns: 1fr; }
   .results .judges h2 { font-size: 24px; }
 }
+
+/* The page for Firebase's own sample prompts: a stand-in look for its two lists. */
+.samples .sources { display: grid; gap: 12px; padding: 32px var(--gutter) 36px; border-top: 2px solid var(--ink); }
+.samples .sources h2 { font: 700 24px/1.15 var(--display); letter-spacing: -0.6px; margin-top: 10px; }
+.samples .sources > div { display: grid; gap: 6px; }
+.samples .sources li { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: 16px; padding: 9px 0; border-bottom: 1.5px solid var(--rule); font-size: 14.5px; }
+.samples .sources li span { color: var(--soft); }
+@media (max-width: 900px) { .samples .sources li { grid-template-columns: 1fr; gap: 2px; } }

@@ -154,7 +154,8 @@ function App() {
           Code decides wherever a prompt's own rules can be checked by code: the genre, the function call's city, state and date, the number and
           shape of the characters, the invoice's parts, the SVG's rules, and the right answer inside a persona's reply. Where a prompt asks for
           something code can't check, a translation, a style, sound advice, the cloud model judges that one thing, its own answers included. The
-          inputs marked as ours are ours: Firebase's samples give one input each, or none.
+          inputs marked as ours are ours: Firebase's samples give one input each, or none.{" "}
+          <a href="/samples/results/">Every input and every answer of this record</a> is on one page, misses included.
         </p>
         <p>
           The cloud side here is {RECORD.cloudModel || CLOUD_MODEL} for every prompt, the model most of these samples name. The SVG sample itself

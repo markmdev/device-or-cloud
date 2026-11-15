@@ -173,7 +173,8 @@ function App() {
           Device or Cloud
         </h1>
         <p>
-          <a href="/shop/">Larkfield shop</a> · {FEATURES.length} AI features · <a href="/own/">Check your own prompts</a>
+          <a href="/shop/">Larkfield shop</a> · {FEATURES.length} AI features · <a href="/own/">Check your own prompts</a> ·{" "}
+          <a href="/samples/">Firebase's sample prompts</a>
         </p>
         <p className="quiet">
           {iphone && RECORD.apple
