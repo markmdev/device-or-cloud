@@ -138,6 +138,7 @@ for (const [id, mode] of modes) {
   const want = mode === "prefer_on_device" ? "on_device" : "in_cloud";
   const ran = (await card.locator(".badge").getAttribute("data-source")) === want && (await card.locator(".badge").getAttribute("data-ran")) === "true";
   expect(ran, `shop: ${id} ran ${want === "on_device" ? "on this computer" : "in the cloud"}`);
+  if (valueOn("Chrome on the web", `line_${id}`)) expect(/with one added line/.test(await card.locator(".badge").innerText()), `shop: ${id}'s badge says it runs with one added line`);
   if (!ran) console.log("     the card says:", (await card.locator(".result").innerText()).replace(/\s+/g, " ").slice(0, 300));
 }
 // The results page's row styles once reached the cards' answers and squeezed each into a column 110 px wide.

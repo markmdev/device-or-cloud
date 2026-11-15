@@ -156,6 +156,12 @@ function FeatureResults({ f }: { f: FeatureNumbers }) {
             <b>{tried(x.fix)}: {x.moved ? "within the bar on both sets of inputs." : "not within the bar on both sets of inputs."}</b>{" "}
             {x.fix.on ? APPLES : "Chrome's model"} {x.own.runsRight} of {x.own.runs} runs on the check's inputs and {x.held.runsRight} of {x.held.runs} on
             those held back; the cloud {x.held.cloudRight} of {x.held.cloud} on those held back.
+            {x.allows && (
+              <>
+                {" "}Its count on the check's inputs allows {Math.round(x.allows.range.low)} to {Math.round(x.allows.range.high)} wrong in 100.{" "}
+                {x.allows.unsure && <span className="unsure">{UNSURE}</span>}
+              </>
+            )}
           </summary>
           {x.fix.line && <blockquote>{x.fix.line}</blockquote>}
           {feature.cases.map((c, i) => (
