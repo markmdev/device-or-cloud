@@ -58,8 +58,8 @@ expect(/after one added line in its prompt/.test(await page.locator(".bottom h2"
 await page.locator(".sides .cloud .feature", { hasText: "Read a review's mood" }).click();
 expect((await page.locator('.fixes .fix[data-moved="true"] blockquote').count()) > 0, "a recorded line moves the mood feature, shown with its counts");
 await page.getByRole("button", { name: "Run Chrome's model with this line" }).click();
-await page.locator(".fix.yours p", { hasText: "On the check's 25 inputs" }).waitFor({ timeout: 600_000 }).catch(() => {});
-expect((await page.locator(".fix.yours p", { hasText: "On the check's 25 inputs" }).count()) === 1, "a line of the reader's own runs on this computer and gets its counts");
+await page.locator(".fix.yours p", { hasText: /On the check's \d+ inputs/ }).waitFor({ timeout: 600_000 }).catch(() => {});
+expect((await page.locator(".fix.yours p", { hasText: /On the check's \d+ inputs/ }).count()) === 1, "a line of the reader's own runs on this computer and gets its counts");
 await shot("fixes");
 
 // Run it here: Chrome's model answers live, then stop.
@@ -77,7 +77,7 @@ const inputs = Object.values(record.features).reduce((n, cases) => n + Object.ke
 expect((await page.locator(".feature-results > .result").count()) === inputs, `results: all ${inputs} inputs are shown with their answers`);
 expect((await page.locator("header").innerText()).includes(`Recorded on ${record.machine}, Chrome ${record.chrome}`), "results: the machine and Chrome's version are given");
 const summary = await page.locator(".summary table").innerText();
-expect(Object.values(template.parameters).every((p) => summary.replace(/\s+/g, " ").includes(/(\d+ of \d+) runs/.exec(p.description)[1])), "results: each feature's count is the one its Remote Config mode was set from");
+expect(Object.values(template.parameters).every((p) => summary.replace(/\s+/g, " ").includes(/got (\d+ of \d+) inputs right/.exec(p.description)[1])), "results: each feature's count is the one its Remote Config mode was set from");
 expect((await page.locator('.result .given[data-ok="false"]').count()) > 100, "results: the wrong answers are there too");
 await shot("results");
 

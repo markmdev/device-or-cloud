@@ -36,7 +36,9 @@ private struct Shaped: Generable {
 }
 
 /// One request, as the app sends it: Firebase AI Logic picks Apple's on-device model or the cloud model by the mode.
-func ask(_ feature: Feature, mode: Mode, input: String) async throws -> Answer {
+/// `line` is one more sentence at the end of the instruction. `steady` switches Apple's model's randomness off, so it
+/// always gives its most likely answer.
+func ask(_ feature: Feature, mode: Mode, input: String, line: String = "", steady: Bool = false) async throws -> Answer {
     let ai = FirebaseAI.firebaseAI(backend: .googleAI())
     let cloud = ai.geminiModel(name: cloudModel)
     let device = FirebaseAI.SystemLanguageModel.default
@@ -47,18 +49,19 @@ func ask(_ feature: Feature, mode: Mode, input: String) async throws -> Answer {
     case .onlyOnDevice: device
     }
     // A session remembers what was said, so every request gets a new one.
-    let session = ai.generativeModelSession(model: model, instructions: feature.system)
+    let session = ai.generativeModelSession(model: model, instructions: line.isEmpty ? feature.system : "\(feature.system) \(line)")
+    let options: any GenerationOptionsRepresentable = steady ? FoundationModels.GenerationOptions(sampling: .greedy) : ResponseGenerationOptions.default
     let clock = ContinuousClock()
     let started = clock.now
     let text: String, ranOn: String
     if let shape = feature.schema {
         let response = try await Shaped.$schema.withValue(shape.generationSchema()) {
-            try await session.respond(to: input, generating: Shaped.self)
+            try await session.respond(to: input, generating: Shaped.self, options: options)
         }
         text = shape.inOrder(response.content.json)
         ranOn = response.rawResponse.modelVersion
     } else {
-        let response = try await session.respond(to: input)
+        let response = try await session.respond(to: input, options: options)
         text = response.content.trimmingCharacters(in: .whitespacesAndNewlines)
         ranOn = response.rawResponse.modelVersion
     }

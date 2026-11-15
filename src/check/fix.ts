@@ -9,13 +9,6 @@ export const withLine = (feature: Feature, line: string): Feature => ({ ...featu
 /** The feature with its held-back inputs in place of the check's own. */
 export const heldBackOf = (feature: Feature): Feature => ({ ...feature, cases: feature.heldBack ?? [] });
 
-/** Lines we wrote ourselves after reading the record's failures, shown beside the cloud model's and labelled as ours. */
-export const OUR_LINES: Record<string, string> = {
-  review_mood:
-    "Go by the buyer's final word on the product itself: positive if they end up pleased with it, negative if it broke, disappointed them or is going back, and mixed only if they say they can't decide.",
-  email_address: "The street line must keep the house number or house name, and any flat or unit, as the customer gives them.",
-};
-
 const PROPOSER = {
   id: "proposer",
   system:
@@ -43,7 +36,7 @@ export async function proposeLine(feature: Feature, misses: Miss[]): Promise<str
   return String(JSON.parse(text).line).trim();
 }
 
-export type Tried = Pick<FixRecord, "cases" | "held">;
+export type Tried = Pick<FixRecord, "cases" | "held" | "steady">;
 const neverStopped = () => false;
 
 /**

@@ -6,24 +6,36 @@ import { parse } from "../features/types";
 import { CLOUD_MODEL } from "../firebase";
 import { appCode, CHROME, DEPLOY, IPHONE, parameterFor, swiftCode, TEMPLATE_FILE, templateText } from "./apply";
 import { Fixes } from "./fixes";
-import { APPLES, barInWords, CHROMES, DEFAULT_ALLOWED, differing, graded, moves, NEITHER_ADVICE, onApple, RUNS, VERDICT_NAME, verdictFor, verdictLine, type Failure, type FixRecord, type Run, type Verdict } from "./record";
+import { APPLES, barInWords, CHROMES, costLine, countLine, DEFAULT_ALLOWED, differing, graded, moves, NEITHER_ADVICE, onApple, RUNS, UNSURE, unsureLine, VERDICT_NAME, verdictFor, verdictLine, type Failure, type FixRecord, type Range, type Run, type Verdict } from "./record";
 import type { Cases } from "./run";
 
 const MAX_ALLOWED = 30;
 
-/** One model's share of right answers, with the bar marked on it. */
-function Meter({ who, right, of, unit, allowed, other }: { who: string; right: number; of: number; unit: string; allowed: number; other?: boolean }) {
+/** One model's count of inputs it got right, with the bar marked on it and the range that count allows. */
+function Meter({ who, right, of, runs, range, allowed, other, unsure }: { who: string; right: number; of: number; runs?: [right: number, of: number]; range: Range; allowed: number; other?: boolean; unsure?: boolean }) {
+  // The bar and the side go by the share of answers that were right, which is the share of inputs unless answers vary between runs.
+  const share = runs ? runs[0] / runs[1] : right / of;
   return (
-    <span className="meter" data-within={(of - right) * 100 <= allowed * of} data-other={other}>
+    <span className="meter" data-within={(1 - share) * 100 <= allowed} data-other={other} data-unsure={unsure}>
       <span>{who}</span>
-      <i style={{ "--share": right / of, "--bar": 1 - allowed / 100 } as React.CSSProperties} />
+      <i style={{ "--share": share, "--bar": 1 - allowed / 100, "--low": 1 - range.high / 100, "--high": 1 - range.low / 100 } as React.CSSProperties}>
+        <s />
+      </i>
       <span>
         <b>{right}</b> of {of}
-        {unit}
+        {runs && runs[0] !== right * RUNS && (
+          <small className="runs">
+            {runs[0]} of {runs[1]} runs
+          </small>
+        )}
       </span>
     </span>
   );
 }
+
+const deviceMeter = (who: string, v: Verdict, allowed: number, other: boolean) => (
+  <Meter who={who} right={v.inputsRight} of={v.inputs} runs={[v.runsRight, v.runs]} range={v.range} allowed={allowed} other={other} unsure={!!v.unsure} />
+);
 
 /** One feature on the board. `v` is its verdict on the platform the board shows; `chrome` and `apple` are each on-device model's own. */
 function FeatureRow({ v, chrome, apple, mine, selected, onSelect, allowed, named }: { v: Verdict; chrome: Verdict; apple?: Verdict; mine: boolean; selected: boolean; onSelect: () => void; allowed: number; named?: boolean }) {
@@ -35,9 +47,14 @@ function FeatureRow({ v, chrome, apple, mine, selected, onSelect, allowed, named
         {named && <em>{VERDICT_NAME[v.kind].replace(/\.$/, "")}</em>}
         {counted ? (
           <>
-            <Meter who={CHROMES} right={chrome.runsRight} of={chrome.runs} unit=" runs" allowed={allowed} other={v !== chrome} />
-            {apple && <Meter who={APPLES} right={apple.runsRight} of={apple.runs} unit=" runs" allowed={allowed} other={v !== apple} />}
-            <Meter who="The cloud" right={v.cloudRight} of={v.inputs} unit="" allowed={allowed} />
+            {deviceMeter(CHROMES, chrome, allowed, v !== chrome)}
+            {apple && deviceMeter(APPLES, apple, allowed, v !== apple)}
+            <Meter who="The cloud" right={v.cloudRight} of={v.inputs} range={v.cloudRange} allowed={allowed} />
+            <span className="range">
+              {Math.round(v.range.low)} to {Math.round(v.range.high)} wrong in 100
+            </span>
+            {v.unsure && <span className="unsure">{UNSURE}</span>}
+            {v.kind === "device" && <span className="cost">{costLine(v)}</span>}
             {v.kind === "cloud" && v.pattern && <small>Its misses: {v.pattern}.</small>}
             {v.kind === "fix" && <small>{NEITHER_ADVICE}</small>}
           </>
@@ -179,10 +196,23 @@ function Proof({ v, cases, who, recordedOn }: { v: Verdict; cases: Cases; who: s
   );
 }
 
+/** Beside a side's count: how many of its features more inputs could still move. */
+function Unsure({ of }: { of: Verdict[] }) {
+  const n = of.filter((v) => v.unsure).length;
+  if (!n) return null;
+  return (
+    <small>
+      <span className="unsure">{UNSURE}</span> for {n === of.length ? (n === 1 ? "it" : n === 2 ? "both" : `all ${n}`) : `${n} of the ${of.length}`}: the range crosses the bar
+    </small>
+  );
+}
+
 const NEXT = ["a first", "a second", "a third", "a fourth", "a fifth", "a sixth", "a seventh", "an eighth"];
 
-function BottomLine({ verdicts, allowed, afterFixes, shop, iphone }: { verdicts: Verdict[]; allowed: number; afterFixes: number; shop: boolean; iphone: boolean }) {
+/** `afterFixes` counts the features on the device once each has its line or setting; `bySetting`, that a setting alone does it. */
+function BottomLine({ verdicts, allowed, afterFixes, bySetting, shop, iphone }: { verdicts: Verdict[]; allowed: number; afterFixes: number; bySetting: boolean; shop: boolean; iphone: boolean }) {
   const onDevice = verdicts.filter((v) => v.kind === "device").length, more = afterFixes - onDevice;
+  const change = bySetting ? "with the model's randomness switched off" : "after one added line in its prompt";
   const whose = shop ? "its" : "your", devices = iphone ? "iPhones" : "devices";
   return (
     <section className="bottom">
@@ -192,11 +222,11 @@ function BottomLine({ verdicts, allowed, afterFixes, shop, iphone }: { verdicts:
           ? onDevice
             ? `this feature can run on your users' own ${devices}.`
             : more
-              ? `this feature stays in the cloud today, and can run on your users' own ${devices} after one added line in its prompt.`
+              ? `this feature stays in the cloud today, and can run on your users' own ${devices} ${change}.`
               : `this feature can't run on your users' own ${devices} yet.`
           : `${onDevice} of ${shop ? "the shop's" : "your"} ${verdicts.length} AI features can run on ${whose} users' own ${devices}${
               more === 1
-                ? ` today, and ${NEXT[onDevice] ?? "one more"} after one added line in its prompt.`
+                ? ` today, and ${NEXT[onDevice] ?? "one more"} ${change}.`
                 : more > 1
                   ? ` today, and ${more} more after one added line in each one's prompt.`
                   : "."
@@ -248,7 +278,10 @@ function Apply({ verdicts, apple, children }: { verdicts: Verdict[]; apple?: Ver
             <li key={v.feature.id} data-verdict={v.kind}>
               <b>{v.feature.name}</b>
               <code>{parameterFor(v.feature)}</code>
-              <span>{where.length ? `prefer_on_device in ${where.join(" and in ")}, only_in_cloud everywhere else` : "only_in_cloud"}</span>
+              <span>
+                {where.length ? `prefer_on_device in ${where.join(" and in ")}, only_in_cloud everywhere else` : "only_in_cloud"}
+                {((v.kind === "device" && v.unsure) || (apple?.[i].kind === "device" && apple[i].unsure)) && <span className="unsure">{UNSURE}</span>}
+              </span>
             </li>
           );
         })}
@@ -343,6 +376,8 @@ export function Board({ features, cases, mine = [], recordedOn, held, fixes, ope
   };
   const who = iphone ? APPLES : CHROMES;
   const seen = (id: string) => (iphone ? onApple(cases[id]) : cases[id]);
+  /** The lines and settings tried on the platform the board shows. */
+  const fixesOn = (id: string) => (fixes?.[id] ?? []).filter((fix) => (fix.on === "apple") === iphone);
   const chrome = features.map((f) => verdictFor(f, cases[f.id], allowed));
   const apple = hasApple ? features.map((f) => verdictFor(f, onApple(cases[f.id]), allowed)) : undefined;
   const verdicts = iphone ? apple! : chrome;
@@ -400,6 +435,7 @@ export function Board({ features, cases, mine = [], recordedOn, held, fixes, ope
           <section className="side device">
             <h2>
               <b>{onDevice.length}</b> <span>run on the device</span>
+              <Unsure of={onDevice} />
             </h2>
             <ul>{onDevice.map((v) => row(v))}</ul>
             {onDevice.length === 0 && (
@@ -412,6 +448,7 @@ export function Board({ features, cases, mine = [], recordedOn, held, fixes, ope
           <section className="side cloud">
             <h2>
               <b>{inCloud.length}</b> <span>stay in the cloud</span>
+              <Unsure of={inCloud} />
             </h2>
             <ul>{inCloud.map((v) => row(v))}</ul>
             {inCloud.length === 0 && <p className="none">Nothing has to stay here at this bar.</p>}
@@ -431,16 +468,24 @@ export function Board({ features, cases, mine = [], recordedOn, held, fixes, ope
             who={who}
             recordedOn={iphone ? "in the iPhone app" : mine.includes(shown.feature.id) ? undefined : recordedOn && `on ${recordedOn}`}
           />
+          {(shown.kind === "device" || shown.kind === "cloud" || shown.kind === "fix") && (
+            <p className="tally">
+              {countLine(shown, who)} {shown.unsure && <b>{unsureLine(shown, who)}</b>}
+            </p>
+          )}
         </div>
-        {/* The one-line fixes were tried on Chrome's model only. */}
-        {!iphone && shown.kind === "cloud" && shown.feature.heldBack?.length && held?.[shown.feature.id] && (
+        {/* One more line is tried where it can change something: a feature kept in the cloud, or one on the device that still gets inputs wrong. */}
+        {(shown.kind === "cloud" || (shown.kind === "device" && shown.failures.some((f) => f.side !== "cloud"))) && shown.feature.heldBack?.length && held?.[shown.feature.id] && (
           <Fixes
             feature={shown.feature}
-            base={cases[shown.feature.id]}
-            heldBase={held[shown.feature.id]}
-            fixes={fixes?.[shown.feature.id] ?? []}
+            who={who}
+            onDevice={shown.kind === "device"}
+            base={seen(shown.feature.id)!}
+            heldBase={iphone ? onApple(held[shown.feature.id]) : held[shown.feature.id]}
+            fixes={fixesOn(shown.feature.id)}
             allowed={allowed}
             canRun={canRun}
+            canTry={!iphone}
             onFix={onFix && ((fix) => onFix(shown.feature.id, fix))}
           />
         )}
@@ -460,7 +505,8 @@ export function Board({ features, cases, mine = [], recordedOn, held, fixes, ope
         allowed={allowed}
         shop={!!recordedOn}
         iphone={iphone}
-        afterFixes={verdicts.filter((v) => v.kind === "device" || (!iphone && v.kind === "cloud" && fixes?.[v.feature.id]?.some((fix) => moves(v.feature, fix, allowed)))).length}
+        afterFixes={verdicts.filter((v) => v.kind === "device" || (v.kind === "cloud" && fixesOn(v.feature.id).some((fix) => moves(v.feature, fix, allowed)))).length}
+        bySetting={verdicts.some((v) => v.kind === "cloud" && fixesOn(v.feature.id).some((fix) => fix.steady && moves(v.feature, fix, allowed)))}
       />
       {chrome.every((v) => v.kind !== "pending") && (
         <Apply verdicts={chrome} apple={apple}>

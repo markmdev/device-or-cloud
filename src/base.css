@@ -464,3 +464,43 @@ article.result .given[data-model="apple"] > .quiet:first-child::before { border-
 
 .sides .none { font: 600 19px/1.3 var(--display); letter-spacing: -0.3px; }
 .card .result .wrong { color: var(--ink); }
+
+/* Counts by input. The range a count allows is a band on its meter, amber where it crosses the bar */
+.meter i { isolation: isolate; }
+.meter i s { position: absolute; z-index: -1; top: -4px; bottom: -4px; left: calc(var(--low) * 100%); width: calc((var(--high) - var(--low)) * 100%); border-radius: 3px; background: #c3c8bb; transition: left 300ms var(--ease-out), width 300ms var(--ease-out); }
+.meter[data-unsure="true"] i s { background: var(--amber); }
+.meter small.runs { display: block; font-size: 11.5px; line-height: 1.2; color: var(--faint); }
+.meter[data-other="true"] .runs { display: none; }
+.unsure { font: 600 12.5px/1.3 var(--ui); color: var(--ink); white-space: nowrap; }
+.unsure::before, .shown .tally b::before { content: ""; display: inline-block; width: 13px; height: 10px; margin-right: 6px; border-radius: 3px; background: var(--amber); box-shadow: inset 0 0 0 1.5px var(--ink); vertical-align: -1px; }
+.feature > :is(strong, em) { order: -3; }
+.feature > .meter[data-unsure]:not([data-other="true"]) { order: -2; }
+.feature > :is(.range, .unsure) { order: -1; margin-top: -3px; padding-left: 116px; }
+.feature > .range { font-size: 12.5px; }
+.feature > .cost { order: 2; font-size: 12.5px; line-height: 1.35; text-wrap: pretty; }
+.sides h2 small { margin-left: auto; max-width: 19em; text-align: right; font: 400 12.5px/1.35 var(--ui); letter-spacing: 0; color: var(--soft); }
+.sides h2 small .unsure { display: block; max-width: none; font: 600 13.5px/1.3 var(--ui); letter-spacing: 0; }
+
+.shown .proof:has(+ .tally) { border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
+.shown .tally { position: relative; z-index: 1; padding: 14px 26px 16px; border: 2px solid var(--ink); border-top: 0; border-radius: 0 0 22px 22px; background: var(--wash); font-size: 13.5px; line-height: 1.45; color: var(--soft); text-wrap: pretty; }
+.shown .tally b { display: block; margin-top: 4px; color: var(--ink); font-weight: 600; }
+
+.fix[data-kind="setting"] h3 { font: 700 21px/1.2 var(--display); letter-spacing: -0.4px; text-wrap: pretty; }
+.fix[data-kind="setting"] > .quiet:first-child::before { content: ""; display: inline-block; width: 22px; height: 12px; margin-right: 7px; border-radius: 6px; background: radial-gradient(circle at 6px 50%, currentColor 3.5px, transparent 4px); box-shadow: inset 0 0 0 1.5px currentColor; vertical-align: -2px; }
+.fixes:not(:has(.yours)) .fix:last-child:nth-of-type(odd) { grid-column: 1 / -1; }
+.modes span .unsure { display: block; margin-top: 3px; font: 600 12.5px/1.3 var(--ui); }
+td small.runs { display: block; font-size: 12px; color: var(--faint); }
+.feature-results .unsure { white-space: normal; font-size: inherit; }
+.feature-results p .unsure { display: block; margin-top: 4px; }
+
+@media (min-width: 901px) {
+  .sides .feature .meter:not([data-other="true"]) { grid-template-columns: 100px 1fr 60px; }
+  .sides .feature :is(.range, .unsure, .meter .runs) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .sides .feature > .cost { grid-column: 1 / -1; margin-top: 2px; }
+}
+
+@media (max-width: 900px) {
+  .sides h2 small { display: none; }
+  .shown .tally { margin-inline: 16px; padding-inline: 18px; }
+  .feature > :is(.range, .unsure) { padding-left: 108px; }
+}

@@ -2,7 +2,7 @@ import { createRoot } from "react-dom/client";
 import { AnswerText } from "../answer";
 import "../base.css";
 import recorded from "../check/recorded.json";
-import { APPLES, CHROMES, DEFAULT_ALLOWED, graded, judge, RUNS, VERDICT_NAME, whereApple, type CaseRecord, type CheckRecord, type Run, type Tally } from "../check/record";
+import { APPLES, CHROMES, countLine, DEFAULT_ALLOWED, graded, judge, RUNS, UNSURE, unsureLine, VERDICT_NAME, whereApple, type CaseRecord, type CheckRecord, type FixRecord, type Run, type Tally } from "../check/record";
 import type { Case, Feature } from "../features";
 import { numbers, WHO, type FeatureNumbers } from "./numbers";
 
@@ -43,7 +43,7 @@ function Answer({ feature, c, run, r, who, source, column }: { feature: Feature;
 }
 
 /** One input with its right answer and every answer given for it. */
-function Input({ feature, c, r, n }: { feature: Feature; c: Case; r?: CaseRecord; n: number }) {
+function Input({ feature, c, r, n, who = CHROMES }: { feature: Feature; c: Case; r?: CaseRecord; n: number; who?: string }) {
   return (
     <article className="result" id={c.id}>
       <div className="asked">
@@ -55,7 +55,7 @@ function Input({ feature, c, r, n }: { feature: Feature; c: Case; r?: CaseRecord
         <Expected c={c} />
       </div>
       {Array.from({ length: RUNS }, (_, i) => (
-        <Answer key={i} feature={feature} c={c} run={r?.device[i]} r={r} who={`${CHROMES}, run ${i + 1}`} source="on_device" />
+        <Answer key={i} feature={feature} c={c} run={r?.device[i]} r={r} who={`${who}, run ${i + 1}`} source="on_device" />
       ))}
       <Answer feature={feature} c={c} run={r?.cloud} r={r} who="The cloud model" source="in_cloud" />
       {r?.apple?.map((run, i) => (
@@ -65,19 +65,30 @@ function Input({ feature, c, r, n }: { feature: Feature; c: Case; r?: CaseRecord
   );
 }
 
-const Count = ({ right, of }: { right: number; of: number }) => (
-  <td data-within={(of - right) * 100 <= DEFAULT_ALLOWED * of}>
+const Count = ({ right, of, runs }: { right: number; of: number; runs?: [right: number, of: number] }) => (
+  <td data-within={runs ? (runs[1] - runs[0]) * 100 <= DEFAULT_ALLOWED * runs[1] : (of - right) * 100 <= DEFAULT_ALLOWED * of}>
     {right} of {of}
+    {runs && runs[0] * of !== right * runs[1] && (
+      <small className="runs">
+        {runs[0]} of {runs[1]} runs
+      </small>
+    )}
   </td>
 );
 
+/** An on-device model's count: the inputs it got right on every run, with the runs where its answers vary. */
+const OnDevice = ({ t }: { t: Pick<Tally, "inputs" | "inputsRight" | "runs" | "runsRight"> }) => <Count right={t.inputsRight} of={t.inputs} runs={[t.runsRight, t.runs]} />;
+
 const Counts = ({ t, apple }: { t: Tally; apple?: Tally }) => (
   <>
-    <Count right={t.runsRight} of={t.runs} />
-    {apple && <Count right={apple.runsRight} of={apple.runs} />}
+    <OnDevice t={t} />
+    {apple && <OnDevice t={apple} />}
     {t.cloud > 0 ? <Count right={t.cloudRight} of={t.cloud} /> : <td>not asked</td>}
   </>
 );
+
+/** A line or a setting, named with the model it was tried on. */
+const tried = (fix: FixRecord) => `${fix.steady ? "With its randomness off" : `With ${WHO[fix.by]}`}${fix.on ? ", on Apple's model" : ""}`;
 
 function FeatureResults({ f }: { f: FeatureNumbers }) {
   const { feature, verdict: v } = f;
@@ -86,12 +97,15 @@ function FeatureResults({ f }: { f: FeatureNumbers }) {
     <section className="feature-results" id={feature.id}>
       <h2>{feature.name}</h2>
       <p>
-        <b>{VERDICT_NAME[v.kind]}</b> Chrome's model was right on {v.runsRight} of {v.runs} runs, the cloud model on {v.cloudRight} of {v.inputs}.{" "}
-        {f.apple && (
-          <>
-            <b>In the iPhone app: {VERDICT_NAME[f.apple.kind]}</b> Apple's model was right on {f.apple.runsRight} of {f.apple.runs} runs.{" "}
-          </>
-        )}
+        <b>{VERDICT_NAME[v.kind]}</b> {countLine(v)} {v.unsure && <span className="unsure">{unsureLine(v)}</span>}
+      </p>
+      {f.apple && (
+        <p>
+          <b>In the iPhone app: {VERDICT_NAME[f.apple.kind]}</b> {countLine(f.apple, APPLES)}{" "}
+          {f.apple.unsure && <span className="unsure">{unsureLine(f.apple, APPLES)}</span>}
+        </p>
+      )}
+      <p>
         {feature.graded
           ? "This feature has no single right answer: code checks its rules and the details an answer has to keep, and the cloud model judges the rest."
           : "Code decides every answer."}
@@ -103,8 +117,8 @@ function FeatureResults({ f }: { f: FeatureNumbers }) {
           <tr>
             <th>Kind of input</th>
             <th>Inputs</th>
-            <th>Chrome's model, runs right</th>
-            {APPLE && <th>Apple's model, runs right</th>}
+            <th>Chrome's model, inputs right on every run</th>
+            {APPLE && <th>Apple's model, inputs right on every run</th>}
             <th>The cloud, inputs right</th>
           </tr>
         </thead>
@@ -126,7 +140,7 @@ function FeatureResults({ f }: { f: FeatureNumbers }) {
         <>
           <h3>{held.length} inputs held back from the check</h3>
           <p>
-            Used only to prove a one-line fix on inputs it wasn't written from. As the instruction stands, Chrome's model was right on{" "}
+            Used only to prove a line, or a setting, on inputs it wasn't written from. As the instruction stands, Chrome's model was right on{" "}
             {f.held.runsRight} of {f.held.runs} runs{f.heldApple && `, Apple's model on ${f.heldApple.runsRight} of ${f.heldApple.runs}`} and the cloud model on{" "}
             {f.held.cloudRight} of {f.held.cloud}.
           </p>
@@ -137,17 +151,18 @@ function FeatureResults({ f }: { f: FeatureNumbers }) {
       )}
 
       {f.fixes.map((x) => (
-        <details key={x.fix.line} className="fix-results">
+        <details key={`${x.fix.line}${x.fix.on}${x.fix.steady}`} className="fix-results">
           <summary>
-            <b>With {WHO[x.fix.by]}: {x.moved ? "moves to the device." : "doesn't move."}</b> Chrome's model {x.own.runsRight} of {x.own.runs} on the
-            check's inputs and {x.held.runsRight} of {x.held.runs} on those held back; the cloud {x.held.cloudRight} of {x.held.cloud} on those held back.
+            <b>{tried(x.fix)}: {x.moved ? "within the bar on both sets of inputs." : "not within the bar on both sets of inputs."}</b>{" "}
+            {x.fix.on ? APPLES : "Chrome's model"} {x.own.runsRight} of {x.own.runs} runs on the check's inputs and {x.held.runsRight} of {x.held.runs} on
+            those held back; the cloud {x.held.cloudRight} of {x.held.cloud} on those held back.
           </summary>
-          <blockquote>{x.fix.line}</blockquote>
+          {x.fix.line && <blockquote>{x.fix.line}</blockquote>}
           {feature.cases.map((c, i) => (
-            <Input key={c.id} feature={feature} c={c} r={x.fix.cases[c.id]} n={i + 1} />
+            <Input key={c.id} feature={feature} c={c} r={x.fix.cases[c.id]} n={i + 1} who={x.fix.on ? APPLES : CHROMES} />
           ))}
           {held.map((c, i) => (
-            <Input key={c.id} feature={feature} c={c} r={x.fix.held[c.id]} n={i + 1} />
+            <Input key={c.id} feature={feature} c={c} r={x.fix.held[c.id]} n={i + 1} who={x.fix.on ? APPLES : CHROMES} />
           ))}
         </details>
       ))}
@@ -180,10 +195,12 @@ function App() {
         <p className="lede">
           {sum((f) => f.verdict.inputs)} inputs for {all.length} features. Each went through Firebase AI Logic {RUNS} times to the model built into Chrome{" "}
           {RECORD.chrome}{APPLE && `, ${RUNS} times to Apple's on-device model from the shop's iPhone app`} and once to {RECORD.cloudModel} in the cloud.
-          Chrome's model was right on {sum((f) => f.verdict.runsRight)} of {sum((f) => f.verdict.runs)} runs,{" "}
-          {APPLE && `Apple's model on ${sum((f) => f.apple!.runsRight)} of ${sum((f) => f.apple!.runs)}, `}the cloud model on{" "}
-          {sum((f) => f.verdict.cloudRight)} of {sum((f) => f.verdict.inputs)}. The verdicts are at
-          the default bar, up to {DEFAULT_ALLOWED} wrong answers in 100; a count short of it is marked.
+          Chrome's model was right on every run on {sum((f) => f.verdict.inputsRight)} of {sum((f) => f.verdict.inputs)} inputs,{" "}
+          {APPLE && `Apple's model on ${sum((f) => f.apple!.inputsRight)}, `}the cloud model on {sum((f) => f.verdict.cloudRight)}. Where a model's
+          answer to one input changes from run to run, its runs are given too. The verdicts are at the default bar, up to {DEFAULT_ALLOWED} wrong
+          answers in 100; a count short of it is marked, and so is a verdict that more inputs could still change. We wrote every input ourselves.
+          The first 25 of each feature came before the first recording. The other 25, and the 10 held back for each feature that has them, were
+          written before any model had answered them.
         </p>
       </section>
 
@@ -195,8 +212,8 @@ function App() {
               <th>{APPLE ? "Verdict on Chrome" : "Verdict"}</th>
               {APPLE && <th>Verdict in the iPhone app</th>}
               <th>Inputs</th>
-              <th>Chrome's model, runs right</th>
-              {APPLE && <th>Apple's model, runs right</th>}
+              <th>Chrome's model, inputs right on every run</th>
+              {APPLE && <th>Apple's model, inputs right on every run</th>}
               <th>The cloud, inputs right</th>
             </tr>
           </thead>
@@ -206,11 +223,15 @@ function App() {
                 <td>
                   <a href={`#${f.feature.id}`}>{f.feature.name}</a>
                 </td>
-                <td data-verdict={f.verdict.kind}>{VERDICT_NAME[f.verdict.kind].replace(/\.$/, "")}</td>
-                {f.apple && <td data-verdict={f.apple.kind}>{VERDICT_NAME[f.apple.kind].replace(/\.$/, "")}</td>}
+                {[f.verdict, ...(f.apple ? [f.apple] : [])].map((v, i) => (
+                  <td key={i} data-verdict={v.kind}>
+                    {VERDICT_NAME[v.kind].replace(/\.$/, "")}
+                    {v.unsure && <span className="unsure">{UNSURE}</span>}
+                  </td>
+                ))}
                 <td>{f.verdict.inputs}</td>
-                <Count right={f.verdict.runsRight} of={f.verdict.runs} />
-                {f.apple && <Count right={f.apple.runsRight} of={f.apple.runs} />}
+                <OnDevice t={f.verdict} />
+                {f.apple && <OnDevice t={f.apple} />}
                 <Count right={f.verdict.cloudRight} of={f.verdict.inputs} />
               </tr>
             ))}
