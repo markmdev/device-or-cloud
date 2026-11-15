@@ -60,7 +60,7 @@ p.answer { white-space: pre-wrap; }
 /* The check */
 .check header { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px; min-height: 68px; padding: 12px var(--gutter); }
 .check h1 { display: flex; align-items: center; gap: 10px; font: 700 21px/1 var(--display); letter-spacing: -0.4px; }
-.check h1 i { width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--ink); background: linear-gradient(90deg, var(--device) 50%, var(--cloud) 50%); }
+.check h1 i, .label h1 i { width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--ink); background: linear-gradient(90deg, var(--device) 50%, var(--cloud) 50%); }
 .check header p { color: var(--soft); font-weight: 500; font-size: 15px; }
 .check header h1 + p { padding-left: 18px; border-left: 1.5px solid var(--rule); }
 .check header .quiet { margin-left: auto; font-weight: 400; font-size: 14px; }
@@ -507,4 +507,50 @@ td small.runs { display: block; font-size: 12px; color: var(--faint); }
   .sides h2 small { display: none; }
   .shown .tally { margin-inline: 16px; padding-inline: 18px; }
   .feature > :is(.range, .unsure) { padding-left: 108px; }
+}
+
+/* The page where a person marks judged answers: one column, for a phone, with no side's colour on it */
+.label { max-width: 620px; margin: 0 auto; padding: 0 20px 48px; }
+.label header { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 10px; padding: 18px 0 0; }
+.label header h1 { display: flex; align-items: center; gap: 9px; font: 600 15px/1.2 var(--ui); }
+.label header .count { margin-left: auto; font: 500 13px/1.2 var(--mono); color: var(--soft); }
+.label header p { flex-basis: 100%; font: 700 30px/1.08 var(--display); letter-spacing: -0.9px; text-wrap: balance; }
+.label header .done { position: relative; flex-basis: 100%; height: 6px; margin-top: 4px; border-radius: 3px; background: var(--rule); }
+.label header .done::before { content: ""; position: absolute; inset: 0 auto 0 0; width: calc(var(--done) * 100%); border-radius: 3px; background: var(--ink); transition: width 300ms var(--ease-out); }
+.label .task, .label .thanks { display: grid; gap: 8px; padding-top: 16px; }
+.label .judge { margin-bottom: 8px; font-size: 15.5px; line-height: 1.45; text-wrap: pretty; }
+.label .task > .quiet { font: 600 12.5px/1.2 var(--ui); }
+.label .task pre, .label .answered { padding: 14px 16px; border-radius: 14px; background: var(--wash); }
+.label .task pre { margin-bottom: 8px; white-space: pre-wrap; overflow-wrap: anywhere; }
+.label .answered { border: 2px solid var(--ink); background: var(--white); box-shadow: 0 5px 0 -1px var(--ink); font-size: 17.5px; line-height: 1.4; font-weight: 500; }
+.label .actions { position: sticky; bottom: 0; z-index: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 16px -20px 0; padding: 12px 20px calc(12px + env(safe-area-inset-bottom)); border-top: 2px solid var(--ink); background: var(--white); }
+/* The two marks weigh the same, so the page leans a person neither way */
+.label .actions button { display: grid; justify-items: center; gap: 7px; padding: 12px 8px 13px; border-radius: 18px; background: var(--white); color: var(--ink); font-size: 15.5px; }
+.label .actions button::before { content: "\2713"; display: grid; place-items: center; width: 26px; height: 26px; border: 2px solid var(--ink); border-radius: 50%; font: 600 15px/1 var(--ui); }
+.label .actions button:last-child::before { content: "\2715"; font-size: 12.5px; }
+.label .actions button:active:not(:disabled) { background: var(--ink); color: var(--white); }
+.label .actions button:active:not(:disabled)::before { border-color: var(--white); }
+.label details { margin-top: 14px; font-size: 13.5px; color: var(--soft); }
+.label details summary { cursor: pointer; }
+.label details p { margin-top: 6px; }
+.label .thanks { gap: 12px; padding-top: 28px; }
+.label .thanks h2 { font: 700 30px/1.08 var(--display); letter-spacing: -0.9px; }
+.label .thanks button { justify-self: start; padding: 16px 24px; font-size: 16px; }
+.label .lede { margin-top: 24px; font-size: 17px; color: var(--ink); }
+.label .notice { margin-top: 16px; border: 2px solid var(--ink); border-radius: 14px; padding: 14px 16px; }
+.label .notice button { padding: 0; border: 0; background: none; font: inherit; text-decoration: underline; text-underline-offset: 3px; }
+
+/* The results page: who else judged the answers that have no single right answer */
+.results .judges { display: grid; gap: 12px; padding: 32px var(--gutter) 36px; border-top: 2px solid var(--ink); }
+.results .judges h2 { font: 700 30px/1.1 var(--display); letter-spacing: -0.8px; }
+.results .judges p { max-width: 96ch; font-size: 15px; }
+.results .judges ul { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 6px; }
+.results .judges li { padding: 18px 20px 20px; border-radius: 14px; background: var(--wash); font-size: 14.5px; }
+.results .judges li b { display: block; margin-bottom: 6px; font: 700 21px/1.2 var(--display); letter-spacing: -0.4px; }
+article.result .given .also { display: grid; gap: 3px; margin-top: 2px; padding-top: 7px; border-top: 1.5px solid #d5d9cd; font-size: 12.5px; color: var(--soft); }
+article.result .given .also span[data-ok="false"] { color: var(--wrong); }
+
+@media (max-width: 900px) {
+  .results .judges ul { grid-template-columns: 1fr; }
+  .results .judges h2 { font-size: 24px; }
 }

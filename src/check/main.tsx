@@ -3,14 +3,14 @@ import { createRoot } from "react-dom/client";
 import "../base.css";
 import { FEATURES, type Feature } from "../features";
 import { DownloadPanel } from "../download";
-import { CLOUD_MODEL, deviceState, type DeviceState } from "../firebase";
+import { CLOUD_MODEL, deviceState, SECOND_GRADER, type DeviceState } from "../firebase";
 import { OutOfRequests, outOfRequests } from "./ask";
 import { Board } from "./board";
 import { heldBackOf, missesOf, proposeLine, withLine } from "./fix";
 import { APPLE_LINES, OUR_LINES } from "./lines";
 import recorded from "./recorded.json";
 import { onApple, RUNS, verdictFor, whereApple, written, type CheckRecord, type FixRecord } from "./record";
-import { gradeFeature, runCloud, runDevice, type Cases } from "./run";
+import { gradeAgain, gradeFeature, runCloud, runDevice, type Cases } from "./run";
 
 const RECORD = recorded as CheckRecord;
 const chromeVersion = () => /Chrome\/(\d+)/.exec(navigator.userAgent)?.[1] ?? "?";
@@ -123,7 +123,27 @@ function App() {
     } catch (e) {
       if (!(e instanceof OutOfRequests)) throw e;
       setNotice(outOfRequests(e));
+      setRunning(undefined);
       return;
+    }
+    // A second model judges the judged answers again, the check's own first, as far as its smaller free day goes. A later
+    // run does the rest.
+    try {
+      const judged = FEATURES.filter((f) => f.graded);
+      for (const f of judged) {
+        setRunning(f.id);
+        all[f.id] = await gradeAgain(f, all[f.id], (cases) => { all[f.id] = cases; save(); });
+      }
+      for (const f of judged.filter((f) => f.heldBack)) {
+        setRunning(f.id);
+        held[f.id] = await gradeAgain(heldBackOf(f), held[f.id], (cases) => { held[f.id] = cases; save(); });
+        for (const fix of fixes[f.id] ?? []) {
+          fix.cases = await gradeAgain(lined(f, fix), fix.cases, (cases) => { fix.cases = cases; save(); });
+          fix.held = await gradeAgain(heldBackOf(lined(f, fix)), fix.held, (cases) => { fix.held = cases; save(); });
+        }
+      }
+    } catch (e) {
+      if (!(e instanceof OutOfRequests)) throw e;
     } finally {
       setRunning(undefined);
     }
@@ -133,6 +153,7 @@ function App() {
       chrome: chromeVersion(),
       date: new Date().toISOString().slice(0, 10),
       cloudModel: CLOUD_MODEL,
+      secondGrader: SECOND_GRADER,
       features: all,
       held,
       fixes,

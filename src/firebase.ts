@@ -18,6 +18,8 @@ initializeAppCheck(app, {
 const ai = getAI(app, { backend: new GoogleAIBackend() });
 
 export const CLOUD_MODEL = "gemini-3.5-flash-lite";
+/** A different model from both that are checked: it judges the judged answers a second time. */
+export const SECOND_GRADER = "gemini-3.8-flash";
 export type Mode = InferenceMode;
 export const MODES = Object.values(InferenceMode);
 
@@ -27,14 +29,14 @@ const models = new Map<string, GenerativeModel>();
  * One feature's model in one mode. The instruction and the output shape are given twice because the SDK
  * sends each side its own: the cloud reads the request's settings, Chrome's model reads the session's.
  */
-export function modelFor(feature: Pick<Feature, "id" | "system" | "schema">, mode: Mode): GenerativeModel {
-  const key = `${feature.id}:${mode}`;
+export function modelFor(feature: Pick<Feature, "id" | "system" | "schema">, mode: Mode, cloudModel = CLOUD_MODEL): GenerativeModel {
+  const key = `${feature.id}:${mode}:${cloudModel}`;
   let model = models.get(key);
   if (!model) {
     model = getGenerativeModel(ai, {
       mode,
       inCloudParams: {
-        model: CLOUD_MODEL,
+        model: cloudModel,
         systemInstruction: feature.system,
         generationConfig: feature.schema ? { responseMimeType: "application/json", responseJsonSchema: feature.schema } : undefined,
       },

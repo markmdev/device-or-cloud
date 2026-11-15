@@ -38,6 +38,8 @@ The cloud side runs on Google's free Gemini tier, which the whole site shares: 1
 
 **The inputs and their right answers** are in `src/features/`. Code decides whether an answer is right wherever an input has one right answer: a category, a date, a total, an address, a yes or no. For receipts, invoices and returns questions, the input text and the right answer are built from the same figures, so the key can't disagree with the input. Two features, the product title and the delivery note, have no single right answer. Code checks their rules (length, required details), and the cloud model judges the rest, 25 answers in one request.
 
+**Who checks that judge.** The cloud model's judgment decides those two features' verdicts, and some of the answers it judges are its own. So two more judges look at the same answers without being told which model wrote which. A second model, `gemini-3.8-flash`, judges them again with the same request; the recorder runs it last, as far as its free 20 requests a day go, and the record keeps its judgments beside the first (`second`). And people mark them on a small page (`label/`, `src/label/`): one answer at a time, "good enough" or "not good enough", no grade shown, each answer to one person. Their marks are kept in Cloud Firestore (`firestore.rules`: an answer keeps its first mark, and nothing is changed or removed). The results page shows every judgment beside each answer, and from 30 marks on, how far the cloud model agrees with the people. Neither changes a verdict.
+
 **The iPhone shop** (`ios/`) is the same shop as a SwiftUI app. Firebase AI Logic's hybrid inference for Apple platforms reaches Apple's on-device model through the Foundation Models framework, with Gemini behind it. The app bundles the same instructions, answer shapes and inputs as the web shop (`npm run ios` writes them from `src/features/` into `ios/Larkfield/features.json`), reads each feature's mode, and its line or setting where it has one, from the same Remote Config template under its own condition, "The iPhone app", and badges every answer with where the SDK says it ran. So one feature can run on the device on one platform and in the cloud on the other.
 
 The check has Apple's model as a third column, and the iPhone app runs the check itself. Its Check tab sends every input three times to the on-device model alone and gives each feature its verdict on the phone. The verdicts come from the web check's own code: `npm run ios` builds `src/check/phone.ts` into one script, `ios/Larkfield/check.js`, which the app runs, so both apps count, judge and decide the same way, against the same recorded cloud answers. `npm run apple` puts the app's answers into the record. On the web check, a switch picks the platform the two sides are about.
@@ -53,8 +55,9 @@ The results page shows the whole record: every input, its right answer, all thre
 - `src/firebase.ts`: Firebase AI Logic (`firebase/ai`) with the Gemini Developer API, one model for each feature and mode, and App Check with reCAPTCHA Enterprise.
 - `src/check/ask.ts`: every request, on the device or in the cloud, and where the SDK says the answer ran.
 - `src/shop/main.tsx`: Remote Config holds each feature's mode, and the shop follows a change without a reload.
+- `src/labels.ts`: Cloud Firestore keeps people's marks on the judged answers.
 - `ios/Larkfield/Ask.swift`: the same request from the iPhone app, through `HybridModel` with Apple's on-device model and Gemini, in the mode `ios/Larkfield/Shop.swift` reads from Remote Config.
-- `firebase.json`: Hosting and the Remote Config template, deployed with one command.
+- `firebase.json`: Hosting, the Remote Config template and the Firestore rules, deployed with one command.
 
 One thing we learned from the SDK's source: in hybrid mode the request's system instruction and output shape reach only the cloud model. Chrome's model takes them from `onDeviceParams`. `modelFor` in `src/firebase.ts` sets both.
 

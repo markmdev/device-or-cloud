@@ -1,0 +1,18 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // One person's mark on one judged answer of the recorded check. An answer keeps its first mark: none is changed or
+    // removed. The document's name is the hash of what it marks, so nobody can put a second mark beside the first.
+    match /labels/{id} {
+      allow read: if true;
+      allow create: if request.resource.data.keys().hasOnly(['feature', 'input', 'answer', 'good', 'by', 'at'])
+        && request.resource.data.feature is string && request.resource.data.feature.size() < 40
+        && request.resource.data.input is string && request.resource.data.input.size() < 40
+        && request.resource.data.answer is string && request.resource.data.answer.size() < 2000
+        && request.resource.data.good is bool
+        && request.resource.data.by is string && request.resource.data.by.size() == 36
+        && request.resource.data.at == request.time
+        && id == hashing.sha256(request.resource.data.feature + '\n' + request.resource.data.input + '\n' + request.resource.data.answer).toHexString().lower();
+    }
+  }
+}
