@@ -12,7 +12,7 @@ It is light, loud and flat on purpose: no dark developer-tool page, no gradients
 | Device | `#d6f36b` | The device side, "Ran on this computer", what the device gives users |
 | Cloud | `#c4dcff` | The cloud side, "Ran in the cloud" |
 | Wrong | `#cf2d12` | A wrong answer, and a model that is outside the bar. Nothing else is red |
-| Amber | `#ffd666` | A verdict that is on neither side yet |
+| Amber | `#ffd666` | A verdict that isn't settled: a feature on neither side yet, or a count with not enough inputs to tell |
 | Wash | `#f4f5f1` | Inputs, the footer, quiet surfaces |
 | Soft, faint | `#4d5650`, `#7c857e` | Secondary text, field names |
 
@@ -37,12 +37,12 @@ The first screen is the product: what it does in one sentence, the two counts, a
 3. **What it does**, one sentence, on the left, and how the check works small on the right.
 4. **The board**, edge to edge. The bar's slider sits on the line at the board's top edge, because it decides which side each feature is on.
    - Where the record has Apple's model too, a switch sits on the same top edge, over the device side: "Chrome on the web" or "The iPhone app". It is one white control with the chosen half in ink, because it decides whose device the left side is. The sentence under the name follows it. Under 1260px it drops under the bar, centred.
-   - Each side opens with its count, as large as the page goes.
-   - Each feature is a white card: its name on the left, two meters on the right, the shown platform's own model and the cloud. The other platform's model is one quiet line under the name, its count in red when it is outside the bar, so a card never grows a third meter. The tick on a meter is the bar. A meter that falls short of it is red. Moving the slider moves every tick at once, and a feature that changes sides is seen crossing the line.
+   - Each side opens with its count, as large as the page goes. Where more inputs could still move some of its features, the count carries that beside it, small: "Not enough inputs to tell", for how many, and why. The big number never stands without it.
+   - Each feature is a white card: its name on the left, two meters on the right, the shown platform's own model and the cloud. The other platform's model is one quiet line under the name, its count in red when it is outside the bar, so a card never grows a third meter. The tick on a meter is the bar. A meter that falls short of it is red. The range a count allows is a band around the end of its meter, as tall as the tick: grey when it is clear of the bar, amber on the platform's own model when it crosses the bar. On a laptop the band says it and the card stays two lines; the range in numbers, "Not enough inputs to tell" and the runs behind a count are written out on the card only where it has room, on a phone and in the panel of features on neither side. A card on the device side adds one line across its foot: what moving costs. Moving the slider moves every tick at once, and a feature that changes sides is seen crossing the line.
    - An empty side says so in the heading type, and the device side adds which feature crosses first and at what bar, so the reader knows where to drag.
    - A bead on the line, in amber, counts the features on neither side and jumps to them.
-   - **The proof** comes straight after the two sides, so the feature a reader picked and its proof are together: a white panel across the line, Chrome's answer under the device side, the cloud's under the cloud side, the input between them. The field that tells the two answers apart is shown large, both at the same size; the full answers are below it in mono. The plainest failure opens first: only Chrome's model wrong, on every run, with the same answer each time. The page opens on the address feature, whose dropped house number reads in a second. Picking a feature anywhere brings its proof into view.
-   - **One more line in the prompt** follows the proof for a feature kept in the cloud: a white panel across the line. A line that moves the feature to the device is a lime card with a solid "Moves to the device"; one that doesn't is a quiet wash card with its reason under a rule.
+   - **The proof** comes straight after the two sides, so the feature a reader picked and its proof are together: a white panel across the line, Chrome's answer under the device side, the cloud's under the cloud side, the input between them. The field that tells the two answers apart is shown large, both at the same size; the full answers are below it in mono. The plainest failure opens first: only Chrome's model wrong, on every run, with the same answer each time. The page opens on the address feature, whose dropped house number reads in a second. Picking a feature anywhere brings its proof into view. The count in a sentence, with its range, is the proof's foot, on wash; when there are not enough inputs to tell, that is its last line, in ink, with the amber mark.
+   - **One more line in the prompt** follows the proof for a feature kept in the cloud, and for one on the device that still gets inputs wrong: a white panel across the line. A setting in place of a line is the same card with a small switch drawn before its label and no quote marks. A third card with no "try your own" under it takes the full width. A line that moves the feature to the device is a lime card with a solid "Moves to the device"; one that doesn't is a quiet wash card with its reason under a rule.
    - **On neither side yet** comes last in the board: one white panel across the line, each feature with its verdict in amber.
 5. **The download notice**, when Chrome's model isn't on this computer, under the board: everything above it was recorded.
 6. **The bottom line:** what moving gives the users, in lime.
@@ -54,7 +54,7 @@ The same top line, question and board as the shop's check, with the paste form b
 
 ## Apply it
 
-Under the bottom line. One line for each feature first: its dot in its side's colour, its parameter, and the mode it gets. The template, the app code and the deploy command are behind one button under the list, as three white cards with ink borders: the template (tall, on the left), the code and the command. Code sits on wash, never on a dark block.
+Under the bottom line. One line for each feature first: its dot in its side's colour, its parameter, and the mode it gets, with "Not enough inputs to tell" under the mode where it holds. The template, the app code and the deploy command are behind one button under the list, as three white cards with ink borders: the template (tall, on the left), the code and the command. Code sits on wash, never on a dark block.
 
 ## The results page
 
@@ -80,7 +80,8 @@ A shopper's own words are set in Geist. A receipt and a trade order keep Geist M
 ## Words
 
 - "the device" and "the cloud" for the sides; "Chrome's model" and "the cloud model" for who answered; "Ran on this computer" and "Ran in the cloud" for where.
-- Counts are said whole: "69 of 75 runs", never a percentage.
+- Counts are said whole: "47 of 50", never a percentage. A count is inputs right on every run; the runs follow it, small, only where a model's answers vary.
+- "Not enough inputs to tell" is one mark everywhere: a small amber block with an ink edge, then the words in ink. It is never a filled pill, which is the verdict "Neither model is good enough".
 - No other company's name or logo anywhere on either page.
 
 ## Sizes

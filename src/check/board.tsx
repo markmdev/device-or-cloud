@@ -12,13 +12,15 @@ import type { Cases } from "./run";
 const MAX_ALLOWED = 30;
 
 /** One model's count of inputs it got right, with the bar marked on it and the range that count allows. */
-function Meter({ who, right, of, runs, range, allowed, other }: { who: string; right: number; of: number; runs?: [right: number, of: number]; range: Range; allowed: number; other?: boolean }) {
+function Meter({ who, right, of, runs, range, allowed, other, unsure }: { who: string; right: number; of: number; runs?: [right: number, of: number]; range: Range; allowed: number; other?: boolean; unsure?: boolean }) {
   // The bar and the side go by the share of answers that were right, which is the share of inputs unless answers vary between runs.
   const share = runs ? runs[0] / runs[1] : right / of;
   return (
-    <span className="meter" data-within={(1 - share) * 100 <= allowed} data-other={other}>
+    <span className="meter" data-within={(1 - share) * 100 <= allowed} data-other={other} data-unsure={unsure}>
       <span>{who}</span>
-      <i style={{ "--share": share, "--bar": 1 - allowed / 100, "--low": 1 - range.high / 100, "--high": 1 - range.low / 100 } as React.CSSProperties} />
+      <i style={{ "--share": share, "--bar": 1 - allowed / 100, "--low": 1 - range.high / 100, "--high": 1 - range.low / 100 } as React.CSSProperties}>
+        <s />
+      </i>
       <span>
         <b>{right}</b> of {of}
         {runs && runs[0] !== right * RUNS && (
@@ -32,7 +34,7 @@ function Meter({ who, right, of, runs, range, allowed, other }: { who: string; r
 }
 
 const deviceMeter = (who: string, v: Verdict, allowed: number, other: boolean) => (
-  <Meter who={who} right={v.inputsRight} of={v.inputs} runs={[v.runsRight, v.runs]} range={v.range} allowed={allowed} other={other} />
+  <Meter who={who} right={v.inputsRight} of={v.inputs} runs={[v.runsRight, v.runs]} range={v.range} allowed={allowed} other={other} unsure={!!v.unsure} />
 );
 
 /** One feature on the board. `v` is its verdict on the platform the board shows; `chrome` and `apple` are each on-device model's own. */
@@ -191,6 +193,17 @@ function Proof({ v, cases, who, recordedOn }: { v: Verdict; cases: Cases; who: s
         </RunAnswer>
       </div>
     </section>
+  );
+}
+
+/** Beside a side's count: how many of its features more inputs could still move. */
+function Unsure({ of }: { of: Verdict[] }) {
+  const n = of.filter((v) => v.unsure).length;
+  if (!n) return null;
+  return (
+    <small>
+      <span className="unsure">{UNSURE}</span> for {n === of.length ? (n === 1 ? "it" : n === 2 ? "both" : `all ${n}`) : `${n} of the ${of.length}`}: the range crosses the bar
+    </small>
   );
 }
 
@@ -422,6 +435,7 @@ export function Board({ features, cases, mine = [], recordedOn, held, fixes, ope
           <section className="side device">
             <h2>
               <b>{onDevice.length}</b> <span>run on the device</span>
+              <Unsure of={onDevice} />
             </h2>
             <ul>{onDevice.map((v) => row(v))}</ul>
             {onDevice.length === 0 && (
@@ -434,6 +448,7 @@ export function Board({ features, cases, mine = [], recordedOn, held, fixes, ope
           <section className="side cloud">
             <h2>
               <b>{inCloud.length}</b> <span>stay in the cloud</span>
+              <Unsure of={inCloud} />
             </h2>
             <ul>{inCloud.map((v) => row(v))}</ul>
             {inCloud.length === 0 && <p className="none">Nothing has to stay here at this bar.</p>}
