@@ -60,6 +60,12 @@ Under the bottom line. One line for each feature first: its dot in its side's co
 
 A record to read down, not a dashboard. The summary table is on wash, with each verdict's dot in its side's colour. Each feature's name stays at the top of the window while its inputs scroll. An input is one row: what was asked and the right answer on the left, then Chrome's three runs (lime dot) and the cloud's answer (blue dot). A right answer is a quiet wash box; a wrong one is white with a red outline, so the misses are what the eye lands on.
 
+The judges' section sits between the summary and the first feature: the heading, why two more judges look, and the two of them as wash cards side by side. In a judged answer's box, the other judgments follow the cloud model's under a hairline, small; one that disagrees is red.
+
+## The page where people mark answers
+
+`/label/`, made for a phone: one column, one answer at a time. No lime and no blue on it, apart from the brand's bead, so nothing hints at which model wrote an answer. From the top: the brand and the count ("3 of 20"), the question as the heading, a thin bar that fills as the person goes, the one thing to judge, the input on wash, then the answer in a white box with the ink edge and shadow, the largest text on the page. The two marks stay at the bottom of the screen. They are the same size and both white, each with its sign in a ring, so the page leans a person neither way; a press turns one ink.
+
 ## The sample shop
 
 Larkfield reads as a shop, and each of its eight features sits where a shop would have it. The check's layer over it is one thing only: the strip at the foot of each feature's card.

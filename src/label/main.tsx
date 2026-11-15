@@ -51,6 +51,7 @@ function App() {
 
   const mine = marks ? [...marks.values()].filter((m) => m.by === me).length : 0;
   const left = marks ? JUDGED.length - JUDGED.filter((j) => marks.has(markKey(j.feature.id, j.c.id, j.answer))).length : 0;
+  const marking = marks && shown && (mine < ASKED || more);
   return (
     <main className="label">
       <header>
@@ -58,7 +59,9 @@ function App() {
           <i />
           Device or Cloud
         </h1>
+        {marking && <span className="count">{mine < ASKED ? `${mine + 1} of ${ASKED}` : `${mine + 1}, and ${left} still have no mark`}</span>}
         <p>Is this answer good enough?</p>
+        <i className="done" style={{ "--done": Math.min(mine / ASKED, 1) } as React.CSSProperties} />
       </header>
       {problem && (
         <p className="notice">
@@ -75,18 +78,17 @@ function App() {
           <button onClick={() => setMore(true)}>Mark some more</button>
         </section>
       )}
-      {marks && shown && (mine < ASKED || more) && (
+      {marking && (
         <section className="task">
-          <p className="quiet">{mine < ASKED ? `${mine + 1} of ${ASKED}` : `${mine + 1}, and ${left} still have no mark`}</p>
+          <p className="judge">
+            <b>Judge only this.</b> {shown.feature.graded}
+          </p>
           <p className="quiet">The app was given</p>
           <pre>{shown.c.input}</pre>
           <p className="quiet">It answered</p>
           <div className="answered">
             <AnswerText text={shown.answer} />
           </div>
-          <p className="judge">
-            <b>Judge only this.</b> {shown.feature.graded}
-          </p>
           <div className="actions">
             <button onClick={() => mark(true)} disabled={busy}>
               Good enough
