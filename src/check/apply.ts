@@ -1,5 +1,5 @@
 import type { Feature } from "../features";
-import { moves, VERDICT_NAME, type FixRecord, type Verdict } from "./record";
+import { fixRange, moves, VERDICT_NAME, type FixRecord, type Verdict } from "./record";
 
 /** The check runs each platform's own model, so a verdict holds on that platform and nowhere else. */
 export const CHROME = "Chrome on the web", IPHONE = "The iPhone app";
@@ -14,8 +14,11 @@ export const parameterFor = (f: Feature) => `mode_${keyOf(f)}`;
 export const lineFor = (f: Feature) => `line_${keyOf(f)}`;
 export const steadyFor = (f: Feature) => `steady_${keyOf(f)}`;
 
-/** One feature on one platform: its verdict as written, and the line or setting that moves it to the device, if one does. */
-export type Placed = { verdict: Verdict; fix?: FixRecord };
+/**
+ * One feature on one platform: its verdict as written, and the line or setting that moves it to the device, if one does.
+ * `unsure` says the count that puts it on the device has a range that crosses the bar.
+ */
+export type Placed = { verdict: Verdict; fix?: FixRecord; unsure: boolean };
 export const runsOnDevice = (p: Placed) => p.verdict.kind === "device" || !!p.fix;
 
 /** Where a feature runs on one platform, in a few words, with its count as written. */
@@ -85,10 +88,10 @@ export function fixesFor(fixes: Record<string, FixRecord[]> | undefined, feature
 
 /** Each feature on a platform, with the first line or setting that moves it to the device at this bar, where one does. */
 export const placedOn = (verdicts: Verdict[], fixes: Record<string, FixRecord[]> | undefined, onIphone: boolean, allowed: number): Placed[] =>
-  verdicts.map((verdict) => ({
-    verdict,
-    fix: verdict.kind === "cloud" ? fixesFor(fixes, verdict.feature, onIphone).find((fix) => moves(verdict.feature, fix, allowed)) : undefined,
-  }));
+  verdicts.map((verdict) => {
+    const fix = verdict.kind === "cloud" ? fixesFor(fixes, verdict.feature, onIphone).find((fix) => moves(verdict.feature, fix, allowed)) : undefined;
+    return { verdict, fix, unsure: fix ? !!fixRange(verdict.feature, fix, allowed)?.unsure : verdict.kind === "device" && !!verdict.unsure };
+  });
 
 export const templateText = (chrome: Placed[], apple?: Placed[]) => JSON.stringify(template(chrome, apple), null, 2) + "\n";
 

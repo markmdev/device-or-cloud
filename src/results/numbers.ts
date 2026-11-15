@@ -1,7 +1,7 @@
-import { APPLES, countLine, DEFAULT_ALLOWED, moves, onApple, tally, unsureLine, VERDICT_NAME, verdictFor, whereApple, type CheckRecord, type FixRecord, type Tally, type Verdict } from "../check/record";
+import { APPLES, countLine, DEFAULT_ALLOWED, fixRange, moves, onApple, tally, UNSURE, unsureLine, VERDICT_NAME, verdictFor, whereApple, type CheckRecord, type FixRecord, type Tally, type Verdict } from "../check/record";
 import { FEATURES, type Feature } from "../features";
 
-export type FixNumbers = { fix: FixRecord; own: Tally; held: Tally; moved: boolean };
+export type FixNumbers = { fix: FixRecord; own: Tally; held: Tally; moved: boolean; allows: ReturnType<typeof fixRange> };
 
 export type FeatureNumbers = {
   feature: Feature;
@@ -39,6 +39,7 @@ export function numbers(record: CheckRecord): FeatureNumbers[] {
         own: tally(feature, fix.cases),
         held: tally(feature, fix.held, heldBack),
         moved: moves(feature, fix, DEFAULT_ALLOWED),
+        allows: fixRange(feature, fix, DEFAULT_ALLOWED),
       })),
     };
   });
@@ -67,7 +68,7 @@ export function printed(record: CheckRecord): string {
     if (f.held) lines.push(`  ${f.feature.heldBack?.length} inputs held back: Chrome's model ${onDevice(f.held)}${apples(f.heldApple)}, the cloud ${f.held.cloudRight} of ${f.held.cloud}`);
     for (const x of f.fixes) {
       lines.push(
-        `  ${x.fix.steady ? "With its randomness off" : `With ${WHO[x.fix.by]}`}, ${x.fix.on ? "Apple's" : "Chrome's"} model: ${x.own.runsRight} of ${x.own.runs} runs on the check's inputs and ${x.held.runsRight} of ${x.held.runs} on those held back, the cloud ${x.held.cloudRight} of ${x.held.cloud} on those held back. ${x.moved ? "Within the bar on both." : "Not within the bar on both."}`,
+        `  ${x.fix.steady ? "With its randomness off" : `With ${WHO[x.fix.by]}`}, ${x.fix.on ? "Apple's" : "Chrome's"} model: ${x.own.runsRight} of ${x.own.runs} runs on the check's inputs and ${x.held.runsRight} of ${x.held.runs} on those held back, the cloud ${x.held.cloudRight} of ${x.held.cloud} on those held back. ${x.moved ? "Within the bar on both." : "Not within the bar on both."}${x.allows ? ` Range on the check's inputs: ${Math.round(x.allows.range.low)} to ${Math.round(x.allows.range.high)} wrong in 100${x.allows.unsure ? `, ${UNSURE.toLowerCase()}` : ""}.` : ""}`,
       );
     }
   }

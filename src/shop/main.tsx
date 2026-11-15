@@ -73,7 +73,10 @@ function Card({ feature, mode, line, device }: { feature: Feature; device?: Devi
         {problem && <p className="wrong">{problem}</p>}
       </div>
       <p className="badge" data-source={where} data-ran={Boolean(source)}>
-        <span>{source ? SOURCE_LABEL[source] : set}</span>
+        <span>
+          {source ? SOURCE_LABEL[source] : set}
+          {line && where === "on_device" && <small> · with one added line</small>}
+        </span>
         <span>{answer ? `${answer.seconds.toFixed(1)} s · ${source === "on_device" ? "works offline" : "needs a connection"}` : means}</span>
       </p>
     </article>

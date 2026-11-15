@@ -284,7 +284,7 @@ function Apply({ chrome, apple, children }: { chrome: Placed[]; apple?: Placed[]
               <code>{parameterFor(v.feature)}</code>
               <span>
                 {where.length ? `prefer_on_device in ${where.join(" and in ")}, only_in_cloud everywhere else` : "only_in_cloud"}
-                {((v.kind === "device" && v.unsure) || (a?.verdict.kind === "device" && a.verdict.unsure)) && <span className="unsure">{UNSURE}</span>}
+                {(p.unsure || a?.unsure) && <span className="unsure">{UNSURE}</span>}
               </span>
             </li>
           );

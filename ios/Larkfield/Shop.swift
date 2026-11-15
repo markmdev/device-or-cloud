@@ -93,6 +93,9 @@ struct Setting {
     let line: String
     /// Apple's model's randomness off.
     let steady: Bool
+
+    /// What the feature runs with on the device beyond its instruction as written, in a few words.
+    var how: String? { steady ? "with its randomness off" : line.isEmpty ? nil : "with one added line" }
 }
 
 private struct Card: View {
@@ -146,15 +149,18 @@ private struct Card: View {
             // Full colour and a filled dot once an answer ran there; pale and hollow while it is only set to.
             HStack(spacing: 8) {
                 Circle().strokeBorder(Color.ink, lineWidth: 2).background(Circle().fill(answer == nil ? .clear : Color.ink)).frame(width: 8, height: 8)
-                Text(answer == nil ? (onDevice ? "Set to run on this iPhone" : "Set to run in the cloud") : (onDevice ? "Ran on this iPhone" : "Ran in the cloud"))
-                    .fontWeight(answer == nil ? .medium : .semibold)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(answer == nil ? (onDevice ? "Set to run on this iPhone" : "Set to run in the cloud") : (onDevice ? "Ran on this iPhone" : "Ran in the cloud"))
+                        .fontWeight(answer == nil ? .medium : .semibold)
+                    if onDevice, let how = setting.how { Text(how).font(.system(size: 12.5, weight: .medium)) }
+                }
                 Spacer()
                 Text((answer.map { "\($0.seconds.formatted(.number.precision(.fractionLength(1)))) s · " } ?? "") + (onDevice ? "works offline" : "needs a connection"))
                     .fontWeight(.medium)
             }
             .font(.system(size: 14))
             .padding(.horizontal, 22)
-            .frame(height: 52)
+            .frame(minHeight: 52)
             .background((onDevice ? Color.device : Color.cloud).opacity(answer == nil ? 0.38 : 1))
             .accessibilityElement(children: .combine)
         }

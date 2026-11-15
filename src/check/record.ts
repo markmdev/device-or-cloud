@@ -88,6 +88,17 @@ export function rangeOf(wrong: number, of: number): Range {
 
 const crosses = (r: Range, allowed: number) => r.low <= allowed && r.high > allowed;
 
+/**
+ * The range a line's or a setting's count on the check's inputs allows, as for a verdict, and whether it crosses the bar.
+ * None until the on-device model has answered with it.
+ */
+export function fixRange(feature: Feature, fix: { cases: Record<string, CaseRecord> }, allowed: number): { range: Range; unsure: boolean } | undefined {
+  const t = tally(feature, fix.cases);
+  if (!t.inputs) return undefined;
+  const range = rangeOf((t.runs - t.runsRight) / RUNS, t.inputs);
+  return { range, unsure: crosses(range, allowed) };
+}
+
 /** How many more inputs, at the same rate, until the range is clear of the bar; none when that takes more than 200. */
 function moreToTell(wrong: number, of: number, allowed: number): number | undefined {
   for (let n = of + 10; n <= of + 200; n += 10) if (!crosses(rangeOf((wrong / of) * n, n), allowed)) return n - of;

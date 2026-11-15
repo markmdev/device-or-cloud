@@ -2,20 +2,32 @@ import { useEffect, useState } from "react";
 import type { Feature } from "../features";
 import { OutOfRequests, outOfRequests } from "./ask";
 import { missesOf, proposeLine, tryLine, type Tried } from "./fix";
-import { moves, RUNS, shortOn, tally, type FixRecord } from "./record";
+import { fixRange, moves, RUNS, shortOn, tally, UNSURE, type FixRecord } from "./record";
 import type { Cases } from "./run";
 
-function Counts({ feature, who, base, heldBase, tried, cloud }: { feature: Feature; who: string; base: Cases; heldBase?: Cases; tried: Tried; cloud: boolean }) {
+function Counts({ feature, who, base, heldBase, tried, cloud, allowed }: { feature: Feature; who: string; base: Cases; heldBase?: Cases; tried: Tried; cloud: boolean; allowed: number }) {
   const held = feature.heldBack ?? [];
   const before = tally(feature, base), after = tally(feature, tried.cases);
   const heldBefore = tally(feature, heldBase, held), heldAfter = tally(feature, tried.held, held);
+  const allows = after.runs === feature.cases.length * RUNS ? fixRange(feature, tried, allowed) : undefined;
   return (
+    <>
     <p>
       On the check's {feature.cases.length} inputs, {who} went from {before.runsRight} to {after.runsRight} of {after.runs} runs right. On{" "}
       {held.length} inputs held back from the check, it was right on {heldBefore.runsRight} of {heldBefore.runs} runs before and {heldAfter.runsRight} of{" "}
       {heldAfter.runs} with {HOW[kindOf(tried)]}
       {cloud && heldAfter.cloud ? `; the cloud model, on ${heldAfter.cloudRight} of ${heldAfter.cloud} with it.` : ". The cloud model wasn't asked again."}
     </p>
+    {allows && (
+      <p className="allows">
+        Its count on the check's inputs allows{" "}
+        <span className="range">
+          {Math.round(allows.range.low)} to {Math.round(allows.range.high)} wrong in 100
+        </span>
+        . {allows.unsure && <span className="unsure">{UNSURE}</span>}
+      </p>
+    )}
+    </>
   );
 }
 
@@ -128,7 +140,7 @@ export function Fixes({ feature, who, onDevice, base, heldBase, fixes, shipped, 
         <article key={`${fix.line}${fix.steady}`} className="fix" data-kind={kindOf(fix)} data-moved={moves(feature, fix, allowed)}>
           <p className="quiet">{fix.steady ? "A setting, not a line" : BY[fix.by]}</p>
           {fix.steady ? <h3>{STEADY}</h3> : <blockquote>{fix.line}</blockquote>}
-          <Counts feature={feature} who={who} base={base} heldBase={heldBase} tried={fix} cloud />
+          <Counts feature={feature} who={who} base={base} heldBase={heldBase} tried={fix} cloud allowed={allowed} />
           <p>
             <b>{outcome(feature, who, onDevice, heldBase, fix, allowed)}</b>
           </p>
@@ -158,7 +170,7 @@ export function Fixes({ feature, who, onDevice, base, heldBase, fixes, shipped, 
               : "Nothing is sent anywhere."}
         </p>
         {notice && <p className="notice">{notice}</p>}
-        {tried && !busy && !onFix && <Counts feature={feature} who={who} base={base} heldBase={heldBase} tried={tried} cloud={false} />}
+        {tried && !busy && !onFix && <Counts feature={feature} who={who} base={base} heldBase={heldBase} tried={tried} cloud={false} allowed={allowed} />}
       </article>
       )}
     </section>
