@@ -234,7 +234,7 @@ export function countLine(v: Verdict, who = CHROMES): string {
 /** Why a verdict could still change, and what would settle it. */
 export function unsureLine(v: Verdict, who = CHROMES): string | undefined {
   if (!v.unsure) return undefined;
-  const settle = v.unsure.more ? `About ${v.unsure.more} more inputs would settle it.` : "The rate sits on the bar, so it would take hundreds more inputs to settle it.";
+  const settle = v.unsure.more ? `About ${v.unsure.more} more inputs would settle it.` : "It would take hundreds more inputs to settle it.";
   return `${UNSURE}: ${who}'s range crosses the bar. ${settle}`;
 }
 

@@ -16,14 +16,14 @@
           "value": "prefer_on_device"
         }
       },
-      "description": "Route a support ticket. Runs on the device. Chrome's model was right on 69 of 75 runs; the cloud, on 25 of 25. In the iPhone app: Keep in the cloud. Apple's model was right on 61 of 75 runs; the cloud, on 25 of 25.",
+      "description": "Route a support ticket. Runs on the device. Chrome's model got 47 of 50 inputs right on every run; the cloud, 50. In the iPhone app: Keep in the cloud. Apple's model got 39 of 50 inputs right on every run; the cloud, 50.",
       "valueType": "STRING"
     },
     "mode_review_mood": {
       "defaultValue": {
         "value": "only_in_cloud"
       },
-      "description": "Read a review's mood. Keep in the cloud. Chrome's model was right on 60 of 75 runs; the cloud, on 23 of 25. In the iPhone app: Keep in the cloud. Apple's model was right on 63 of 75 runs; the cloud, on 23 of 25.",
+      "description": "Read a review's mood. Keep in the cloud. Chrome's model got 41 of 50 inputs right on every run; the cloud, 45. In the iPhone app: Keep in the cloud. Apple's model got 42 of 50 inputs right on every run; the cloud, 45.",
       "valueType": "STRING"
     },
     "mode_receipt_fields": {
@@ -35,42 +35,42 @@
           "value": "prefer_on_device"
         }
       },
-      "description": "Pull fields from a receipt. Runs on the device. Chrome's model was right on 74 of 75 runs; the cloud, on 25 of 25. In the iPhone app: Keep in the cloud. Apple's model was right on 59 of 75 runs; the cloud, on 25 of 25.",
+      "description": "Pull fields from a receipt. Runs on the device. Chrome's model got 46 of 50 inputs right on every run; the cloud, 50. In the iPhone app: Keep in the cloud. Apple's model got 37 of 50 inputs right on every run; the cloud, 50.",
       "valueType": "STRING"
     },
     "mode_product_title": {
       "defaultValue": {
         "value": "only_in_cloud"
       },
-      "description": "Rewrite a product title. Keep in the cloud. Chrome's model was right on 60 of 75 runs; the cloud, on 23 of 25. In the iPhone app: Keep in the cloud. Apple's model was right on 13 of 75 runs; the cloud, on 23 of 25.",
+      "description": "Rewrite a product title. Keep in the cloud. Chrome's model got 32 of 50 inputs right on every run; the cloud, 45. In the iPhone app: Keep in the cloud. Apple's model got 0 of 50 inputs right on every run; the cloud, 45.",
       "valueType": "STRING"
     },
     "mode_delivery_summary": {
       "defaultValue": {
         "value": "only_in_cloud"
       },
-      "description": "Summarise a delivery note. Keep in the cloud. Chrome's model was right on 52 of 75 runs; the cloud, on 23 of 25. In the iPhone app: Keep in the cloud. Apple's model was right on 17 of 75 runs; the cloud, on 23 of 25.",
+      "description": "Summarise a delivery note. Keep in the cloud. Chrome's model got 22 of 50 inputs right on every run; the cloud, 46. In the iPhone app: Keep in the cloud. Apple's model got 1 of 50 inputs right on every run; the cloud, 46.",
       "valueType": "STRING"
     },
     "mode_invoice_total": {
       "defaultValue": {
         "value": "only_in_cloud"
       },
-      "description": "Work out an invoice total. Neither model is good enough. The cloud was right on 14 of 25; Chrome's model, on 8 of 75 runs. In the iPhone app: Neither model is good enough. The cloud was right on 14 of 25; Apple's model, on 2 of 75 runs.",
+      "description": "Work out an invoice total. Neither model is good enough. Chrome's model got 5 of 50 inputs right on every run; the cloud, 26. In the iPhone app: Neither model is good enough. Apple's model got 2 of 50 inputs right on every run; the cloud, 26.",
       "valueType": "STRING"
     },
     "mode_email_address": {
       "defaultValue": {
         "value": "only_in_cloud"
       },
-      "description": "Pull an address from an email. Keep in the cloud. Chrome's model was right on 64 of 75 runs; the cloud, on 24 of 25. In the iPhone app: Keep in the cloud. Apple's model was right on 43 of 75 runs; the cloud, on 24 of 25.",
+      "description": "Pull an address from an email. Keep in the cloud. Chrome's model got 38 of 50 inputs right on every run; the cloud, 49. In the iPhone app: Keep in the cloud. Apple's model got 27 of 50 inputs right on every run; the cloud, 49.",
       "valueType": "STRING"
     },
     "mode_returns_answer": {
       "defaultValue": {
         "value": "only_in_cloud"
       },
-      "description": "Answer a returns question. Neither model is good enough. The cloud was right on 19 of 25; Chrome's model, on 45 of 75 runs. In the iPhone app: Neither model is good enough. The cloud was right on 19 of 25; Apple's model, on 48 of 75 runs.",
+      "description": "Answer a returns question. Neither model is good enough. Chrome's model got 29 of 50 inputs right on every run; the cloud, 38. In the iPhone app: Neither model is good enough. Apple's model got 26 of 50 inputs right on every run; the cloud, 38.",
       "valueType": "STRING"
     }
   }
