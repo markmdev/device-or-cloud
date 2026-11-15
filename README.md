@@ -38,7 +38,7 @@ The cloud side runs on Google's free Gemini tier, which the whole site shares: 1
 
 The check has Apple's model as a third column, and the iPhone app runs the check itself. Its Check tab sends every input three times to the on-device model alone and gives each feature its verdict on the phone. The verdicts come from the web check's own code: `npm run ios` builds `src/check/phone.ts` into one script, `ios/Larkfield/check.js`, which the app runs, so both apps count, judge and decide the same way, against the same recorded cloud answers. `npm run apple` puts the app's answers into the record. On the web check, a switch picks the platform the two sides are about.
 
-In the recorded check Apple's model stays within the default bar on none of the eight features, so the template keeps all of them in the cloud for the iPhone app, while Chrome runs two on the device.
+In the recorded check Apple's model, as written, stays within the default bar on none of the eight features, so the template keeps all of them in the cloud for the iPhone app, while Chrome runs two on the device. With its randomness switched off, Apple's model comes within the bar on the ticket router, on the check's inputs and the held-back ones.
 
 ## The numbers
 
@@ -79,9 +79,12 @@ It needs Xcode 26 and a Mac with Apple Intelligence switched on, because the iPh
 4. Open `ios/Larkfield.xcodeproj` and run it on an iPhone simulator, or build it from the command line:
 
 ```sh
-cd ios && xcodebuild -project Larkfield.xcodeproj -scheme Larkfield \
-  -destination 'platform=iOS Simulator,name=iPhone 17' -derivedDataPath build CODE_SIGN_IDENTITY=- build
+cd ios && xcodebuild -project Larkfield.xcodeproj -target Larkfield -sdk iphonesimulator \
+  -clonedSourcePackagesDirPath build/packages SYMROOT=$PWD/build/target-build OBJROOT=$PWD/build/target-obj \
+  ARCHS=arm64 ONLY_ACTIVE_ARCH=NO CODE_SIGN_IDENTITY=- build
 ```
+
+This builds the target, not the scheme, because a scheme build wants the simulator of Xcode's own iOS version installed, and that may be the one that can't answer.
 
 The app has to be signed, if only for local use as here: an unsigned build can't reach its keychain in the simulator, and then Remote Config and App Check both fail. With Xcode 26.0 or 26.1, whose Swift is older, install the Swift 6.2.3 toolchain from swift.org and put `TOOLCHAINS=<its identifier>` before `xcodebuild`.
 

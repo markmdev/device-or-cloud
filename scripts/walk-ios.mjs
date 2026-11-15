@@ -6,7 +6,7 @@ import { mkdtempSync, readFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 
 const BUNDLE = "app.deviceorcloud.larkfield";
-const APP = "ios/build/Build/Products/Debug-iphonesimulator/Larkfield.app";
+const APP = "ios/build/target-build/Debug-iphonesimulator/Larkfield.app";
 const device = process.env.SIMULATOR ?? "booted";
 const simctl = (...args) => execFileSync("xcrun", ["simctl", ...args], { encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] });
 
