@@ -18,7 +18,7 @@ It is light, loud and flat on purpose: no dark developer-tool page, no gradients
 
 A feature that stays in the cloud is not an error, so the cloud side is never red. Red marks only the answers and the meters that are wrong.
 
-In the shop, a strip in full colour with a filled dot means the answer ran there. A pale strip with a hollow dot means the feature is set to run there and hasn't yet.
+In the shop, a strip in full colour with a filled dot means the answer ran there. A pale strip with a hollow dot means the feature is set to run there and hasn't yet. A feature that runs on the device only with an added line, or a setting, says so in a second, smaller line under the strip's label, on the web and in the iPhone app alike.
 
 ## Type
 

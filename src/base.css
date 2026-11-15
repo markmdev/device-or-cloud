@@ -233,6 +233,7 @@ p.answer { white-space: pre-wrap; }
 .card .badge { display: flex; flex-wrap: wrap; gap: 4px 12px; margin: 14px -22px 0; padding: 10px 22px; min-height: 52px; line-height: 1.25; border-radius: 0; border-top: 2px solid var(--ink); font-size: 14px; }
 .card .badge span:first-child { flex: 1 1 12em; }
 .card .badge span:last-child { margin-left: auto; font-weight: 500; }
+.card .badge small { display: block; margin-top: 2px; font-size: 12.5px; font-weight: 500; }
 .card .badge[data-ran="false"] { font-weight: 500; }
 .card .badge[data-ran="false"][data-source="on_device"] { background: color-mix(in srgb, var(--device) 38%, var(--white)); }
 .card .badge[data-ran="false"][data-source="in_cloud"] { background: color-mix(in srgb, var(--cloud) 38%, var(--white)); }
