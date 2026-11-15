@@ -4,6 +4,11 @@
       "name": "Chrome on the web",
       "expression": "app.browserAndVersion.inOne([browserName('Chrome').anyVersion])",
       "tagColor": "GREEN"
+    },
+    {
+      "name": "The iPhone app",
+      "expression": "device.os == 'ios'",
+      "tagColor": "BLUE"
     }
   ],
   "parameters": {
@@ -14,16 +19,48 @@
       "conditionalValues": {
         "Chrome on the web": {
           "value": "prefer_on_device"
+        },
+        "The iPhone app": {
+          "value": "prefer_on_device"
         }
       },
-      "description": "Route a support ticket. Runs on the device. Chrome's model got 47 of 50 inputs right on every run; the cloud, 50. In the iPhone app: Keep in the cloud. Apple's model got 39 of 50 inputs right on every run; the cloud, 50.",
+      "description": "Route a support ticket. Chrome on the web: on the device, 47 of 50 inputs right on every run. The iPhone app: on the device with steady_ticket_route; as written, 39 of 50 inputs right on every run.",
       "valueType": "STRING"
+    },
+    "steady_ticket_route": {
+      "defaultValue": {
+        "value": "false"
+      },
+      "conditionalValues": {
+        "The iPhone app": {
+          "value": "true"
+        }
+      },
+      "description": "Route a support ticket: the on-device model's randomness off, so it always gives its most likely answer. As written it is outside the bar. With this setting the check found it within, on its own inputs and on inputs held back.",
+      "valueType": "BOOLEAN"
     },
     "mode_review_mood": {
       "defaultValue": {
         "value": "only_in_cloud"
       },
-      "description": "Read a review's mood. Keep in the cloud. Chrome's model got 41 of 50 inputs right on every run; the cloud, 45. In the iPhone app: Keep in the cloud. Apple's model got 42 of 50 inputs right on every run; the cloud, 45.",
+      "conditionalValues": {
+        "Chrome on the web": {
+          "value": "prefer_on_device"
+        }
+      },
+      "description": "Read a review's mood. Chrome on the web: on the device with line_review_mood; as written, 41 of 50 inputs right on every run. The iPhone app: in the cloud, 42 of 50 inputs right on every run on the device.",
+      "valueType": "STRING"
+    },
+    "line_review_mood": {
+      "defaultValue": {
+        "value": ""
+      },
+      "conditionalValues": {
+        "Chrome on the web": {
+          "value": "Do not classify a review as mixed simply because it contains a minor complaint alongside praise or a compliment alongside a final rejection; judge the review as positive or negative based on the ultimate satisfaction with the product itself."
+        }
+      },
+      "description": "Read a review's mood: one more sentence at the end of its instruction. As written the on-device model is outside the bar. With this line the check found it within, on its own inputs and on inputs held back.",
       "valueType": "STRING"
     },
     "mode_receipt_fields": {
@@ -35,42 +72,59 @@
           "value": "prefer_on_device"
         }
       },
-      "description": "Pull fields from a receipt. Runs on the device. Chrome's model got 46 of 50 inputs right on every run; the cloud, 50. In the iPhone app: Keep in the cloud. Apple's model got 37 of 50 inputs right on every run; the cloud, 50.",
+      "description": "Pull fields from a receipt. Chrome on the web: on the device, 46 of 50 inputs right on every run. The iPhone app: in the cloud, 37 of 50 inputs right on every run on the device.",
       "valueType": "STRING"
     },
     "mode_product_title": {
       "defaultValue": {
         "value": "only_in_cloud"
       },
-      "description": "Rewrite a product title. Keep in the cloud. Chrome's model got 32 of 50 inputs right on every run; the cloud, 45. In the iPhone app: Keep in the cloud. Apple's model got 0 of 50 inputs right on every run; the cloud, 45.",
+      "description": "Rewrite a product title. Chrome on the web: in the cloud, 32 of 50 inputs right on every run on the device. The iPhone app: in the cloud, 0 of 50 inputs right on every run on the device.",
       "valueType": "STRING"
     },
     "mode_delivery_summary": {
       "defaultValue": {
         "value": "only_in_cloud"
       },
-      "description": "Summarise a delivery note. Keep in the cloud. Chrome's model got 22 of 50 inputs right on every run; the cloud, 46. In the iPhone app: Keep in the cloud. Apple's model got 1 of 50 inputs right on every run; the cloud, 46.",
+      "description": "Summarise a delivery note. Chrome on the web: in the cloud, 22 of 50 inputs right on every run on the device. The iPhone app: in the cloud, 1 of 50 inputs right on every run on the device.",
       "valueType": "STRING"
     },
     "mode_invoice_total": {
       "defaultValue": {
         "value": "only_in_cloud"
       },
-      "description": "Work out an invoice total. Neither model is good enough. Chrome's model got 5 of 50 inputs right on every run; the cloud, 26. In the iPhone app: Neither model is good enough. Apple's model got 2 of 50 inputs right on every run; the cloud, 26.",
+      "description": "Work out an invoice total. Chrome on the web: neither model is good enough, 5 of 50 inputs right on every run on the device. The iPhone app: neither model is good enough, 2 of 50 inputs right on every run on the device.",
       "valueType": "STRING"
     },
     "mode_email_address": {
       "defaultValue": {
         "value": "only_in_cloud"
       },
-      "description": "Pull an address from an email. Keep in the cloud. Chrome's model got 38 of 50 inputs right on every run; the cloud, 49. In the iPhone app: Keep in the cloud. Apple's model got 27 of 50 inputs right on every run; the cloud, 49.",
+      "conditionalValues": {
+        "Chrome on the web": {
+          "value": "prefer_on_device"
+        }
+      },
+      "description": "Pull an address from an email. Chrome on the web: on the device with line_email_address; as written, 38 of 50 inputs right on every run. The iPhone app: in the cloud, 27 of 50 inputs right on every run on the device.",
+      "valueType": "STRING"
+    },
+    "line_email_address": {
+      "defaultValue": {
+        "value": ""
+      },
+      "conditionalValues": {
+        "Chrome on the web": {
+          "value": "The street line must keep the house number or house name, and any flat or unit, as the customer gives them."
+        }
+      },
+      "description": "Pull an address from an email: one more sentence at the end of its instruction. As written the on-device model is outside the bar. With this line the check found it within, on its own inputs and on inputs held back.",
       "valueType": "STRING"
     },
     "mode_returns_answer": {
       "defaultValue": {
         "value": "only_in_cloud"
       },
-      "description": "Answer a returns question. Neither model is good enough. Chrome's model got 29 of 50 inputs right on every run; the cloud, 38. In the iPhone app: Neither model is good enough. Apple's model got 26 of 50 inputs right on every run; the cloud, 38.",
+      "description": "Answer a returns question. Chrome on the web: neither model is good enough, 29 of 50 inputs right on every run on the device. The iPhone app: neither model is good enough, 26 of 50 inputs right on every run on the device.",
       "valueType": "STRING"
     }
   }

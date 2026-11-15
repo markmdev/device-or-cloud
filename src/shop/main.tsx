@@ -4,6 +4,7 @@ import { createRoot } from "react-dom/client";
 import { SOURCE_LABEL } from "../answer";
 import "../base.css";
 import { ask, type Answer } from "../check/ask";
+import { withLine } from "../check/fix";
 import { DownloadPanel } from "../download";
 import { FEATURES, type Feature } from "../features";
 import { app, deviceState, MODES, type DeviceState, type Mode } from "../firebase";
@@ -13,18 +14,21 @@ const remoteConfig = getRemoteConfig(app);
 remoteConfig.settings.minimumFetchIntervalMillis = 5 * 60_000;
 remoteConfig.defaultConfig = Object.fromEntries(FEATURES.map((f) => [`mode_${f.id}`, "only_in_cloud"]));
 
-function modes(): Record<string, Mode> {
+/** What Remote Config gives a feature: its mode, and the line the check found it needs in that mode, if any. */
+type Setting = { mode: Mode; line: string };
+
+function settings(): Record<string, Setting> {
   return Object.fromEntries(
     FEATURES.map((f) => {
       const value = getString(remoteConfig, `mode_${f.id}`) as Mode;
-      return [f.id, MODES.includes(value) ? value : "only_in_cloud"];
+      return [f.id, { mode: MODES.includes(value) ? value : "only_in_cloud", line: getString(remoteConfig, `line_${f.id}`) }];
     }),
   );
 }
 
 const ON_DEVICE: Mode[] = ["prefer_on_device", "only_on_device"];
 
-function Card({ feature, mode, device }: { feature: Feature; mode: Mode; device?: DeviceState }) {
+function Card({ feature, mode, line, device }: { feature: Feature; device?: DeviceState } & Setting) {
   const shown = SHOWN[feature.id];
   const { added, text } = sampleOf(feature);
   const [input, setInput] = useState(text);
@@ -37,7 +41,7 @@ function Card({ feature, mode, device }: { feature: Feature; mode: Mode; device?
     setAnswer(undefined);
     setProblem(undefined);
     try {
-      setAnswer(await ask(feature, mode, added + input));
+      setAnswer(await ask(line ? withLine(feature, line) : feature, mode, added + input));
     } catch (e) {
       setProblem(navigator.onLine ? (e instanceof Error ? e.message : String(e)) : "This feature runs in the cloud, so it needs a connection.");
     }
@@ -78,14 +82,14 @@ function Card({ feature, mode, device }: { feature: Feature; mode: Mode; device?
 
 function Shop() {
   // Empty until Remote Config has answered, so no feature runs on a setting older than the published one.
-  const [mode, setMode] = useState<Record<string, Mode>>();
+  const [setting, setSetting] = useState<Record<string, Setting>>();
   const [device, setDevice] = useState<DeviceState>();
 
   useEffect(() => {
     deviceState().then(setDevice);
-    fetchAndActivate(remoteConfig).catch(() => {}).then(() => setMode(modes()));
+    fetchAndActivate(remoteConfig).catch(() => {}).then(() => setSetting(settings()));
     return onConfigUpdate(remoteConfig, {
-      next: () => void activate(remoteConfig).then(() => setMode(modes())),
+      next: () => void activate(remoteConfig).then(() => setSetting(settings())),
       error: () => {},
       complete: () => {},
     });
@@ -93,7 +97,7 @@ function Shop() {
 
   const card = (id: string) => {
     const feature = FEATURES.find((f) => f.id === id)!;
-    return mode && <Card feature={feature} mode={mode[id]} device={device} />;
+    return setting && <Card feature={feature} {...setting[id]} device={device} />;
   };
 
   return (

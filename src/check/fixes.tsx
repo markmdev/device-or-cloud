@@ -55,7 +55,7 @@ const STEADY = "Apple's model with its randomness off: it always gives its most 
  * What one more line in the instruction does for a feature: the lines already tried on `who`, and, with `canTry`, a line of the
  * reader's own. With onFix, the reader's line is also run in the cloud on the held-back inputs, so it gets its verdict and is kept.
  */
-export function Fixes({ feature, who, onDevice, base, heldBase, fixes, allowed, canRun, canTry, onFix }: {
+export function Fixes({ feature, who, onDevice, base, heldBase, fixes, shipped, allowed, canRun, canTry, onFix }: {
   feature: Feature;
   /** The on-device model the lines were tried on. */
   who: string;
@@ -64,6 +64,8 @@ export function Fixes({ feature, who, onDevice, base, heldBase, fixes, allowed, 
   base: Cases;
   heldBase: Cases;
   fixes: FixRecord[];
+  /** The one the template under "Apply it" moves the feature with, when one does. */
+  shipped?: FixRecord;
   allowed: number;
   canRun: boolean;
   canTry: boolean;
@@ -130,6 +132,7 @@ export function Fixes({ feature, who, onDevice, base, heldBase, fixes, allowed, 
           <p>
             <b>{outcome(feature, who, onDevice, heldBase, fix, allowed)}</b>
           </p>
+          {fix === shipped && <p className="shipped">The template under "Apply it" moves this feature with this {kindOf(fix)}: it is there beside the mode.</p>}
         </article>
       ))}
       {canTry && (

@@ -4,9 +4,13 @@ import { readFileSync } from "node:fs";
 import { chromium } from "playwright-core";
 
 const site = process.env.SITE ?? "https://device-or-cloud.web.app";
-// The mode each shop feature has in Chrome, where the walk runs: the template's value for Chrome on the web, or its default.
+// What the template gives each shop feature on a platform: its mode, and whether it gets there as written or with a
+// line or a setting beside the mode. The walk runs in Chrome.
 const template = JSON.parse(readFileSync("remoteconfig.template.json", "utf8"));
-const modes = Object.entries(template.parameters).map(([key, p]) => [key.replace("mode_", ""), (p.conditionalValues?.["Chrome on the web"] ?? p.defaultValue).value]);
+const valueOn = (platform, key) => template.parameters[key] && (template.parameters[key].conditionalValues?.[platform] ?? template.parameters[key].defaultValue).value;
+const ids = Object.keys(template.parameters).filter((key) => key.startsWith("mode_")).map((key) => key.replace("mode_", ""));
+const modes = ids.map((id) => [id, valueOn("Chrome on the web", `mode_${id}`)]);
+const asWritten = (platform) => ids.filter((id) => valueOn(platform, `mode_${id}`) === "prefer_on_device" && !valueOn(platform, `line_${id}`) && valueOn(platform, `steady_${id}`) !== "true").length;
 const browser = await chromium.connectOverCDP(process.env.CDP);
 const context = await browser.newContext({ viewport: { width: 1440, height: 1000 } });
 if (process.env.APPCHECK_DEBUG_TOKEN) await context.addInitScript((token) => { self.FIREBASE_APPCHECK_DEBUG_TOKEN = token; }, process.env.APPCHECK_DEBUG_TOKEN);
@@ -24,8 +28,8 @@ await page.goto(site);
 await page.locator(".sides").waitFor();
 expect(/Recorded on our laptop.*, Chrome \d+, \d+ \w+ 20\d\d/.test(await page.locator("header").innerText()), "the check says where and when it was recorded");
 expect((await page.locator(".feature").count()) === modes.length, `all ${modes.length} features have a verdict`);
-const onDevice = modes.filter(([, mode]) => mode === "prefer_on_device").length;
-expect((await page.locator(".sides .device .feature").count()) === onDevice, `${onDevice} features are on the device side, as published`);
+const onDevice = asWritten("Chrome on the web");
+expect((await page.locator(".sides .device .feature").count()) === onDevice, `${onDevice} features are on the device side: the ones published for the device as written`);
 expect((await page.locator(".bottom h2").innerText()).includes(`${onDevice} of the shop's ${modes.length} AI features`), "the bottom line counts the same");
 await page.getByLabel("Wrong answers allowed in 100").press("Home");
 expect(await settles(() => document.querySelector(".bottom h2").innerText.startsWith("With no wrong answers allowed")), "the bar moves the verdicts and the headline names it");
@@ -36,10 +40,10 @@ expect((await page.locator(".proof pre").count()) === 1, "a failure is shown wit
 await shot("check");
 
 // The iPhone view: the same board on Apple's model, split as the template has it for the iPhone app.
-const onIphone = Object.values(template.parameters).filter((p) => (p.conditionalValues?.["The iPhone app"] ?? p.defaultValue).value === "prefer_on_device").length;
+const onIphone = asWritten("The iPhone app");
 await page.getByRole("button", { name: "The iPhone app" }).click();
 expect(await settles(() => document.querySelector(".bottom h2").innerText.includes("iPhones")), "the iPhone view speaks of the shop's iPhone users");
-expect((await page.locator(".sides .device .feature").count()) === onIphone, `${onIphone} features are on the device side in the iPhone app, as published`);
+expect((await page.locator(".sides .device .feature").count()) === onIphone, `${onIphone} features are on the device side in the iPhone app: the ones published for it as written`);
 await shot("check-iphone");
 await page.getByRole("button", { name: "Chrome on the web" }).click();
 expect(await settles(() => !document.querySelector(".bottom h2").innerText.includes("iPhones")), "back on Chrome, the board is Chrome's again");
@@ -49,14 +53,16 @@ await page.locator(".apply summary").click();
 expect(JSON.stringify(JSON.parse(await page.locator(".apply pre").first().innerText())) === JSON.stringify(template), "apply: at the default bar the template shown is the one the shop runs on");
 const appCode = await page.locator(".apply pre").nth(1).innerText();
 expect(modes.every(([id]) => appCode.includes(`mode_${id}:`)), "apply: the app code names every feature's parameter");
-expect(/onDeviceParams/.test(appCode) && modes.every(([id]) => appCode.includes(`model(\n  "mode_${id}",\n  "`)), "apply: the app code gives every feature its instruction on the device side too");
+expect(/onDeviceParams/.test(appCode) && modes.every(([id]) => appCode.includes(`model(\n  "${id}",\n  "`)), "apply: the app code gives every feature its instruction on the device side too");
+expect(appCode.includes('getString(remoteConfig, "line_" + feature)'), "apply: the app code reads each feature's added line beside its mode");
 expect(/firebase deploy --only remoteconfig/.test(await page.locator(".apply pre").last().innerText()), "apply: the deploy command is given");
 expect(/Nothing on this page writes to your Firebase project/.test(await page.locator(".apply").innerText()), "apply: it says nothing is written to the reader's project");
 
 // A feature kept in the cloud: the recorded one-line fixes, and a line of the reader's own on Chrome's model.
-expect(/after one added line in its prompt/.test(await page.locator(".bottom h2").innerText()), "the bottom line counts what one added line moves");
+expect(/after one added line in (its|each one's) prompt/.test(await page.locator(".bottom h2").innerText()), "the bottom line counts what one added line moves");
 await page.locator(".sides .cloud .feature", { hasText: "Read a review's mood" }).click();
 expect((await page.locator('.fixes .fix[data-moved="true"] blockquote').count()) > 0, "a recorded line moves the mood feature, shown with its counts");
+expect((await page.locator(".fixes .fix", { has: page.locator(".shipped") }).locator("blockquote").innerText().catch(() => "")).includes(valueOn("Chrome on the web", "line_review_mood")), "the mood line the template ships is marked, and it is the published one");
 await page.getByRole("button", { name: "Run Chrome's model with this line" }).click();
 await page.locator(".fix.yours p", { hasText: /On the check's \d+ inputs/ }).waitFor({ timeout: 600_000 }).catch(() => {});
 expect((await page.locator(".fix.yours p", { hasText: /On the check's \d+ inputs/ }).count()) === 1, "a line of the reader's own runs on this computer and gets its counts");
@@ -77,7 +83,7 @@ const inputs = Object.values(record.features).reduce((n, cases) => n + Object.ke
 expect((await page.locator(".feature-results > .result").count()) === inputs, `results: all ${inputs} inputs are shown with their answers`);
 expect((await page.locator("header").innerText()).includes(`Recorded on ${record.machine}, Chrome ${record.chrome}`), "results: the machine and Chrome's version are given");
 const summary = await page.locator(".summary table").innerText();
-expect(Object.values(template.parameters).every((p) => summary.replace(/\s+/g, " ").includes(/got (\d+ of \d+) inputs right/.exec(p.description)[1])), "results: each feature's count is the one its Remote Config mode was set from");
+expect(ids.every((id) => summary.replace(/\s+/g, " ").includes(/Chrome on the web: [^.]*?(\d+ of \d+) inputs right/.exec(template.parameters[`mode_${id}`].description)[1])), "results: each feature's count is the one its Remote Config mode was set from");
 expect((await page.locator('.result .given[data-ok="false"]').count()) > 100, "results: the wrong answers are there too");
 await shot("results");
 
