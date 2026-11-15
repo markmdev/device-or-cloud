@@ -1,5 +1,6 @@
 import { APPLES, countLine, DEFAULT_ALLOWED, fixRange, moves, onApple, tally, UNSURE, unsureLine, VERDICT_NAME, verdictFor, whereApple, type CheckRecord, type FixRecord, type Tally, type Verdict } from "../check/record";
 import { FEATURES, type Feature } from "../features";
+import { judgedInCheck, judges, MARKS_TO_SAY, type Mark } from "./judges";
 
 export type FixNumbers = { fix: FixRecord; own: Tally; held: Tally; moved: boolean; allows: ReturnType<typeof fixRange> };
 
@@ -48,7 +49,7 @@ export function numbers(record: CheckRecord): FeatureNumbers[] {
 export const WHO: Record<FixRecord["by"], string> = { cloud: "the cloud model's line", us: "our line", you: "your line" };
 
 /** The same numbers as text, for the repo's command. */
-export function printed(record: CheckRecord): string {
+export function printed(record: CheckRecord, marks?: Map<string, Mark>): string {
   const all = numbers(record);
   const a = record.apple;
   const onDevice = (t: { inputsRight: number; inputs: number; runsRight: number; runs: number }) =>
@@ -72,5 +73,16 @@ export function printed(record: CheckRecord): string {
       );
     }
   }
+  const j = judges(record, marks);
+  lines.push(
+    "",
+    `Answers with no single right answer: the cloud model judged ${j.judged}, counting an answer again where a tried line gave it again.`,
+    j.second
+      ? `  A second model, ${record.secondGrader}, judged ${j.second} of them again and agrees on ${j.secondAgrees}; it is the stricter one on ${j.secondStricter}, the more lenient on ${j.second - j.secondAgrees - j.secondStricter}.`
+      : "  A second model has not judged them yet.",
+    j.marked >= MARKS_TO_SAY
+      ? `  People marked ${j.marked} of the check's ${judgedInCheck(record).length}: the cloud model agrees with them on ${j.cloudAgrees}${j.markedAndSecond ? `, the second model on ${j.secondAgreesWithPeople} of ${j.markedAndSecond}` : ""}.`
+      : `  People have marked ${j.marked} of the check's ${judgedInCheck(record).length}; the agreement is given from ${MARKS_TO_SAY} marks.`,
+  );
   return lines.join("\n") + "\n";
 }

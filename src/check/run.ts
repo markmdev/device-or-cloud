@@ -1,6 +1,7 @@
 import type { Check, Feature } from "../features";
 import { ask, CLOUD, DEVICE, OutOfRequests } from "./ask";
-import { BATCH, GRADER, gradingPrompt, readGrades, ungraded, withGrades } from "./grade";
+import { SECOND_GRADER } from "../firebase";
+import { BATCH, GRADER, gradingPrompt, notJudgedTwice, readGrades, ungraded, withGrades } from "./grade";
 import { RUNS, type Cases, type Run } from "./record";
 
 export type { Cases };
@@ -47,4 +48,18 @@ export async function gradeFeature(feature: Feature, cases: Cases): Promise<Case
     checks.push(...readGrades((await ask(GRADER, CLOUD, gradingPrompt(feature, batch))).text, batch.length));
   }
   return withGrades(cases, items, checks);
+}
+
+/**
+ * Has the second grader judge every answer the cloud model judged, with the same request. Each batch is kept as it
+ * comes, because the second grader's free day is short.
+ */
+export async function gradeAgain(feature: Feature, cases: Cases = {}, onChange: (cases: Cases) => void): Promise<Cases> {
+  const items = notJudgedTwice(feature, cases);
+  for (let start = 0; start < items.length; start += BATCH) {
+    const batch = items.slice(start, start + BATCH);
+    const checks = readGrades((await ask(GRADER, CLOUD, gradingPrompt(feature, batch), SECOND_GRADER)).text, batch.length);
+    onChange((cases = withGrades(cases, batch, checks, "second")));
+  }
+  return cases;
 }

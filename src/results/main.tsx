@@ -1,13 +1,19 @@
+import { createContext, useContext, useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
 import { AnswerText } from "../answer";
 import "../base.css";
 import recorded from "../check/recorded.json";
 import { APPLES, CHROMES, countLine, DEFAULT_ALLOWED, graded, judge, RUNS, UNSURE, unsureLine, VERDICT_NAME, whereApple, type CaseRecord, type CheckRecord, type FixRecord, type Run, type Tally } from "../check/record";
 import type { Case, Feature } from "../features";
+import { readMarks } from "../labels";
+import { judgedInCheck, judges, markKey, MARKS_TO_SAY, type Mark } from "./judges";
 import { numbers, WHO, type FeatureNumbers } from "./numbers";
 
 const RECORD = recorded as CheckRecord;
 const APPLE = RECORD.apple;
+
+/** People's marks on the judged answers, once they are read; they are kept outside the record. */
+const Marks = createContext<Map<string, Mark> | undefined>(undefined);
 
 /** The right answer as the record holds it: one value, a set of fields, or the details an answer has to keep. */
 function Expected({ c }: { c: Case }) {
@@ -28,6 +34,9 @@ function Answer({ feature, c, run, r, who, source, column }: { feature: Feature;
   const check = judge(feature, c, run, r?.grades);
   if (!run) return null;
   const byCode = !graded(feature, c) || ("text" in run && !feature.check(run.text, c).ok);
+  const marks = useContext(Marks);
+  const second = "text" in run && !byCode ? r?.second?.[run.text] : undefined;
+  const mark = "text" in run && !byCode ? marks?.get(markKey(feature.id, c.id, run.text)) : undefined;
   return (
     <div className="given" data-ok={check?.ok} data-source={source} data-model={column ? "apple" : undefined} style={column ? { gridColumn: column } : undefined}>
       <p className="quiet">
@@ -38,6 +47,12 @@ function Answer({ feature, c, run, r, who, source, column }: { feature: Feature;
       <p className={check?.ok ? "right" : "wrong"}>
         {!check ? "Not judged." : check.ok ? "Right." : `Wrong. ${check.reason}`} <small>{"error" in run ? "" : byCode ? "Checked by code." : "Judged by the cloud model."}</small>
       </p>
+      {(second || mark) && (
+        <p className="also">
+          {second && <span data-ok={second.ok}>The second model: {second.ok ? "right." : `wrong. ${second.reason}`}</span>}
+          {mark && <span data-ok={mark.good}>A person: {mark.good ? "good enough." : "not good enough."}</span>}
+        </p>
+      )}
     </div>
   );
 }
@@ -176,7 +191,41 @@ function FeatureResults({ f }: { f: FeatureNumbers }) {
   );
 }
 
+/** Who judged the answers that have no single right answer, and how far the other two judges agree with the cloud model. */
+function Judges({ marks }: { marks?: Map<string, Mark> }) {
+  const j = judges(RECORD, marks), inCheck = judgedInCheck(RECORD).length;
+  return (
+    <section className="judges">
+      <h2>Who judged the answers that have no single right answer</h2>
+      <p>
+        A product title and a delivery note's summary have no single right answer. Code checks what it can, and the cloud model,{" "}
+        {RECORD.cloudModel}, judges the rest: {j.judged} answers in this record, counting an answer again where a tried line gave it again. Its judgment decides those two features' verdicts, and
+        some of the answers it judges are its own. So two more judges look at the same answers, without being told which model wrote which.
+      </p>
+      <ul>
+        <li>
+          <b>A second model.</b>{" "}
+          {j.second
+            ? `${RECORD.secondGrader} has judged ${j.second === j.judged ? `all ${j.judged}` : `${j.second} of the ${j.judged} so far`}, with the same request. It agrees with the cloud model on ${j.secondAgrees} of ${j.second}. Where they differ, it is the stricter one on ${j.secondStricter} and the more lenient on ${j.second - j.secondAgrees - j.secondStricter}.`
+            : "A different model will judge them again with the same request. It has not yet."}
+        </li>
+        <li>
+          <b>People.</b>{" "}
+          {!marks
+            ? "Reading their marks."
+            : j.marked >= MARKS_TO_SAY
+              ? `People on our team marked ${j.marked} of the check's ${inCheck} judged answers "good enough" or "not good enough", one at a time, without seeing a grade. The cloud model agrees with them on ${j.cloudAgrees} of ${j.marked}${j.markedAndSecond ? `, the second model on ${j.secondAgreesWithPeople} of ${j.markedAndSecond}` : ""}.`
+              : `People on our team are marking the check's ${inCheck} judged answers "good enough" or "not good enough", one at a time, without seeing a grade: ${j.marked} so far. How far the cloud model agrees with them shows here from ${MARKS_TO_SAY} marks.`}
+        </li>
+      </ul>
+      <p className="quiet">Each judged answer below shows every judgment it has.</p>
+    </section>
+  );
+}
+
 function App() {
+  const [marks, setMarks] = useState<Map<string, Mark>>();
+  useEffect(() => void readMarks().then(setMarks, () => {}), []);
   const all = numbers(RECORD);
   const sum = (pick: (f: FeatureNumbers) => number) => all.reduce((n, f) => n + pick(f), 0);
   const date = new Date(RECORD.date).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
@@ -249,9 +298,13 @@ function App() {
         </p>
       </section>
 
-      {all.map((f) => (
-        <FeatureResults key={f.feature.id} f={f} />
-      ))}
+      <Judges marks={marks} />
+
+      <Marks.Provider value={marks}>
+        {all.map((f) => (
+          <FeatureResults key={f.feature.id} f={f} />
+        ))}
+      </Marks.Provider>
     </main>
   );
 }

@@ -10,7 +10,14 @@ export type CloudRun = Run & { tokensIn?: number; tokensOut?: number };
 export type Grades = Record<string, Check>;
 
 /** `device` holds the runs on Chrome's model; `apple`, the runs on Apple's model from the iPhone app. */
-export type CaseRecord = { device: Run[]; apple?: Run[]; cloud?: CloudRun; grades?: Grades };
+export type CaseRecord = {
+  device: Run[];
+  apple?: Run[];
+  cloud?: CloudRun;
+  grades?: Grades;
+  /** The second grader's judgment of the same answers. The verdicts never read it. */
+  second?: Grades;
+};
 
 /** One line added to a feature's instruction, and how both sets of inputs went with it. */
 export type FixRecord = {
@@ -32,6 +39,8 @@ export type CheckRecord = {
   chrome: string;
   date: string;
   cloudModel: string;
+  /** The model that judged the judged answers a second time, once it has. */
+  secondGrader?: string;
   /** Where Apple's runs were made. */
   apple?: { device: string; os: string; host: string; date: string };
   features: Record<string, Record<string, CaseRecord>>;

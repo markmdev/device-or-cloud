@@ -57,11 +57,18 @@ export function ungraded(feature: Feature, cases: Cases): (ToGrade & { id: strin
   return items;
 }
 
-/** The cases with the grader's checks for those answers put in. */
-export function withGrades(cases: Cases, items: { id: string; answer: string }[], checks: Check[]): Cases {
+/** A feature's answers the cloud model has judged and the second grader hasn't. */
+export function notJudgedTwice(feature: Feature, cases: Cases): (ToGrade & { id: string })[] {
+  return feature.cases.flatMap((c) =>
+    Object.keys(cases[c.id]?.grades ?? {}).filter((answer) => !cases[c.id].second?.[answer]).map((answer) => ({ id: c.id, input: c.input, answer })),
+  );
+}
+
+/** The cases with a grader's checks for those answers put in: the cloud model's, or the second grader's. */
+export function withGrades(cases: Cases, items: { id: string; answer: string }[], checks: Check[], by: "grades" | "second" = "grades"): Cases {
   const next = { ...cases };
   items.forEach((item, i) => {
-    next[item.id] = { ...next[item.id], grades: { ...next[item.id].grades, [item.answer]: checks[i] } };
+    next[item.id] = { ...next[item.id], [by]: { ...next[item.id][by], [item.answer]: checks[i] } };
   });
   return next;
 }
