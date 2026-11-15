@@ -57,7 +57,7 @@ The results page shows the whole record: every input, its right answer, all thre
 - `src/shop/main.tsx`: Remote Config holds each feature's mode, and the shop follows a change without a reload.
 - `src/labels.ts`: Cloud Firestore keeps people's marks on the judged answers.
 - `ios/Larkfield/Ask.swift`: the same request from the iPhone app, through `HybridModel` with Apple's on-device model and Gemini, in the mode `ios/Larkfield/Shop.swift` reads from Remote Config.
-- `firebase.json`: Hosting and the Remote Config template, deployed with one command.
+- `firebase.json`: Hosting, the Remote Config template and the Firestore rules, deployed with one command.
 
 One thing we learned from the SDK's source: in hybrid mode the request's system instruction and output shape reach only the cloud model. Chrome's model takes them from `onDeviceParams`. `modelFor` in `src/firebase.ts` sets both.
 

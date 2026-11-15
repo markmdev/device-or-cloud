@@ -192,8 +192,8 @@ function FeatureResults({ f }: { f: FeatureNumbers }) {
 }
 
 /** Who judged the answers that have no single right answer, and how far the other two judges agree with the cloud model. */
-function Judges({ marks }: { marks?: Map<string, Mark> }) {
-  const j = judges(RECORD, marks), inCheck = judgedInCheck(RECORD).length;
+function Judges({ marks }: { marks?: Map<string, Mark> | null }) {
+  const j = judges(RECORD, marks ?? undefined), inCheck = judgedInCheck(RECORD).length;
   return (
     <section className="judges">
       <h2>Who judged the answers that have no single right answer</h2>
@@ -211,7 +211,9 @@ function Judges({ marks }: { marks?: Map<string, Mark> }) {
         </li>
         <li>
           <b>People.</b>{" "}
-          {!marks
+          {marks === null
+            ? "People on our team mark the same answers. Their marks could not be read just now."
+            : !marks
             ? "Reading their marks."
             : j.marked >= MARKS_TO_SAY
               ? `People on our team marked ${j.marked} of the check's ${inCheck} judged answers "good enough" or "not good enough", one at a time, without seeing a grade. The cloud model agrees with them on ${j.cloudAgrees} of ${j.marked}${j.markedAndSecond ? `, the second model on ${j.secondAgreesWithPeople} of ${j.markedAndSecond}` : ""}.`
@@ -224,8 +226,9 @@ function Judges({ marks }: { marks?: Map<string, Mark> }) {
 }
 
 function App() {
-  const [marks, setMarks] = useState<Map<string, Mark>>();
-  useEffect(() => void readMarks().then(setMarks, () => {}), []);
+  // Not read yet, read, or (null) not reachable.
+  const [marks, setMarks] = useState<Map<string, Mark> | null>();
+  useEffect(() => void readMarks().then(setMarks, () => setMarks(null)), []);
   const all = numbers(RECORD);
   const sum = (pick: (f: FeatureNumbers) => number) => all.reduce((n, f) => n + pick(f), 0);
   const date = new Date(RECORD.date).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
@@ -300,7 +303,7 @@ function App() {
 
       <Judges marks={marks} />
 
-      <Marks.Provider value={marks}>
+      <Marks.Provider value={marks ?? undefined}>
         {all.map((f) => (
           <FeatureResults key={f.feature.id} f={f} />
         ))}
