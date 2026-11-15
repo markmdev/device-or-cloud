@@ -36,14 +36,16 @@ export const outOfRequests = (e: OutOfRequests) =>
 const sleep = (seconds: number) => new Promise((done) => setTimeout(done, seconds * 1000));
 
 /** One request, as the app would send it. A full minute on the free tier is waited out; a full day isn't. */
-export async function ask(feature: Pick<Feature, "id" | "system" | "schema">, mode: Mode, input: string, cloudModel?: string): Promise<Answer> {
+export async function ask(feature: Pick<Feature, "id" | "system" | "schema" | "history" | "tools">, mode: Mode, input: string, cloudModel?: string): Promise<Answer> {
   for (let attempt = 0; ; attempt++) {
     const started = performance.now();
     try {
-      const { response } = await modelFor(feature, mode, cloudModel).generateContent(input);
+      const turns = [...(feature.history ?? []), { role: "user" as const, text: input }].map(({ role, text }) => ({ role, parts: [{ type: "text" as const, text }] }));
+      const { response } = await modelFor(feature, mode, cloudModel).generateContent(feature.history ? { contents: turns } : input);
       const usage = response.usageMetadata;
+      const call = response.functionCalls()?.[0];
       return {
-        text: response.text().trim(),
+        text: call ? JSON.stringify(call.args) : response.text().trim(),
         source: response.inferenceSource,
         seconds: (performance.now() - started) / 1000,
         tokensIn: usage?.promptTokenCount,

@@ -29,7 +29,7 @@ const models = new Map<string, GenerativeModel>();
  * One feature's model in one mode. The instruction and the output shape are given twice because the SDK
  * sends each side its own: the cloud reads the request's settings, Chrome's model reads the session's.
  */
-export function modelFor(feature: Pick<Feature, "id" | "system" | "schema">, mode: Mode, cloudModel = CLOUD_MODEL): GenerativeModel {
+export function modelFor(feature: Pick<Feature, "id" | "system" | "schema" | "tools">, mode: Mode, cloudModel = CLOUD_MODEL): GenerativeModel {
   const key = `${feature.id}:${mode}:${cloudModel}`;
   let model = models.get(key);
   if (!model) {
@@ -37,11 +37,12 @@ export function modelFor(feature: Pick<Feature, "id" | "system" | "schema">, mod
       mode,
       inCloudParams: {
         model: cloudModel,
-        systemInstruction: feature.system,
+        systemInstruction: feature.system || undefined,
+        tools: feature.tools,
         generationConfig: feature.schema ? { responseMimeType: "application/json", responseJsonSchema: feature.schema } : undefined,
       },
       onDeviceParams: {
-        createOptions: { initialPrompts: [{ role: "system", content: [{ type: "text", value: feature.system }] }] },
+        createOptions: feature.system ? { initialPrompts: [{ role: "system", content: [{ type: "text", value: feature.system }] }] } : undefined,
         promptOptions: feature.schema ? { responseConstraint: feature.schema } : undefined,
       },
     });

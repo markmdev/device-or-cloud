@@ -210,7 +210,7 @@ function Unsure({ of }: { of: Verdict[] }) {
 const NEXT = ["a first", "a second", "a third", "a fourth", "a fifth", "a sixth", "a seventh", "an eighth"];
 
 /** `afterFixes` counts the features on the device once each has its line or setting; `bySetting`, that a setting alone does it. */
-function BottomLine({ verdicts, allowed, afterFixes, bySetting, shop, iphone }: { verdicts: Verdict[]; allowed: number; afterFixes: number; bySetting: boolean; shop: boolean; iphone: boolean }) {
+function BottomLine({ verdicts, allowed, afterFixes, bySetting, shop, iphone, said }: { verdicts: Verdict[]; allowed: number; afterFixes: number; bySetting: boolean; shop: boolean; iphone: boolean; said?: (onDevice: number) => string }) {
   const onDevice = verdicts.filter((v) => v.kind === "device").length, more = afterFixes - onDevice;
   const change = bySetting ? "with the model's randomness switched off" : "after one added line in its prompt";
   const whose = shop ? "its" : "your", devices = iphone ? "iPhones" : "devices";
@@ -218,7 +218,9 @@ function BottomLine({ verdicts, allowed, afterFixes, bySetting, shop, iphone }: 
     <section className="bottom">
       <h2>
         {barInWords(allowed)},{" "}
-        {verdicts.length === 1
+        {said
+          ? said(onDevice)
+          : verdicts.length === 1
           ? onDevice
             ? `this feature can run on your users' own ${devices}.`
             : more
@@ -340,7 +342,7 @@ function Apply({ chrome, apple, children }: { chrome: Placed[]; apple?: Placed[]
 /**
  * The verdicts for a list of features: the bar, the two sides, the proof for one feature, its one-line fixes and the bottom line.
  */
-export function Board({ features, cases, mine = [], recordedOn, held, fixes, opensOn, canRun, onFix, onPlatform, below, belowOnIphone, children }: {
+export function Board({ features, cases, mine = [], recordedOn, held, fixes, opensOn, canRun, onFix, onPlatform, below, belowOnIphone, said, handsOver = true, children }: {
   features: Feature[];
   cases: Record<string, Cases>;
   /** Features whose device answers were made on this computer just now. */
@@ -361,6 +363,10 @@ export function Board({ features, cases, mine = [], recordedOn, held, fixes, ope
   onPlatform?: (iphone: boolean) => void;
   /** The same place on the iPhone view. */
   belowOnIphone?: ReactNode;
+  /** The bottom line's count in the page's own words, where the features aren't an app's own. */
+  said?: (onDevice: number) => string;
+  /** False where the page hands over no template: nothing follows the bottom line. */
+  handsOver?: boolean;
   /** A note under "Apply it" about where this template is in use. */
   children?: ReactNode;
 }) {
@@ -513,8 +519,9 @@ export function Board({ features, cases, mine = [], recordedOn, held, fixes, ope
         iphone={iphone}
         afterFixes={placed.filter(runsOnDevice).length}
         bySetting={placed.some((p) => p.fix?.steady)}
+        said={said}
       />
-      {chrome.every((v) => v.kind !== "pending") && (
+      {handsOver && chrome.every((v) => v.kind !== "pending") && (
         <Apply chrome={chromePlaced} apple={applePlaced}>
           {children}
         </Apply>
