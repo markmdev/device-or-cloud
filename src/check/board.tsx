@@ -4,9 +4,9 @@ import { SOURCE_LABEL } from "../answer";
 import type { Check, Feature } from "../features";
 import { parse } from "../features/types";
 import { CLOUD_MODEL } from "../firebase";
-import { appCode, CHROME, DEPLOY, IPHONE, parameterFor, swiftCode, TEMPLATE_FILE, templateText } from "./apply";
+import { appCode, CHROME, DEPLOY, fixesFor, IPHONE, parameterFor, placedOn, runsOnDevice, swiftCode, TEMPLATE_FILE, templateText, type Placed } from "./apply";
 import { Fixes } from "./fixes";
-import { APPLES, barInWords, CHROMES, costLine, countLine, DEFAULT_ALLOWED, differing, graded, moves, NEITHER_ADVICE, onApple, RUNS, UNSURE, unsureLine, VERDICT_NAME, verdictFor, verdictLine, type Failure, type FixRecord, type Range, type Run, type Verdict } from "./record";
+import { APPLES, barInWords, CHROMES, costLine, countLine, DEFAULT_ALLOWED, differing, graded, NEITHER_ADVICE, onApple, RUNS, UNSURE, unsureLine, VERDICT_NAME, verdictFor, verdictLine, type Failure, type FixRecord, type Range, type Run, type Verdict } from "./record";
 import type { Cases } from "./run";
 
 const MAX_ALLOWED = 30;
@@ -253,34 +253,38 @@ function Copy({ text }: { text: string }) {
 }
 
 /** The verdicts handed over as Remote Config: the template, the app code that reads it, and the command that deploys it. */
-function Apply({ verdicts, apple, children }: { verdicts: Verdict[]; apple?: Verdict[]; children?: ReactNode }) {
-  const text = templateText(verdicts, apple), code = appCode(verdicts, CLOUD_MODEL), swift = apple && swiftCode(verdicts, CLOUD_MODEL);
-  const moved = verdicts.filter((v) => v.kind === "device").length;
+function Apply({ chrome, apple, children }: { chrome: Placed[]; apple?: Placed[]; children?: ReactNode }) {
+  const verdicts = chrome.map((p) => p.verdict);
+  const text = templateText(chrome, apple), code = appCode(verdicts, CLOUD_MODEL), swift = apple && swiftCode(verdicts, CLOUD_MODEL);
+  const moved = chrome.filter(runsOnDevice).length;
   return (
     <section className="apply">
       <h2>Apply it</h2>
       <p className="lede">
-        The verdicts at this bar as a Firebase Remote Config template: one parameter for each feature, holding its inference mode. Every feature
+        The check at this bar as a Firebase Remote Config template: one parameter for each feature, holding its inference mode. Every feature
         stays in the cloud by default.{" "}
         {apple
           ? `A feature that can run on the device gets prefer_on_device under a condition for the platform whose own model passed: "${CHROME}" for Chrome's model, "${IPHONE}" for Apple's. A verdict holds on its own platform and nowhere else.`
           : moved > 0
             ? `${moved === 1 ? "The one" : `The ${moved}`} that can run on the device ${moved === 1 ? "gets" : "get"} prefer_on_device under a condition, "${CHROME}": this check ran Chrome's model, so its verdicts hold there and nowhere else.`
             : "At this bar none is moved to the device."}{" "}
-        Nothing on this page writes to your Firebase project. You deploy the template yourself, and after that you move a feature back from the
-        Firebase console, with no release.
+        Where a feature gets there only with one more line in its prompt, or with the model's randomness off, the line or the setting is in the
+        template beside the mode, and the app reads both. Nothing on this page writes to your Firebase project. You deploy the template yourself,
+        and after that you move a feature back from the Firebase console, with no release.
       </p>
       {children}
       <ul className="modes">
-        {verdicts.map((v, i) => {
-          const where = [v.kind === "device" && CHROME, apple?.[i].kind === "device" && IPHONE].filter(Boolean);
+        {chrome.map((p, i) => {
+          const v = p.verdict, a = apple?.[i];
+          const how = (x: Placed) => (x.fix ? (x.fix.steady ? " with its randomness off" : " with one added line") : "");
+          const where = [runsOnDevice(p) && `${CHROME}${how(p)}`, a && runsOnDevice(a) && `${IPHONE}${how(a)}`].filter(Boolean);
           return (
-            <li key={v.feature.id} data-verdict={v.kind}>
+            <li key={v.feature.id} data-verdict={runsOnDevice(p) ? "device" : v.kind}>
               <b>{v.feature.name}</b>
               <code>{parameterFor(v.feature)}</code>
               <span>
                 {where.length ? `prefer_on_device in ${where.join(" and in ")}, only_in_cloud everywhere else` : "only_in_cloud"}
-                {((v.kind === "device" && v.unsure) || (apple?.[i].kind === "device" && apple[i].unsure)) && <span className="unsure">{UNSURE}</span>}
+                {((v.kind === "device" && v.unsure) || (a?.verdict.kind === "device" && a.verdict.unsure)) && <span className="unsure">{UNSURE}</span>}
               </span>
             </li>
           );
@@ -377,10 +381,11 @@ export function Board({ features, cases, mine = [], recordedOn, held, fixes, ope
   const who = iphone ? APPLES : CHROMES;
   const seen = (id: string) => (iphone ? onApple(cases[id]) : cases[id]);
   /** The lines and settings tried on the platform the board shows. */
-  const fixesOn = (id: string) => (fixes?.[id] ?? []).filter((fix) => (fix.on === "apple") === iphone);
   const chrome = features.map((f) => verdictFor(f, cases[f.id], allowed));
   const apple = hasApple ? features.map((f) => verdictFor(f, onApple(cases[f.id]), allowed)) : undefined;
   const verdicts = iphone ? apple! : chrome;
+  const chromePlaced = placedOn(chrome, fixes, false, allowed), applePlaced = apple && placedOn(apple, fixes, true, allowed);
+  const placed = iphone ? applePlaced! : chromePlaced;
   const onDevice = verdicts.filter((v) => v.kind === "device"), inCloud = verdicts.filter((v) => v.kind === "cloud");
   const neither = verdicts.filter((v) => v.kind !== "device" && v.kind !== "cloud");
 
@@ -482,7 +487,8 @@ export function Board({ features, cases, mine = [], recordedOn, held, fixes, ope
             onDevice={shown.kind === "device"}
             base={seen(shown.feature.id)!}
             heldBase={iphone ? onApple(held[shown.feature.id]) : held[shown.feature.id]}
-            fixes={fixesOn(shown.feature.id)}
+            fixes={fixesFor(fixes, shown.feature, iphone)}
+            shipped={placed[verdicts.indexOf(shown)].fix}
             allowed={allowed}
             canRun={canRun}
             canTry={!iphone}
@@ -505,11 +511,11 @@ export function Board({ features, cases, mine = [], recordedOn, held, fixes, ope
         allowed={allowed}
         shop={!!recordedOn}
         iphone={iphone}
-        afterFixes={verdicts.filter((v) => v.kind === "device" || (v.kind === "cloud" && fixesOn(v.feature.id).some((fix) => moves(v.feature, fix, allowed)))).length}
-        bySetting={verdicts.some((v) => v.kind === "cloud" && fixesOn(v.feature.id).some((fix) => fix.steady && moves(v.feature, fix, allowed)))}
+        afterFixes={placed.filter(runsOnDevice).length}
+        bySetting={placed.some((p) => p.fix?.steady)}
       />
       {chrome.every((v) => v.kind !== "pending") && (
-        <Apply verdicts={chrome} apple={apple}>
+        <Apply chrome={chromePlaced} apple={applePlaced}>
           {children}
         </Apply>
       )}

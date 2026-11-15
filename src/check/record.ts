@@ -200,9 +200,6 @@ export function barInWords(allowed: number): string {
   return `At up to ${count} wrong answer${count === 1 ? "" : "s"} in ${per}`;
 }
 
-/** The Remote Config value each verdict sets. */
-export const modeFor = (v: Verdict) => (v.kind === "device" ? "prefer_on_device" : "only_in_cloud");
-
 export const CHROMES = "Chrome's model", APPLES = "Apple's model";
 
 export function verdictLine(v: Verdict, who = CHROMES): string {

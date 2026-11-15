@@ -223,7 +223,7 @@ function App() {
       >
         <p>
           <a href="/shop/">The Larkfield shop</a> runs on this template as it stands at the default bar of 10: we deployed it from the recorded
-          check, and each of the shop's features reads its mode from it.
+          check, and each of the shop's features reads its mode from it, with its added line or setting where it has one.
         </p>
       </Board>
 

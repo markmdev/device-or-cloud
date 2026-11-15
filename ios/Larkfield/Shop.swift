@@ -19,7 +19,7 @@ extension Color {
 
 struct Shop: View {
     // Empty until Remote Config has answered, so no feature runs on a setting older than the published one.
-    @State private var modes: [String: Mode]?
+    @State private var settings: [String: Setting]?
     private let config = RemoteConfig.remoteConfig()
 
     var body: some View {
@@ -41,9 +41,9 @@ struct Shop: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .background(Color.notice, in: RoundedRectangle(cornerRadius: 14))
                 }
-                if let modes {
+                if let settings {
                     ForEach(Feature.all) { feature in
-                        Card(feature: feature, mode: modes[feature.id] ?? .onlyInCloud)
+                        Card(feature: feature, setting: settings[feature.id]!)
                     }
                 }
             }
@@ -57,7 +57,7 @@ struct Shop: View {
         .task {
             config.setDefaults(Dictionary(uniqueKeysWithValues: Feature.all.map { ($0.parameter, "only_in_cloud" as NSObject) }))
             _ = try? await config.fetchAndActivate()
-            modes = read()
+            settings = read()
             #if DEBUG
             // Started with -walk, the app also says whether Apple's model answers here at all, whatever the modes are.
             if CommandLine.arguments.contains("-walk"), let feature = Feature.all.first {
@@ -69,33 +69,48 @@ struct Shop: View {
             do {
                 for try await _ in config.configUpdates {
                     _ = try? await config.activate()
-                    modes = read()
+                    settings = read()
                 }
             } catch {}
         }
     }
 
-    private func read() -> [String: Mode] {
-        Dictionary(uniqueKeysWithValues: Feature.all.map { ($0.id, Mode(rawValue: config.configValue(forKey: $0.parameter).stringValue) ?? .onlyInCloud) })
+    private func read() -> [String: Setting] {
+        Dictionary(uniqueKeysWithValues: Feature.all.map { feature in
+            (feature.id, Setting(
+                mode: Mode(rawValue: config.configValue(forKey: feature.parameter).stringValue) ?? .onlyInCloud,
+                line: config.configValue(forKey: "line_\(feature.id)").stringValue,
+                steady: config.configValue(forKey: "steady_\(feature.id)").boolValue
+            ))
+        })
     }
+}
+
+/// What Remote Config says about one feature: where it runs, and what the check found it needs to run there.
+struct Setting {
+    let mode: Mode
+    /// One more sentence at the end of its instruction; empty for none.
+    let line: String
+    /// Apple's model's randomness off.
+    let steady: Bool
 }
 
 private struct Card: View {
     let feature: Feature
-    let mode: Mode
+    let setting: Setting
     @State private var input: String
     @State private var busy = false
     @State private var answer: Answer?
     @State private var problem: String?
 
-    init(feature: Feature, mode: Mode) {
+    init(feature: Feature, setting: Setting) {
         self.feature = feature
-        self.mode = mode
+        self.setting = setting
         _input = State(initialValue: feature.sample.text)
     }
 
     var body: some View {
-        let onDevice = answer?.onDevice ?? mode.startsOnDevice
+        let onDevice = answer?.onDevice ?? setting.mode.startsOnDevice
         VStack(alignment: .leading, spacing: 0) {
             VStack(alignment: .leading, spacing: 0) {
                 Text(feature.label).font(.system(size: 12.5, weight: .semibold)).foregroundStyle(Color.soft)
@@ -148,10 +163,15 @@ private struct Card: View {
         .overlay(RoundedRectangle(cornerRadius: 22).strokeBorder(Color.ink, lineWidth: 2))
         #if DEBUG
         // Started with -walk, every card answers its sample once and says where it ran, for scripts/walk-ios.mjs.
+        // Started with -film <feature id>, that card answers its sample after a moment, for a take nobody has to touch.
         .task {
+            if UserDefaults.standard.string(forKey: "film") == feature.id {
+                try? await Task.sleep(for: .seconds(3))
+                await run()
+            }
             guard CommandLine.arguments.contains("-walk") else { return }
             await run()
-            print("WALK", feature.id, mode.rawValue, answer.map { $0.onDevice ? "on_device" : "in_cloud" } ?? "failed: \(problem ?? "")")
+            print("WALK", feature.id, setting.mode.rawValue, setting.steady ? "steady" : setting.line.isEmpty ? "plain" : "line", answer.map { $0.onDevice ? "on_device" : "in_cloud" } ?? "failed: \(problem ?? "")")
         }
         #endif
     }
@@ -161,7 +181,7 @@ private struct Card: View {
         answer = nil
         problem = nil
         do {
-            answer = try await ask(feature, mode: mode, input: feature.sample.added + input)
+            answer = try await ask(feature, mode: setting.mode, input: feature.sample.added + input, line: setting.line, steady: setting.steady)
         } catch {
             let said = String(describing: error)
             problem = if said.contains(NSURLErrorDomain) {
