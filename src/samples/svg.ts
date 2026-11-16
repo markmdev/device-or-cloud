@@ -1,4 +1,5 @@
 import type { Case, Feature } from "../features/types";
+import { malformed } from "./xml";
 
 const SHAPES = "simple shapes";
 const SCENES = "small scenes";
@@ -45,12 +46,15 @@ export const svg: Feature = {
     'You are an expert at turning image prompts into SVG code. When given a prompt,\nuse your creativity to code a 800x600 SVG rendering of it.\nAlways add viewBox="0 0 800 600" to the root svg tag. Do\nnot import external assets, they won\'t work. Return ONLY the SVG code, nothing else,\nno commentary.',
   cases,
   check(answer) {
-    // The sample app itself takes a ```xml fence off the reply before it draws it, so the check does too.
+    // The sample app itself takes a ```xml fence off the reply before it draws it, and no other fence, so the check does too.
+    const fence = /^```(\w*)/.exec(answer.trim())?.[1];
+    if (fence !== undefined && fence !== "xml") return { ok: false, reason: `The reply is fenced as \`\`\`${fence}. The sample app takes off a \`\`\`xml fence and no other, so it can't draw this.` };
     const code = answer.trim().replace(/^```xml/, "").replace(/```$/, "").trim();
     if (!/^(<\?xml[^>]*\?>\s*)?<svg[\s>]/.test(code) || !code.endsWith("</svg>")) return { ok: false, reason: "The answer is not only SVG code." };
     if (!/^(<\?xml[^>]*\?>\s*)?<svg[^>]*\sviewBox="0 0 800 600"/.test(code)) return { ok: false, reason: 'The root svg tag has no viewBox="0 0 800 600".' };
     const outside = code.replace(/xmlns(:\w+)?="[^"]*"/g, "");
     if (/<image[\s>]|@import|https?:\/\//.test(outside)) return { ok: false, reason: "The code imports an outside asset." };
-    return { ok: true };
+    const broken = malformed(code);
+    return broken ? { ok: false, reason: `A browser can't draw the code: ${broken}.` } : { ok: true };
   },
 };

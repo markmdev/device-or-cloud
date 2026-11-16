@@ -10,6 +10,7 @@
     "results": "tsx scripts/results.ts",
     "ios": "tsx scripts/ios-features.ts",
     "apple": "tsx scripts/apple.ts",
+    "test": "node --import tsx --test test/*.test.ts",
     "deploy": "npm run modes && npm run build && firebase deploy"
   },
   "dependencies": {
