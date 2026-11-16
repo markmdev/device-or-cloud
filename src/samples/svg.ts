@@ -45,6 +45,7 @@ export const svg: Feature = {
   system:
     'You are an expert at turning image prompts into SVG code. When given a prompt,\nuse your creativity to code a 800x600 SVG rendering of it.\nAlways add viewBox="0 0 800 600" to the root svg tag. Do\nnot import external assets, they won\'t work. Return ONLY the SVG code, nothing else,\nno commentary.',
   cases,
+  rules: { pass: "Follows the sample's rules", unjudged: "Code checks the sample's rules. Nobody judged whether the picture shows what was asked." },
   check(answer) {
     // The sample app itself takes a ```xml fence off the reply before it draws it, and no other fence, so the check does too.
     const fence = /^```(\w*)/.exec(answer.trim())?.[1];

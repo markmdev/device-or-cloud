@@ -34,6 +34,8 @@ export type Feature = {
   check(answer: string, c: Case): Check;
   /** Set when code can't decide everything: what the cloud grader is asked to judge. */
   graded?: string;
+  /** Set when the check holds an answer to rules and can't tell a good answer from a poor one: what the pages call a pass, and what they say nobody judged. */
+  rules?: { pass: string; unjudged: string };
 };
 
 const fail = (reason: string): Check => ({ ok: false, reason });
