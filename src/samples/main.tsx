@@ -136,32 +136,33 @@ function App() {
 
       <section className="sources">
         <h2>The {SAMPLES.length} prompts the check ran</h2>
-        <ul>
+        <ul className="ran">
           {SAMPLES.map(({ feature, from, link }) => (
             <li key={feature.id}>
               <b>{feature.name}</b>
-              <span>
-                <a href={link}>{from}</a> · {feature.graded ? "judged by the cloud model, after what code can check" : "checked by code"}
-              </span>
+              <a href={link}>{from}</a>
+              <small>{feature.graded ? "Judged by the cloud model, after what code can check" : "Checked by code"}</small>
             </li>
           ))}
         </ul>
         <h2>The {NOT_RUN_COUNT} it did not run</h2>
-        {NOT_RUN.map((group) => (
-          <div key={group.why}>
-            <p>{group.why}</p>
-            <ul>
-              {group.prompts.map((p) => (
-                <li key={p.name}>
-                  <b>{p.name}</b>
-                  <span>
+        <div className="not">
+          {NOT_RUN.map((group) => (
+            <div key={group.why}>
+              <p>
+                <b>{group.prompts.length}</b> {group.why}
+              </p>
+              <ul>
+                {group.prompts.map((p) => (
+                  <li key={p.name}>
+                    {p.name}
                     <a href={p.link}>{p.from}</a>
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
       </section>
 
       <footer>

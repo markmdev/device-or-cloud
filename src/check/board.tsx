@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { flushSync } from "react-dom";
-import { SOURCE_LABEL } from "../answer";
+import { isLong, LongText, SOURCE_LABEL, Value } from "../answer";
 import type { Check, Feature } from "../features";
 import { parse, shown } from "../features/types";
 import { CLOUD_MODEL } from "../firebase";
@@ -77,14 +77,19 @@ const Mark = ({ ok }: { ok?: boolean }) => (
 
 const textOf = (run?: Run) => (run && "text" in run ? run.text : undefined);
 
-/** What an answer shows large: the first field that tells the two answers apart, or the whole text. */
-function headline(text: string | undefined, telling: string[]): { key?: string; value: string } | undefined {
+/** What an answer shows large: the first field that tells the two answers apart, or the whole text. `nested` is that field when it holds fields of its own. */
+function headline(text: string | undefined, telling: string[]): { key?: string; value: string; nested?: object } | undefined {
   if (text === undefined) return undefined;
   const object = parse(text);
   if (!object) return { value: text };
   const key = telling[0] ?? Object.keys(object)[0];
-  return key === undefined ? undefined : { key, value: shown(object[key]) };
+  if (key === undefined) return undefined;
+  const field = object[key];
+  return { key, value: shown(field), nested: typeof field === "object" && field !== null ? field : undefined };
 }
+
+/** An answer too long to show large: a letter, a page of code. It has a box of its own, in the type a model's words are set in. */
+const long = (head?: { value: string; nested?: object }) => Boolean(head && !head.nested && isLong(head.value));
 
 function RunAnswer({ run, check, telling, size, children }: { run?: Run; check?: Check; telling: string[]; size: string; children?: ReactNode }) {
   if (!run) return <p className="quiet">No answer yet.</p>;
@@ -96,24 +101,34 @@ function RunAnswer({ run, check, telling, size, children }: { run?: Run; check?:
     <div className="said" data-ok={check?.ok} data-size={size}>
       {"error" in run ? (
         <p className="answer">{run.error}</p>
+      ) : long(head) ? (
+        <LongText text={head!.value}>{check && <Mark ok={check.ok} />}</LongText>
       ) : (
         <>
-          <p className="telling">
+          <p className="telling" data-nested={Boolean(head?.nested)}>
             {head?.key && <span>{head.key}</span>}
-            <b>
-              {head?.value.slice(0, lastWord)}
-              <span className="together">
-                {head?.value.slice(lastWord)}
-                {check && <Mark ok={check.ok} />}
-              </span>
-            </b>
+            {head?.nested ? (
+              <b>
+                <Value value={head.nested} end={check && <Mark ok={check.ok} />} />
+              </b>
+            ) : (
+              <b>
+                {head?.value.slice(0, lastWord)}
+                <span className="together">
+                  {head?.value.slice(lastWord)}
+                  {check && <Mark ok={check.ok} />}
+                </span>
+              </b>
+            )}
           </p>
           {object && Object.keys(object).length > 1 && (
             <dl className="answer">
               {Object.entries(object).map(([key, value]) => (
                 <div key={key} data-telling={telling.includes(key)}>
                   <dt>{key}</dt>
-                  <dd>{shown(value)}</dd>
+                  <dd>
+                    <Value value={value} />
+                  </dd>
                 </div>
               ))}
             </dl>
@@ -150,8 +165,10 @@ function Proof({ v, cases, who, recordedOn }: { v: Verdict; cases: Cases; who: s
   const sameText = new Set(r.device.map((d) => ("text" in d ? d.text : d.error))).size === 1;
   const decidedByCode = !graded(v.feature, f.c) || !v.feature.check("text" in run ? run.text : "", f.c).ok;
   const telling = differing(textOf(run), textOf(r.cloud));
-  const longest = Math.max(...[run, r.cloud].map((x) => headline(textOf(x), telling)?.value.length ?? 0));
-  const size = longest <= 16 ? "large" : longest <= 40 ? "medium" : "small";
+  // Both answers are set at one size, the one the longer of them needs. A long answer has a box of its own and doesn't count.
+  const heads = [run, r.cloud].map((x) => headline(textOf(x), telling)).filter((h) => h && !long(h));
+  const longest = Math.max(0, ...heads.map((h) => h!.value.length));
+  const size = heads.some((h) => h!.nested) || longest > 40 ? "small" : longest <= 16 ? "large" : "medium";
   const deviceCheck = f.device[worst];
   return (
     <section className="proof">
