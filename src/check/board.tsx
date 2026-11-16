@@ -180,7 +180,7 @@ function Proof({ v, cases, who, recordedOn }: { v: Verdict; cases: Cases; who: s
         <p className="who">{who} answered</p>
         <RunAnswer run={run} check={deviceCheck} telling={telling} size={size}>
           <p className="quiet">
-            {wrongRuns === 0 ? `Right on all ${RUNS} runs.` : sameText ? `The same answer on all ${RUNS} runs.` : `Wrong on ${wrongRuns} of ${RUNS} runs.`}
+            {wrongRuns === 0 ? `${v.feature.rules?.pass ?? "Right"} on all ${RUNS} runs.` : sameText ? `The same answer on all ${RUNS} runs.` : `Wrong on ${wrongRuns} of ${RUNS} runs.`}
           </p>
         </RunAnswer>
       </div>

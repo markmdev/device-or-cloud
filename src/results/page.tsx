@@ -44,7 +44,7 @@ function Answer({ feature, c, run, r, who, source, column }: { feature: Feature;
       </p>
       {"error" in run ? <p className="answer">{run.error}</p> : <AnswerText text={run.text} />}
       <p className={check?.ok ? "right" : "wrong"}>
-        {!check ? "Not judged." : check.ok ? "Right." : `Wrong. ${check.reason}`} <small>{"error" in run ? "" : byCode ? "Checked by code." : "Judged by the cloud model."}</small>
+        {!check ? "Not judged." : check.ok ? `${feature.rules?.pass ?? "Right"}.` : `Wrong. ${check.reason}`} <small>{"error" in run ? "" : byCode ? "Checked by code." : "Judged by the cloud model."}</small>
       </p>
       {(second || mark) && (
         <p className="also">
@@ -123,7 +123,7 @@ function FeatureResults({ f }: { f: FeatureNumbers }) {
       <p>
         {feature.graded
           ? "This one has no single right answer: code checks its rules and the details an answer has to keep, and the cloud model judges the rest."
-          : "Code decides every answer."}
+          : (feature.rules?.unjudged ?? "Code decides every answer.")}
       </p>
       <p className="quiet">The instruction the app sends</p>
       <pre>{feature.system || "None: the input is the whole prompt."}</pre>
