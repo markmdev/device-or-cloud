@@ -159,6 +159,7 @@ p.answer { white-space: pre-wrap; }
 .long { position: relative; display: grid; gap: 10px; min-width: 0; }
 .long pre { margin: 0; font: 400 13px/1.5 var(--mono); white-space: pre-wrap; overflow-wrap: anywhere; }
 .long[data-open="false"] pre { max-height: 18em; overflow: hidden; -webkit-mask-image: linear-gradient(#000 calc(100% - 3.5em), transparent); mask-image: linear-gradient(#000 calc(100% - 3.5em), transparent); }
+.long .undrawn { font-size: 13px; color: var(--soft); }
 .long img { display: block; width: min(100%, 300px); aspect-ratio: 4 / 3; object-fit: contain; border: 1.5px solid var(--rule); border-radius: 8px; background: var(--white); }
 .long button { justify-self: start; padding: 5px 12px; border: 1.5px solid var(--ink); border-radius: 999px; background: var(--white); color: var(--ink); font: 600 12.5px/1.2 var(--ui); cursor: pointer; }
 .long button:hover { background: var(--ink); color: var(--white); }
@@ -167,7 +168,6 @@ p.answer { white-space: pre-wrap; }
 .said .long .mark { position: absolute; top: 12px; right: 12px; width: 22px; height: 22px; margin: 0; }
 .said .long pre { padding-right: 30px; }
 article.result .long pre { font-size: 12.5px; }
-article.result .long[data-open="false"] pre { max-height: 15em; }
 .said[data-ok="false"] [data-telling="true"] dd { color: var(--wrong); font-weight: 500; }
 .said .quiet { margin-top: 14px; font-size: 13px; }
 .proof .input { background: var(--wash); border-inline: 2px solid var(--ink); }
@@ -448,7 +448,7 @@ article.result small { color: var(--soft); font-weight: 400; }
 article.result .right { font-weight: 600; }
 article.result .wrong { font-size: 13px; line-height: 1.35; }
 article.result dl.answer { font-size: 12.5px; }
-article.result dl.answer div { grid-template-columns: 68px 1fr; gap: 8px; }
+article.result dl.answer div { grid-template-columns: minmax(68px, max-content) 1fr; gap: 8px; }
 .fix-results { padding: 16px 20px; border: 2px solid var(--ink); border-radius: 16px; }
 .fix-results summary { cursor: pointer; font-size: 14.5px; }
 .fix-results blockquote { margin: 14px 0; font: 700 20px/1.25 var(--display); letter-spacing: -0.3px; }
@@ -582,7 +582,6 @@ article.result .given .also span[data-ok="false"] { color: var(--wrong); }
 /* The page for Firebase's own sample prompts: what the check ran, as a table to read across, and what it left out, grouped by why. */
 .samples .sources { display: grid; gap: 16px; padding: 44px var(--gutter) 48px; border-top: 2px solid var(--ink); }
 .samples .sources h2 { font: 700 30px/1.1 var(--display); letter-spacing: -0.9px; }
-.samples .sources .not { margin-bottom: 0; }
 .samples .sources .ran { margin-bottom: 28px; border-top: 2px solid var(--ink); }
 .samples .sources .ran li { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr) minmax(0, 0.9fr); gap: 4px 24px; align-items: baseline; padding: 11px 0; border-bottom: 1.5px solid var(--rule); font-size: 14.5px; }
 .samples .sources .ran b { font-weight: 600; }

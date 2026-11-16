@@ -1,4 +1,4 @@
-import { useEffect, useState, type ReactNode } from "react";
+import { useLayoutEffect, useRef, useState, type ReactNode } from "react";
 import { parse, shown } from "./features/types";
 
 /**
@@ -40,34 +40,41 @@ export function Value({ value, end }: { value: unknown; end?: ReactNode }) {
 }
 
 /** The picture a model's SVG code draws, as an address an image can show. Nothing in it can run. */
-export function drawn(text: string): string | undefined {
+function drawn(text: string): string | undefined {
   const code = /<svg[\s>][\s\S]*<\/svg>/.exec(text)?.[0];
   if (!code) return undefined;
   const named = /^<svg[^>]*\sxmlns=/.test(code) ? code : code.replace(/^<svg/, '<svg xmlns="http://www.w3.org/2000/svg"');
   return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(named)}`;
 }
 
-const LINES_SHOWN = 12;
 /** Too long to set large beside another answer. */
 export const isLong = (text: string) => text.length > 140 || text.split("\n").length > 3;
-const isCut = (text: string) => text.split("\n").length > LINES_SHOWN || text.length > LINES_SHOWN * 46;
+
+/** The lines a long answer shows before the reader asks for the rest. The max-height in base.css is the same number. */
+const LINES_SHOWN = 12;
 
 /**
  * A long answer in mono, cut to its first lines until the reader asks for the rest. Code that draws a picture shows
  * the picture too. `children` is the answer's mark, in the corner.
  */
 export function LongText({ text, children }: { text: string; children?: ReactNode }) {
+  const pre = useRef<HTMLPreElement>(null);
   const [open, setOpen] = useState(false);
-  useEffect(() => setOpen(false), [text]);
+  const [fits, setFits] = useState(false);
+  const [undrawn, setUndrawn] = useState(false);
+  useLayoutEffect(() => {
+    const el = pre.current!;
+    setFits(el.scrollHeight <= parseFloat(getComputedStyle(el).lineHeight) * LINES_SHOWN + 2);
+    setOpen(false);
+    setUndrawn(false);
+  }, [text]);
   const picture = drawn(text);
-  const lines = text.split("\n").length;
-  const cut = isCut(text);
   return (
-    <div className="long" data-open={open || !cut}>
+    <div className="long" data-open={open || fits}>
       {children}
-      {picture && <img src={picture} loading="lazy" alt="The picture this code draws" onError={(e) => (e.currentTarget.hidden = true)} />}
-      <pre>{text}</pre>
-      {cut && <button onClick={() => setOpen(!open)}>{open ? "Show less" : lines > LINES_SHOWN ? `Show all ${lines} lines` : "Show the whole answer"}</button>}
+      {picture && (undrawn ? <p className="undrawn">A browser can't draw this code.</p> : <img src={picture} loading="lazy" alt="The picture this code draws" onError={() => setUndrawn(true)} />)}
+      <pre ref={pre}>{text}</pre>
+      {!fits && <button onClick={() => setOpen(!open)}>{open ? "Show less" : "Show the whole answer"}</button>}
     </div>
   );
 }
@@ -75,7 +82,7 @@ export function LongText({ text, children }: { text: string; children?: ReactNod
 /** An answer as a person reads it: a JSON object as rows, a long text cut to its first lines, anything else as text. */
 export function AnswerText({ text }: { text: string }) {
   const object = parse(text);
-  if (!object) return isCut(text) || drawn(text) ? <LongText text={text} /> : <p className="answer">{text}</p>;
+  if (!object) return isLong(text) ? <LongText text={text} /> : <p className="answer">{text}</p>;
   return (
     <dl className="answer">
       {Object.entries(object).map(([key, value]) => (
