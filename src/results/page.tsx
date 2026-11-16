@@ -215,7 +215,7 @@ function Judges({ marks, what, people }: { marks?: Map<string, Mark> | null; wha
         <li>
           <b>A second model.</b>{" "}
           {j.second
-            ? `${RECORD.secondGrader} has judged ${j.second === j.judged ? `all ${j.judged}` : `${j.second} of the ${j.judged} so far`}, with the same request. It agrees with the cloud model on ${j.secondAgrees} of ${j.second}. Where they differ, it is the stricter one on ${j.secondStricter} and the more lenient on ${j.second - j.secondAgrees - j.secondStricter}.`
+            ? `${RECORD.secondGrader}, the cloud model's larger sibling, has judged ${j.second === j.judged ? `all ${j.judged}` : `${j.second} of the ${j.judged} so far`}, with the same request. It agrees with the cloud model on ${j.secondAgrees} of ${j.second}. Where they differ, it is the stricter one on ${j.secondStricter} and the more lenient on ${j.second - j.secondAgrees - j.secondStricter}.`
             : "A different model will judge them again with the same request. It has not yet."}
         </li>
         {people && <li>

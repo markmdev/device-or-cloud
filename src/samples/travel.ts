@@ -32,6 +32,17 @@ const rows: [string, string][] = [
   [OFF, "What's a good recipe for banana bread?"],
   [OFF, "Who won the World Cup in 2018?"],
   [OFF, "Fix this Python error for me: NameError: name 'x' is not defined."],
+  // Ten more of ours, written on 16 November before any model answered them.
+  [PLAIN, "How do I choose a safe place to stay?"],
+  [PLAIN, "What should I do if I get ill while I'm abroad?"],
+  [PLAIN, "How do I use my phone abroad without a huge bill?"],
+  [FACTS, "How much is the departure tax at Cancún airport today?"],
+  [FACTS, "What is the speed limit on motorways in Portugal?"],
+  [FACTS, "What is the exchange rate from pounds to yen right now?"],
+  [FOLLOW, "You mentioned six months for the passport. Six months counted from when?"],
+  [FOLLOW, "Remind me: how far ahead did you say to book?"],
+  [OFF, "Can you explain how photosynthesis works?"],
+  [OFF, "Write me a poem about my cat."],
 ];
 
 const cases: Case[] = rows.map(([kind, input], i) => ({ id: `travel-${i + 1}`, input, kind }));

@@ -3,7 +3,7 @@ import { createRoot } from "react-dom/client";
 import "../base.css";
 import { OutOfRequests, outOfRequests } from "../check/ask";
 import { Board } from "../check/board";
-import { RUNS, verdictFor, written, type Cases, type CheckRecord } from "../check/record";
+import { RUNS, verdictFor, written, type Cases, type CheckRecord, type Verdict } from "../check/record";
 import { gradeAgain, gradeFeature, runCloud, runDevice } from "../check/run";
 import { CLOUD_MODEL, SECOND_GRADER } from "../firebase";
 import { NOT_RUN, SAMPLES } from ".";
@@ -11,6 +11,17 @@ import recorded from "./recorded.json";
 
 const RECORD = recorded as CheckRecord;
 const FEATURES = SAMPLES.map((s) => s.feature);
+
+/**
+ * The prompts whose verdict is "runs on the device": how many of those verdicts more inputs could no longer change,
+ * and a sentence for the others, which only looked able to.
+ */
+function found(device: Verdict[]): { sure: number; rest: string } {
+  const open = device.filter((v) => v.unsure), counts = open.map((v) => v.inputs), fewest = Math.min(...counts), most = Math.max(...counts);
+  const each = `${fewest === most ? fewest : `${fewest} to ${most}`} inputs${open.length > 1 ? " each" : ""}`;
+  return { sure: device.length - open.length, rest: open.length ? ` ${open.length} more looked able to, and ${each} were not enough to be sure.` : "" };
+}
+
 const NOT_RUN_COUNT = NOT_RUN.reduce((n, group) => n + group.prompts.length, 0);
 
 function App() {
@@ -70,7 +81,8 @@ function App() {
   }
 
   const verdicts = FEATURES.map((f) => verdictFor(f, features[f.id]));
-  const onDevice = verdicts.filter((v) => v.kind === "device").length;
+  const onDevice = found(verdicts.filter((v) => v.kind === "device"));
+  const inputs = FEATURES.map((f) => f.cases.length), fewest = Math.min(...inputs), most = Math.max(...inputs);
   const done = running ? Object.values(features[running] ?? {}).filter((r) => r.device.length === RUNS).length : 0;
   const all = SAMPLES.length + NOT_RUN_COUNT;
 
@@ -101,13 +113,13 @@ function App() {
 
       <section className="intro">
         <h2>
-          We checked the {SAMPLES.length} text prompts in Firebase's own sample apps. {onDevice} can run on the device as written.
+          We checked the {SAMPLES.length} text prompts in Firebase's own sample apps. {onDevice.sure} can run on the device as written.{onDevice.rest}
         </h2>
         <p className="lede">
           Firebase's sample apps for AI Logic, the web, iOS and Android quickstarts as they stood on 15 November 2026, send {all} fixed prompts.{" "}
           {SAMPLES.length + 1} are text in and text out, and {SAMPLES.length} of those have their text in the repositories. Each of the{" "}
-          {SAMPLES.length} went through the check as it is written, with {FEATURES[0].cases.length} inputs: the sample's own input where it has
-          one, and the rest written by us. Every input went through Firebase AI Logic {RUNS} times to the model built into Chrome and once to{" "}
+          {SAMPLES.length} went through the check as it is written, with {fewest === most ? fewest : `${fewest} to ${most}`} inputs: the sample's own input
+          where it has one, and the rest written by us. Every input went through Firebase AI Logic {RUNS} times to the model built into Chrome and once to{" "}
           {RECORD.cloudModel || CLOUD_MODEL} in the cloud. The other {NOT_RUN_COUNT} prompts are listed below, with why the check does not run
           them.
         </p>
@@ -119,7 +131,7 @@ function App() {
         recordedOn="our laptop"
         canRun={false}
         handsOver={false}
-        said={(n) => `${n} of the ${SAMPLES.length} text prompts in Firebase's sample apps can run on the device as written.`}
+        said={(device) => `${found(device).sure} of the ${SAMPLES.length} text prompts in Firebase's sample apps can run on the device as written.${found(device).rest}`}
       />
 
       <section className="sources">

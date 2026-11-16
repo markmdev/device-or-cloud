@@ -18,8 +18,11 @@ initializeAppCheck(app, {
 const ai = getAI(app, { backend: new GoogleAIBackend() });
 
 export const CLOUD_MODEL = "gemini-3.5-flash-lite";
-/** A different model from both that are checked: it judges the judged answers a second time. */
-export const SECOND_GRADER = "gemini-3.8-flash";
+/**
+ * It judges the judged answers a second time. A different model from both that are checked, though the cloud model's
+ * larger sibling: the free tier offers no model of another family that answers.
+ */
+export const SECOND_GRADER = "gemini-3.5-flash";
 export type Mode = InferenceMode;
 export const MODES = Object.values(InferenceMode);
 

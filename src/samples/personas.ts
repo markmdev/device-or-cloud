@@ -32,6 +32,17 @@ const everyday: [string, string, string[]?][] = [
   [SMALL, "It's raining again and I'm bored."],
   [SMALL, "Tell me something interesting."],
   [SMALL, "Thanks, that was helpful. Goodbye!"],
+  // Ten more of ours, written on 16 November before any model answered them.
+  [FACTS, "How many sides does a hexagon have?", ["six", "6"]],
+  [FACTS, "What is the boiling point of water in degrees Celsius at sea level?", ["100", "one hundred"]],
+  [FACTS, "Which is the longest river in Africa?", ["nile"]],
+  [FACTS, "How many hours are there in three days?", ["72", "seventy[- ]two"]],
+  [HOW, "How do I iron a shirt?"],
+  [HOW, "How do I make a cup of tea?"],
+  [HOW, "How can I save money on my food shopping?"],
+  [SMALL, "Good morning! What a lovely day."],
+  [SMALL, "I can't decide what to have for dinner."],
+  [SMALL, "My team lost the match last night."],
 ];
 
 const said = (answer: string, words: string[]) => words.some((w) => new RegExp(`\\b${w}\\b`, "i").test(answer));
@@ -107,6 +118,17 @@ const dev: [string, string][] = [
   [VAGUE, "My code is slow. What should I do?"],
   [VAGUE, "Is it OK to copy code from the internet?"],
   [VAGUE, "How do I start contributing to open source?"],
+  // Ten more of ours, written on 16 November before any model answered them.
+  [BASICS, "What is the difference between a class and an object?"],
+  [BASICS, "What is a hash map?"],
+  [BASICS, "What does immutable mean?"],
+  [PRACTICE, "How should I handle errors in an API?"],
+  [PRACTICE, "When should I add a comment to my code?"],
+  [PRACTICE, "How do I review someone else's pull request well?"],
+  [BUGS, "Why does my JavaScript sort put 10 before 9 when I sort numbers?"],
+  [BUGS, "My Python script says 'IndentationError: unexpected indent'. What does it mean?"],
+  [VAGUE, "How do I learn a new codebase quickly?"],
+  [VAGUE, "Should I use tabs or spaces?"],
 ];
 
 export const seniorDev: Feature = {

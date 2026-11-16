@@ -33,6 +33,17 @@ const rows: [string, string][] = [
   [ODD, "Bill Sales"],
   [ODD, "Penny Cash"],
   [ODD, "Mark Total"],
+  // Ten more of ours, written on 16 November before any model answered them.
+  [PLAIN, "Grace Hall"],
+  [PLAIN, "Omar Haddad"],
+  [TITLED, "Dr. Samuel Ortiz"],
+  [TITLED, "Lady Margaret Ashby"],
+  [MARKS, "Chloé Lefèvre"],
+  [MARKS, "Seán O'Brien"],
+  [FIRMS, "Riverside Garden Centre"],
+  [FIRMS, "Foxglove Books"],
+  [ODD, "Bill Due"],
+  [ODD, "Rob Banks"],
 ];
 
 const cases: Case[] = rows.map(([kind, name], i) => ({ id: `invoice-${i + 1}`, input: `Create an example customer invoice for a customer named ${name}.`, expect: name, kind }));

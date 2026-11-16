@@ -10,7 +10,7 @@ createRoot(document.getElementById("root")!).render(
     features={SAMPLES.map((s) => s.feature)}
     back={{ href: "/samples/", label: "Back to Firebase's sample prompts" }}
     heading="Every input and every answer behind the check of Firebase's sample prompts, misses included."
-    wrote="Each prompt is Firebase's, word for word. A sample gives one input of its own, or none; we wrote the others on 15 November 2026, before any model had answered them."
+    wrote="Each prompt is Firebase's, word for word. A sample gives one input of its own, or none; we wrote the others on 15 and 16 November 2026, each before any model had answered it."
     judged="A translation, a chat reply in a persona and a piece of advice have no single right answer."
     source={
       <>
