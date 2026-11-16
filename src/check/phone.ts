@@ -1,7 +1,7 @@
 // The check as the iPhone app runs it. `npm run ios` builds this file into one script the app loads, so the app judges
 // Apple's answers with the same code and the same recorded cloud answers as the web check.
 import { FEATURES } from "../features";
-import { parse } from "../features/types";
+import { parse, shown as asText } from "../features/types";
 import { BATCH, GRADER, gradingPrompt, readGrades, ungraded, withGrades } from "./grade";
 import recorded from "./recorded.json";
 import { APPLES, DEFAULT_ALLOWED, differing, graded, onApple, RUNS, unsureLine, VERDICT_NAME, verdictFor, type Cases, type CheckRecord, type Grades, type Run } from "./record";
@@ -30,7 +30,7 @@ function shown(run: Run | undefined, other: Run | undefined): { text: string; di
   const text = textOf(run) ?? "", object = parse(text);
   if (!object) return [{ text, differs: true }];
   const differs = differing(text, textOf(other));
-  return Object.entries(object).map(([key, value]) => ({ text: `${key}: ${String(value) || "(empty)"}`, differs: differs.includes(key) }));
+  return Object.entries(object).map(([key, value]) => ({ text: `${key}: ${asText(value)}`, differs: differs.includes(key) }));
 }
 
 /** Every feature's verdict at the default bar, with its counts and its wrong answers. */

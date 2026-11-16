@@ -1,3 +1,5 @@
+import type { FunctionDeclarationsTool } from "firebase/ai";
+
 export type Case = {
   id: string;
   input: string;
@@ -21,6 +23,10 @@ export type Feature = {
   system: string;
   /** The JSON shape the app asks for; none means plain text. */
   schema?: Record<string, unknown>;
+  /** Turns the app sends before the input, where its prompt is a chat that has already started. */
+  history?: { role: "user" | "model"; text: string }[];
+  /** The functions the app offers the model. An answer is then the first function call's arguments, as JSON. */
+  tools?: FunctionDeclarationsTool[];
   cases: Case[];
   /** Inputs kept out of the check, used only to prove a change to the instruction on inputs it wasn't written from. */
   heldBack?: Case[];
@@ -98,3 +104,6 @@ export const money = (got: unknown, want: unknown) =>
 
 export const words = (s: string) => s.trim().split(/\s+/).filter(Boolean).length;
 export { fail, OK };
+
+/** A field's value as a person reads it: a nested object or a list as its JSON, anything else as it is. */
+export const shown = (value: unknown): string => (typeof value === "object" && value !== null ? JSON.stringify(value) : String(value)) || "(empty)";

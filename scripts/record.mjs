@@ -11,7 +11,8 @@ await page.goto(process.env.SITE ?? "http://127.0.0.1:5173/");
 // The run goes on from record.partial.json when a run cut short left one, and from the last record otherwise, so only
 // what is missing is asked. REDO=<feature id>,... records those features again from nothing.
 // REGRADE=<feature id>,... keeps their answers and asks the cloud model to judge them again.
-const RECORD = "src/check/recorded.json", PARTIAL = "record.partial.json";
+// RECORD and PARTIAL name another record's files, with SITE as its page: the sample prompts' is src/samples/recorded.json.
+const RECORD = process.env.RECORD ?? "src/check/recorded.json", PARTIAL = process.env.PARTIAL ?? "record.partial.json";
 const kept = JSON.parse(readFileSync(existsSync(PARTIAL) ? PARTIAL : RECORD, "utf8"));
 for (const id of process.env.REDO?.split(",") ?? []) delete kept.features[id];
 for (const id of process.env.REGRADE?.split(",") ?? []) for (const c of Object.values(kept.features[id])) delete c.grades;
@@ -36,7 +37,7 @@ for (;;) {
   }
   if (state.at !== last) console.log(new Date().toTimeString().slice(0, 8), (last = state.at));
   if (!state.at.startsWith("Stop")) {
-    console.log("the run stopped before the end; what it has is in record.partial.json");
+    console.log(`the run stopped before the end; what it has is in ${PARTIAL}`);
     process.exitCode = 1;
     break;
   }

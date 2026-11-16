@@ -19,8 +19,8 @@ export type FeatureNumbers = {
 };
 
 /** Every count the results page shows, from the record alone. */
-export function numbers(record: CheckRecord): FeatureNumbers[] {
-  return FEATURES.map((feature) => {
+export function numbers(record: CheckRecord, features: Feature[] = FEATURES): FeatureNumbers[] {
+  return features.map((feature) => {
     const cases = record.features[feature.id] ?? {};
     const kinds = [...new Set(feature.cases.map((c) => c.kind))];
     const heldBack = feature.heldBack ?? [];
@@ -78,7 +78,7 @@ export function printed(record: CheckRecord, marks?: Map<string, Mark>): string 
     "",
     `Answers with no single right answer: the cloud model judged ${j.judged}, counting an answer again where a tried line gave it again.`,
     j.second
-      ? `  A second model, ${record.secondGrader}, judged ${j.second} of them again and agrees on ${j.secondAgrees}; it is the stricter one on ${j.secondStricter}, the more lenient on ${j.second - j.secondAgrees - j.secondStricter}.`
+      ? `  A second model, ${record.secondGrader}, the cloud model's larger sibling, judged ${j.second} of them again and agrees on ${j.secondAgrees}; it is the stricter one on ${j.secondStricter}, the more lenient on ${j.second - j.secondAgrees - j.secondStricter}.`
       : "  A second model has not judged them yet.",
     j.marked >= MARKS_TO_SAY
       ? `  People marked ${j.marked} of the check's ${judgedInCheck(record).length}: the cloud model agrees with them on ${j.cloudAgrees}${j.markedAndSecond ? `, the second model on ${j.secondAgreesWithPeople} of ${j.markedAndSecond}` : ""}.`
