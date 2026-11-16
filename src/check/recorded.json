@@ -1,7 +1,7 @@
 {
  "machine": "our laptop (32 GB)",
  "chrome": "157",
- "date": "2026-11-15",
+ "date": "2026-11-16",
  "cloudModel": "gemini-3.5-flash-lite",
  "features": {
   "ticket_route": {
@@ -5453,7 +5453,22 @@
       "text": "Your parcel has been collected from the warehouse and is now on its way to the Leeds depot. It will be delivered to you between 8 am and 6 pm on Thursday, without requiring a signature.",
       "seconds": 1.16045375
      }
-    ]
+    ],
+    "second": {
+     "Your Larkfield order is en route to Leeds and will be delivered Thursday between 8 am and 6 pm; no signature required.": {
+      "ok": true
+     },
+     "Your Larkfield order is on its way to Leeds and will be delivered Thursday between 8 am - 6 pm; no signature required.": {
+      "ok": true
+     },
+     "Your parcel is on its way to Leeds depot and will be delivered by Thursday.": {
+      "ok": false,
+      "reason": "Says delivery will be 'by Thursday' instead of going out for delivery on Thursday."
+     },
+     "Your order will be delivered to your specified address on Thursday between 8 am and 6 pm.": {
+      "ok": true
+     }
+    }
    },
    "summary-2": {
     "device": [
@@ -5507,7 +5522,25 @@
       "text": "Your order from Larkfield was delivered today, and the driver left a photo of it on your porch.",
       "seconds": 0.817176959
      }
-    ]
+    ],
+    "second": {
+     "Delivered today at 2:12 PM to your porch; photo attached for confirmation.": {
+      "ok": true
+     },
+     "Order delivered today at 2:12 PM; photo of porch drop-off attached, per your instructions.": {
+      "ok": true
+     },
+     "Your parcel was delivered to your porch today at 14:12, and a photo has been attached to your order.": {
+      "ok": true
+     },
+     "Your parcel has been delivered to the porch at 14:12 today.": {
+      "ok": true
+     },
+     "Your order from Larkfield was delivered today, and the driver left a photo of it on your porch.": {
+      "ok": false,
+      "reason": "Incorrectly states that the driver left a physical photo on the porch instead of attaching it to the order."
+     }
+    }
    },
    "summary-3": {
     "device": [
@@ -5557,7 +5590,24 @@
       "text": "Your two armchairs are on their way today and should arrive on Monday. The footstool is out of stock and will follow in a second parcel, with no extra delivery charge.",
       "seconds": 1.038579333
      }
-    ]
+    ],
+    "second": {
+     "Your Larkfield order is splitting: armchairs ship Monday; the footstool will arrive separately, with no extra cost.": {
+      "ok": false,
+      "reason": "Incorrectly states the armchairs ship on Monday when the note says they arrive on Monday."
+     },
+     "Your order is split: armchairs ship Monday, footstool follows in a separate, complimentary delivery.": {
+      "ok": false,
+      "reason": "Incorrectly states that the armchairs ship on Monday rather than arriving on Monday."
+     },
+     "Your order is split: armchairs ship Monday, footstool will arrive in a separate parcel—no extra charge.": {
+      "ok": false,
+      "reason": "Incorrectly claims the armchairs ship on Monday instead of arriving on Monday."
+     },
+     "Your armchairs ship today and arrive Monday, while your out-of-stock footstool will follow in a second parcel at no extra charge.": {
+      "ok": true
+     }
+    }
    },
    "summary-4": {
     "device": [
@@ -5611,7 +5661,25 @@
       "text": "The parcel has been delivered to your neighbor at number 14.",
       "seconds": 0.607040625
      }
-    ]
+    ],
+    "second": {
+     "Your parcel was delivered to your neighbor (14) at 11:40 AM; a card was left explaining.": {
+      "ok": true
+     },
+     "Your parcel was delivered to your neighbour at number 14 at 11:40 today; please collect it from them.": {
+      "ok": true
+     },
+     "Parcel delivered to your neighbour at 14, please collect it.": {
+      "ok": true
+     },
+     "Your parcel has been delivered to your neighbour at number 14, and a card was left with your details.": {
+      "ok": false,
+      "reason": "Misinterprets the card as containing 'your details' rather than stating the delivery location."
+     },
+     "The parcel has been delivered to your neighbor at number 14.": {
+      "ok": true
+     }
+    }
    },
    "summary-5": {
     "device": [
@@ -5664,7 +5732,24 @@
       "text": "Your parcel is on the van for delivery today, arriving between 1 pm and 3 pm.",
       "seconds": 0.742709625
      }
-    ]
+    ],
+    "second": {
+     "Your Larkfield order is out for delivery today (1-3 pm); you don't need to do anything!": {
+      "ok": true
+     },
+     "Your parcel from Larkfield is out for delivery today between 1 pm and 3 pm; no action needed.": {
+      "ok": true
+     },
+     "Your Larkfield order is out for delivery today between 1-3 pm; no action needed.": {
+      "ok": true
+     },
+     "Your parcel is out for delivery today and is expected to arrive between 1 pm and 3 pm; no action is needed.": {
+      "ok": true
+     },
+     "Your parcel is on the van for delivery today, arriving between 1 pm and 3 pm.": {
+      "ok": true
+     }
+    }
    },
    "summary-6": {
     "device": [
@@ -5714,7 +5799,21 @@
       "seconds": 0.819368042,
       "text": "Your table was delivered at 10:05 and the legs were fitted on site. You don't have to do anything."
      }
-    ]
+    ],
+    "second": {
+     "Your table was delivered, set up, and packaging recycled – no action needed!": {
+      "ok": true
+     },
+     "Your table was delivered, assembled in your dining room, and packaging was recycled; no further action is needed.": {
+      "ok": true
+     },
+     "Your table was delivered, fitted, and the packaging was recycled.": {
+      "ok": true
+     },
+     "Your table was delivered at 10:05 and is now ready for use in the dining room.": {
+      "ok": true
+     }
+    }
    },
    "summary-7": {
     "device": [
@@ -5772,7 +5871,30 @@
       "text": "Your refund has been sent and will arrive in 3 to 5 working days.",
       "seconds": 0.755060292
      }
-    ]
+    ],
+    "second": {
+     "Your returned item has been processed; a refund has been issued and will arrive in 3-5 business days.": {
+      "ok": true
+     },
+     "Refund issued for your returned Larkfield order; please allow 3-5 business days for processing.": {
+      "ok": false,
+      "reason": "Incorrectly states to allow 3-5 days for processing, whereas the refund has already been sent and takes 3-5 days to reach the card."
+     },
+     "Your return has been processed; a refund of 3-5 business days will be issued to your original payment method.": {
+      "ok": false,
+      "reason": "Incorrectly states 'a refund of 3-5 business days' and says it will be issued rather than already sent."
+     },
+     "Your returned item passed inspection and your refund has been issued, which will reach your card in 3 to 5 working days.": {
+      "ok": true
+     },
+     "Your refund has been processed and will arrive in your bank account in 3 to 5 working days.": {
+      "ok": false,
+      "reason": "Invents that the money will arrive in a 'bank account' when the note specifies 'your card'."
+     },
+     "Your refund has been sent and will arrive in 3 to 5 working days.": {
+      "ok": true
+     }
+    }
    },
    "summary-8": {
     "device": [
@@ -5829,7 +5951,28 @@
       "seconds": 0.903398917,
       "text": "Due to a van breakdown, your order from Larkfield will be rebooked for Thursday 19 November, same time slot, 8 am to 12 noon."
      }
-    ]
+    ],
+    "second": {
+     "Delivery to Larkfield is rescheduled for Thursday, November 19th, 8 AM - 12 PM due to a vehicle breakdown.": {
+      "ok": false,
+      "reason": "Mistakenly refers to 'Delivery to Larkfield', whereas Larkfield is the retailer sending the package."
+     },
+     "Your delivery is rescheduled for Thursday, November 19th, 8 am - 12 noon due to a vehicle issue.": {
+      "ok": true
+     },
+     "Your delivery has been rescheduled to Thursday 19 November from 8 am to 12 noon due to a van breakdown, and no action is needed.": {
+      "ok": true
+     },
+     "Your order from Larkfield has been rescheduled to Thursday, November 19th, from 8 am to 12 noon.": {
+      "ok": true
+     },
+     "Your delivery from Larkfield has been rescheduled to Thursday, 19 November, from 8 am to 12 noon.": {
+      "ok": true
+     },
+     "Due to a van breakdown, your order from Larkfield will be rebooked for Thursday 19 November, same time slot, 8 am to 12 noon.": {
+      "ok": true
+     }
+    }
    },
    "summary-9": {
     "device": [
@@ -5882,7 +6025,24 @@
       "text": "Your parcel will not arrive today, Friday, as planned. It is now due on Monday.",
       "seconds": 0.636617834
      }
-    ]
+    ],
+    "second": {
+     "Your order from Larkfield is delayed; expect delivery on Monday due to a sorting issue.": {
+      "ok": true
+     },
+     "Your Larkfield order is delayed; expect delivery Monday due to a sorting issue.": {
+      "ok": true
+     },
+     "Your Larkfield order will now arrive on Monday due to a sorting delay; no action needed.": {
+      "ok": true
+     },
+     "Your Larkfield order missed last night's sorting cut-off and is now due to arrive on Monday; no action is needed.": {
+      "ok": true
+     },
+     "Sorry for the delay, but your parcel will now arrive on Monday, as it missed the sorting cut-off.": {
+      "ok": true
+     }
+    }
    },
    "summary-10": {
     "device": [
@@ -5929,7 +6089,19 @@
       "seconds": 0.838016625,
       "text": "Due to stormy weather, the ferry route to Larkfield is closed. Deliveries scheduled for Wednesday will now go on the first sailing on Friday."
      }
-    ]
+    ],
+    "second": {
+     "Your Larkfield order for Wednesday is delayed; it will ship on Friday, weather permitting.": {
+      "ok": true
+     },
+     "Your Larkfield order from Wednesday is delayed due to storm warnings; it will ship on Friday, weather permitting.": {
+      "ok": true
+     },
+     "Delivery to Larkfield (island) is delayed to Friday due to ferry closures; check back then for updated delivery information.": {
+      "ok": false,
+      "reason": "Incorrectly refers to 'Delivery to Larkfield' and invents an instruction to check back for updated information."
+     }
+    }
    },
    "summary-11": {
     "device": [
@@ -5990,7 +6162,32 @@
       "seconds": 0.927383042,
       "text": "Your mattress, originally due on 12 November, will now arrive on 23 November."
      }
-    ]
+    ],
+    "second": {
+     "Your mattress delivery has been delayed; it will arrive November 23rd due to a production setback.": {
+      "ok": false,
+      "reason": "Invents that the delay is due to a 'production setback', which is not specified in the note."
+     },
+     "Your mattress delivery will be delayed; awaiting maker shipment, arriving Nov 20th with a delivery date of Nov 23rd.": {
+      "ok": true
+     },
+     "Your mattress delivery is delayed; arriving at our warehouse Nov 20th, with delivery scheduled for Nov 23rd.": {
+      "ok": true
+     },
+     "Your mattress will arrive at our warehouse on November 20 and we will deliver it to you on November 23; no action needed.": {
+      "ok": true
+     },
+     "Your mattress is on its way from the maker to our warehouse on 20 November and will be delivered on 23 November.": {
+      "ok": true
+     },
+     "Your mattress is now expected to arrive on 23 November, so please be ready to collect it.": {
+      "ok": false,
+      "reason": "Invents a customer action to collect the item when the note states it will be delivered."
+     },
+     "Your mattress, originally due on 12 November, will now arrive on 23 November.": {
+      "ok": true
+     }
+    }
    },
    "summary-12": {
     "device": [
@@ -6040,7 +6237,21 @@
       "text": "Your order from Larkfield is delayed. It will be delivered on Saturday morning.",
       "seconds": 0.675520167
      }
-    ]
+    ],
+    "second": {
+     "Your order from Larkfield is arriving Saturday morning; please expect delivery then.": {
+      "ok": true
+     },
+     "Your order from Larkfield will arrive Saturday morning – sorry for the incorrect date!": {
+      "ok": true
+     },
+     "Your order from Larkfield will arrive Saturday morning; the delivery date has been updated.": {
+      "ok": true
+     },
+     "Your delivery date has changed to Saturday morning, and no further action is needed on your part.": {
+      "ok": true
+     }
+    }
    },
    "summary-13": {
     "device": [
@@ -6087,7 +6298,18 @@
       "text": "Your parcel was held for a routine customs check and released this afternoon. Delivery will now be from Monday to Wednesday.",
       "seconds": 0.856511
      }
-    ]
+    ],
+    "second": {
+     "Your Larkfield order was briefly held by customs but is now cleared; expect delivery Wednesday.": {
+      "ok": true
+     },
+     "Your Larkfield order was held for customs, but is now moving to delivery on Wednesday.": {
+      "ok": true
+     },
+     "Your parcel was delayed by customs for a routine check, but it has been released and will now be delivered on Wednesday.": {
+      "ok": true
+     }
+    }
    },
    "summary-14": {
     "device": [
@@ -6134,7 +6356,18 @@
       "seconds": 1.17465675,
       "text": "Your parcel has been returned to the depot because the driver couldn't deliver it. Please book a new delivery day on the tracking page within 5 days, or it will be returned to Larkfield."
      }
-    ]
+    ],
+    "second": {
+     "Your parcel from Larkfield was returned to depot due to a missed delivery; please reschedule within 5 days on the tracking page.": {
+      "ok": true
+     },
+     "Your parcel was returned to depot due to a missed delivery attempt; please reschedule within 5 days via the tracking page.": {
+      "ok": true
+     },
+     "We missed you today, so your parcel is back at the depot; please book a new delivery day via the tracking page within 5 days.": {
+      "ok": true
+     }
+    }
    },
    "summary-15": {
     "device": [
@@ -6184,7 +6417,21 @@
       "text": "Parcel is waiting for pickup at Corner Stores on Mill Lane. Bring ID and collection code for pickup on Friday 20 November.",
       "seconds": 0.939390042
      }
-    ]
+    ],
+    "second": {
+     "Pick up your Larkfield order at Corner Stores (Mill Lane) with your collection code (email) and photo ID by Friday, November 20th.": {
+      "ok": true
+     },
+     "Collect your Larkfield order at Corner Stores on Mill Lane with your collection code (email) and ID by Friday, November 20th.": {
+      "ok": true
+     },
+     "Pick up your Larkfield order at Corner Stores on Mill Lane with your collection code (email) and photo ID by Friday, November 20th.": {
+      "ok": true
+     },
+     "Your parcel is waiting at the Corner Stores on Mill Lane until Friday 20 November; please bring your collection code and photo ID.": {
+      "ok": true
+     }
+    }
    },
    "summary-16": {
     "device": [
@@ -6234,7 +6481,23 @@
       "seconds": 0.911099084,
       "text": "We are unable to deliver your order due to an incorrect address. Please provide the correct house number or a nearby landmark."
      }
-    ]
+    ],
+    "second": {
+     "Unable to deliver; please confirm your address (12 Meadow Way) or provide a nearby landmark for redelivery.": {
+      "ok": false,
+      "reason": "Incorrectly asks the customer to confirm 12 Meadow Way when the note says that number does not exist."
+     },
+     "Unable to deliver; please confirm your address (12 Meadow Way or nearby landmark) so we can resend your order.": {
+      "ok": false,
+      "reason": "Incorrectly asks the customer to confirm an address that the driver verified does not exist."
+     },
+     "We couldn't find your address, so please reply with your correct house number or a nearby landmark so we can try again.": {
+      "ok": true
+     },
+     "We couldn't find your address, so please reply with the right house number or a nearby landmark so we can try again.": {
+      "ok": true
+     }
+    }
    },
    "summary-17": {
     "device": [
@@ -6284,7 +6547,23 @@
       "text": "A larger vehicle is needed to deliver your sofa. Please phone the delivery team to pick a day.",
       "seconds": 0.784262833
      }
-    ]
+    ],
+    "second": {
+     "Your sofa delivery requires a larger van and a signature upon arrival – please call the delivery team to schedule a suitable day.": {
+      "ok": false,
+      "reason": "Invents the requirement of a signature upon arrival which is not mentioned in the note."
+     },
+     "Delivery requires a larger vehicle and a home presence; please call the delivery team (see order email) to schedule a suitable day.": {
+      "ok": true
+     },
+     "Delivery requires a larger van and a homeowner to guide the team; please call the number in your email to schedule.": {
+      "ok": false,
+      "reason": "Incorrectly specifies that a homeowner must be present, whereas the note only requires someone to be home."
+     },
+     "Your sofa requires a larger delivery vehicle; please call our team using the number in your email to reschedule and ensure someone is home.": {
+      "ok": true
+     }
+    }
    },
    "summary-18": {
     "device": [
@@ -6325,7 +6604,12 @@
       "text": "The damaged box from Larkfield has not been sent out yet. We will send it out tomorrow, and we need to know whether you want it replaced or refunded.",
       "seconds": 1.072071417
      }
-    ]
+    ],
+    "second": {
+     "One box will arrive tomorrow, but the damaged second box was held; please tell us whether you want a replacement or refund.": {
+      "ok": true
+     }
+    }
    },
    "summary-19": {
     "device": [
@@ -6375,7 +6659,21 @@
       "seconds": 1.20004725,
       "text": "Your order from Larkfield has been dispatched. It contains garden tools with blades and requires a signature from an adult. Please ensure someone is home on Tuesday between 10 am and 2 pm to collect it."
      }
-    ]
+    ],
+    "second": {
+     "Signature required: A parcel containing garden tools needs an adult signature on Tuesday between 10 am and 2 pm.": {
+      "ok": true
+     },
+     "Signature required for your garden tools (blades); an adult 18+ must be home Tuesday 10 am-2 pm to receive it.": {
+      "ok": true
+     },
+     "Signature required from an adult for your garden tools; please ensure someone 18+ is home Tuesday 10 am-2 pm.": {
+      "ok": true
+     },
+     "Your parcel requires an adult signature upon delivery on Tuesday between 10 am and 2 pm, so please ensure someone 18 or older is home.": {
+      "ok": true
+     }
+    }
    },
    "summary-20": {
     "device": [
@@ -6419,7 +6717,16 @@
       "seconds": 0.796152333,
       "text": "Your order from Larkfield has been received and is on its way to the warehouse."
      }
-    ]
+    ],
+    "second": {
+     "Your Larkfield order was left for pickup due to no answer; it will be redelivered next business day.": {
+      "ok": false,
+      "reason": "Incorrectly states the order was left for pickup; a card was left and it returned to the depot for redelivery."
+     },
+     "We attempted delivery at 9:15 AM but received no answer; a card was left and your package will be redelivered the next working day.": {
+      "ok": true
+     }
+    }
    },
    "summary-21": {
     "device": [
@@ -6471,7 +6778,23 @@
       "seconds": 0.98794925,
       "text": "Your order from Larkfield has been safely delivered to the shed at 1632, as instructed."
      }
-    ]
+    ],
+    "second": {
+     "Your order was delivered to your shed per your instructions and a photo was taken; no further action is needed.": {
+      "ok": true
+     },
+     "Your order for 1632 has been delivered to the shed and a photo has been taken.": {
+      "ok": false,
+      "reason": "Incorrectly presents the delivery time '1632' (4:32 PM) as an order identifier."
+     },
+     "Your order for 1632 has been delivered safely to the shed and a photo has been taken.": {
+      "ok": false,
+      "reason": "Misinterprets the delivery timestamp '1632' as an order number."
+     },
+     "Your order from Larkfield has been safely delivered to the shed at 1632, as instructed.": {
+      "ok": true
+     }
+    }
    },
    "summary-22": {
     "device": [
@@ -6515,7 +6838,15 @@
       "text": "Your order from Larkfield is in transit and will be replaced at the hub.",
       "seconds": 0.717815917
      }
-    ]
+    ],
+    "second": {
+     "Your order experienced damage during transit and is being replaced; no action needed.": {
+      "ok": true
+     },
+     "Your package was damaged in transit and is held at the hub; we have notified the sender and a replacement will be dispatched.": {
+      "ok": true
+     }
+    }
    },
    "summary-23": {
     "device": [
@@ -6559,7 +6890,15 @@
       "seconds": 1.121754416,
       "text": "Your order from Larkfield has been sent and will be delivered between 1300 and 1500. Please keep an eye on your inbox for a signature request."
      }
-    ]
+    ],
+    "second": {
+     "Your order from Larkfield is out for delivery today between 1:00 PM - 3:00 PM; a signature is required.": {
+      "ok": true
+     },
+     "Your order is out for delivery today between 13:00 and 15:00 and a signature is required upon receipt.": {
+      "ok": true
+     }
+    }
    },
    "summary-24": {
     "device": [
@@ -6614,7 +6953,26 @@
       "text": "Order from Larkfield, on the road to you, has been held for 3 days awaiting customer contact.",
       "seconds": 0.94878525
      }
-    ]
+    ],
+    "second": {
+     "We're waiting for your contact regarding your Larkfield order due to an address issue; please reply within 3 days to avoid a return.": {
+      "ok": true
+     },
+     "We're holding your Larkfield order for 3 days due to an address query; please contact us to confirm your delivery address.": {
+      "ok": true
+     },
+     "We could not find your street number, so please contact us within 3 days to prevent your order from being returned.": {
+      "ok": true
+     },
+     "Larkfield's order from Awaiting Customer Contact has been held for 3 days and will be re-shipped.": {
+      "ok": false,
+      "reason": "Misinterprets 'Awaiting Customer Contact' as a location/sender and incorrectly claims the item will be re-shipped instead of returned to sender."
+     },
+     "Order from Larkfield, on the road to you, has been held for 3 days awaiting customer contact.": {
+      "ok": false,
+      "reason": "Fails to inform the customer that they need to contact customer support to resolve the address issue."
+     }
+    }
    },
    "summary-25": {
     "device": [
@@ -6674,7 +7032,31 @@
       "text": "Your order from Larkfield is on its way to the hub, scheduled for delivery on November 16th.",
       "seconds": 0.909179542
      }
-    ]
+    ],
+    "second": {
+     "Your Larkfield order is in transit to our hub and expected to arrive by November 16th.": {
+      "ok": true
+     },
+     "Your order from Larkfield is in transit to our hub and expected by November 16th.": {
+      "ok": true
+     },
+     "Your order from Larkfield is currently in transit to our hub and expected to arrive by November 16th.": {
+      "ok": true
+     },
+     "Your order is in transit to the hub for delivery on 16/11; no action is needed from you.": {
+      "ok": true
+     },
+     "Your order from Larkfield is in transit to our hub and will be delivered on November 16th.": {
+      "ok": true
+     },
+     "Your order from Larkfield is in transit and will be delivered to the hub by 16/11.": {
+      "ok": false,
+      "reason": "Incorrectly states that the parcel will be delivered to the hub on 16/11 instead of to the customer."
+     },
+     "Your order from Larkfield is on its way to the hub, scheduled for delivery on November 16th.": {
+      "ok": true
+     }
+    }
    },
    "summary-26": {
     "device": [
@@ -6728,6 +7110,25 @@
      "seconds": 1.106699999988079,
      "tokensIn": 113,
      "tokensOut": 24
+    },
+    "second": {
+     "Your order has been packed and will be delivered to the Glasgow depot on Tuesday.": {
+      "ok": false,
+      "reason": "Incorrectly states that the parcel will be delivered to the Glasgow depot on Tuesday rather than to the customer."
+     },
+     "Your order has been packed and handed to the courier, and it will be delivered to the Glasgow depot on Tuesday.": {
+      "ok": false,
+      "reason": "Incorrectly states that delivery to the Glasgow depot will happen on Tuesday."
+     },
+     "Your order is on its way to you and is expected Tuesday; no action required.": {
+      "ok": true
+     },
+     "Your Larkfield order shipped today and is expected to arrive Tuesday; no action needed!": {
+      "ok": true
+     },
+     "Your order is on its way to the Glasgow depot for delivery on Tuesday, and you do not need to be in.": {
+      "ok": true
+     }
     }
    },
    "summary-27": {
@@ -6778,6 +7179,21 @@
      "seconds": 0.6465,
      "tokensIn": 104,
      "tokensOut": 29
+    },
+    "second": {
+     "The parcel has been delivered to your building's concierge desk, and it has been signed for.": {
+      "ok": true
+     },
+     "Your order from Larkfield has been delivered to your building's concierge desk.": {
+      "ok": true
+     },
+     "Your Larkfield order was delivered today at 08:55 and signed for by concierge.": {
+      "ok": true
+     },
+     "Your Larkfield order was delivered today to your building's concierge; no action needed!": {
+      "ok": false,
+      "reason": "Adds 'no action needed!', which was not stated in the original note."
+     }
     }
    },
    "summary-28": {
@@ -6827,6 +7243,21 @@
      },
      "Your bed frame shipped today and arrives Wednesday, while your custom mattress will follow in about two weeks; no action is needed.": {
       "ok": true
+     }
+    },
+    "second": {
+     "Your Larkfield order is arriving in two parts: the bed frame arrives Wednesday, and the mattress will ship in approximately two weeks.": {
+      "ok": true
+     },
+     "Your order ships in two parts: the bed frame arrives Wednesday, and the mattress follows in approximately two weeks.": {
+      "ok": true
+     },
+     "Your order ships in two parts: bed frame arriving Wednesday, mattress following in approximately two weeks.": {
+      "ok": true
+     },
+     "Your bed frame shipped today and arrives Wednesday, while your custom mattress will follow in about two weeks; no action is needed.": {
+      "ok": false,
+      "reason": "Invents the detail 'custom' mattress and adds an unstated instruction that no action is needed."
      }
     }
    },
@@ -6884,6 +7315,26 @@
      "seconds": 0.8331000000238419,
      "tokensIn": 105,
      "tokensOut": 28
+    },
+    "second": {
+     "Your parcel was left in the garage at 15:20 as requested, and a photo is on the order page.": {
+      "ok": true
+     },
+     "Your parcel has been delivered to your garage at 15:20.": {
+      "ok": true
+     },
+     "Parcel delivered to garage at 3:20 PM; photo available on order page.": {
+      "ok": true
+     },
+     "Your Larkfield order was delivered to your garage at 3:20 PM – see photo on order page.": {
+      "ok": true
+     },
+     "Parcel delivered to your garage at 3:20 PM; photo available on your order page.": {
+      "ok": true
+     },
+     "Your parcel was left in your garage at 15:20 following your instructions, and a photo is available on your order page.": {
+      "ok": true
+     }
     }
    },
    "summary-30": {
@@ -6938,6 +7389,25 @@
      "seconds": 0.728199999988079,
      "tokensIn": 102,
      "tokensOut": 26
+    },
+    "second": {
+     "Your parcel has arrived and is on its way to your doorstep, arriving between 10 am and 12 pm today.": {
+      "ok": false,
+      "reason": "Presents the delivery time window as definite rather than 'most likely' as stated in the note."
+     },
+     "Your order from Larkfield is out for delivery today, arriving between 10 am and midday.": {
+      "ok": false,
+      "reason": "Omits the qualification 'most likely' for the time window, making a certainty out of an estimate."
+     },
+     "Your Larkfield order has been loaded for delivery today, likely between 10 am and midday.": {
+      "ok": true
+     },
+     "Your order from Larkfield is out for delivery today, expected between 10 am and midday.": {
+      "ok": true
+     },
+     "Your parcel arrived at the Norwich depot overnight and will be delivered today between 10 am and midday; no action is needed.": {
+      "ok": true
+     }
     }
    },
    "summary-31": {
@@ -6985,6 +7455,17 @@
      "seconds": 0.7153999999761581,
      "tokensIn": 100,
      "tokensOut": 29
+    },
+    "second": {
+     "Your wardrobe has been delivered and installed by our fitters.": {
+      "ok": true
+     },
+     "Your wardrobe has been delivered and installed, and the fitters have leveled, fitted the doors, and removed all packaging.": {
+      "ok": true
+     },
+     "Our fitters have delivered and installed your wardrobe, including levelling, door fitting, and packaging removal; no further action is needed from you.": {
+      "ok": true
+     }
     }
    },
    "summary-32": {
@@ -7068,6 +7549,18 @@
      "Your sofa delivery is delayed to 30 November due to a fabric shortage; we will call you the day before.": {
       "ok": true
      }
+    },
+    "second": {
+     "Your sofa delivery is delayed to November 30th due to fabric issues; we'll call the day before to confirm.": {
+      "ok": true
+     },
+     "Your sofa delivery is delayed to Monday, November 30th due to fabric issues; we'll call the day before to confirm.": {
+      "ok": true
+     },
+     "Your sofa delivery is delayed to 30 November due to a fabric shortage; we will call you the day before.": {
+      "ok": false,
+      "reason": "It invents a 'fabric shortage', whereas the note only states a 'delay with the fabric'."
+     }
     }
    },
    "summary-34": {
@@ -7126,6 +7619,28 @@
      "seconds": 0.8026999999880791,
      "tokensIn": 102,
      "tokensOut": 25
+    },
+    "second": {
+     "Your order from Larkfield is on the van today, Friday.": {
+      "ok": true
+     },
+     "Your parcel is now on the van and will arrive on Friday.": {
+      "ok": true
+     },
+     "Your order from Larkfield is delayed due to yesterday's depot closure but is now out for delivery today, Friday.": {
+      "ok": true
+     },
+     "Your Larkfield order is delayed due to yesterday's power outage but will ship today, Friday.": {
+      "ok": false,
+      "reason": "Incorrectly states it 'will ship today' when the note says it is already on the van."
+     },
+     "Your order from Larkfield is delayed due to a depot closure but will ship today, Friday.": {
+      "ok": false,
+      "reason": "Incorrectly states it 'will ship today' instead of stating it is already loaded on the van."
+     },
+     "Your parcel is out for delivery today after a brief delay from a depot power cut yesterday, so no further action is needed.": {
+      "ok": true
+     }
     }
    },
    "summary-35": {
@@ -7186,6 +7701,29 @@
      "seconds": 0.8051000000238419,
      "tokensIn": 101,
      "tokensOut": 23
+    },
+    "second": {
+     "Order from Larkfield will arrive on Monday, as the driver only delivers on weekdays.": {
+      "ok": true
+     },
+     "Your order will arrive on Monday, instead of Saturday.": {
+      "ok": true
+     },
+     "Your order from Larkfield will arrive on Monday instead of Saturday.": {
+      "ok": true
+     },
+     "Your order will now arrive on Monday due to a delivery scheduling error; please expect it then.": {
+      "ok": true
+     },
+     "Your order will now arrive Monday due to a delivery scheduling error; please plan accordingly.": {
+      "ok": true
+     },
+     "Order delivery has been rescheduled to Monday due to a driver schedule change; no action needed.": {
+      "ok": true
+     },
+     "Your order will now arrive on Monday, as our local driver only delivers on weekdays; no further action is needed.": {
+      "ok": true
+     }
     }
    },
    "summary-36": {
@@ -7242,6 +7780,28 @@
      "seconds": 0.8378000000119209,
      "tokensIn": 97,
      "tokensOut": 24
+    },
+    "second": {
+     "Your order from Larkfield has been postponed from Tuesday to Thursday.": {
+      "ok": true
+     },
+     "Your Tuesday's delivery has been postponed to Thursday due to snow.": {
+      "ok": true
+     },
+     "Delivery to your village is postponed to Thursday due to road closures; we'll update you if anything changes.": {
+      "ok": false,
+      "reason": "It invents a promise that 'we'll update you if anything changes', which is not in the note."
+     },
+     "Delivery to your village is delayed until Thursday due to snow; we apologize for the inconvenience.": {
+      "ok": true
+     },
+     "Delivery to your village is postponed to Thursday due to snow; please check back then for updated delivery information.": {
+      "ok": false,
+      "reason": "The answer invents an instruction telling the customer to check back on Thursday for updated information."
+     },
+     "Due to snow closing the pass road, your Tuesday delivery is postponed until Thursday; no action is needed on your part.": {
+      "ok": true
+     }
     }
    },
    "summary-37": {
@@ -7280,6 +7840,14 @@
      "tokensOut": 26
     },
     "grades": {
+     "Your order is delayed to November 25th due to a quality check replacement; you don't need to do anything.": {
+      "ok": true
+     },
+     "Your order has been rescheduled to 25 November because an item failed quality checks and is being replaced; no action is needed.": {
+      "ok": true
+     }
+    },
+    "second": {
      "Your order is delayed to November 25th due to a quality check replacement; you don't need to do anything.": {
       "ok": true
      },
@@ -7336,6 +7904,21 @@
      "Your parcel was misrouted to the wrong depot and will now be delivered tomorrow; no action is needed on your part.": {
       "ok": true
      }
+    },
+    "second": {
+     "Your Larkfield order was misrouted and will now arrive tomorrow; no action needed.": {
+      "ok": true
+     },
+     "Your order from Larkfield was misrouted and will now arrive tomorrow; no action needed.": {
+      "ok": true
+     },
+     "Your order to Larkfield was misrouted; it's being redirected and will arrive tomorrow.": {
+      "ok": false,
+      "reason": "Says 'Your order to Larkfield' instead of from Larkfield, which is incorrect."
+     },
+     "Your parcel was misrouted to the wrong depot and will now be delivered tomorrow; no action is needed on your part.": {
+      "ok": true
+     }
     }
    },
    "summary-39": {
@@ -7374,6 +7957,17 @@
      "tokensOut": 28
     },
     "grades": {
+     "Your parcel from Larkfield is awaiting signature at Elm Road post office; collect it within 7 days with ID.": {
+      "ok": true
+     },
+     "Your parcel from Larkfield requires a signature and is now at the Elm Road post office; collect it within 7 days with ID.": {
+      "ok": true
+     },
+     "Your Larkfield parcel needs a signature, so it was taken to Elm Road post office; please collect it within 7 days with ID.": {
+      "ok": true
+     }
+    },
+    "second": {
      "Your parcel from Larkfield is awaiting signature at Elm Road post office; collect it within 7 days with ID.": {
       "ok": true
      },
@@ -7430,6 +8024,17 @@
      "seconds": 1.0005,
      "tokensIn": 106,
      "tokensOut": 27
+    },
+    "second": {
+     "Please provide a phone number by 6 pm today or the delivery will move to next week.": {
+      "ok": true
+     },
+     "Your order is ready for delivery - please add a phone number to your order page by 6 pm today to avoid a delay.": {
+      "ok": true
+     },
+     "Your order is ready, but please add a phone number to your order page by 6 pm today or delivery moves to next week.": {
+      "ok": true
+     }
     }
    },
    "summary-41": {
@@ -7470,6 +8075,15 @@
     "grades": {
      "Lift repair delayed; please contact us to reschedule your delivery once the lift is operational.": {
       "ok": true
+     },
+     "Your washing machine couldn't be delivered because the building's lift is broken; please let us know when it's fixed to reschedule.": {
+      "ok": true
+     }
+    },
+    "second": {
+     "Lift repair delayed; please contact us to reschedule your delivery once the lift is operational.": {
+      "ok": false,
+      "reason": "Invents the fact that the lift repair was delayed rather than the lift being currently broken."
      },
      "Your washing machine couldn't be delivered because the building's lift is broken; please let us know when it's fixed to reschedule.": {
       "ok": true
@@ -7527,6 +8141,24 @@
      "seconds": 1.035,
      "tokensIn": 99,
      "tokensOut": 26
+    },
+    "second": {
+     "Your fridge freezer will arrive on Thursday morning, so please switch it off and empty it the night before.": {
+      "ok": false,
+      "reason": "Fails to specify to switch off and empty the 'old' appliance, implying the new one should be emptied."
+     },
+     "Fridge freezer arriving Thursday morning; please empty your old unit the night before for removal.": {
+      "ok": true
+     },
+     "Your fridge freezer arrives Thursday morning; please empty your old fridge the night before for removal.": {
+      "ok": true
+     },
+     "Fridge freezer arriving Thursday morning: please empty your old fridge the night before for removal.": {
+      "ok": true
+     },
+     "Your fridge freezer arrives Thursday morning; please switch off and empty your old one the night before for the delivery team to take away.": {
+      "ok": true
+     }
     }
    },
    "summary-43": {
@@ -7565,6 +8197,20 @@
      "tokensOut": 30
     },
     "grades": {
+     "Please pay a £18.40 customs charge via the courier's text link within 10 days to release your parcel.": {
+      "ok": true
+     },
+     "Please pay a £18.40 customs charge via the link in your courier's text within 10 days to release your parcel.": {
+      "ok": true
+     },
+     "Please pay a £18.40 customs charge via the link in your courier's text message within 10 days to release your parcel.": {
+      "ok": true
+     },
+     "Pay the £18.40 customs charge via the courier's text message link within 10 days to release your Larkfield parcel.": {
+      "ok": true
+     }
+    },
+    "second": {
      "Please pay a £18.40 customs charge via the courier's text link within 10 days to release your parcel.": {
       "ok": true
      },
@@ -7624,6 +8270,19 @@
      "Because your parcel is very heavy, please be home Friday to help lift it from the kerb or select kerbside delivery online.": {
       "ok": true
      }
+    },
+    "second": {
+     "Heavy parcel delivery requires assistance; please be home Friday or choose kerbside pickup on tracking.": {
+      "ok": false,
+      "reason": "It incorrectly says kerbside pickup instead of kerbside delivery."
+     },
+     "Parcel is heavy; please be home Friday to assist delivery, or select kerbside pickup online.": {
+      "ok": false,
+      "reason": "It incorrectly says kerbside pickup instead of kerbside delivery."
+     },
+     "Because your parcel is very heavy, please be home Friday to help lift it from the kerb or select kerbside delivery online.": {
+      "ok": true
+     }
     }
    },
    "summary-45": {
@@ -7662,6 +8321,11 @@
      "tokensOut": 24
     },
     "grades": {
+     "Your order has been delivered and signed for by the neighbor at number 7, and a delivery card has been left.": {
+      "ok": true
+     }
+    },
+    "second": {
      "Your order has been delivered and signed for by the neighbor at number 7, and a delivery card has been left.": {
       "ok": true
      }
@@ -7712,6 +8376,17 @@
      "Delivery was attempted at 14:25, but your business was closed; we will try again tomorrow morning with no action needed from you.": {
       "ok": true
      }
+    },
+    "second": {
+     "Your order from Larkfield is temporarily delayed due to a business closure; we'll attempt delivery again tomorrow morning.": {
+      "ok": true
+     },
+     "Your order from Larkfield is currently delayed due to business closure; a second attempt will be made tomorrow morning.": {
+      "ok": true
+     },
+     "Delivery was attempted at 14:25, but your business was closed; we will try again tomorrow morning with no action needed from you.": {
+      "ok": true
+     }
     }
    },
    "summary-47": {
@@ -7750,6 +8425,20 @@
      "tokensOut": 26
     },
     "grades": {
+     "Your Larkfield order is held at the Post Office (High St) for 10 days; please present ID for pickup.": {
+      "ok": true
+     },
+     "Your order from Larkfield is held at the Post Office High St for 10 days; please pick it up with ID.": {
+      "ok": true
+     },
+     "Your order is held at the Post Office (High St) for 10 days; please pick it up with valid ID.": {
+      "ok": true
+     },
+     "Your order is being held at the High Street Post Office pickup point for 10 days; please bring ID to collect it.": {
+      "ok": true
+     }
+    },
+    "second": {
      "Your Larkfield order is held at the Post Office (High St) for 10 days; please present ID for pickup.": {
       "ok": true
      },
@@ -7813,6 +8502,22 @@
      "seconds": 0.7228999999761582,
      "tokensIn": 85,
      "tokensOut": 28
+    },
+    "second": {
+     "Your order from Larkfield is delayed due to weather at the hub and will now be shipped on November 21st.": {
+      "ok": false,
+      "reason": "It invents that the item will be shipped on November 21st; ETA means estimated arrival date."
+     },
+     "Your Larkfield order is temporarily delayed due to weather; expect a new delivery estimate by November 21st.": {
+      "ok": false,
+      "reason": "It incorrectly states that a new estimate will be provided by November 21st, rather than November 21st being the estimated delivery date."
+     },
+     "Your order from Larkfield is delayed due to weather; expect a new delivery estimate of November 21st.": {
+      "ok": true
+     },
+     "Your order is delayed due to weather and is now expected to arrive on 21/11; no action is needed from you.": {
+      "ok": true
+     }
     }
    },
    "summary-49": {
@@ -7858,6 +8563,15 @@
      "seconds": 0.772800000011921,
      "tokensIn": 89,
      "tokensOut": 24
+    },
+    "second": {
+     "Part 1 of 3 boxes for your order from Larkfield has been shipped, and the remaining 2 boxes will arrive the next day.": {
+      "ok": false,
+      "reason": "It states the box has been shipped, but the note states it was already partially delivered."
+     },
+     "Your first box has arrived, and the remaining two boxes will be delivered tomorrow; no action is needed on your part.": {
+      "ok": true
+     }
     }
    },
    "summary-50": {
@@ -7905,6 +8619,18 @@
      "seconds": 0.8406999999880791,
      "tokensIn": 87,
      "tokensOut": 25
+    },
+    "second": {
+     "Your order from Larkfield has been refused at your doorstep by the recipient at 0930.": {
+      "ok": true
+     },
+     "An order from Larkfield was refused by the recipient at 9:30 am.": {
+      "ok": true
+     },
+     "Your order is being returned to us because delivery was refused at the door; please contact customer support to arrange reshipment.": {
+      "ok": false,
+      "reason": "It invents an instruction for the customer to contact customer support, which was not in the note."
+     }
     }
    }
   },
@@ -13351,7 +14077,15 @@
       "seconds": 0.809041709,
       "text": "SPECKLED BLUE GLASS MUG"
      }
-    ]
+    ],
+    "second": {
+     "Stoneware Mug - 350ml, Speckled Blue": {
+      "ok": true
+     },
+     "Hand made stoneware mug speckled blue 350ml": {
+      "ok": true
+     }
+    }
    },
    "title-2": {
     "device": [
@@ -13401,7 +14135,21 @@
       "text": "Kids Raincoat Age 5-6 Yellow Fleece",
       "seconds": 0.668760708
      }
-    ]
+    ],
+    "second": {
+     "Kids Yellow Raincoat 5-6 Years Fleece Lined": {
+      "ok": true
+     },
+     "Yellow Kids Raincoat, Size 5-6": {
+      "ok": true
+     },
+     "Yellow Reflective Striped Fleece Lined Raincoat 5-6": {
+      "ok": true
+     },
+     "Kids Raincoat Age 5-6 Yellow Fleece": {
+      "ok": true
+     }
+    }
    },
    "title-3": {
     "device": [
@@ -13448,7 +14196,18 @@
       "text": "Wool Blanket 130 x 180 cm, Grey Herringbone, Made in Wales",
       "seconds": 0.931791542
      }
-    ]
+    ],
+    "second": {
+     "Wool Blanket Grey Herringbone 130x180cm": {
+      "ok": true
+     },
+     "Grey herringbone wool blanket 130 x 180 cm": {
+      "ok": true
+     },
+     "Wool Blanket 130 x 180 cm, Grey Herringbone, Made in Wales": {
+      "ok": true
+     }
+    }
    },
    "title-4": {
     "device": [
@@ -13501,7 +14260,24 @@
       "seconds": 0.545087333,
       "text": "Watering Can"
      }
-    ]
+    ],
+    "second": {
+     "9L Galvanised Steel Watering Can": {
+      "ok": true
+     },
+     "9 Litre Galvanised Steel Watering Can": {
+      "ok": true
+     },
+     "9 Litre Galvanised Steel Watering Can With Brass Rose": {
+      "ok": true
+     },
+     "Galvanised Steel 9 Litre Watering Can": {
+      "ok": true
+     },
+     "Watering Can 9 Litre Galvanised Steel With Brass Rose": {
+      "ok": true
+     }
+    }
    },
    "title-5": {
     "device": [
@@ -13551,7 +14327,21 @@
       "text": "LARKFIELD NATURAL LINEN TABLECLOTH, 150cm ROUND",
       "seconds": 0.968405333
      }
-    ]
+    ],
+    "second": {
+     "Linen Tablecloth - 150cm Round - Natural": {
+      "ok": true
+     },
+     "Linen Tablecloth - 150cm Round, Natural": {
+      "ok": true
+     },
+     "Linen Tablecloth - Natural 150cm Round": {
+      "ok": true
+     },
+     "Natural linen round tablecloth 150cm": {
+      "ok": true
+     }
+    }
    },
    "title-6": {
     "device": [
@@ -13604,7 +14394,24 @@
       "text": "Oak Chopping Board 40 x 28 cm with Juice Groove",
       "seconds": 0.779820916
      }
-    ]
+    ],
+    "second": {
+     "Oak Chopping Board 40x28cm with Groove": {
+      "ok": true
+     },
+     "Oak Chopping Board 40x28cm Juice Groove": {
+      "ok": true
+     },
+     "Oak Chopping Board 40x28cm, Juice Groove": {
+      "ok": true
+     },
+     "Oak chopping board 40 x 28 cm with juice groove": {
+      "ok": true
+     },
+     "Oak Chopping Board 40 x 28 cm with Juice Groove": {
+      "ok": true
+     }
+    }
    },
    "title-7": {
     "device": [
@@ -13654,7 +14461,21 @@
       "text": "White 20cm Ceramic Pot",
       "seconds": 0.646857958
      }
-    ]
+    ],
+    "second": {
+     "White 20cm Ceramic Plant Pot with Saucer": {
+      "ok": true
+     },
+     "White 20cm ceramic plant pot with saucer": {
+      "ok": true
+     },
+     "White Ceramic Pot, 20cm, With Drainage Hole And Saucer": {
+      "ok": true
+     },
+     "White 20cm Ceramic Pot": {
+      "ok": true
+     }
+    }
    },
    "title-8": {
     "device": [
@@ -13701,7 +14522,18 @@
       "seconds": 0.828504708,
       "text": "GREEN FOAM GARDEN KNEELER"
      }
-    ]
+    ],
+    "second": {
+     "Foam Garden Kneeler - Green, 45x20cm": {
+      "ok": true
+     },
+     "Garden Kneeler - Foam, Green, 45x20cm": {
+      "ok": true
+     },
+     "Green foam garden kneeler 45 x 20 cm": {
+      "ok": true
+     }
+    }
    },
    "title-9": {
     "device": [
@@ -13754,7 +14586,24 @@
       "text": "Navy Striped Cotton Apron",
       "seconds": 0.739232875
      }
-    ]
+    ],
+    "second": {
+     "Navy Stripe Cotton Apron - One Size": {
+      "ok": true
+     },
+     "Cotton Apron - Navy Stripe - One Size": {
+      "ok": true
+     },
+     "Cotton navy stripe apron one size adjustable strap": {
+      "ok": true
+     },
+     "Navy Stripe Cotton Apron": {
+      "ok": true
+     },
+     "Navy Striped Cotton Apron": {
+      "ok": true
+     }
+    }
    },
    "title-10": {
     "device": [
@@ -13801,7 +14650,18 @@
       "text": "I can't create a title that is written all in capitals.",
       "seconds": 0.846490375
      }
-    ]
+    ],
+    "second": {
+     "LED Desk Lamp - Black - 3 Brightness Levels": {
+      "ok": true
+     },
+     "Black LED Desk Lamp - 3 Brightness Levels": {
+      "ok": true
+     },
+     "Black LED Desk Lamp": {
+      "ok": true
+     }
+    }
    },
    "title-11": {
     "device": [
@@ -13848,7 +14708,18 @@
       "seconds": 0.649794209,
       "text": "GREEN GARDEN HOSE 30M"
      }
-    ]
+    ],
+    "second": {
+     "Garden Hose 30m Green with Spray Gun": {
+      "ok": true
+     },
+     "Garden Hose 30m Green Spray Gun": {
+      "ok": true
+     },
+     "Green 30 metre garden hose with spray gun": {
+      "ok": true
+     }
+    }
    },
    "title-12": {
     "device": [
@@ -13892,7 +14763,15 @@
       "seconds": 0.534195291,
       "text": "Velvet Cushion"
      }
-    ]
+    ],
+    "second": {
+     "Mustard Yellow Velvet Cushion - 45cm": {
+      "ok": true
+     },
+     "Mustard yellow 45cm square feather filled velvet cushion": {
+      "ok": true
+     }
+    }
    },
    "title-13": {
     "device": [
@@ -13942,7 +14821,21 @@
       "seconds": 0.851185208,
       "text": "BAMBOO MAT 60X40CM"
      }
-    ]
+    ],
+    "second": {
+     "Bamboo Bath Mat 60x40cm - Natural Finish": {
+      "ok": true
+     },
+     "Bamboo Bath Mat 60x40cm Natural Finish": {
+      "ok": true
+     },
+     "Bamboo Bath Mat - 60x40cm Natural Finish": {
+      "ok": true
+     },
+     "Natural bamboo bath mat 60x40cm": {
+      "ok": true
+     }
+    }
    },
    "title-14": {
     "device": [
@@ -13989,7 +14882,18 @@
       "text": "CAST IRON CASSEROLE DISH",
       "seconds": 0.824505916
      }
-    ]
+    ],
+    "second": {
+     "Cast Iron Casserole Dish 24cm Red": {
+      "ok": true
+     },
+     "Cast Iron Casserole Dish 24cm Red Enamel": {
+      "ok": true
+     },
+     "Red enameled cast iron casserole dish 24cm": {
+      "ok": true
+     }
+    }
    },
    "title-15": {
     "device": [
@@ -14042,7 +14946,24 @@
       "seconds": 0.698365083,
       "text": "DOORMAT COIR 60x90 CM"
      }
-    ]
+    ],
+    "second": {
+     "Coir Doormat - 60x90cm - Natural": {
+      "ok": true
+     },
+     "Doormat Coir 60x90cm Natural": {
+      "ok": true
+     },
+     "Coir Doormat - 60x90cm Natural": {
+      "ok": true
+     },
+     "Plain natural coir doormat 60 x 90 cm": {
+      "ok": true
+     },
+     "Doormat Coir 60 x 90 cm Plain Natural": {
+      "ok": true
+     }
+    }
    },
    "title-16": {
     "device": [
@@ -14092,7 +15013,21 @@
       "text": "USB-C Cable 2m Black Nylon",
       "seconds": 0.669943
      }
-    ]
+    ],
+    "second": {
+     "Black 2m Braided Nylon USB-C Cable": {
+      "ok": true
+     },
+     "Black 2m USB-C Braided Nylon Charging Cable": {
+      "ok": true
+     },
+     "Black 2m braided nylon USB-C cable": {
+      "ok": true
+     },
+     "USB-C Cable 2m Black Nylon": {
+      "ok": true
+     }
+    }
    },
    "title-17": {
     "device": [
@@ -14175,7 +15110,18 @@
       "seconds": 0.712733458,
       "text": "BRASS FURNITURE LAMP"
      }
-    ]
+    ],
+    "second": {
+     "Brass Floor Lamp - 150cm Cream Shade": {
+      "ok": true
+     },
+     "Brass Floor Lamp - Cream Shade, 150cm": {
+      "ok": true
+     },
+     "150 cm cream fabric and brass steel floor lamp": {
+      "ok": true
+     }
+    }
    },
    "title-19": {
     "device": [
@@ -14216,7 +15162,12 @@
       "seconds": 0.605107625,
       "text": "Ash Wood Garden Trowel"
      }
-    ]
+    ],
+    "second": {
+     "Stainless steel garden trowel with ash wood handle 30cm": {
+      "ok": true
+     }
+    }
    },
    "title-20": {
     "device": [
@@ -14266,7 +15217,21 @@
       "text": "Seagrass Storage Basket",
       "seconds": 0.624895083
      }
-    ]
+    ],
+    "second": {
+     "Seagrass Storage Basket - 35x30cm - Natural": {
+      "ok": true
+     },
+     "Seagrass Storage Basket - Natural 35x30cm": {
+      "ok": true
+     },
+     "Seagrass Storage Basket - 35x30cm Natural": {
+      "ok": true
+     },
+     "Natural seagrass woven storage basket 35x30 cm": {
+      "ok": true
+     }
+    }
    },
    "title-21": {
     "device": [
@@ -14310,7 +15275,15 @@
       "text": "LARKFIELD WINE GLASSES",
       "seconds": 0.608714667
      }
-    ]
+    ],
+    "second": {
+     "Set of 6 Clear Wine Glasses - 350ml": {
+      "ok": true
+     },
+     "Set of 6 clear glass wine glasses 350ml": {
+      "ok": true
+     }
+    }
    },
    "title-22": {
     "device": [
@@ -14360,7 +15333,21 @@
       "seconds": 0.456458292,
       "text": "Tea Lights Pack"
      }
-    ]
+    ],
+    "second": {
+     "Beeswax Tea Lights - 20 Pack - Yellow": {
+      "ok": true
+     },
+     "Beeswax Tea Lights - 20 Count, Yellow": {
+      "ok": true
+     },
+     "Beeswax Tea Lights - 20 Pack - Natural Yellow": {
+      "ok": true
+     },
+     "Pack of 20 natural yellow beeswax tea lights": {
+      "ok": true
+     }
+    }
    },
    "title-23": {
     "device": [
@@ -14407,7 +15394,18 @@
       "seconds": 0.547976959,
       "text": "COCKTAIL CORKS"
      }
-    ]
+    ],
+    "second": {
+     "Cork Coasters - 4 Round 10cm Plain": {
+      "ok": true
+     },
+     "Cork Coasters - 4 Pack, 10cm Round": {
+      "ok": true
+     },
+     "4 plain round 10cm cork coasters": {
+      "ok": true
+     }
+    }
    },
    "title-24": {
     "device": [
@@ -14451,7 +15449,15 @@
       "seconds": 0.561827542,
       "text": "TERRACOTTA HERB PLANTS"
      }
-    ]
+    ],
+    "second": {
+     "Terracotta Herb Pots - 12cm x 3 + Tray": {
+      "ok": true
+     },
+     "Three 12cm terracotta herb pots on a wooden tray": {
+      "ok": true
+     }
+    }
    },
    "title-25": {
     "device": [
@@ -14492,7 +15498,12 @@
       "text": "COTTON GLOVES",
       "seconds": 0.542973542
      }
-    ]
+    ],
+    "second": {
+     "Pair of quilted cotton oven gloves grey 30cm": {
+      "ok": true
+     }
+    }
    },
    "title-26": {
     "device": [
@@ -14578,6 +15589,20 @@
      "Stainless steel garden fork with 95 cm ash handle": {
       "ok": true
      }
+    },
+    "second": {
+     "Garden Fork - Stainless Steel, Ash, 95cm": {
+      "ok": true
+     },
+     "Garden Fork - Stainless Steel, Ash Handle, 95cm": {
+      "ok": true
+     },
+     "Garden Fork - Stainless Steel/Ash, 95cm": {
+      "ok": true
+     },
+     "Stainless steel garden fork with 95 cm ash handle": {
+      "ok": true
+     }
     }
    },
    "title-28": {
@@ -14622,6 +15647,14 @@
      "seconds": 0.6593999999761582,
      "tokensIn": 96,
      "tokensOut": 20
+    },
+    "second": {
+     "Shower Curtain 180 x 200 cm Pale Grey Polyester": {
+      "ok": true
+     },
+     "Pale Grey Polyester Shower Curtain 180x200cm": {
+      "ok": true
+     }
     }
    },
    "title-29": {
@@ -14660,6 +15693,20 @@
      "tokensOut": 10
     },
     "grades": {
+     "Oak Frame White Wall Clock, 30cm": {
+      "ok": true
+     },
+     "Oak Frame Silent Wall Clock 30cm White": {
+      "ok": true
+     },
+     "Oak Frame Wall Clock - 30cm White Face": {
+      "ok": true
+     },
+     "30cm oak frame white face silent wall clock": {
+      "ok": true
+     }
+    },
+    "second": {
      "Oak Frame White Wall Clock, 30cm": {
       "ok": true
      },
@@ -14713,6 +15760,11 @@
      "Bamboo Cutlery Tray - 5-7 Compartments, 33cm": {
       "ok": true
      }
+    },
+    "second": {
+     "Bamboo Cutlery Tray - 5-7 Compartments, 33cm": {
+      "ok": true
+     }
     }
    },
    "title-31": {
@@ -14754,6 +15806,11 @@
      "Red tartan fleece picnic blanket 150 x 200 cm": {
       "ok": true
      }
+    },
+    "second": {
+     "Red tartan fleece picnic blanket 150 x 200 cm": {
+      "ok": true
+     }
     }
    },
    "title-32": {
@@ -14792,6 +15849,17 @@
      "tokensOut": 11
     },
     "grades": {
+     "Amber Glass Soap Dispenser - 500ml": {
+      "ok": true
+     },
+     "Amber Glass Soap Dispenser 500ml": {
+      "ok": true
+     },
+     "500ml amber glass soap dispenser with black pump": {
+      "ok": true
+     }
+    },
+    "second": {
      "Amber Glass Soap Dispenser - 500ml": {
       "ok": true
      },
@@ -14845,6 +15913,14 @@
      "seconds": 0.855199999988079,
      "tokensIn": 88,
      "tokensOut": 12
+    },
+    "second": {
+     "Kids Wellies Size 10 Navy Red Soles Natural Rubber": {
+      "ok": true
+     },
+     "Navy kids wellies size 10 red soles natural rubber": {
+      "ok": true
+     }
     }
    },
    "title-34": {
@@ -14892,6 +15968,18 @@
      "Grey wool felt weighted draught excluder 90cm": {
       "ok": true
      }
+    },
+    "second": {
+     "Grey Wool Felt Draught Excluder - 90cm": {
+      "ok": true
+     },
+     "Grey Wool Felt Draft Excluder - 90cm": {
+      "ok": false,
+      "reason": "It changes the spelling of 'draught' to 'Draft'."
+     },
+     "Grey wool felt weighted draught excluder 90cm": {
+      "ok": true
+     }
     }
    },
    "title-35": {
@@ -14930,6 +16018,17 @@
      "tokensOut": 10
     },
     "grades": {
+     "Stainless Steel Kettle 1.7L - Matt Black": {
+      "ok": true
+     },
+     "Stainless Steel Kettle - 1.7L - Matt Black": {
+      "ok": true
+     },
+     "Matt black stainless steel kettle 1.7 litre": {
+      "ok": true
+     }
+    },
+    "second": {
      "Stainless Steel Kettle 1.7L - Matt Black": {
       "ok": true
      },
@@ -14989,6 +16088,20 @@
      "A4 solid oak picture frame with glass front": {
       "ok": true
      }
+    },
+    "second": {
+     "A4 Solid Oak Picture Frame with Glass": {
+      "ok": true
+     },
+     "A4 Oak Picture Frame with Glass": {
+      "ok": true
+     },
+     "A4 Oak Picture Frame - Glass Front": {
+      "ok": true
+     },
+     "A4 solid oak picture frame with glass front": {
+      "ok": true
+     }
     }
    },
    "title-37": {
@@ -15027,6 +16140,17 @@
      "tokensOut": 13
     },
     "grades": {
+     "Fleece Throw 130x170cm Teal": {
+      "ok": true
+     },
+     "Fleece Throw, Teal, 130x170cm": {
+      "ok": true
+     },
+     "Teal fleece throw 130x170cm": {
+      "ok": true
+     }
+    },
+    "second": {
      "Fleece Throw 130x170cm Teal": {
       "ok": true
      },
@@ -15086,6 +16210,20 @@
      "seconds": 1.0359000000357628,
      "tokensIn": 94,
      "tokensOut": 8
+    },
+    "second": {
+     "Cream Ceramic Utensil Jar, 15cm Tall": {
+      "ok": true
+     },
+     "Ceramic Utensil Jar - Cream, 15cm": {
+      "ok": true
+     },
+     "Ceramic Utensil Jar - Cream 15cm": {
+      "ok": true
+     },
+     "Cream ceramic utensil jar 15cm": {
+      "ok": true
+     }
     }
    },
    "title-39": {
@@ -15124,6 +16262,17 @@
      "tokensOut": 13
     },
     "grades": {
+     "Green 2.5m Garden Parasol - Crank Handle": {
+      "ok": true
+     },
+     "Green 2.5m Garden Parasol - Steel Pole": {
+      "ok": true
+     },
+     "Green 2.5m steel garden parasol with crank handle": {
+      "ok": true
+     }
+    },
+    "second": {
      "Green 2.5m Garden Parasol - Crank Handle": {
       "ok": true
      },
@@ -15180,6 +16329,17 @@
      "seconds": 0.859,
      "tokensIn": 100,
      "tokensOut": 15
+    },
+    "second": {
+     "Jute Rug 120 x 180cm Natural Flat Weave": {
+      "ok": true
+     },
+     "Jute Rug 120x180cm Natural Flat Weave": {
+      "ok": true
+     },
+     "Natural jute flat weave rug 120 x 180 cm": {
+      "ok": true
+     }
     }
    },
    "title-41": {
@@ -15224,6 +16384,14 @@
      "seconds": 1.2908999999761581,
      "tokensIn": 121,
      "tokensOut": 8
+    },
+    "second": {
+     "Digital Kitchen Scales, Stainless Steel, 5kg": {
+      "ok": true
+     },
+     "Stainless steel digital kitchen scales 5 kg": {
+      "ok": true
+     }
     }
    },
    "title-42": {
@@ -15262,6 +16430,17 @@
      "tokensOut": 13
     },
     "grades": {
+     "Willow Laundry Basket - 60cm Natural": {
+      "ok": true
+     },
+     "Willow Laundry Basket 60cm Natural": {
+      "ok": true
+     },
+     "Natural Woven Willow Laundry Basket 60cm With Cotton Liner": {
+      "ok": true
+     }
+    },
+    "second": {
      "Willow Laundry Basket - 60cm Natural": {
       "ok": true
      },
@@ -15315,6 +16494,14 @@
      "Black Aluminium Outdoor Wall Lantern 35 cm": {
       "ok": true
      }
+    },
+    "second": {
+     "Black Aluminium Outdoor Wall Lantern - 35cm": {
+      "ok": true
+     },
+     "Black Aluminium Outdoor Wall Lantern 35 cm": {
+      "ok": true
+     }
     }
    },
    "title-44": {
@@ -15360,6 +16547,15 @@
      "25 cm carbon steel folding pruning saw with beech handle": {
       "ok": true
      }
+    },
+    "second": {
+     "Larkfield 25cm Folding Pruning Saw - Carbon Steel": {
+      "ok": false,
+      "reason": "The brand name 'Larkfield' was added despite not being in the seller's notes."
+     },
+     "25 cm carbon steel folding pruning saw with beech handle": {
+      "ok": true
+     }
     }
    },
    "title-45": {
@@ -15398,6 +16594,14 @@
      "tokensOut": 15
     },
     "grades": {
+     "Sage Green Cotton Bath Mat 50x80cm": {
+      "ok": true
+     },
+     "Sage green cotton terry bath mat 50 x 80 cm": {
+      "ok": true
+     }
+    },
+    "second": {
      "Sage Green Cotton Bath Mat 50x80cm": {
       "ok": true
      },
@@ -15457,6 +16661,23 @@
      "Set of 4 charcoal linen napkins, 45cm square": {
       "ok": true
      }
+    },
+    "second": {
+     "Larkfield Linen Napkins - Charcoal 45cm (Set of 4)": {
+      "ok": false,
+      "reason": "'Larkfield' was added, which is not included in the seller's notes."
+     },
+     "Larkfield Linen Napkins - Charcoal, 45cm (Set of 4)": {
+      "ok": false,
+      "reason": "'Larkfield' was added, which is not present in the seller's notes."
+     },
+     "Larkfield Linen Napkins Charcoal 45cm (Set of 4)": {
+      "ok": false,
+      "reason": "'Larkfield' was added, which is not part of the seller's notes."
+     },
+     "Set of 4 charcoal linen napkins, 45cm square": {
+      "ok": true
+     }
     }
    },
    "title-47": {
@@ -15495,6 +16716,20 @@
      "tokensOut": 14
     },
     "grades": {
+     "Bamboo Plant Labels - 10 Pack (15cm)": {
+      "ok": true
+     },
+     "Bamboo Plant Labels - 10 Pack": {
+      "ok": true
+     },
+     "Bamboo Plant Labels - 10 Pack, 15cm": {
+      "ok": true
+     },
+     "Pack of 10 15cm bamboo plant labels with pencil": {
+      "ok": true
+     }
+    },
+    "second": {
      "Bamboo Plant Labels - 10 Pack (15cm)": {
       "ok": true
      },
@@ -15557,6 +16792,20 @@
      "Two round 38cm seagrass placemats": {
       "ok": true
      }
+    },
+    "second": {
+     "Seagrass Placemats - 38cm (2)": {
+      "ok": true
+     },
+     "Seagrass Placemats - Set of 2 (38cm)": {
+      "ok": true
+     },
+     "Seagrass Placemats, Round 38cm (2 Pack)": {
+      "ok": true
+     },
+     "Two round 38cm seagrass placemats": {
+      "ok": true
+     }
     }
    },
    "title-49": {
@@ -15605,6 +16854,17 @@
      "Set of 3 white and blue enamel mugs 350ml": {
       "ok": true
      }
+    },
+    "second": {
+     "Blue Rim White Enamel Mugs (350ml)": {
+      "ok": true
+     },
+     "Three White & Blue Enamel Mugs - 350ml": {
+      "ok": true
+     },
+     "Set of 3 white and blue enamel mugs 350ml": {
+      "ok": true
+     }
     }
    },
    "title-50": {
@@ -15643,6 +16903,17 @@
      "tokensOut": 9
     },
     "grades": {
+     "Egg Cups - 6pc Stoneware Pastel Assorted": {
+      "ok": true
+     },
+     "6 Egg Cups Stoneware Pastel Assorted": {
+      "ok": true
+     },
+     "Set of 6 assorted pastel stoneware egg cups": {
+      "ok": true
+     }
+    },
+    "second": {
      "Egg Cups - 6pc Stoneware Pastel Assorted": {
       "ok": true
      },
@@ -16065,7 +17336,18 @@
       "seconds": 0.722259667,
       "text": "BEECH DOOR WEDGE"
      }
-    ]
+    ],
+    "second": {
+     "Door Wedge - Beech Wood, 12cm, Natural": {
+      "ok": true
+     },
+     "Beech Door Wedge - 12cm Natural": {
+      "ok": true
+     },
+     "Natural solid beech door wedge 12 cm": {
+      "ok": true
+     }
+    }
    },
    "title-held-2": {
     "device": [
@@ -16112,7 +17394,18 @@
       "seconds": 0.592165042,
       "text": "Larkfield Sage Green Linen Throw Pillow Cover"
      }
-    ]
+    ],
+    "second": {
+     "Throw Pillow Cover - Linen Sage Green 50x50cm": {
+      "ok": true
+     },
+     "Throw Pillow Cover Linen Sage Green 50x50cm": {
+      "ok": true
+     },
+     "Sage green linen 50x50cm throw pillow cover": {
+      "ok": true
+     }
+    }
    },
    "title-held-3": {
     "device": [
@@ -16156,7 +17449,15 @@
       "seconds": 0.626602834,
       "text": "CREAM ENAMEL TIN SET"
      }
-    ]
+    ],
+    "second": {
+     "Nest of 3 Cream Enamel Storage Tins - 18cm": {
+      "ok": true
+     },
+     "Set of 3 cream enamel nesting storage tins 18cm": {
+      "ok": true
+     }
+    }
    },
    "title-held-4": {
     "device": [
@@ -16206,7 +17507,23 @@
       "text": "Jute Garden Twine",
       "seconds": 0.429875958
      }
-    ]
+    ],
+    "second": {
+     "Garden Twine - 100m Jute, Green": {
+      "ok": true
+     },
+     "Jute Garden Twine - 100m Green Spool": {
+      "ok": false,
+      "reason": "Changes 'wooden spool' and 'green' twine to 'Green Spool'."
+     },
+     "Garden Twine 100M Jute Green Spool": {
+      "ok": false,
+      "reason": "Incorrectly changes the wooden spool to a green spool."
+     },
+     "Green jute garden twine 100 m on wooden spool": {
+      "ok": true
+     }
+    }
    },
    "title-held-5": {
     "device": [
@@ -16254,7 +17571,19 @@
       "seconds": 0.544435083,
       "text": "CHARCOAL GREY WELCOME MAT"
      }
-    ]
+    ],
+    "second": {
+     "Larkfield Charcoal Grey Welcome Mat 45x75cm": {
+      "ok": false,
+      "reason": "Adds 'Larkfield' which is not in the seller's notes."
+     },
+     "Charcoal Grey Rubber Backed Welcome Mat - 45x75cm": {
+      "ok": true
+     },
+     "Charcoal grey rubber backed welcome mat 45 x 75 cm": {
+      "ok": true
+     }
+    }
    },
    "title-held-6": {
     "device": [
@@ -16295,7 +17624,12 @@
       "seconds": 0.432665417,
       "text": "BOOKENDS"
      }
-    ]
+    ],
+    "second": {
+     "Pair of 15cm cast iron black bookends": {
+      "ok": true
+     }
+    }
    },
    "title-held-7": {
     "device": [
@@ -16346,7 +17680,22 @@
       "seconds": 0.649298,
       "text": "Bread Bin Bamboo Lid White Steel Body 33cm Wide"
      }
-    ]
+    ],
+    "second": {
+     "Bamboo Lid Bread Bin - White, 33cm": {
+      "ok": true
+     },
+     "Bread Bin Bamboo Lid White Steel 33cm": {
+      "ok": true
+     },
+     "Larkfield 33cm white steel bread bin with bamboo lid": {
+      "ok": false,
+      "reason": "Adds 'Larkfield' which was not in the seller's notes."
+     },
+     "Bread Bin Bamboo Lid White Steel Body 33cm Wide": {
+      "ok": true
+     }
+    }
    },
    "title-held-8": {
     "device": [
@@ -16393,7 +17742,18 @@
       "text": "Wooden Pegs",
       "seconds": 0.439583291
      }
-    ]
+    ],
+    "second": {
+     "Birch Wooden Clothes Pegs - 12 Pack": {
+      "ok": true
+     },
+     "Wooden Clothes Pegs - 12 Pack - Birch": {
+      "ok": true
+     },
+     "Set of 12 birch wooden clothes pegs with spring": {
+      "ok": true
+     }
+    }
    },
    "title-held-9": {
     "device": [
@@ -16446,7 +17806,24 @@
       "seconds": 0.625892292,
       "text": "Plant Mister Amber Glass 300ml Brass Pump Top"
      }
-    ]
+    ],
+    "second": {
+     "Amber Glass Plant Mister - 300ml": {
+      "ok": true
+     },
+     "Amber Glass Plant Mister 300ml Brass Pump": {
+      "ok": true
+     },
+     "Amber glass 300 ml plant mister with brass pump top": {
+      "ok": true
+     },
+     "Plant Mister Amber Glass 300ml": {
+      "ok": true
+     },
+     "Plant Mister Amber Glass 300ml Brass Pump Top": {
+      "ok": true
+     }
+    }
    },
    "title-held-10": {
     "device": [
@@ -16493,7 +17870,18 @@
       "text": "Blue Check Tea Towels",
       "seconds": 0.539771333
      }
-    ]
+    ],
+    "second": {
+     "Blue Check Organic Cotton Tea Towels - 2 Pack": {
+      "ok": true
+     },
+     "Blue Check Organic Cotton Tea Towels (Pack of 2)": {
+      "ok": true
+     },
+     "Blue check organic cotton tea towel 50 x 70 cm pack of two": {
+      "ok": true
+     }
+    }
    }
   },
   "delivery_summary": {
@@ -23259,6 +24647,14 @@
         "ok": false,
         "reason": "Omits the 'handmade' detail from the notes."
        }
+      },
+      "second": {
+       "Handmade Stoneware Mug - 350ml Speckled Blue": {
+        "ok": true
+       },
+       "Stoneware Mug - 350ml - Speckled Blue": {
+        "ok": true
+       }
       }
      },
      "title-2": {
@@ -23284,6 +24680,14 @@
        "Kids Yellow Raincoat, Size 5-6, Fleece Lined": {
         "ok": false,
         "reason": "Omits the 'reflective strips' detail from the notes."
+       }
+      },
+      "second": {
+       "Kids Yellow Raincoat, 5-6 Years, Fleece Lined": {
+        "ok": true
+       },
+       "Kids Yellow Raincoat, Size 5-6, Fleece Lined": {
+        "ok": true
        }
       }
      },
@@ -23315,6 +24719,18 @@
         "ok": false,
         "reason": "Omits the 'made in Wales' detail and adds the word 'throw'."
        }
+      },
+      "second": {
+       "Wool Blanket Grey Herringbone 130x180cm": {
+        "ok": true
+       },
+       "Wool Blanket 130x180cm Grey Herringbone": {
+        "ok": true
+       },
+       "Wool Throw Blanket - Grey Herringbone - 130x180cm": {
+        "ok": false,
+        "reason": "The word 'Throw' was added and was not present in the seller's notes."
+       }
       }
      },
      "title-4": {
@@ -23340,6 +24756,14 @@
         "ok": false,
         "reason": "Omits the 'brass rose' detail from the notes."
        }
+      },
+      "second": {
+       "9 Litre Galvanised Steel Watering Can with Brass Rose": {
+        "ok": true
+       },
+       "9 Litre Galvanised Steel Watering Can": {
+        "ok": true
+       }
       }
      },
      "title-5": {
@@ -23361,6 +24785,11 @@
        "Linen Tablecloth - 150cm Round - Natural": {
         "ok": true
        }
+      },
+      "second": {
+       "Linen Tablecloth - 150cm Round - Natural": {
+        "ok": true
+       }
       }
      },
      "title-6": {
@@ -23379,6 +24808,14 @@
        }
       ],
       "grades": {
+       "Oak Chopping Board 40x28cm with Juice Groove": {
+        "ok": true
+       },
+       "Oak Chopping Board 40x28cm, Juice Groove": {
+        "ok": true
+       }
+      },
+      "second": {
        "Oak Chopping Board 40x28cm with Juice Groove": {
         "ok": true
        },
@@ -23415,6 +24852,17 @@
         "ok": false,
         "reason": "Omits the 'drainage hole' detail from the notes."
        }
+      },
+      "second": {
+       "White 20cm Ceramic Plant Pot with Saucer": {
+        "ok": true
+       },
+       "White Ceramic Plant Pot 20cm with Saucer": {
+        "ok": true
+       },
+       "White Ceramic Plant Pot - 20cm with Saucer": {
+        "ok": true
+       }
       }
      },
      "title-8": {
@@ -23438,6 +24886,18 @@
        },
        "Larkfield Garden Kneeler, Green Foam, 45x20cm": {
         "ok": true
+       },
+       "Garden Kneeler, Foam, Green, 45x20 cm": {
+        "ok": true
+       }
+      },
+      "second": {
+       "Garden Kneeler - Foam - Green - 45x20cm": {
+        "ok": true
+       },
+       "Larkfield Garden Kneeler, Green Foam, 45x20cm": {
+        "ok": false,
+        "reason": "The brand name 'Larkfield' was added, which is not in the seller's notes."
        },
        "Garden Kneeler, Foam, Green, 45x20 cm": {
         "ok": true
@@ -23472,6 +24932,19 @@
         "ok": false,
         "reason": "Omits the 'adjustable neck strap' detail from the notes."
        }
+      },
+      "second": {
+       "Larkfield Cotton Striped Apron - Navy, One Size": {
+        "ok": false,
+        "reason": "The brand name 'Larkfield' was added, which is not in the seller's notes."
+       },
+       "Cotton Apron Navy Stripe, One Size": {
+        "ok": true
+       },
+       "Larkfield Navy Stripe Cotton Apron - One Size": {
+        "ok": false,
+        "reason": "The brand name 'Larkfield' was added, which is not in the seller's notes."
+       }
       }
      },
      "title-10": {
@@ -23493,6 +24966,11 @@
        "LED Desk Lamp - Black - 3 Brightness Levels": {
         "ok": true
        }
+      },
+      "second": {
+       "LED Desk Lamp - Black - 3 Brightness Levels": {
+        "ok": true
+       }
       }
      },
      "title-11": {
@@ -23511,6 +24989,11 @@
        }
       ],
       "grades": {
+       "Garden Hose 30m Green with Spray Gun": {
+        "ok": true
+       }
+      },
+      "second": {
        "Garden Hose 30m Green with Spray Gun": {
         "ok": true
        }
@@ -23539,6 +25022,14 @@
        "Mustard Yellow Velvet Cushion - 45cm, Feather Filled": {
         "ok": true
        }
+      },
+      "second": {
+       "Mustard Yellow Velvet Cushion - 45cm Square": {
+        "ok": true
+       },
+       "Mustard Yellow Velvet Cushion - 45cm, Feather Filled": {
+        "ok": true
+       }
       }
      },
      "title-13": {
@@ -23557,6 +25048,17 @@
        }
       ],
       "grades": {
+       "Bamboo Bath Mat - 60x40cm - Natural Finish": {
+        "ok": true
+       },
+       "Bamboo Bath Mat 60x40cm - Natural Finish": {
+        "ok": true
+       },
+       "Bamboo Bath Mat 60x40cm Natural Finish": {
+        "ok": true
+       }
+      },
+      "second": {
        "Bamboo Bath Mat - 60x40cm - Natural Finish": {
         "ok": true
        },
@@ -23590,6 +25092,14 @@
        "Cast Iron Casserole - 24cm Red Enamel": {
         "ok": true
        }
+      },
+      "second": {
+       "Cast Iron Casserole Dish 24cm Red Enamel": {
+        "ok": true
+       },
+       "Cast Iron Casserole - 24cm Red Enamel": {
+        "ok": true
+       }
       }
      },
      "title-15": {
@@ -23608,6 +25118,11 @@
        }
       ],
       "grades": {
+       "Coir Doormat 60x90cm Natural": {
+        "ok": true
+       }
+      },
+      "second": {
        "Coir Doormat 60x90cm Natural": {
         "ok": true
        }
@@ -23638,6 +25153,17 @@
        "Black 2m Braided Nylon USB-C Cable": {
         "ok": true
        }
+      },
+      "second": {
+       "Black 2m Braided Nylon USB-C Cable 100W": {
+        "ok": true
+       },
+       "USB-C Cable 2m Black Braided Nylon 100W": {
+        "ok": true
+       },
+       "Black 2m Braided Nylon USB-C Cable": {
+        "ok": true
+       }
       }
      },
      "title-17": {
@@ -23656,6 +25182,14 @@
        }
       ],
       "grades": {
+       "Clear Plastic Bird Feeder - 38cm with Green Lid & Base": {
+        "ok": true
+       },
+       "Clear Plastic Bird Feeder 38cm with Green Lid & Base": {
+        "ok": true
+       }
+      },
+      "second": {
        "Clear Plastic Bird Feeder - 38cm with Green Lid & Base": {
         "ok": true
        },
@@ -23690,6 +25224,18 @@
         "ok": false,
         "reason": "Includes the brand name 'Larkfield' which is not in the seller's notes."
        }
+      },
+      "second": {
+       "Brass Floor Lamp - Cream Shade, 150cm": {
+        "ok": true
+       },
+       "Brass Floor Lamp 150cm Cream Shade 2m Cord": {
+        "ok": true
+       },
+       "Larkfield Floor Lamp Brass Finish, 150cm, Cream Shade": {
+        "ok": false,
+        "reason": "Includes the brand name Larkfield, which is not in the seller's notes."
+       }
       }
      },
      "title-19": {
@@ -23716,6 +25262,16 @@
         "ok": false,
         "reason": "Includes the brand name 'Larkfield' which is not in the seller's notes."
        }
+      },
+      "second": {
+       "Larkfield Garden Trowel - 30cm Ash, Stainless Steel": {
+        "ok": false,
+        "reason": "Includes the brand name Larkfield, which is not in the seller's notes."
+       },
+       "Larkfield Garden Trowel - 30cm Ash/Steel": {
+        "ok": false,
+        "reason": "Includes the brand name Larkfield, which is not in the seller's notes."
+       }
       }
      },
      "title-20": {
@@ -23734,6 +25290,14 @@
        }
       ],
       "grades": {
+       "Seagrass Storage Basket - 35x30cm Natural": {
+        "ok": true
+       },
+       "Seagrass Storage Basket Natural 35x30cm, 2 Handles": {
+        "ok": true
+       }
+      },
+      "second": {
        "Seagrass Storage Basket - 35x30cm Natural": {
         "ok": true
        },
@@ -23770,6 +25334,20 @@
         "ok": false,
         "reason": "Includes the brand name 'Larkfield' which is not in the seller's notes."
        }
+      },
+      "second": {
+       "Larkfield 6 Clear Wine Glasses - 350ml Dishwasher Safe": {
+        "ok": false,
+        "reason": "Includes the brand name Larkfield, which is not in the seller's notes."
+       },
+       "Larkfield 6 Clear Glass Wine Glasses (350ml)": {
+        "ok": false,
+        "reason": "Includes the brand name Larkfield, which is not in the seller's notes."
+       },
+       "Larkfield Set of 6 Clear Glass Wine Glasses - 350ml": {
+        "ok": false,
+        "reason": "Includes the brand name Larkfield, which is not in the seller's notes."
+       }
       }
      },
      "title-22": {
@@ -23788,6 +25366,17 @@
        }
       ],
       "grades": {
+       "Beeswax Tea Lights - 20 Pack, Natural Yellow": {
+        "ok": true
+       },
+       "Beeswax Tea Lights - 20 Count - Natural Yellow": {
+        "ok": true
+       },
+       "Beeswax Tea Lights, Yellow, 20 Count": {
+        "ok": true
+       }
+      },
+      "second": {
        "Beeswax Tea Lights - 20 Pack, Natural Yellow": {
         "ok": true
        },
@@ -23824,6 +25413,17 @@
        "Cork Coasters - 10cm Round - Set of 4": {
         "ok": true
        }
+      },
+      "second": {
+       "Cork Coasters - 10cm Round - Pack of 4": {
+        "ok": true
+       },
+       "Larkfield 4 Round Cork Coasters 10cm": {
+        "ok": true
+       },
+       "Cork Coasters - 10cm Round - Set of 4": {
+        "ok": true
+       }
       }
      },
      "title-24": {
@@ -23844,6 +25444,15 @@
       "grades": {
        "Terracotta Herb Pots (12cm) on Wooden Tray (3)": {
         "ok": true
+       },
+       "Terracotta Herb Pots (3) on Wooden Tray - 12cm": {
+        "ok": true
+       }
+      },
+      "second": {
+       "Terracotta Herb Pots (12cm) on Wooden Tray (3)": {
+        "ok": false,
+        "reason": "The quantity 3 is placed after wooden tray, incorrectly indicating 3 trays instead of 3 pots."
        },
        "Terracotta Herb Pots (3) on Wooden Tray - 12cm": {
         "ok": true
@@ -23893,6 +25502,17 @@
        "Larkfield Butter Dish - White Porcelain & Beech Lid, 250g": {
         "ok": true
        }
+      },
+      "second": {
+       "Larkfield Butter Dish - White Porcelain, 250g": {
+        "ok": true
+       },
+       "White Porcelain Butter Dish with Beech Lid - 250g": {
+        "ok": true
+       },
+       "Larkfield Butter Dish - White Porcelain & Beech Lid, 250g": {
+        "ok": true
+       }
       }
      },
      "title-27": {
@@ -23918,6 +25538,14 @@
         "ok": false,
         "reason": "It leaves out the ash handle detail completely."
        }
+      },
+      "second": {
+       "Garden Fork - Stainless Steel Head, Ash Handle, 95cm": {
+        "ok": true
+       },
+       "Larkfield Garden Fork - 95cm Stainless Steel": {
+        "ok": true
+       }
       }
      },
      "title-28": {
@@ -23936,6 +25564,17 @@
        }
       ],
       "grades": {
+       "Pale Grey Polyester Shower Curtain - 180x200cm with 12 Hooks": {
+        "ok": true
+       },
+       "Polyester Shower Curtain Pale Grey 180x200cm with 12 Hooks": {
+        "ok": true
+       },
+       "Polyester Shower Curtain - 180x200cm Pale Grey, 12 Hooks": {
+        "ok": true
+       }
+      },
+      "second": {
        "Pale Grey Polyester Shower Curtain - 180x200cm with 12 Hooks": {
         "ok": true
        },
@@ -23974,6 +25613,17 @@
        "Larkfield 30cm Oak Frame White Silent Wall Clock": {
         "ok": true
        }
+      },
+      "second": {
+       "Oak Frame Wall Clock, 30cm, White Face": {
+        "ok": true
+       },
+       "Oak Frame Wall Clock 30cm White Face": {
+        "ok": true
+       },
+       "Larkfield 30cm Oak Frame White Silent Wall Clock": {
+        "ok": true
+       }
       }
      },
      "title-30": {
@@ -24002,6 +25652,17 @@
         "ok": false,
         "reason": "It drops the expandable feature from the notes."
        }
+      },
+      "second": {
+       "Bamboo Expandable Cutlery Tray - 5-7 Compartments (33cm)": {
+        "ok": true
+       },
+       "Bamboo Expandable Cutlery Tray - 5-7 Compartments, 33cm Wide": {
+        "ok": true
+       },
+       "Bamboo Cutlery Tray - 5-7 Compartments, 33cm Wide": {
+        "ok": true
+       }
       }
      },
      "title-31": {
@@ -24028,6 +25689,14 @@
         "ok": false,
         "reason": "It misses the waterproof backing from the notes."
        }
+      },
+      "second": {
+       "Red Tartan Fleece Picnic Blanket 150x200cm": {
+        "ok": true
+       },
+       "Picnic Blanket: Red Tartan Fleece, 150x200cm": {
+        "ok": true
+       }
       }
      },
      "title-32": {
@@ -24046,6 +25715,17 @@
        }
       ],
       "grades": {
+       "Amber Glass Soap Dispenser 500ml - Black Pump": {
+        "ok": true
+       },
+       "Amber Glass Soap Dispenser - 500ml with Black Pump": {
+        "ok": true
+       },
+       "Amber Glass Soap Dispenser - 500ml - Black Pump": {
+        "ok": true
+       }
+      },
+      "second": {
        "Amber Glass Soap Dispenser 500ml - Black Pump": {
         "ok": true
        },
@@ -24081,6 +25761,14 @@
         "ok": false,
         "reason": "It leaves out the red soles detail entirely."
        }
+      },
+      "second": {
+       "Kids Wellies Size 10 Navy Red Sole Natural Rubber": {
+        "ok": true
+       },
+       "Kids' Navy Wellies Size 10 - Natural Rubber": {
+        "ok": true
+       }
       }
      },
      "title-34": {
@@ -24107,6 +25795,14 @@
         "ok": false,
         "reason": "It leaves out the weighted feature."
        }
+      },
+      "second": {
+       "Grey Wool Felt Draught Excluder - 90cm": {
+        "ok": true
+       },
+       "Wool Felt Draught Excluder 90cm Grey": {
+        "ok": true
+       }
       }
      },
      "title-35": {
@@ -24128,6 +25824,11 @@
        "Stainless Steel Kettle 1.7L - Matt Black": {
         "ok": true
        }
+      },
+      "second": {
+       "Stainless Steel Kettle 1.7L - Matt Black": {
+        "ok": true
+       }
       }
      },
      "title-36": {
@@ -24146,6 +25847,14 @@
        }
       ],
       "grades": {
+       "A4 Solid Oak Picture Frame with Glass": {
+        "ok": true
+       },
+       "A4 Oak Picture Frame with Glass": {
+        "ok": true
+       }
+      },
+      "second": {
        "A4 Solid Oak Picture Frame with Glass": {
         "ok": true
        },
@@ -24176,6 +25885,14 @@
        "Fleece Throw Teal 130x170cm": {
         "ok": true
        }
+      },
+      "second": {
+       "Fleece Throw 130x170cm Teal": {
+        "ok": true
+       },
+       "Fleece Throw Teal 130x170cm": {
+        "ok": true
+       }
       }
      },
      "title-38": {
@@ -24194,6 +25911,14 @@
        }
       ],
       "grades": {
+       "Ceramic Utensil Jar - Cream, 15cm Tall": {
+        "ok": true
+       },
+       "Cream Ceramic Utensil Jar - 15cm": {
+        "ok": true
+       }
+      },
+      "second": {
        "Ceramic Utensil Jar - Cream, 15cm Tall": {
         "ok": true
        },
@@ -24221,6 +25946,11 @@
        "Garden Parasol 2.5m Green Steel Pole": {
         "ok": true
        }
+      },
+      "second": {
+       "Garden Parasol 2.5m Green Steel Pole": {
+        "ok": true
+       }
       }
      },
      "title-40": {
@@ -24239,6 +25969,11 @@
        }
       ],
       "grades": {
+       "Jute Rug 120x180cm Natural Flat Weave": {
+        "ok": true
+       }
+      },
+      "second": {
        "Jute Rug 120x180cm Natural Flat Weave": {
         "ok": true
        }
@@ -24264,6 +25999,12 @@
         "ok": false,
         "reason": "It fails to mention the size and quantity details from the extensive input notes."
        }
+      },
+      "second": {
+       "Larkfield Digital Kitchen Scale - 5kg Stainless Steel": {
+        "ok": false,
+        "reason": "Added the brand name 'Larkfield' which is not present in the seller's notes."
+       }
       }
      },
      "title-42": {
@@ -24286,6 +26027,11 @@
         "ok": false,
         "reason": "It misses the material details like willow and cotton liner."
        }
+      },
+      "second": {
+       "Willow Laundry Basket - 60cm Tall, Natural": {
+        "ok": true
+       }
       }
      },
      "title-43": {
@@ -24304,6 +26050,14 @@
        }
       ],
       "grades": {
+       "Black Aluminum Wall Lantern with Clear Glass, 35cm": {
+        "ok": true
+       },
+       "Black Aluminium & Glass Outdoor Wall Lantern - 35cm": {
+        "ok": true
+       }
+      },
+      "second": {
        "Black Aluminum Wall Lantern with Clear Glass, 35cm": {
         "ok": true
        },
@@ -24336,6 +26090,16 @@
         "ok": false,
         "reason": "It misses the beech handle detail from the notes."
        }
+      },
+      "second": {
+       "Larkfield 25cm Folding Pruning Saw - Carbon Steel": {
+        "ok": false,
+        "reason": "Added 'Larkfield' which is not in the seller's notes."
+       },
+       "Larkfield 25cm Folding Carbon Steel Pruning Saw": {
+        "ok": false,
+        "reason": "Added 'Larkfield' which is not in the seller's notes."
+       }
       }
      },
      "title-45": {
@@ -24354,6 +26118,14 @@
        }
       ],
       "grades": {
+       "Sage Green Bath Mat - 50x80cm Cotton Terry": {
+        "ok": true
+       },
+       "Sage Green Cotton Bath Mat 50x80cm": {
+        "ok": true
+       }
+      },
+      "second": {
        "Sage Green Bath Mat - 50x80cm Cotton Terry": {
         "ok": true
        },
@@ -24384,6 +26156,16 @@
        "Larkfield Linen Napkins, Charcoal, 45cm (Set of 4)": {
         "ok": true
        }
+      },
+      "second": {
+       "Larkfield Linen Napkins - Charcoal, 45cm (Set of 4)": {
+        "ok": false,
+        "reason": "Added 'Larkfield' which is not present in the seller's notes."
+       },
+       "Larkfield Linen Napkins, Charcoal, 45cm (Set of 4)": {
+        "ok": false,
+        "reason": "Added 'Larkfield' which is not present in the seller's notes."
+       }
       }
      },
      "title-47": {
@@ -24405,6 +26187,11 @@
        "Bamboo Plant Labels - 10 Pack, 15cm": {
         "ok": true
        }
+      },
+      "second": {
+       "Bamboo Plant Labels - 10 Pack, 15cm": {
+        "ok": true
+       }
       }
      },
      "title-48": {
@@ -24423,6 +26210,14 @@
        }
       ],
       "grades": {
+       "Seagrass Round Placemats - 38cm (2)": {
+        "ok": true
+       },
+       "Seagrass Placemats Round 38cm (2)": {
+        "ok": true
+       }
+      },
+      "second": {
        "Seagrass Round Placemats - 38cm (2)": {
         "ok": true
        },
@@ -24458,6 +26253,12 @@
        "Larkfield Enamel Mugs - 350ml (Set of 3)": {
         "ok": false,
         "reason": "It misses the color details explicitly given in the notes."
+       }
+      },
+      "second": {
+       "Larkfield 3 White & Blue Enamel Mugs - 350ml": {
+        "ok": false,
+        "reason": "Added 'Larkfield' which is not in the seller's notes."
        }
       }
      },
@@ -38859,5 +40660,6 @@
   "os": "26.5",
   "host": "macOS 26.6.2",
   "date": "2026-11-14"
- }
+ },
+ "secondGrader": "gemini-3.5-flash"
 }
