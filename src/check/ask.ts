@@ -1,6 +1,7 @@
 import { AIError, InferenceMode, InferenceSource } from "firebase/ai";
 import type { Feature } from "../features";
 import { modelFor, type Mode } from "../firebase";
+import { again } from "./retry";
 
 export type Answer = {
   text: string;
@@ -35,7 +36,7 @@ export const outOfRequests = (e: OutOfRequests) =>
 
 const sleep = (seconds: number) => new Promise((done) => setTimeout(done, seconds * 1000));
 
-/** One request, as the app would send it. A full minute on the free tier is waited out; a full day isn't. */
+/** One request, as the app would send it. A full minute on the free tier and a busy model are waited out; a full day isn't. */
 export async function ask(feature: Pick<Feature, "id" | "system" | "schema" | "history" | "tools">, mode: Mode, input: string, cloudModel?: string): Promise<Answer> {
   for (let attempt = 0; ; attempt++) {
     const started = performance.now();
@@ -53,11 +54,10 @@ export async function ask(feature: Pick<Feature, "id" | "system" | "schema" | "h
       };
     } catch (e) {
       const message = e instanceof Error ? e.message : String(e);
-      if (!(e instanceof AIError) || !message.includes("429")) throw e;
-      const retryIn = Number(/retry in ([\d.]+)s/.exec(message)?.[1]);
-      const forToday = /per day|PerDay/i.test(message);
-      if (forToday || attempt >= 3 || !retryIn) throw new OutOfRequests(forToday);
-      await sleep(retryIn + 1);
+      const wait = e instanceof AIError ? again(message, attempt) : undefined;
+      if (wait === undefined) throw e;
+      if (typeof wait === "string") throw new OutOfRequests(wait === "day");
+      await sleep(wait);
     }
   }
 }
