@@ -58,7 +58,7 @@ Under the bottom line. One line for each feature first: its dot in its side's co
 
 ## The results page
 
-A record to read down, not a dashboard. The summary table is on wash, with each verdict's dot in its side's colour. Each feature's name stays at the top of the window while its inputs scroll. An input is one row: what was asked and the right answer on the left, then Chrome's three runs (lime dot) and the cloud's answer (blue dot). A right answer is a quiet wash box; a wrong one is white with a red outline, so the misses are what the eye lands on.
+A record to read down, not a dashboard. The summary table is on wash, with each verdict's dot in its side's colour. "Not enough inputs to tell" sits on a line of its own under the verdict, in line with its words, and a verdict that wraps stays clear of its dot. Each feature's name stays at the top of the window while its inputs scroll. An input is one row: what was asked and the right answer on the left, then Chrome's three runs (lime dot) and the cloud's answer (blue dot). A right answer is a quiet wash box; a wrong one is white with a red outline, so the misses are what the eye lands on.
 
 The judges' section sits between the summary and the first feature: the heading, why two more judges look, and the two of them as wash cards side by side. In a judged answer's box, the other judgments follow the cloud model's under a hairline, small; one that disagrees is red.
 
