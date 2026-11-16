@@ -1,4 +1,4 @@
-import { parse } from "./features/types";
+import { parse, shown } from "./features/types";
 
 /** An answer as a person reads it: a JSON object as rows, anything else as text. */
 export function AnswerText({ text }: { text: string }) {
@@ -9,7 +9,7 @@ export function AnswerText({ text }: { text: string }) {
       {Object.entries(object).map(([key, value]) => (
         <div key={key}>
           <dt>{key}</dt>
-          <dd>{String(value) || "(empty)"}</dd>
+          <dd>{shown(value)}</dd>
         </div>
       ))}
     </dl>

@@ -39,14 +39,15 @@ function App() {
         put(f.id)(all[f.id]);
         save();
       }
-      // The second model judges the judged answers again, as far as its smaller free day goes.
+      // The second model judges the judged answers again, as far as it goes: its free day is smaller, and for days it
+      // answered nothing at all. No verdict reads it, so the record is made with what it has.
       try {
         for (const f of FEATURES.filter((f) => f.graded)) {
           setRunning(f.id);
           all[f.id] = await gradeAgain(f, all[f.id], (cases) => { all[f.id] = cases; save(); });
         }
       } catch (e) {
-        if (!(e instanceof OutOfRequests)) throw e;
+        console.error("the second grader stopped:", String(e).slice(0, 200));
       }
     } catch (e) {
       if (!(e instanceof OutOfRequests)) throw e;
@@ -63,6 +64,8 @@ function App() {
       secondGrader: SECOND_GRADER,
       features: all,
     };
+    // The record takes the partial's place: the two together are more than a page may store.
+    sessionStorage.removeItem("partial");
     sessionStorage.setItem("record", JSON.stringify(record));
   }
 

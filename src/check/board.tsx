@@ -2,7 +2,7 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 import { flushSync } from "react-dom";
 import { SOURCE_LABEL } from "../answer";
 import type { Check, Feature } from "../features";
-import { parse } from "../features/types";
+import { parse, shown } from "../features/types";
 import { CLOUD_MODEL } from "../firebase";
 import { appCode, CHROME, DEPLOY, fixesFor, IPHONE, parameterFor, placedOn, runsOnDevice, swiftCode, TEMPLATE_FILE, templateText, type Placed } from "./apply";
 import { Fixes } from "./fixes";
@@ -83,7 +83,7 @@ function headline(text: string | undefined, telling: string[]): { key?: string; 
   const object = parse(text);
   if (!object) return { value: text };
   const key = telling[0] ?? Object.keys(object)[0];
-  return key === undefined ? undefined : { key, value: String(object[key]) || "(empty)" };
+  return key === undefined ? undefined : { key, value: shown(object[key]) };
 }
 
 function RunAnswer({ run, check, telling, size, children }: { run?: Run; check?: Check; telling: string[]; size: string; children?: ReactNode }) {
@@ -113,7 +113,7 @@ function RunAnswer({ run, check, telling, size, children }: { run?: Run; check?:
               {Object.entries(object).map(([key, value]) => (
                 <div key={key} data-telling={telling.includes(key)}>
                   <dt>{key}</dt>
-                  <dd>{String(value) || "(empty)"}</dd>
+                  <dd>{shown(value)}</dd>
                 </div>
               ))}
             </dl>

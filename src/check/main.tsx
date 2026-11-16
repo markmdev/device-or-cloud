@@ -126,7 +126,8 @@ function App() {
       setRunning(undefined);
       return;
     }
-    // A second model judges the judged answers again, the check's own first, as far as its smaller free day goes. A later
+    // A second model judges the judged answers again, the check's own first, as far as it goes: its free day is smaller,
+    // and for days it answered nothing at all. No verdict reads it, so the record is made with what it has, and a later
     // run does the rest.
     try {
       const judged = FEATURES.filter((f) => f.graded);
@@ -143,7 +144,7 @@ function App() {
         }
       }
     } catch (e) {
-      if (!(e instanceof OutOfRequests)) throw e;
+      console.error("the second grader stopped:", String(e).slice(0, 200));
     } finally {
       setRunning(undefined);
     }
@@ -158,6 +159,8 @@ function App() {
       held,
       fixes,
     };
+    // The record takes the partial's place: the two together are more than a page may store.
+    sessionStorage.removeItem("partial");
     sessionStorage.setItem("record", JSON.stringify(record));
   }
 

@@ -104,3 +104,6 @@ export const money = (got: unknown, want: unknown) =>
 
 export const words = (s: string) => s.trim().split(/\s+/).filter(Boolean).length;
 export { fail, OK };
+
+/** A field's value as a person reads it: a nested object or a list as its JSON, anything else as it is. */
+export const shown = (value: unknown): string => (typeof value === "object" && value !== null ? JSON.stringify(value) : String(value)) || "(empty)";
