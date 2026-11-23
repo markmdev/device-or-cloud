@@ -17927,7 +17927,15 @@
       "seconds": 1.285045375,
       "text": "Your order from Larkfield is on its way! It left our warehouse at 16:20 and should arrive by Wednesday. You'll receive a text with a delivery slot in the morning."
      }
-    ]
+    ],
+    "second": {
+     "Your order shipped at 4:20 PM and is expected Wednesday; text with a delivery window will follow.": {
+      "ok": true
+     },
+     "Your order left our warehouse and will arrive on Wednesday; watch for a text on delivery morning with your one-hour slot.": {
+      "ok": true
+     }
+    }
    },
    "summary-held-2": {
     "device": [
@@ -17968,7 +17976,12 @@
       "seconds": 0.767067291,
       "text": "Your parcel from Larkfield was delivered at 09:48 and signed for by R. Evans."
      }
-    ]
+    ],
+    "second": {
+     "Your Larkfield order has been delivered; signed for at reception and left at the front desk.": {
+      "ok": true
+     }
+    }
    },
    "summary-held-3": {
     "device": [
@@ -18018,7 +18031,21 @@
       "text": "We're sorry to inform you that your wardrobe delivery from Larkfield is delayed. Your new delivery day is Tuesday 24 November.",
       "seconds": 0.978377667
      }
-    ]
+    ],
+    "second": {
+     "Your wardrobe delivery from Larkfield is delayed until Tuesday, November 24th due to port issues.": {
+      "ok": true
+     },
+     "Your wardrobe delivery is delayed due to port issues and is now rescheduled for Tuesday 24 November; no action is needed.": {
+      "ok": true
+     },
+     "Your wardrobe delivery from Larkfield has been rescheduled to Tuesday, 24 November, due to a port delay.": {
+      "ok": true
+     },
+     "Sorry for the delay, but your wardrobe will now be delivered on Tuesday, 24 November.": {
+      "ok": true
+     }
+    }
    },
    "summary-held-4": {
     "device": [
@@ -18075,7 +18102,28 @@
       "text": "We apologize for the delay. Please send us the correct code for your order today so the parcel can be delivered tomorrow.",
       "seconds": 0.876679375
      }
-    ]
+    ],
+    "second": {
+     "Incorrect entry code delayed your order; please update it now so delivery can resume tomorrow.": {
+      "ok": true
+     },
+     "Incorrect entry code delayed your delivery; please send the correct code so we can reschedule for tomorrow.": {
+      "ok": true
+     },
+     "Incorrect entry code delayed your delivery; please send the correct code today for redelivery tomorrow.": {
+      "ok": true
+     },
+     "The driver couldn't enter your building because the entry code was incorrect, so please reply with the correct code today for redelivery tomorrow.": {
+      "ok": true
+     },
+     "Your order is ready to be picked up from our warehouse tomorrow, but it can't leave until you send us the correct entry code.": {
+      "ok": false,
+      "reason": "Incorrectly states the order is ready for customer pickup from the warehouse."
+     },
+     "Please send us the correct entry code for the parcel to be delivered tomorrow.": {
+      "ok": true
+     }
+    }
    },
    "summary-held-5": {
     "device": [
@@ -18123,7 +18171,19 @@
       "text": "Your order from Larkfield, valued at $1,000, is delayed. Please contact our customer service for a redelivery.",
       "seconds": 0.860018
      }
-    ]
+    ],
+    "second": {
+     "Your Larkfield order (DEL ATT 1410) has been delayed; please arrange redelivery at Depot 5 within 5 days.": {
+      "ok": false,
+      "reason": "Misinterprets 'DEL ATT 1410' (attempted delivery time) as an order code and '5 DAYS' as 'Depot 5'."
+     },
+     "Your order from Larkfield is held at the depot - please arrange redelivery within 5 days.": {
+      "ok": true
+     },
+     "Delivery was attempted but the gate was locked, so your parcel is held at the depot for 5 days; please arrange redelivery.": {
+      "ok": true
+     }
+    }
    },
    "summary-held-6": {
     "device": [
@@ -18173,7 +18233,21 @@
       "seconds": 0.5470665,
       "text": "Your parcel has been handed to the local post office for delivery."
      }
-    ]
+    ],
+    "second": {
+     "Your parcel is now with the post office; expect delivery within two working days with your regular mail.": {
+      "ok": true
+     },
+     "Your parcel is being delivered to you via the post office within two days; no action needed.": {
+      "ok": true
+     },
+     "Your parcel is at the post office; expect delivery within 2 days via your regular mail.": {
+      "ok": true
+     },
+     "Your parcel has been transferred to your local post office for delivery with your normal post within two working days; no action is needed.": {
+      "ok": true
+     }
+    }
    },
    "summary-held-7": {
     "device": [
@@ -18235,7 +18309,32 @@
       "seconds": 0.604803458,
       "text": "Your second box has been found and will be delivered with the other two on Thursday."
      }
-    ]
+    ],
+    "second": {
+     "Your missing box from Larkfield has resurfaced and will be delivered Thursday with your other two boxes – no action needed!": {
+      "ok": true
+     },
+     "Your missing boxes from Larkfield have been located and will be delivered together on Thursday – no action needed!": {
+      "ok": false,
+      "reason": "Incorrectly states multiple boxes were missing when only one box went missing."
+     },
+     "Your missing Larkfield boxes have been located and will be delivered together on Thursday; no action needed!": {
+      "ok": false,
+      "reason": "Incorrectly states multiple boxes were missing rather than just one."
+     },
+     "Your missing box has been found, and all three boxes will now be delivered together this Thursday with no action needed from you.": {
+      "ok": true
+     },
+     "All three boxes are now on their way to you, so you can expect to receive them on Thursday.": {
+      "ok": true
+     },
+     "The second of your three boxes has been found and will now be delivered with the other two on Thursday.": {
+      "ok": true
+     },
+     "Your second box has been found and will be delivered with the other two on Thursday.": {
+      "ok": true
+     }
+    }
    },
    "summary-held-8": {
     "device": [
@@ -18282,7 +18381,18 @@
       "text": "Your mower is booked for Monday between 9 am and 1 pm. Please box it and have it ready at the front door.",
       "seconds": 0.79248375
      }
-    ]
+    ],
+    "second": {
+     "Faulty mower collection booked for Monday 9am-1pm; please box it and leave by the front door.": {
+      "ok": true
+     },
+     "Faulty mower collection booked for Monday 9am-1pm; please box and leave by your front door.": {
+      "ok": true
+     },
+     "Your faulty mower collection is booked for Monday between 9 am and 1 pm; please have it boxed and ready by the front door.": {
+      "ok": true
+     }
+    }
    },
    "summary-held-9": {
     "device": [
@@ -18335,7 +18445,24 @@
       "seconds": 0.913535917,
       "text": "Your order from Larkfield is out for delivery by 2:00 PM. Call 30 minutes before arrival to choose your room."
      }
-    ]
+    ],
+    "second": {
+     "Your order from Larkfield is out for delivery today by 2 men; please call 30 minutes before arrival to arrange delivery location.": {
+      "ok": false,
+      "reason": "Incorrectly tells the customer to call, whereas the note indicates the delivery crew will call the customer."
+     },
+     "Your order from Larkfield is out for delivery today by a 2-person crew; please call 30 minutes before arrival to arrange delivery.": {
+      "ok": false,
+      "reason": "Incorrectly instructs the customer to make the phone call instead of the delivery crew."
+     },
+     "Your order from Larkfield is out for delivery today with a 2-person crew; please call 30 minutes prior to arrival and specify a location.": {
+      "ok": false,
+      "reason": "Incorrectly tells the customer to call 30 minutes before arrival."
+     },
+     "Your order is out for delivery with a two-man crew who will call 30 minutes before arriving to place it in your room of choice.": {
+      "ok": true
+     }
+    }
    },
    "summary-held-10": {
     "device": [
@@ -18385,7 +18512,21 @@
       "text": "Delivery has been canceled today due to weather conditions. We will send a new date by email as soon as roads reopen.",
       "seconds": 0.708040417
      }
-    ]
+    ],
+    "second": {
+     "Delivery is delayed due to weather; a new delivery date will be emailed as soon as possible.": {
+      "ok": true
+     },
+     "Delivery is delayed today due to weather; we'll email you a new delivery date as soon as possible.": {
+      "ok": true
+     },
+     "Delivery is delayed today due to weather; we'll email a rescheduled date once roads reopen.": {
+      "ok": true
+     },
+     "Bad weather has delayed today's delivery in your area; your order is safe and we will email you a new date when roads reopen.": {
+      "ok": true
+     }
+    }
    }
   },
   "email_address": {
@@ -26259,6 +26400,12 @@
        "Larkfield 3 White & Blue Enamel Mugs - 350ml": {
         "ok": false,
         "reason": "Added 'Larkfield' which is not in the seller's notes."
+       },
+       "Larkfield Set of 3 White & Blue Enamel Mugs - 350ml": {
+        "ok": true
+       },
+       "Larkfield Enamel Mugs - 350ml (Set of 3)": {
+        "ok": true
        }
       }
      },
@@ -26278,6 +26425,17 @@
        }
       ],
       "grades": {
+       "Larkfield 6 Egg Cups Stoneware Pastel Assortment": {
+        "ok": true
+       },
+       "Larkfield 6 Egg Cups - Pastel Stoneware": {
+        "ok": true
+       },
+       "6 Egg Cups Stoneware Pastel Assorted Colours": {
+        "ok": true
+       }
+      },
+      "second": {
        "Larkfield 6 Egg Cups Stoneware Pastel Assortment": {
         "ok": true
        },
@@ -26322,6 +26480,17 @@
        "Natural solid beech door wedge 12 cm long": {
         "ok": true
        }
+      },
+      "second": {
+       "Solid Beech Door Wedge - 12cm Natural": {
+        "ok": true
+       },
+       "Beech Door Wedge - 12cm Natural Finish": {
+        "ok": true
+       },
+       "Natural solid beech door wedge 12 cm long": {
+        "ok": true
+       }
       }
      },
      "title-held-2": {
@@ -26355,6 +26524,18 @@
        "Sage green linen throw pillow cover 50x50cm": {
         "ok": true
        }
+      },
+      "second": {
+       "Larkfield Linen Throw Pillow Cover 50x50cm Sage Green": {
+        "ok": false,
+        "reason": "Adds the store name 'Larkfield' which was not in the seller's notes."
+       },
+       "Throw Pillow Cover Linen Sage Green 50x50cm": {
+        "ok": true
+       },
+       "Sage green linen throw pillow cover 50x50cm": {
+        "ok": true
+       }
       }
      },
      "title-held-3": {
@@ -26381,6 +26562,15 @@
       "grades": {
        "Larkfield Nesting Storage Tins - Cream, 3 Pack, 18cm": {
         "ok": true
+       },
+       "Cream enamel set of 3 nesting storage tins largest 18cm": {
+        "ok": true
+       }
+      },
+      "second": {
+       "Larkfield Nesting Storage Tins - Cream, 3 Pack, 18cm": {
+        "ok": false,
+        "reason": "Adds the store name 'Larkfield' which was not in the seller's notes."
        },
        "Cream enamel set of 3 nesting storage tins largest 18cm": {
         "ok": true
@@ -26421,6 +26611,21 @@
        "Green jute garden twine 100 m on wooden spool": {
         "ok": true
        }
+      },
+      "second": {
+       "Jute Garden Twine - 100m Green Wooden Spool": {
+        "ok": true
+       },
+       "Garden Twine: 100M Green Jute Spool": {
+        "ok": true
+       },
+       "Larkfield 100M Green Jute Garden Twine Spool": {
+        "ok": false,
+        "reason": "Adds the store name 'Larkfield' which was not in the seller's notes."
+       },
+       "Green jute garden twine 100 m on wooden spool": {
+        "ok": true
+       }
       }
      },
      "title-held-5": {
@@ -26457,6 +26662,22 @@
        "Charcoal Grey Rubber Backed Welcome Mat 45 x 75 cm": {
         "ok": true
        }
+      },
+      "second": {
+       "Charcoal Grey 45x75cm Rubber-Backed Welcome Mat": {
+        "ok": true
+       },
+       "Larkfield Charcoal Grey Welcome Mat 45x75cm": {
+        "ok": false,
+        "reason": "Adds the store name 'Larkfield' which was not in the seller's notes."
+       },
+       "Larkfield 45x75cm Charcoal Grey Rubber Mat": {
+        "ok": false,
+        "reason": "Adds the store name 'Larkfield' which was not in the seller's notes."
+       },
+       "Charcoal Grey Rubber Backed Welcome Mat 45 x 75 cm": {
+        "ok": true
+       }
       }
      },
      "title-held-6": {
@@ -26481,6 +26702,14 @@
        "tokensOut": 12
       },
       "grades": {
+       "Bookends - Cast Iron, Black, 15cm High - Pair": {
+        "ok": true
+       },
+       "Pair of black cast iron bookends 15cm high": {
+        "ok": true
+       }
+      },
+      "second": {
        "Bookends - Cast Iron, Black, 15cm High - Pair": {
         "ok": true
        },
@@ -26523,6 +26752,22 @@
        "White steel bread bin 33cm with bamboo lid": {
         "ok": true
        }
+      },
+      "second": {
+       "Larkfield Bread Bin Bamboo Lid White 33cm": {
+        "ok": false,
+        "reason": "Adds the store name 'Larkfield' which was not in the seller's notes."
+       },
+       "Larkfield Bread Bin - Bamboo Lid, White Steel, 33cm": {
+        "ok": false,
+        "reason": "Adds the store name 'Larkfield' which was not in the seller's notes."
+       },
+       "Bread Bin Bamboo Lid White Steel 33cm": {
+        "ok": true
+       },
+       "White steel bread bin 33cm with bamboo lid": {
+        "ok": true
+       }
       }
      },
      "title-held-8": {
@@ -26547,6 +26792,20 @@
        "tokensOut": 8
       },
       "grades": {
+       "Birch Spring Clothes Pegs - 12 Pack": {
+        "ok": true
+       },
+       "12 Birch Spring Clothes Pegs - Wooden": {
+        "ok": true
+       },
+       "12 Birch Wooden Spring Clothes Pegs": {
+        "ok": true
+       },
+       "12 Birch wooden clothes pegs with spring": {
+        "ok": true
+       }
+      },
+      "second": {
        "Birch Spring Clothes Pegs - 12 Pack": {
         "ok": true
        },
@@ -26596,6 +26855,20 @@
        "Amber glass 300 ml plant mister with brass pump": {
         "ok": true
        }
+      },
+      "second": {
+       "Amber Glass Plant Mister - 300ml, Brass Pump": {
+        "ok": true
+       },
+       "Amber Glass Plant Mister, 300 ml, Brass Pump": {
+        "ok": true
+       },
+       "Amber Glass Plant Mister - 300ml": {
+        "ok": true
+       },
+       "Amber glass 300 ml plant mister with brass pump": {
+        "ok": true
+       }
       }
      },
      "title-held-10": {
@@ -26623,6 +26896,17 @@
        "Organic Cotton Tea Towels - Blue Check (2)": {
         "ok": false,
         "reason": "Misses the size detail from the input notes."
+       },
+       "Blue Check Organic Cotton Tea Towels - 50x70cm (Pack of 2)": {
+        "ok": true
+       },
+       "Blue check organic cotton tea towel 50 x 70 cm pack of two": {
+        "ok": true
+       }
+      },
+      "second": {
+       "Organic Cotton Tea Towels - Blue Check (2)": {
+        "ok": true
        },
        "Blue Check Organic Cotton Tea Towels - 50x70cm (Pack of 2)": {
         "ok": true
@@ -26665,6 +26949,17 @@
        "Your Larkfield order is en route to Leeds depot and will be delivered Thursday, 8 AM - 6 PM; no signature required.": {
         "ok": true
        }
+      },
+      "second": {
+       "Your Larkfield order is en route to Leeds and will be delivered Thursday between 8 am and 6 pm; no signature required.": {
+        "ok": true
+       },
+       "Your Larkfield order has been shipped to Leeds and will be delivered Thursday between 8 am and 6 pm; no signature required.": {
+        "ok": true
+       },
+       "Your Larkfield order is en route to Leeds depot and will be delivered Thursday, 8 AM - 6 PM; no signature required.": {
+        "ok": true
+       }
       }
      },
      "summary-2": {
@@ -26688,6 +26983,19 @@
        },
        "Parcel delivered to your porch in Larkfield at 2:12 PM; photo attached for your reference.": {
         "ok": true
+       },
+       "Your Larkfield order from Larkfield was delivered to your porch today; a photo is attached for reference.": {
+        "ok": true
+       }
+      },
+      "second": {
+       "Order delivered to your porch in Larkfield today; photo attached for confirmation.": {
+        "ok": false,
+        "reason": "Incorrectly states 'in Larkfield' as the delivery location, which is not in the note."
+       },
+       "Parcel delivered to your porch in Larkfield at 2:12 PM; photo attached for your reference.": {
+        "ok": false,
+        "reason": "Incorrectly implies the porch is in Larkfield, inventing a location detail."
        },
        "Your Larkfield order from Larkfield was delivered to your porch today; a photo is attached for reference.": {
         "ok": true
@@ -26719,6 +27027,20 @@
        "Your order is splitting: two armchairs ship Monday, and a footstool will arrive separately with no extra cost.": {
         "ok": true
        }
+      },
+      "second": {
+       "Your Larkfield order has split; two armchairs ship Monday, and your footstool will arrive separately with no extra charge.": {
+        "ok": false,
+        "reason": "Incorrectly states armchairs ship Monday, whereas the note states they ship today and arrive Monday."
+       },
+       "Your Larkfield order is splitting: armchairs ship Monday, and the out-of-stock footstool will arrive shortly after, free of charge.": {
+        "ok": false,
+        "reason": "Incorrectly states armchairs ship Monday instead of leaving today to arrive Monday."
+       },
+       "Your order is splitting: two armchairs ship Monday, and a footstool will arrive separately with no extra cost.": {
+        "ok": false,
+        "reason": "Incorrectly states armchairs ship Monday when the note says they leave today and arrive Monday."
+       }
       }
      },
      "summary-4": {
@@ -26737,6 +27059,17 @@
        }
       ],
       "grades": {
+       "Your parcel from Larkfield was delivered to neighbour #14; a card was left explaining where it is.": {
+        "ok": true
+       },
+       "Your order from Larkfield was delivered to a neighbor at #14; a card was left explaining the delivery.": {
+        "ok": true
+       },
+       "Your parcel from Larkfield was delivered to neighbour #14; a card was left explaining the situation.": {
+        "ok": true
+       }
+      },
+      "second": {
        "Your parcel from Larkfield was delivered to neighbour #14; a card was left explaining where it is.": {
         "ok": true
        },
@@ -26774,6 +27107,18 @@
        "Your Larkfield order from Bristol is out for delivery today, expected between 1 pm and 3 pm – no action needed!": {
         "ok": true
        }
+      },
+      "second": {
+       "Your Larkfield order from Bristol is out for delivery today between 1 pm and 3 pm; tracking details are available online.": {
+        "ok": false,
+        "reason": "Invents the detail that tracking details are available online."
+       },
+       "Your Larkfield order from Bristol is out for delivery today between 1 pm and 3 pm; please await its arrival.": {
+        "ok": true
+       },
+       "Your Larkfield order from Bristol is out for delivery today, expected between 1 pm and 3 pm – no action needed!": {
+        "ok": true
+       }
       }
      },
      "summary-6": {
@@ -26792,6 +27137,17 @@
        }
       ],
       "grades": {
+       "Your Larkfield table was delivered and set up in your dining room; packaging was recycled, and no action is required.": {
+        "ok": true
+       },
+       "Your Larkfield table was delivered and assembled; packaging was recycled, and no further action is needed.": {
+        "ok": true
+       },
+       "Your Larkfield table is delivered and assembled; the packaging was recycled, no action needed.": {
+        "ok": true
+       }
+      },
+      "second": {
        "Your Larkfield table was delivered and set up in your dining room; packaging was recycled, and no action is required.": {
         "ok": true
        },
@@ -26828,6 +27184,17 @@
        "Your Larkfield return has been processed; your refund will arrive in 3-5 business days.": {
         "ok": true
        }
+      },
+      "second": {
+       "Your Larkfield return was received, inspected, and your refund is on its way, arriving in 3-5 days.": {
+        "ok": true
+       },
+       "Refund issued for your Larkfield order received; expect it in 3-5 business days.": {
+        "ok": true
+       },
+       "Your Larkfield return has been processed; your refund will arrive in 3-5 business days.": {
+        "ok": true
+       }
       }
      },
      "summary-8": {
@@ -26846,6 +27213,17 @@
        }
       ],
       "grades": {
+       "Your Larkfield order from Larkfield is now scheduled for Thursday, November 19th, 8 am-12 noon due to a vehicle issue.": {
+        "ok": true
+       },
+       "Your Larkfield order from Larkfield was impacted by a van breakdown; it's now rebooked for Thursday, November 19th, 8am-12pm.": {
+        "ok": true
+       },
+       "Your Larkfield order from Larkfield is now scheduled for delivery Thursday 19th, 8 am - 12 noon, due to a vehicle issue.": {
+        "ok": true
+       }
+      },
+      "second": {
        "Your Larkfield order from Larkfield is now scheduled for Thursday, November 19th, 8 am-12 noon due to a vehicle issue.": {
         "ok": true
        },
@@ -26882,6 +27260,18 @@
        "Your Larkfield order from Friday is delayed; expect delivery on Monday – no action needed.": {
         "ok": true
        }
+      },
+      "second": {
+       "Your Larkfield order from Friday is delayed and will arrive Monday; no action is needed.": {
+        "ok": false,
+        "reason": "Misinterprets Friday as when the order was placed/from rather than the original delivery day."
+       },
+       "Your Larkfield order from Friday is delayed; expect delivery on Monday due to a sorting issue at the hub.": {
+        "ok": true
+       },
+       "Your Larkfield order from Friday is delayed; expect delivery on Monday – no action needed.": {
+        "ok": true
+       }
       }
      },
      "summary-10": {
@@ -26905,6 +27295,19 @@
        },
        "Ferry closures delay your Larkfield order to Larkfield Island; expect shipment on Friday if weather permits.": {
         "ok": true
+       },
+       "Due to storm warnings, Larkfield orders to your island will ship Friday, pending weather conditions; no action needed.": {
+        "ok": true
+       }
+      },
+      "second": {
+       "Due to storm warnings, your Larkfield order to Larkfield Island will ship Friday, weather permitting; check updates for the latest arrival time.": {
+        "ok": false,
+        "reason": "Invents the location name 'Larkfield Island' and invents an instruction to check updates."
+       },
+       "Ferry closures delay your Larkfield order to Larkfield Island; expect shipment on Friday if weather permits.": {
+        "ok": false,
+        "reason": "Invents the location name 'Larkfield Island'."
        },
        "Due to storm warnings, Larkfield orders to your island will ship Friday, pending weather conditions; no action needed.": {
         "ok": true
@@ -26937,6 +27340,18 @@
         "ok": false,
         "reason": "Invents the detail that the mattress is from Wiltshire, which is not in the input."
        }
+      },
+      "second": {
+       "Your Larkfield mattress from November 12th will arrive at our warehouse November 20th and be delivered November 23rd.": {
+        "ok": true
+       },
+       "Your Larkfield mattress will arrive at our warehouse Nov 20th and be delivered to you on Nov 23rd; no action needed.": {
+        "ok": true
+       },
+       "Your Larkfield mattress from Wiltshire is delayed; expecting delivery on November 23rd due to manufacturing delays impacting dispatch date.": {
+        "ok": false,
+        "reason": "Invents that the mattress is from Wiltshire."
+       }
       }
      },
      "summary-12": {
@@ -26964,6 +27379,17 @@
        "Your Larkfield order from Larkfield will arrive Saturday morning; please check for delivery then, as today's date was incorrect.": {
         "ok": true
        }
+      },
+      "second": {
+       "Your Larkfield order from Larkfield will arrive Saturday morning; the driver's schedule is for Saturday deliveries in your area.": {
+        "ok": true
+       },
+       "Your Larkfield order from Larkfield will arrive Saturday morning; the driver's schedule covers your area then.": {
+        "ok": true
+       },
+       "Your Larkfield order from Larkfield will arrive Saturday morning; please check for delivery then, as today's date was incorrect.": {
+        "ok": true
+       }
       }
      },
      "summary-13": {
@@ -26982,6 +27408,17 @@
        }
       ],
       "grades": {
+       "Your Larkfield order from Larkfield is cleared for delivery and will arrive Wednesday; no action needed.": {
+        "ok": true
+       },
+       "Your Larkfield order from Larkfield is now cleared by customs and will arrive Wednesday (originally Monday).": {
+        "ok": true
+       },
+       "Your Larkfield order from Larkfield is now expected Wednesday after a brief customs hold; delivery will resume.": {
+        "ok": true
+       }
+      },
+      "second": {
        "Your Larkfield order from Larkfield is cleared for delivery and will arrive Wednesday; no action needed.": {
         "ok": true
        },
@@ -27019,6 +27456,18 @@
        "Delivery attempted from Larkfield at 9:15; parcel returned to depot – please book a new delivery within 5 days via the tracking page.": {
         "ok": true
        }
+      },
+      "second": {
+       "Your Larkfield order from the depot was returned; please book a new delivery within 5 days on the tracking page to avoid return to Larkfield.": {
+        "ok": false,
+        "reason": "Incorrectly states the order was returned from the depot rather than to the depot."
+       },
+       "Your Larkfield order from 9:15 was returned to the depot; please reschedule delivery within 5 days on the tracking page.": {
+        "ok": true
+       },
+       "Delivery attempted from Larkfield at 9:15; parcel returned to depot – please book a new delivery within 5 days via the tracking page.": {
+        "ok": true
+       }
       }
      },
      "summary-15": {
@@ -27043,6 +27492,14 @@
        "Your Larkfield order is ready for pickup at Corner Stores on Mill Lane; bring your collection code and ID by Friday, November 20th.": {
         "ok": true
        }
+      },
+      "second": {
+       "Pickup your Larkfield order at Corner Stores on Mill Lane by Friday, presenting your collection code and photo ID.": {
+        "ok": true
+       },
+       "Your Larkfield order is ready for pickup at Corner Stores on Mill Lane; bring your collection code and ID by Friday, November 20th.": {
+        "ok": true
+       }
       }
      },
      "summary-16": {
@@ -27061,6 +27518,17 @@
        }
       ],
       "grades": {
+       "Unable to deliver to 12 Meadow Way, Larkfield; please confirm your address or provide a landmark for redelivery.": {
+        "ok": true
+       },
+       "Please confirm your delivery address on 12 Meadow Way, as the driver couldn't locate a corresponding house number for your Larkfield order.": {
+        "ok": true
+       },
+       "Larkfield order delayed: address not found at 12 Meadow Way; please confirm your correct house number or a landmark.": {
+        "ok": true
+       }
+      },
+      "second": {
        "Unable to deliver to 12 Meadow Way, Larkfield; please confirm your address or provide a landmark for redelivery.": {
         "ok": true
        },
@@ -27097,6 +27565,18 @@
        "Larkfield sofa delivery requires a larger van and a recipient at home; please call the delivery team to schedule.": {
         "ok": true
        }
+      },
+      "second": {
+       "A larger van is needed to deliver your Larkfield sofa; please call the delivery team to schedule a convenient time.": {
+        "ok": false,
+        "reason": "Omits the note's requirement that someone must be at home for the delivery."
+       },
+       "Delivery of your Larkfield sofa requires a larger vehicle and a homeowner to be available; please contact the delivery team to reschedule.": {
+        "ok": true
+       },
+       "Larkfield sofa delivery requires a larger van and a recipient at home; please call the delivery team to schedule.": {
+        "ok": true
+       }
       }
      },
      "summary-18": {
@@ -27124,6 +27604,19 @@
        "Your Larkfield order is delayed; one box was damaged, and the other ships tomorrow – please confirm replacement or refund preference.": {
         "ok": true
        }
+      },
+      "second": {
+       "Your Larkfield order has arrived with a damaged box; we'll deliver the other tomorrow - please confirm replacement or refund.": {
+        "ok": true
+       },
+       "Your Larkfield order has a damaged box at the depot; the other will ship tomorrow – please advise on a replacement or refund.": {
+        "ok": false,
+        "reason": "Note states the other box will be delivered tomorrow, not shipped tomorrow."
+       },
+       "Your Larkfield order is delayed; one box was damaged, and the other ships tomorrow – please confirm replacement or refund preference.": {
+        "ok": false,
+        "reason": "Note states the other box will be delivered tomorrow, not shipped tomorrow."
+       }
       }
      },
      "summary-19": {
@@ -27142,6 +27635,17 @@
        }
       ],
       "grades": {
+       "Signature required for your Larkfield garden tool order; please ensure an adult is home Tuesday 10 am-2 pm to receive delivery.": {
+        "ok": true
+       },
+       "Signature required for your Larkfield garden tools parcel; please ensure someone 18+ is home Tuesday 10am-2pm.": {
+        "ok": true
+       },
+       "Signature required for garden tools from Larkfield; please ensure someone 18+ is home Tuesday 10 am-2 pm.": {
+        "ok": true
+       }
+      },
+      "second": {
        "Signature required for your Larkfield garden tool order; please ensure an adult is home Tuesday 10 am-2 pm to receive delivery.": {
         "ok": true
        },
@@ -27180,6 +27684,20 @@
         "ok": false,
         "reason": "Hallucinated 'from ATT' and added an extra requirement not present in the note."
        }
+      },
+      "second": {
+       "Your Larkfield order from ADEL was attempted; a card was left for redelivery tomorrow.": {
+        "ok": false,
+        "reason": "Misinterprets the attempted delivery acronym 'ATT DEL' as a location name 'ADEL'."
+       },
+       "Your Larkfield order (ATT DEL 0915) was left due to no answer; redelivery is scheduled for tomorrow.": {
+        "ok": false,
+        "reason": "States the order was left rather than that a card was left after an attempted delivery."
+       },
+       "Your Larkfield order from ATT was left at the depot; redelivery will occur next business day, please ensure someone is available.": {
+        "ok": false,
+        "reason": "Misinterprets the acronym 'ATT' as a location name."
+       }
       }
      },
      "summary-21": {
@@ -27198,6 +27716,17 @@
        }
       ],
       "grades": {
+       "Your Larkfield order is secured in a safe location (shed) as per your instructions; a photo was taken for confirmation.": {
+        "ok": true
+       },
+       "Your Larkfield order has been safely delivered to your shed (as per your instructions); a photo was taken for confirmation.": {
+        "ok": true
+       },
+       "Your order from Larkfield has been safely placed in the shed at 1632, as per your instructions, and a photo was taken as confirmation.": {
+        "ok": true
+       }
+      },
+      "second": {
        "Your Larkfield order is secured in a safe location (shed) as per your instructions; a photo was taken for confirmation.": {
         "ok": true
        },
@@ -27228,6 +27757,11 @@
        "Your Larkfield order (PCL DMG) encountered transit damage and is being replaced; no action needed.": {
         "ok": true
        }
+      },
+      "second": {
+       "Your Larkfield order (PCL DMG) encountered transit damage and is being replaced; no action needed.": {
+        "ok": true
+       }
       }
      },
      "summary-23": {
@@ -27249,6 +27783,18 @@
        "Your Larkfield order from London is out for delivery today between 1:00 PM - 3:00 PM; please sign for the package.": {
         "ok": false,
         "reason": "Hallucinated 'from London' which is not in the source note."
+       },
+       "Your Larkfield order is out for delivery today between 1:00 PM - 3:00 PM; please have someone sign for it.": {
+        "ok": true
+       },
+       "Your Larkfield order is out for delivery today between 1 PM and 3 PM; a signature is required upon arrival.": {
+        "ok": true
+       }
+      },
+      "second": {
+       "Your Larkfield order from London is out for delivery today between 1:00 PM - 3:00 PM; please sign for the package.": {
+        "ok": false,
+        "reason": "Invents that the order is coming from London."
        },
        "Your Larkfield order is out for delivery today between 1:00 PM - 3:00 PM; please have someone sign for it.": {
         "ok": true
@@ -27284,6 +27830,18 @@
         "ok": false,
         "reason": "Incorrectly states 'we'll reship in 3 days', whereas the note says it will be returned (RTS) after 3 days."
        }
+      },
+      "second": {
+       "We're awaiting your contact regarding your Larkfield order (no such address on record) before it's returned after 3 days.": {
+        "ok": true
+       },
+       "We're awaiting a contact from you regarding your Larkfield order, which is currently held and will be returned after 3 days.": {
+        "ok": true
+       },
+       "Your Larkfield order is awaiting customer contact due to an address query; we'll reship in 3 days after that.": {
+        "ok": false,
+        "reason": "Falsely claims the order will be reshipped, when RTS means return to sender."
+       }
       }
      },
      "summary-25": {
@@ -27309,6 +27867,16 @@
        "Your Larkfield order from our hub is en route to Larkfield, arriving November 16th; no action needed.": {
         "ok": false,
         "reason": "Incorrectly states the order is en route to Larkfield when Larkfield is the shop/sender location."
+       }
+      },
+      "second": {
+       "Your Larkfield order from 1105 is in transit to our hub and expected by November 16th; no action needed.": {
+        "ok": false,
+        "reason": "Misinterprets the timestamp 1105 as an origin location."
+       },
+       "Your Larkfield order from our hub is en route to Larkfield, arriving November 16th; no action needed.": {
+        "ok": false,
+        "reason": "Incorrectly states the parcel is traveling from the hub to Larkfield rather than from sender to hub."
        }
       }
      },
@@ -27339,6 +27907,20 @@
         "ok": false,
         "reason": "It claims the order is out for delivery today, which contradicts the input stating delivery is on Tuesday."
        }
+      },
+      "second": {
+       "Your Larkfield order from Glasgow is out for delivery today/tomorrow; no action needed, expect it Tuesday.": {
+        "ok": false,
+        "reason": "Claims the order is from Glasgow and out for delivery today/tomorrow, misrepresenting the note."
+       },
+       "Your Larkfield order from Glasgow is on its way, arriving Tuesday; no action needed!": {
+        "ok": false,
+        "reason": "States the order is coming from Glasgow rather than heading to the Glasgow depot."
+       },
+       "Your Larkfield order from Glasgow is out for delivery today and will arrive on Tuesday; no action needed.": {
+        "ok": false,
+        "reason": "Incorrectly states the order is from Glasgow and is out for delivery today."
+       }
       }
      },
      "summary-27": {
@@ -27357,6 +27939,17 @@
        }
       ],
       "grades": {
+       "Your Larkfield order from Larkfield was delivered at 8:55 AM to your building's concierge; no action needed.": {
+        "ok": true
+       },
+       "Your Larkfield order from Larkfield was delivered today at your building's concierge; no action is required.": {
+        "ok": true
+       },
+       "Your Larkfield order from Larkfield was delivered to your building concierge; no action needed.": {
+        "ok": true
+       }
+      },
+      "second": {
        "Your Larkfield order from Larkfield was delivered at 8:55 AM to your building's concierge; no action needed.": {
         "ok": true
        },
@@ -27394,6 +27987,18 @@
         "ok": false,
         "reason": "It confuses the arrival day with the word 'Wednesday' from the bed frame delivery date, making it illogical."
        }
+      },
+      "second": {
+       "Your Larkfield order from Larkfield is arriving in two parts: the bed frame arrives Wednesday, and the mattress will ship in two weeks.": {
+        "ok": true
+       },
+       "Your Larkfield order from Larkfield is shipping in two parts: the bed frame arrives Wednesday, and the mattress in two weeks.": {
+        "ok": true
+       },
+       "Your Larkfield order from Wednesday includes the bed frame; the mattress will ship in approximately two weeks.": {
+        "ok": false,
+        "reason": "Incorrectly states the order was from Wednesday instead of saying the bed frame arrives on Wednesday."
+       }
       }
      },
      "summary-29": {
@@ -27415,6 +28020,18 @@
        "Parcel delivered to your garage at Larkfield (15:20); photo available on your order page.": {
         "ok": false,
         "reason": "It invents 'at Larkfield' as a location when Larkfield is the shop name, and the actual location was the garage."
+       },
+       "Parcel delivered to your garage at 3:20 PM; photo attached to your order page for confirmation.": {
+        "ok": true
+       },
+       "Your Larkfield order was delivered to your garage at 3:20 PM; a photo is available on your order page.": {
+        "ok": true
+       }
+      },
+      "second": {
+       "Parcel delivered to your garage at Larkfield (15:20); photo available on your order page.": {
+        "ok": false,
+        "reason": "Incorrectly implies 'Larkfield' is the location of your garage rather than the shop name."
        },
        "Parcel delivered to your garage at 3:20 PM; photo attached to your order page for confirmation.": {
         "ok": true
@@ -27449,6 +28066,20 @@
        "Your Larkfield order from Norwich is out for delivery today, expected between 10 am and midday.": {
         "ok": true
        }
+      },
+      "second": {
+       "Your Larkfield order from Norwich has been loaded for delivery today between 10 am and midday; expect it soon!": {
+        "ok": false,
+        "reason": "Falsely claims the order is 'from Norwich' rather than passing through the Norwich depot."
+       },
+       "Your Larkfield order from Norwich is out for delivery today, arriving between 10 am and midday.": {
+        "ok": false,
+        "reason": "Incorrectly states the order is 'from Norwich' instead of noting it passed through the Norwich depot."
+       },
+       "Your Larkfield order from Norwich is out for delivery today, expected between 10 am and midday.": {
+        "ok": false,
+        "reason": "Falsely describes the order as being 'from Norwich'."
+       }
       }
      },
      "summary-31": {
@@ -27476,6 +28107,20 @@
        "Wardrobe installed at your Larkfield address (13:30); please enjoy your new furniture!": {
         "ok": true
        }
+      },
+      "second": {
+       "Wardrobe installed at 1:30 PM at your Larkfield address; no action required, enjoy your new furniture!": {
+        "ok": false,
+        "reason": "Mistakenly refers to 'your Larkfield address', misinterpreting the store name as the customer's location."
+       },
+       "Wardrobe installed at your Larkfield address today at 1:30 PM; please check everything is to your satisfaction.": {
+        "ok": false,
+        "reason": "Incorrectly refers to 'your Larkfield address' and invents a request to check the furniture."
+       },
+       "Wardrobe installed at your Larkfield address (13:30); please enjoy your new furniture!": {
+        "ok": false,
+        "reason": "Falsely refers to 'your Larkfield address' treating Larkfield as the customer's location."
+       }
       }
      },
      "summary-32": {
@@ -27494,6 +28139,17 @@
        }
       ],
       "grades": {
+       "Replacement Larkfield lamp shade shipped via First Class Post; expect delivery within two days; you can discard the damaged one.": {
+        "ok": true
+       },
+       "Larkfield sent your replacement lamp shade via first class; expect delivery within two days, and you can dispose of the old one.": {
+        "ok": true
+       },
+       "Replacement Larkfield lamp shade shipped via First Class - arrive in 2 days; you can discard the damaged shade.": {
+        "ok": true
+       }
+      },
+      "second": {
        "Replacement Larkfield lamp shade shipped via First Class Post; expect delivery within two days; you can discard the damaged one.": {
         "ok": true
        },
@@ -27531,6 +28187,18 @@
        "Your sofa delivery from Larkfield is delayed to November 30th due to fabric issues; we'll call the day before.": {
         "ok": true
        }
+      },
+      "second": {
+       "Your Larkfield sofa delivery from London is now Monday, November 30th; we'll call the day before to confirm.": {
+        "ok": false,
+        "reason": "Invents the detail that the delivery is 'from London', which is not in the note."
+       },
+       "Your Larkfield sofa delivery is now Monday, November 30th; we'll call the day before to confirm.": {
+        "ok": true
+       },
+       "Your sofa delivery from Larkfield is delayed to November 30th due to fabric issues; we'll call the day before.": {
+        "ok": true
+       }
       }
      },
      "summary-34": {
@@ -27556,6 +28224,14 @@
        "Your Larkfield order from Larkfield is delayed; it's now out for delivery today, Friday.": {
         "ok": true
        }
+      },
+      "second": {
+       "Your Larkfield order from Larkfield is delayed due to yesterday's power outage but will ship today, Friday.": {
+        "ok": true
+       },
+       "Your Larkfield order from Larkfield is delayed; it's now out for delivery today, Friday.": {
+        "ok": true
+       }
       }
      },
      "summary-35": {
@@ -27577,6 +28253,18 @@
        "Your Larkfield order from Monday will arrive, as weekend deliveries are not available in your Larkfield area.": {
         "ok": false,
         "reason": "It hallucinates that the order is 'from Monday', which is incorrect."
+       },
+       "Your Larkfield order from Larkfield will now arrive on Monday due to a weekday-only delivery schedule in your area.": {
+        "ok": true
+       },
+       "Your Larkfield order from Larkfield will now arrive Monday due to a weekday-only delivery schedule in your area.": {
+        "ok": true
+       }
+      },
+      "second": {
+       "Your Larkfield order from Monday will arrive, as weekend deliveries are not available in your Larkfield area.": {
+        "ok": false,
+        "reason": "Falsely states 'order from Monday' and misidentifies Larkfield as the customer's area."
        },
        "Your Larkfield order from Larkfield will now arrive on Monday due to a weekday-only delivery schedule in your area.": {
         "ok": true
@@ -27611,6 +28299,20 @@
        "Due to snow, your Larkfield order from Larkfield will be delivered Thursday; please check back then.": {
         "ok": true
        }
+      },
+      "second": {
+       "Due to snow, your Larkfield order to your village is delayed until Thursday; we'll notify you of updates.": {
+        "ok": false,
+        "reason": "It invents the promise that updates will be sent to the customer."
+       },
+       "Due to snow closures, your Larkfield order from Tuesday is delayed until Thursday; we'll update you then.": {
+        "ok": false,
+        "reason": "It invents the promise that an update will be provided on Thursday."
+       },
+       "Due to snow, your Larkfield order from Larkfield will be delivered Thursday; please check back then.": {
+        "ok": false,
+        "reason": "It invents an instruction telling the customer to check back on Thursday."
+       }
       }
      },
      "summary-37": {
@@ -27632,6 +28334,11 @@
        "Your Larkfield order from November 18th has a delayed item replacement; expect shipment on November 25th, no action needed.": {
         "ok": true
        }
+      },
+      "second": {
+       "Your Larkfield order from November 18th has a delayed item replacement; expect shipment on November 25th, no action needed.": {
+        "ok": true
+       }
       }
      },
      "summary-38": {
@@ -27650,6 +28357,17 @@
        }
       ],
       "grades": {
+       "Due to a depot error, your Larkfield order from Larkfield will now arrive tomorrow; no action is needed.": {
+        "ok": true
+       },
+       "Your Larkfield order from Larkfield is temporarily delayed due to a depot mix-up; expect delivery tomorrow.": {
+        "ok": true
+       },
+       "Due to a misrouted parcel at a depot, your Larkfield order will arrive tomorrow; no action needed.": {
+        "ok": true
+       }
+      },
+      "second": {
        "Due to a depot error, your Larkfield order from Larkfield will now arrive tomorrow; no action is needed.": {
         "ok": true
        },
@@ -27689,6 +28407,17 @@
         "ok": false,
         "reason": "Incorrectly states the order is 'from' Elm Road post office."
        }
+      },
+      "second": {
+       "Your Larkfield order from Elm Road post office requires a signature; collect it with ID within 7 days.": {
+        "ok": true
+       },
+       "Your Larkfield order from Elm Road post office requires a signature; collect it within 7 days with ID.": {
+        "ok": true
+       },
+       "Your Larkfield order from Elm Road post office requires a signature; collect it within 7 days with valid ID.": {
+        "ok": true
+       }
       }
      },
      "summary-40": {
@@ -27707,6 +28436,17 @@
        }
       ],
       "grades": {
+       "Your Larkfield order from Larkfield is ready for delivery; please provide a phone number on your order page by 6 pm today to avoid delays.": {
+        "ok": true
+       },
+       "Your Larkfield order from Larkfield is ready, please add a phone number to your order page by 6 pm today to avoid rescheduling.": {
+        "ok": true
+       },
+       "Your Larkfield order is ready for delivery; please add a phone number to your order page by 6 pm today to prevent rescheduling.": {
+        "ok": true
+       }
+      },
+      "second": {
        "Your Larkfield order from Larkfield is ready for delivery; please provide a phone number on your order page by 6 pm today to avoid delays.": {
         "ok": true
        },
@@ -27737,6 +28477,11 @@
        "Building lift is out of order; please contact us when repairs are scheduled to reschedule your washing machine delivery from Larkfield.": {
         "ok": true
        }
+      },
+      "second": {
+       "Building lift is out of order; please contact us when repairs are scheduled to reschedule your washing machine delivery from Larkfield.": {
+        "ok": true
+       }
       }
      },
      "summary-42": {
@@ -27755,6 +28500,17 @@
        }
       ],
       "grades": {
+       "Fridge freezer arrives Thursday morning; please prepare your old fridge by emptying and switching off the night before.": {
+        "ok": true
+       },
+       "Fridge freezer arriving Thursday; please empty your old unit the night before for removal.": {
+        "ok": true
+       },
+       "Fridge freezer arriving Thursday: please empty your old unit the night before for removal by our team.": {
+        "ok": true
+       }
+      },
+      "second": {
        "Fridge freezer arrives Thursday morning; please prepare your old fridge by emptying and switching off the night before.": {
         "ok": true
        },
@@ -27794,6 +28550,20 @@
         "ok": false,
         "reason": "Adds an incorrect location detail ('London') not in the input."
        }
+      },
+      "second": {
+       "Please pay a £18.40 customs charge (link in courier text) within 10 days to release your Larkfield order from Larkfield, UK.": {
+        "ok": false,
+        "reason": "Invents the location detail 'UK' which was not in the original note."
+       },
+       "Please pay a £18.40 customs charge via the courier's text link within 10 days to release your Larkfield parcel from Larkfield, UK.": {
+        "ok": false,
+        "reason": "Invents the location detail 'UK' which was not specified in the note."
+       },
+       "Please pay a £18.40 customs charge via the courier's text link within 10 days to release your Larkfield order from London.": {
+        "ok": false,
+        "reason": "Invents the location 'London' which is not mentioned in the note."
+       }
       }
      },
      "summary-44": {
@@ -27817,6 +28587,18 @@
        },
        "Your heavy Larkfield order from Larkfield will require assistance upon delivery Friday; please have someone home or select kerbside pickup.": {
         "ok": true
+       },
+       "Heavy Larkfield parcel requires someone home Friday to assist the driver; or select kerbside delivery via tracking.": {
+        "ok": true
+       }
+      },
+      "second": {
+       "Larkfield order requires assistance; please ensure someone is home Friday to help with delivery, or select kerbside delivery online.": {
+        "ok": true
+       },
+       "Your heavy Larkfield order from Larkfield will require assistance upon delivery Friday; please have someone home or select kerbside pickup.": {
+        "ok": false,
+        "reason": "Incorrectly changes 'kerbside delivery' to 'kerbside pickup', changing the meaning."
        },
        "Heavy Larkfield parcel requires someone home Friday to assist the driver; or select kerbside delivery via tracking.": {
         "ok": true
@@ -27845,6 +28627,16 @@
        "A card was left by neighbor #7 for your Larkfield order (DEL 1042); please check your mailbox.": {
         "ok": false,
         "reason": "The sentence invents that the neighbor left the card and tells the customer to check their mailbox, which is not in the note."
+       }
+      },
+      "second": {
+       "Your Larkfield order (DEL 1042) was signed for by neighbour #7; please check your doorstep for the card.": {
+        "ok": false,
+        "reason": "Invents the specific instruction to check the doorstep, which was not in the note."
+       },
+       "A card was left by neighbor #7 for your Larkfield order (DEL 1042); please check your mailbox.": {
+        "ok": false,
+        "reason": "Incorrectly states the card was left by the neighbor and invents checking the mailbox."
        }
       }
      },
@@ -27876,6 +28668,19 @@
         "ok": false,
         "reason": "The note states a second attempt is tomorrow morning, but the answer claims rescheduling is pending."
        }
+      },
+      "second": {
+       "Courier missed delivery from Larkfield (ATT DEL 1425); reschedule for tomorrow morning.": {
+        "ok": false,
+        "reason": "Tells the customer to reschedule, whereas the note states the courier will make a second attempt tomorrow morning."
+       },
+       "Courier visit delayed for Larkfield order (ATT DEL 1425); reschedule appointment for tomorrow morning.": {
+        "ok": false,
+        "reason": "Instructs the customer to reschedule an appointment, which is not mentioned in the note."
+       },
+       "Your Larkfield order (ATT DEL 1425) delivery attempted today is delayed; rescheduling for tomorrow morning is pending.": {
+        "ok": true
+       }
       }
      },
      "summary-47": {
@@ -27900,6 +28705,16 @@
        },
        "Your Larkfield order from Pickup Point (Post Office High St) has been held for 10 days; please bring ID to retrieve it.": {
         "ok": true
+       }
+      },
+      "second": {
+       "Your Larkfield order from Post Office High St has been held for 10 days; please pick it up with valid ID.": {
+        "ok": false,
+        "reason": "Incorrectly states the order has already been held for 10 days rather than being held for a 10-day period."
+       },
+       "Your Larkfield order from Pickup Point (Post Office High St) has been held for 10 days; please bring ID to retrieve it.": {
+        "ok": false,
+        "reason": "Incorrectly states the order has already been held for 10 days instead of specifying the 10-day pickup window."
        }
       }
      },
@@ -27930,6 +28745,19 @@
         "ok": false,
         "reason": "The sentence hallucinates 'London' as the hub location, which is not in the input."
        }
+      },
+      "second": {
+       "Your Larkfield order from our hub is delayed due to weather; expect updated delivery information by November 21st.": {
+        "ok": false,
+        "reason": "Claims updated delivery information is expected by November 21st, whereas November 21st is the new delivery ETA itself."
+       },
+       "Your Larkfield order from the hub is delayed due to weather; expect delivery around November 21st.": {
+        "ok": true
+       },
+       "Your Larkfield order from London is delayed due to weather; expect delivery by November 21st.": {
+        "ok": false,
+        "reason": "Invents that the order is from London, which is not stated in the note."
+       }
       }
      },
      "summary-49": {
@@ -27953,6 +28781,16 @@
        },
        "Your Larkfield order (Part 1 of 3) has shipped; the remaining two boxes will follow tomorrow.": {
         "ok": true
+       }
+      },
+      "second": {
+       "Your Larkfield order is partially shipped; two more boxes are expected tomorrow; please await delivery.": {
+        "ok": false,
+        "reason": "Incorrectly states the order is partially shipped rather than partially delivered."
+       },
+       "Your Larkfield order (Part 1 of 3) has shipped; the remaining two boxes will follow tomorrow.": {
+        "ok": false,
+        "reason": "Incorrectly states the first box has shipped instead of noting it was delivered."
        }
       }
      },
@@ -27982,6 +28820,20 @@
        "Your Larkfield order was refused at doorstep 0930; please contact customer service to arrange redelivery.": {
         "ok": false,
         "reason": "The sentence awkwardly places 'doorstep 0930' as the location."
+       }
+      },
+      "second": {
+       "Your Larkfield order was refused at the door; please contact customer service to arrange redelivery.": {
+        "ok": false,
+        "reason": "Invents a customer action to contact customer service for redelivery when the item is marked Return to Sender (RTS)."
+       },
+       "Your Larkfield order from 0930 was refused at the doorstep; please contact customer service to arrange redelivery.": {
+        "ok": false,
+        "reason": "Misinterprets 0930 as an order detail and invents customer instructions not present in the note."
+       },
+       "Your Larkfield order was refused at doorstep 0930; please contact customer service to arrange redelivery.": {
+        "ok": false,
+        "reason": "Misinterprets the delivery time 0930 as a doorstep identifier and invents instructions to contact customer service."
        }
       }
      }
@@ -28021,6 +28873,22 @@
        "Your Larkfield order left our warehouse at 16:20, will arrive on Wednesday, and you will receive a morning text with a delivery slot.": {
         "ok": true
        }
+      },
+      "second": {
+       "Your Larkfield order from 16:20 is with the courier and expected Wednesday; text will provide a delivery window.": {
+        "ok": true
+       },
+       "Your Larkfield order from Wednesday shipped with the courier; expect a delivery notification text with a morning slot.": {
+        "ok": false,
+        "reason": "Misstates Wednesday as the order date rather than the expected delivery date."
+       },
+       "Your Larkfield order from Wednesday has shipped and is en route; expect a delivery text with a morning slot.": {
+        "ok": false,
+        "reason": "Incorrectly states Wednesday as the order date instead of the expected delivery date."
+       },
+       "Your Larkfield order left our warehouse at 16:20, will arrive on Wednesday, and you will receive a morning text with a delivery slot.": {
+        "ok": true
+       }
       }
      },
      "summary-held-2": {
@@ -28048,6 +28916,11 @@
        "Your Larkfield order from Larkfield was delivered to the reception desk at 09:48; please collect it at your convenience.": {
         "ok": true
        }
+      },
+      "second": {
+       "Your Larkfield order from Larkfield was delivered to the reception desk at 09:48; please collect it at your convenience.": {
+        "ok": true
+       }
       }
      },
      "summary-held-3": {
@@ -28072,6 +28945,20 @@
        "tokensOut": 27
       },
       "grades": {
+       "Your wardrobe delivery from Larkfield is delayed; it's now scheduled for Tuesday, November 24th.": {
+        "ok": true
+       },
+       "Your wardrobe delivery from Larkfield has been delayed; it's now scheduled for Tuesday, November 24th.": {
+        "ok": true
+       },
+       "Due to a port delay, your Larkfield wardrobe delivery is now scheduled for Tuesday, November 24th.": {
+        "ok": true
+       },
+       "Your wardrobe delivery is rescheduled to Tuesday 24 November because the transport lorry was delayed at the port, and no action is required.": {
+        "ok": true
+       }
+      },
+      "second": {
        "Your wardrobe delivery from Larkfield is delayed; it's now scheduled for Tuesday, November 24th.": {
         "ok": true
        },
@@ -28118,6 +29005,17 @@
        "Your parcel couldn't be delivered today because the entry code was incorrect; please reply with the correct code so we can try again tomorrow.": {
         "ok": true
        }
+      },
+      "second": {
+       "Please update your entry code for your Larkfield order so our courier can deliver it tomorrow from Larkfield.": {
+        "ok": true
+       },
+       "Incorrect entry code delayed your Larkfield order; please send the correct code to reschedule delivery tomorrow.": {
+        "ok": true
+       },
+       "Your parcel couldn't be delivered today because the entry code was incorrect; please reply with the correct code so we can try again tomorrow.": {
+        "ok": true
+       }
       }
      },
      "summary-held-5": {
@@ -28145,6 +29043,11 @@
        "Delivery failed because the gate was locked, so your parcel is held at the depot for 5 days; please arrange redelivery.": {
         "ok": true
        }
+      },
+      "second": {
+       "Delivery failed because the gate was locked, so your parcel is held at the depot for 5 days; please arrange redelivery.": {
+        "ok": true
+       }
       }
      },
      "summary-held-6": {
@@ -28169,6 +29072,17 @@
        "tokensOut": 26
       },
       "grades": {
+       "Your Larkfield parcel is held at the local post office and will be delivered within two working days – check your regular mail!": {
+        "ok": true
+       },
+       "Your Larkfield order is at your local post office and will be delivered within two days; expect it with your regular mail.": {
+        "ok": true
+       },
+       "Your parcel has been transferred to your local post office for delivery with your normal post within two working days; no action is needed.": {
+        "ok": true
+       }
+      },
+      "second": {
        "Your Larkfield parcel is held at the local post office and will be delivered within two working days – check your regular mail!": {
         "ok": true
        },
@@ -28217,6 +29131,21 @@
        "Your missing second box was found, so all three boxes will now be delivered together on Thursday.": {
         "ok": true
        }
+      },
+      "second": {
+       "Your Larkfield order, previously delayed from Larkfield, will be delivered Thursday with all boxes arriving together; no action needed.": {
+        "ok": true
+       },
+       "Your Larkfield order from Larkfield is being re-routed and will arrive Thursday with all three boxes.": {
+        "ok": false,
+        "reason": "Invents the fact that the order is being re-routed."
+       },
+       "Your Larkfield order from Larkfield is being delivered Thursday; all three boxes reunited after a brief delay at our hub.": {
+        "ok": true
+       },
+       "Your missing second box was found, so all three boxes will now be delivered together on Thursday.": {
+        "ok": true
+       }
       }
      },
      "summary-held-8": {
@@ -28247,6 +29176,20 @@
        "A courier will collect your faulty mower from your Larkfield collection on Monday, 9 am-1 pm; please box it by the door.": {
         "ok": false,
         "reason": "Awkward phrasing with 'from your Larkfield collection'."
+       },
+       "Faulty mower pickup from Larkfield will occur Monday 9-1 pm; please box it up and leave by your door.": {
+        "ok": true
+       },
+       "Your faulty mower collection is booked for Monday between 9 am and 1 pm; please have it boxed by the front door.": {
+        "ok": true
+       }
+      },
+      "second": {
+       "Faulty mower pickup from Larkfield will be Monday 9am-1pm; please box it and leave by your front door.": {
+        "ok": true
+       },
+       "A courier will collect your faulty mower from your Larkfield collection on Monday, 9 am-1 pm; please box it by the door.": {
+        "ok": true
        },
        "Faulty mower pickup from Larkfield will occur Monday 9-1 pm; please box it up and leave by your door.": {
         "ok": true
@@ -28289,6 +29232,19 @@
        "Your Larkfield order is out for delivery with a two-man crew who will call 30 minutes before bringing it to your room of choice.": {
         "ok": true
        }
+      },
+      "second": {
+       "A two-person crew from Larkfield is out for delivery; please call 30 minutes prior to arrival to specify your preferred room.": {
+        "ok": false,
+        "reason": "Incorrectly instructs the customer to call prior to arrival, misinterpreting the courier's note that the delivery crew will call the customer."
+       },
+       "Your Larkfield order from Larkfield is out for delivery by 2 men; please call 30 minutes before arrival to specify room preference.": {
+        "ok": false,
+        "reason": "It incorrectly tells the customer to call the courier, whereas the note indicates the crew will call the customer."
+       },
+       "Your Larkfield order is out for delivery with a two-man crew who will call 30 minutes before bringing it to your room of choice.": {
+        "ok": true
+       }
       }
      },
      "summary-held-10": {
@@ -28322,6 +29278,21 @@
        "Delivery to Larkfield from your postcode is temporarily delayed due to weather; we'll email a new delivery date soon.": {
         "ok": false,
         "reason": "It incorrectly swaps the delivery direction by saying delivery is to Larkfield from your postcode."
+       },
+       "Due to severe weather, your delivery is postponed today; we will email you a new date as soon as roads reopen.": {
+        "ok": true
+       }
+      },
+      "second": {
+       "Delivery to your postcode is delayed today due to weather; we'll email a new delivery date once roads reopen.": {
+        "ok": true
+       },
+       "Delivery to your postcode is delayed today due to weather; we'll email a new date as soon as roads reopen.": {
+        "ok": true
+       },
+       "Delivery to Larkfield from your postcode is temporarily delayed due to weather; we'll email a new delivery date soon.": {
+        "ok": false,
+        "reason": "It incorrectly states that delivery is to Larkfield from the customer's postcode."
        },
        "Due to severe weather, your delivery is postponed today; we will email you a new date as soon as roads reopen.": {
         "ok": true
