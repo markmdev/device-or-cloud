@@ -1,17 +1,23 @@
 # Device or Cloud
 
-Which of your app's AI features can run on your users' own devices?
+Device or Cloud measures which of an app's AI features the model built into Chrome, or Apple's on-device model, answers well enough, and hands the result over as a Firebase Remote Config template for Firebase AI Logic's hybrid inference.
+
+**Live:** https://device-or-cloud.web.app (open it in Chrome on a computer)
 
 Firebase AI Logic's hybrid inference lets a web app send a prompt to the model built into Chrome or to Gemini in the cloud, and asks you to pick a mode for every feature. This project checks, feature by feature, where the small model's answers are good enough, and turns the result into the app's settings.
 
-Working name; built for the Firebase #BuildHybridAI hackathon. Everything here was built during the hackathon: the first commit is from 13 November 2026.
+Built for the Firebase #BuildHybridAI hackathon. Everything here was built during the hackathon: the first commit is from 13 November 2026.
 
 - **The check:** https://device-or-cloud.web.app
 - **The sample shop it checks:** https://device-or-cloud.web.app/shop/
 - **Check your own prompts:** https://device-or-cloud.web.app/own/
 - **Every input and answer of the recorded check:** https://device-or-cloud.web.app/results/
 
-Open them in Chrome on a computer to see the device side run.
+## Try it
+
+Open https://device-or-cloud.web.app in Chrome on a computer. There is no sign-in. The page opens on the check as we recorded it on our laptop, so every verdict, input and answer shows in any browser, with or without Chrome's model.
+
+To run the device side on your own computer, Chrome first needs its built-in model. Under the board, press "Download it": about 4 GB, 12 minutes on our laptop. Nothing downloads until you press. Once it's there, "Run it on your own computer" at the top runs every input through it again. Chrome's own page lists what the model needs ([Get started with built-in AI](https://developer.chrome.com/docs/ai/get-started)): Chrome on Windows 10 or 11, macOS 13 or later, Linux, or a Chromebook Plus; at least 22 GB free on the disk that holds the Chrome profile; and more than 4 GB of video memory, or 16 GB of memory and 4 processor cores. We recorded with Chrome 157 on a Mac, with no flags set. Where Chrome can't have the model, the pages say so and keep showing the recorded answers, and the shop's device features go to the cloud.
 
 ## What is here
 
@@ -32,7 +38,7 @@ The page shows the check as recorded on our laptop, with every wrong answer side
 
 A feature that comes within the bar on the device only after a change ships with that change in the same template. Beside `mode_<feature>` sits `line_<feature>`, one more sentence for the end of the instruction, or `steady_<feature>`, which switches the on-device model's randomness off; each is empty or false by default and set under the same platform condition as the mode. Both shops read them with the mode, so a feature moves to the device, and back, with a Remote Config change alone. Where more than one change works, the template takes a setting first, then the cloud model's own line, then one a person wrote. The fix panel marks the one that ships.
 
-**Firebase's own sample prompts** (`samples/`, `src/samples/`). The sample shop is made up, so the same check also runs on prompts we did not write: the fixed prompts of Firebase's AI Logic quickstarts for the web, iOS and Android, as they stood on 15 November 2026. They send 31 fixed prompts. Thirteen are text in and text out, and twelve of those have their text in the repositories: a film-genre sorter, a function call for the weather, a character generator, an invoice template, an SVG drawer, a translation, a travel assistant, a course chatbot and four chat personas. Each of the twelve went through the check word for word, system instruction, earlier chat turns, answer shape and function declaration included, with 25 inputs: the sample's own where it has one, the rest written by us before any model answered. Code decides wherever a prompt's own rule can be checked by code; the cloud model judges the rest. `src/samples/index.ts` links every prompt to its file at the commit we read, and lists the other 19 with why the check does not run them: most need a picture, sound, video or a web search, among them Firebase's own hybrid sample for Android, which reads a receipt from a photo. The page gives the count, and `samples/results/` has every input and answer. To record it: `SITE=http://127.0.0.1:5173/samples/ RECORD=src/samples/recorded.json PARTIAL=samples.partial.json CDP=... node scripts/record.mjs`.
+**Firebase's own sample prompts** (`samples/`, `src/samples/`). The sample shop is made up, so the same check also runs on prompts we did not write: the fixed prompts of Firebase's AI Logic quickstarts for the web, iOS and Android, as they stood on 15 November 2026. They send 31 fixed prompts. Thirteen are text in and text out, and twelve of those have their text in the repositories: a film-genre sorter, a function call for the weather, a character generator, an invoice template, an SVG drawer, a translation, a travel assistant, a course chatbot and four chat personas. Each of the twelve went through the check word for word, system instruction, earlier chat turns, answer shape and function declaration included, with 25 to 55 inputs: the sample's own where it has one, the rest written by us before any model answered. Code decides wherever a prompt's own rule can be checked by code; the cloud model judges the rest. `src/samples/index.ts` links every prompt to its file at the commit we read, and lists the other 19 with why the check does not run them: most need a picture, sound, video or a web search, among them Firebase's own hybrid sample for Android, which reads a receipt from a photo. The page gives the count, and `samples/results/` has every input and answer. To record it: `SITE=http://127.0.0.1:5173/samples/ RECORD=src/samples/recorded.json PARTIAL=samples.partial.json CDP=... node scripts/record.mjs`.
 
 **Check your own prompts** (`own/`, `src/own/`) gives the same verdicts for a feature you paste: the instruction your app sends, the shape of the answer and a few inputs. The cloud model writes 30 more inputs from yours, hard ones included, with the right answer where there is one; you tick the ones a real user could send and correct the answers. An input with a right answer is decided by code. One without is judged by the cloud model, and the page says which. One ticked input in four is kept out of the check, so a one-line fix to the prompt is proved on inputs it wasn't written from. Your features and their answers are kept only in your browser.
 
@@ -40,7 +46,7 @@ The cloud side runs on Google's free Gemini tier, which the whole site shares: 1
 
 **The inputs and their right answers** are in `src/features/`. Code decides whether an answer is right wherever an input has one right answer: a category, a date, a total, an address, a yes or no. For receipts, invoices and returns questions, the input text and the right answer are built from the same figures, so the key can't disagree with the input. Two features, the product title and the delivery note, have no single right answer. Code checks their rules (length, required details), and the cloud model judges the rest, 25 answers in one request.
 
-**Who checks that judge.** The cloud model's judgment decides those two features' verdicts, and some of the answers it judges are its own. So two more judges look at the same answers without being told which model wrote which. A second model, `gemini-3.8-flash`, judges them again with the same request; the recorder runs it last, as far as its free 20 requests a day go, and the record keeps its judgments beside the first (`second`). And people mark them on a small page (`label/`, `src/label/`): one answer at a time, "good enough" or "not good enough", no grade shown, each answer to one person. Their marks are kept in Cloud Firestore (`firestore.rules`: an answer keeps its first mark, and nothing is changed or removed). The results page shows every judgment beside each answer, and from 30 marks on, how far the cloud model agrees with the people. Neither changes a verdict.
+**Who checks that judge.** The cloud model's judgment decides those two features' verdicts, and some of the answers it judges are its own. So two more judges look at the same answers without being told which model wrote which. A second model, `gemini-3.5-flash`, the cloud model's larger sibling, judges them again with the same request; the recorder runs it last, as far as its free 20 requests a day go, and the record keeps its judgments beside the first (`second`). And people mark them on a small page (`label/`, `src/label/`): one answer at a time, "good enough" or "not good enough", no grade shown, each answer to one person. Their marks are kept in Cloud Firestore (`firestore.rules`: an answer keeps its first mark, and nothing is changed or removed). The results page shows every judgment beside each answer, and from 30 marks on, how far the cloud model agrees with the people. Neither changes a verdict.
 
 **The iPhone shop** (`ios/`) is the same shop as a SwiftUI app. Firebase AI Logic's hybrid inference for Apple platforms reaches Apple's on-device model through the Foundation Models framework, with Gemini behind it. The app bundles the same instructions, answer shapes and inputs as the web shop (`npm run ios` writes them from `src/features/` into `ios/Larkfield/features.json`), reads each feature's mode, and its line or setting where it has one, from the same Remote Config template under its own condition, "The iPhone app", and badges every answer with where the SDK says it ran. So one feature can run on the device on one platform and in the cloud on the other.
 
@@ -50,15 +56,28 @@ In the recorded check Apple's model, as written, stays within the default bar on
 
 ## The numbers
 
+At the default bar of 10 wrong answers in 100, Chrome's model can take 2 of the shop's 8 features as written (routing a support ticket, pulling fields from a receipt), and 2 more with one added line each (a review's mood, an address from an email). Two stay in the cloud (a product title, a delivery note). For two, neither model is good enough (an invoice total, a returns question). Apple's model takes none as written, and the ticket router with its randomness off. Of Firebase's 12 sample prompts, 3 can run on the device as written, and 3 more looked able to, but 25 to 55 inputs each were not enough to be sure. The second model has judged 474 of the check's 719 judged answers so far and agrees with the cloud model on 412.
+
 The results page shows the whole record: every input, its right answer, all three answers from Chrome's model and the cloud model's, each marked right or wrong with the reason, the held-back inputs, and every answer under each one-line fix. `npm run results` prints the same counts from the same file, `src/check/recorded.json`: for each feature and each kind of input, how many runs Chrome's model got right and how many inputs the cloud model did.
 
 ## Where Firebase is used
 
-- `src/firebase.ts`: Firebase AI Logic (`firebase/ai`) with the Gemini Developer API, one model for each feature and mode, and App Check with reCAPTCHA Enterprise.
-- `src/check/ask.ts`: every request, on the device or in the cloud, and where the SDK says the answer ran.
-- `src/shop/main.tsx`: Remote Config holds each feature's mode, and the shop follows a change without a reload.
-- `src/labels.ts`: Cloud Firestore keeps people's marks on the judged answers.
-- `ios/Larkfield/Ask.swift`: the same request from the iPhone app, through `HybridModel` with Apple's on-device model and Gemini, in the mode `ios/Larkfield/Shop.swift` reads from Remote Config.
+Firebase AI Logic, on the web:
+
+- `src/firebase.ts:18`: `getAI(app, { backend: new GoogleAIBackend() })`, Firebase AI Logic with the Gemini Developer API.
+- `src/firebase.ts:39`: `getGenerativeModel(ai, { mode, inCloudParams, onDeviceParams })` in `modelFor`, one model for each feature and inference mode.
+- `src/check/ask.ts:45`: `generateContent`, every request the pages send, on the device or in the cloud: the check, the fix step, the shop and "Check your own prompts". Line 50 keeps `inferenceSource`, where the SDK says the answer ran.
+- `src/firebase.ts:66`: `initializeDeviceModel`, Chrome's model downloaded when you press the button.
+
+Firebase AI Logic, on the iPhone:
+
+- `ios/Larkfield/Ask.swift:42`: `FirebaseAI.firebaseAI(backend: .googleAI())`; lines 47 and 48 make the `HybridModel` of Apple's on-device model (`FirebaseAI.SystemLanguageModel`) and Gemini, and lines 59 and 64 send the request.
+
+The rest of Firebase:
+
+- `src/firebase.ts:13`: App Check with reCAPTCHA Enterprise, which Firebase AI Logic requires on this project.
+- `src/shop/main.tsx:93`: Remote Config holds each feature's mode, and `onConfigUpdate` lets the shop follow a change without a reload. `ios/Larkfield/Shop.swift:59` reads the same template in the iPhone app.
+- `src/labels.ts:17`: Cloud Firestore keeps people's marks on the judged answers.
 - `firebase.json`: Hosting, the Remote Config template and the Firestore rules, deployed with one command.
 
 One thing we learned from the SDK's source: in hybrid mode the request's system instruction and output shape reach only the cloud model. Chrome's model takes them from `onDeviceParams`. `modelFor` in `src/firebase.ts` sets both.
