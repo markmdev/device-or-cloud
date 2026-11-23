@@ -17,7 +17,7 @@ const rows: [string, string][] = [
   [PLAIN, "Should I exchange money before I leave or when I arrive?"],
   [PLAIN, "I'm nervous about flying for the first time. Any advice?"],
   [FACTS, "How much does a visa for Japan cost for a Brazilian citizen?"],
-  [FACTS, "What is the exact baggage allowance on Lufthansa economy flights?"],
+  [FACTS, "What is the exact baggage allowance on economy flights from Madrid to Lisbon?"],
   [FACTS, "Which vaccinations does Kenya require by law right now?"],
   [FACTS, "What's the cheapest month to fly from Chicago to Rome, and what will it cost?"],
   [FACTS, "How many millilitres of liquid can I take through security at Dubai airport?"],
@@ -30,7 +30,7 @@ const rows: [string, string][] = [
   [FOLLOW, "So when exactly should I book, and what about the passport? Sum it up."],
   [OFF, "Can you help me write a cover letter for a job?"],
   [OFF, "What's a good recipe for banana bread?"],
-  [OFF, "Who won the World Cup in 2018?"],
+  [OFF, "How many moons does Jupiter have?"],
   [OFF, "Fix this Python error for me: NameError: name 'x' is not defined."],
   // Ten more of ours, written on 16 November before any model answered them.
   [PLAIN, "How do I choose a safe place to stay?"],
