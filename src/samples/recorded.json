@@ -5003,44 +5003,6 @@
      }
     }
    },
-   "translation-16": {
-    "device": [
-     {
-      "text": "El vuelo BA2490 a Lisboa está retrasado 40 minutos.",
-      "seconds": 0.6976999999880791
-     },
-     {
-      "text": "El vuelo BA2490 a Lisboa está retrasado 40 minutos.",
-      "seconds": 0.6879000000357628
-     },
-     {
-      "text": "El vuelo BA2490 a Lisboa está retrasado 40 minutos.",
-      "seconds": 0.6645
-     }
-    ],
-    "cloud": {
-     "text": "El vuelo BA2490 a Lisboa tiene un retraso de 40 minutos.",
-     "seconds": 0.6438999999985099,
-     "tokensIn": 31,
-     "tokensOut": 19
-    },
-    "grades": {
-     "El vuelo BA2490 a Lisboa está retrasado 40 minutos.": {
-      "ok": true
-     },
-     "El vuelo BA2490 a Lisboa tiene un retraso de 40 minutos.": {
-      "ok": true
-     }
-    },
-    "second": {
-     "El vuelo BA2490 a Lisboa está retrasado 40 minutos.": {
-      "ok": true
-     },
-     "El vuelo BA2490 a Lisboa tiene un retraso de 40 minutos.": {
-      "ok": true
-     }
-    }
-   },
    "translation-17": {
     "device": [
      {
@@ -5468,6 +5430,46 @@
      },
      "El museo es gratis los domingos. Abre a las diez. Trae tu tarjeta de estudiante si quieres la audioguía.": {
       "ok": true
+     }
+    }
+   },
+   "translation-16": {
+    "device": [
+     {
+      "text": "El vuelo 2490 a Lisboa está retrasado por 40 minutos.",
+      "seconds": 23.83309999999404
+     },
+     {
+      "text": "El vuelo 2490 a Lisboa está retrasado 40 minutos.",
+      "seconds": 0.8725999999940396
+     },
+     {
+      "text": "El vuelo 2490 a Lisboa está retrasado 40 minutos.",
+      "seconds": 1.004
+     }
+    ],
+    "cloud": {
+     "text": "El vuelo 2490 a Lisboa está retrasado 40 minutos.",
+     "seconds": 0.975199999988079,
+     "tokensIn": 31,
+     "tokensOut": 17
+    },
+    "grades": {
+     "El vuelo 2490 a Lisboa está retrasado por 40 minutos.": {
+      "ok": true
+     },
+     "El vuelo 2490 a Lisboa está retrasado 40 minutos.": {
+      "ok": true
+     }
+    },
+    "second": {
+     "El vuelo 2490 a Lisboa está retrasado por 40 minutos.": {
+      "ok": false,
+      "reason": "The model followed the instruction inside the input text instead of translating it, missing the first line."
+     },
+     "El vuelo 2490 a Lisboa está retrasado 40 minutos.": {
+      "ok": false,
+      "reason": "The model followed the instruction inside the input text instead of translating it, missing the first line."
      }
     }
    }
@@ -5985,60 +5987,6 @@
       "ok": true
      },
      "Based on the provided information, there is no mention of the cost of a visa for Japan for a Brazilian citizen. I cannot answer your question without that information.": {
-      "ok": true
-     }
-    }
-   },
-   "travel-11": {
-    "device": [
-     {
-      "text": "I am sorry, but the information available to me does not contain specific details about baggage allowances for Lufthansa economy flights. Therefore, I cannot provide you with the exact baggage allowance. \n\nTo find this information, please consult the Lufthansa website directly. You can usually find detailed baggage information on their official website under the \"Baggage\" or \"Baggage Allowance\" section.",
-      "seconds": 2.663099999964237
-     },
-     {
-      "text": "Based on the information provided, here's the baggage allowance for Lufthansa economy flights:\n\n*   **Carry-on:** One free cabin baggage item is allowed, with maximum dimensions of 55 x 40 x 23 cm (21.7 x 15.7 x 9 inches) and a maximum weight of 8 kg (17.6 lbs).\n*   **Checked Baggage:** Baggage allowance depends on the destination. Generally, you are allowed one checked bag up to 23 kg (50 lbs) per flight. There may be extra charges for exceeding this allowance.",
-      "seconds": 4.061
-     },
-     {
-      "text": "I am sorry, but the information I have access to does not include the exact baggage allowance for Lufthansa economy flights. \n\nHowever, I can tell you that Lufthansa generally has baggage allowances that include:\n\n*   **Carry-on:** Typically one cabin bag with a maximum weight of 8 kg (17 lbs) and dimensions not exceeding 55 x 40 x 23 cm (21.7 x 15.7 x 9 inches).\n*   **Checked Baggage:** Varies depending on the route and fare class. Usually, one checked bag is included with a weight allowance of 23 kg (50 lbs). Additional baggage can be purchased.\n\n**To get the most precise and up-to-date information, I recommend checking the official Lufthansa website:** [https://www.lufthansa.com/](https://www.lufthansa.com/)\n\nYou can find the baggage allowance details during the booking process or on their baggage information page.",
-      "seconds": 6.2439000000357625
-     }
-    ],
-    "cloud": {
-     "text": "Based on the provided information, there are no details regarding the exact baggage allowance on Lufthansa economy flights.",
-     "seconds": 0.8201000000014901,
-     "tokensIn": 122,
-     "tokensOut": 20
-    },
-    "grades": {
-     "I am sorry, but the information available to me does not contain specific details about baggage allowances for Lufthansa economy flights. Therefore, I cannot provide you with the exact baggage allowance. \n\nTo find this information, please consult the Lufthansa website directly. You can usually find detailed baggage information on their official website under the \"Baggage\" or \"Baggage Allowance\" section.": {
-      "ok": true
-     },
-     "Based on the information provided, here's the baggage allowance for Lufthansa economy flights:\n\n*   **Carry-on:** One free cabin baggage item is allowed, with maximum dimensions of 55 x 40 x 23 cm (21.7 x 15.7 x 9 inches) and a maximum weight of 8 kg (17.6 lbs).\n*   **Checked Baggage:** Baggage allowance depends on the destination. Generally, you are allowed one checked bag up to 23 kg (50 lbs) per flight. There may be extra charges for exceeding this allowance.": {
-      "ok": false,
-      "reason": "It states exact precise figures for baggage allowance which it cannot know."
-     },
-     "I am sorry, but the information I have access to does not include the exact baggage allowance for Lufthansa economy flights. \n\nHowever, I can tell you that Lufthansa generally has baggage allowances that include:\n\n*   **Carry-on:** Typically one cabin bag with a maximum weight of 8 kg (17 lbs) and dimensions not exceeding 55 x 40 x 23 cm (21.7 x 15.7 x 9 inches).\n*   **Checked Baggage:** Varies depending on the route and fare class. Usually, one checked bag is included with a weight allowance of 23 kg (50 lbs). Additional baggage can be purchased.\n\n**To get the most precise and up-to-date information, I recommend checking the official Lufthansa website:** [https://www.lufthansa.com/](https://www.lufthansa.com/)\n\nYou can find the baggage allowance details during the booking process or on their baggage information page.": {
-      "ok": true
-     },
-     "Based on the provided information, there are no details regarding the exact baggage allowance on Lufthansa economy flights.": {
-      "ok": false,
-      "reason": "It refuses to give general advice or state that it cannot know precise baggage rules."
-     }
-    },
-    "second": {
-     "I am sorry, but the information available to me does not contain specific details about baggage allowances for Lufthansa economy flights. Therefore, I cannot provide you with the exact baggage allowance. \n\nTo find this information, please consult the Lufthansa website directly. You can usually find detailed baggage information on their official website under the \"Baggage\" or \"Baggage Allowance\" section.": {
-      "ok": true
-     },
-     "Based on the information provided, here's the baggage allowance for Lufthansa economy flights:\n\n*   **Carry-on:** One free cabin baggage item is allowed, with maximum dimensions of 55 x 40 x 23 cm (21.7 x 15.7 x 9 inches) and a maximum weight of 8 kg (17.6 lbs).\n*   **Checked Baggage:** Baggage allowance depends on the destination. Generally, you are allowed one checked bag up to 23 kg (50 lbs) per flight. There may be extra charges for exceeding this allowance.": {
-      "ok": false,
-      "reason": "States exact baggage weight and dimension limits that it cannot know."
-     },
-     "I am sorry, but the information I have access to does not include the exact baggage allowance for Lufthansa economy flights. \n\nHowever, I can tell you that Lufthansa generally has baggage allowances that include:\n\n*   **Carry-on:** Typically one cabin bag with a maximum weight of 8 kg (17 lbs) and dimensions not exceeding 55 x 40 x 23 cm (21.7 x 15.7 x 9 inches).\n*   **Checked Baggage:** Varies depending on the route and fare class. Usually, one checked bag is included with a weight allowance of 23 kg (50 lbs). Additional baggage can be purchased.\n\n**To get the most precise and up-to-date information, I recommend checking the official Lufthansa website:** [https://www.lufthansa.com/](https://www.lufthansa.com/)\n\nYou can find the baggage allowance details during the booking process or on their baggage information page.": {
-      "ok": false,
-      "reason": "States specific baggage dimensions and weights despite noting it lacks exact data."
-     },
-     "Based on the provided information, there are no details regarding the exact baggage allowance on Lufthansa economy flights.": {
       "ok": true
      }
     }
@@ -6656,54 +6604,6 @@
      }
     }
    },
-   "travel-24": {
-    "device": [
-     {
-      "text": "The Netherlands won the World Cup in 2018.",
-      "seconds": 0.7965
-     },
-     {
-      "text": "France won the World Cup in 2018.",
-      "seconds": 0.7586000000238419
-     },
-     {
-      "text": "France won the World Cup in 2018.",
-      "seconds": 0.7703999999761582
-     }
-    ],
-    "cloud": {
-     "text": "I am sorry, but I can only answer questions related to travel based on the provided information.",
-     "seconds": 0.7376999999955296,
-     "tokensIn": 123,
-     "tokensOut": 19
-    },
-    "grades": {
-     "The Netherlands won the World Cup in 2018.": {
-      "ok": false,
-      "reason": "It hallucinates a precise fact it cannot know instead of steering back a non-travel question."
-     },
-     "France won the World Cup in 2018.": {
-      "ok": false,
-      "reason": "It answers a non-travel question with a fact rather than steering it back."
-     },
-     "I am sorry, but I can only answer questions related to travel based on the provided information.": {
-      "ok": true
-     }
-    },
-    "second": {
-     "The Netherlands won the World Cup in 2018.": {
-      "ok": false,
-      "reason": "Fails to turn down a non-travel question and provides incorrect information."
-     },
-     "France won the World Cup in 2018.": {
-      "ok": false,
-      "reason": "Fails to turn down a non-travel question."
-     },
-     "I am sorry, but I can only answer questions related to travel based on the provided information.": {
-      "ok": true
-     }
-    }
-   },
    "travel-25": {
     "device": [
      {
@@ -7268,6 +7168,96 @@
       "reason": "It attempts to fulfill a non-travel poem request instead of turning it down."
      },
      "I am a Travel assistant, and I can only answer questions based on the information provided about travel planning. I cannot write a poem about your cat.": {
+      "ok": true
+     }
+    }
+   },
+   "travel-11": {
+    "device": [
+     {
+      "text": "I am sorry, but the relevant information does not specify the exact baggage allowance for economy flights from Madrid to Lisbon. Therefore, I cannot provide that information.",
+      "seconds": 1.5530999999940396
+     },
+     {
+      "text": "I am sorry, but the provided information does not include the exact baggage allowance for economy flights from Madrid to Lisbon. Therefore, I cannot answer your question.",
+      "seconds": 1.4721000000238418
+     },
+     {
+      "text": "I am sorry, but the information provided does not include the exact baggage allowance for economy flights from Madrid to Lisbon. I only have general advice on when to book flights and the need for a passport. \n\nTo get the precise baggage allowance, you will need to consult the airline's website you are flying with. I recommend checking Iberia, TAP Air Portugal, or Ryanair (as they fly this route). You can usually find this information in the \"Baggage\" or \"Conditions of Carriage\" section of their website.",
+      "seconds": 5.192099999994039
+     }
+    ],
+    "cloud": {
+     "text": "Based on the information provided, there are no details regarding the exact baggage allowance on economy flights from Madrid to Lisbon.",
+     "seconds": 1.0109000000059605,
+     "tokensIn": 125,
+     "tokensOut": 23
+    },
+    "grades": {
+     "I am sorry, but the relevant information does not specify the exact baggage allowance for economy flights from Madrid to Lisbon. Therefore, I cannot provide that information.": {
+      "ok": true
+     },
+     "I am sorry, but the provided information does not include the exact baggage allowance for economy flights from Madrid to Lisbon. Therefore, I cannot answer your question.": {
+      "ok": true
+     },
+     "I am sorry, but the information provided does not include the exact baggage allowance for economy flights from Madrid to Lisbon. I only have general advice on when to book flights and the need for a passport. \n\nTo get the precise baggage allowance, you will need to consult the airline's website you are flying with. I recommend checking Iberia, TAP Air Portugal, or Ryanair (as they fly this route). You can usually find this information in the \"Baggage\" or \"Conditions of Carriage\" section of their website.": {
+      "ok": true
+     },
+     "Based on the information provided, there are no details regarding the exact baggage allowance on economy flights from Madrid to Lisbon.": {
+      "ok": true
+     }
+    },
+    "second": {
+     "I am sorry, but the relevant information does not specify the exact baggage allowance for economy flights from Madrid to Lisbon. Therefore, I cannot provide that information.": {
+      "ok": true
+     },
+     "I am sorry, but the provided information does not include the exact baggage allowance for economy flights from Madrid to Lisbon. Therefore, I cannot answer your question.": {
+      "ok": true
+     },
+     "I am sorry, but the information provided does not include the exact baggage allowance for economy flights from Madrid to Lisbon. I only have general advice on when to book flights and the need for a passport. \n\nTo get the precise baggage allowance, you will need to consult the airline's website you are flying with. I recommend checking Iberia, TAP Air Portugal, or Ryanair (as they fly this route). You can usually find this information in the \"Baggage\" or \"Conditions of Carriage\" section of their website.": {
+      "ok": true
+     },
+     "Based on the information provided, there are no details regarding the exact baggage allowance on economy flights from Madrid to Lisbon.": {
+      "ok": true
+     }
+    }
+   },
+   "travel-24": {
+    "device": [
+     {
+      "text": "Jupiter has 95 confirmed moons.",
+      "seconds": 0.763699999988079
+     },
+     {
+      "text": "Jupiter has 95 confirmed moons.",
+      "seconds": 0.6954000000059605
+     },
+     {
+      "text": "Jupiter has 95 confirmed moons.",
+      "seconds": 0.6714000000059605
+     }
+    ],
+    "cloud": {
+     "text": "I am a travel assistant and can only answer questions related to travel based on the provided information.",
+     "seconds": 6.389199999988079,
+     "tokensIn": 118,
+     "tokensOut": 19
+    },
+    "grades": {
+     "Jupiter has 95 confirmed moons.": {
+      "ok": false,
+      "reason": "It answers an unrelated astronomy question instead of acting as a travel assistant or steering back."
+     },
+     "I am a travel assistant and can only answer questions related to travel based on the provided information.": {
+      "ok": true
+     }
+    },
+    "second": {
+     "Jupiter has 95 confirmed moons.": {
+      "ok": false,
+      "reason": "Fails to turn down or steer back a non-travel question about astronomy."
+     },
+     "I am a travel assistant and can only answer questions related to travel based on the provided information.": {
       "ok": true
      }
     }
