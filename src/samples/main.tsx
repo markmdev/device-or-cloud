@@ -3,7 +3,7 @@ import { createRoot } from "react-dom/client";
 import "../base.css";
 import { OutOfRequests, outOfRequests } from "../check/ask";
 import { Board } from "../check/board";
-import { RUNS, verdictFor, written, type Cases, type CheckRecord, type Verdict } from "../check/record";
+import { RUNS, recordedOn, verdictFor, type Cases, type CheckRecord, type Verdict } from "../check/record";
 import { gradeAgain, gradeFeature, runCloud, runDevice } from "../check/run";
 import { CLOUD_MODEL, SECOND_GRADER } from "../firebase";
 import { NOT_RUN, SAMPLES } from ".";
@@ -97,7 +97,7 @@ function App() {
           Firebase's own sample prompts · <a href="/">Back to the check</a>
         </p>
         <p className="quiet">
-          Recorded on {RECORD.machine}, Chrome {RECORD.chrome}, {written(RECORD.date)}
+          {recordedOn(RECORD)}
         </p>
         {import.meta.env.DEV &&
           (running ? (

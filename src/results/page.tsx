@@ -2,7 +2,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import type { ReactNode } from "react";
 import { AnswerText } from "../answer";
 import "../base.css";
-import { APPLES, CHROMES, countLine, DEFAULT_ALLOWED, graded, judge, NO_TOOLS_ON_DEVICE, RUNS, UNSURE, unsureLine, VERDICT_NAME, whereApple, type CaseRecord, type CheckRecord, type FixRecord, type Run, type Tally } from "../check/record";
+import { APPLES, CHROMES, countLine, DEFAULT_ALLOWED, graded, judge, NO_TOOLS_ON_DEVICE, recordedOn, RUNS, UNSURE, unsureLine, VERDICT_NAME, whereApple, type CaseRecord, type CheckRecord, type FixRecord, type Run, type Tally } from "../check/record";
 import type { Case, Feature } from "../features";
 import { readMarks } from "../labels";
 import { judgedInCheck, judges, markKey, MARKS_TO_SAY, type Mark } from "./judges";
@@ -255,7 +255,6 @@ export function ResultsPage({ record: RECORD, features, back, heading, wrote, ju
   const APPLE = RECORD.apple;
   const all = numbers(RECORD, features);
   const sum = (pick: (f: FeatureNumbers) => number) => all.reduce((n, f) => n + pick(f), 0);
-  const date = new Date(RECORD.date).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
   return (
     <main className="check results">
       <header>
@@ -267,7 +266,7 @@ export function ResultsPage({ record: RECORD, features, back, heading, wrote, ju
           Every input and every answer · <a href={back.href}>{back.label}</a>
         </p>
         <p className="quiet">
-          Recorded on {RECORD.machine}, Chrome {RECORD.chrome}, {date}
+          {recordedOn(RECORD)}
         </p>
         {APPLE && <p className="quiet">{whereApple(APPLE)}</p>}
       </header>
@@ -276,7 +275,7 @@ export function ResultsPage({ record: RECORD, features, back, heading, wrote, ju
         <h2>{heading}</h2>
         <p className="lede">
           {sum((f) => f.verdict.inputs)} inputs for {all.length} {RECORD.fixes ? "features" : "prompts"}. Each went through Firebase AI Logic {RUNS} times to the model built into Chrome{" "}
-          {RECORD.chrome}{APPLE && `, ${RUNS} times to Apple's on-device model from the shop's iPhone app`} and once to {RECORD.cloudModel} in the cloud.
+          {RECORD.chrome}{RECORD.again && ` (Chrome ${RECORD.again.chrome} for the ${RECORD.again.cases.length} recorded again)`}{APPLE && `, ${RUNS} times to Apple's on-device model from the shop's iPhone app`} and once to {RECORD.cloudModel} in the cloud.
           Chrome's model was right on every run on {sum((f) => f.verdict.inputsRight)} of {sum((f) => f.verdict.inputs)} inputs,{" "}
           {APPLE && `Apple's model on ${sum((f) => f.apple!.inputsRight)}, `}the cloud model on {sum((f) => f.verdict.cloudRight)}. Where a model's
           answer to one input changes from run to run, its runs are given too. The verdicts are at the default bar, up to {DEFAULT_ALLOWED} wrong
