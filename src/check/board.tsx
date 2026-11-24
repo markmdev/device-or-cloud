@@ -6,7 +6,7 @@ import { parse, shown } from "../features/types";
 import { CLOUD_MODEL } from "../firebase";
 import { appCode, CHROME, DEPLOY, fixesFor, IPHONE, parameterFor, placedOn, runsOnDevice, swiftCode, TEMPLATE_FILE, templateText, type Placed } from "./apply";
 import { Fixes } from "./fixes";
-import { APPLES, barInWords, brokeLine, CHROMES, costLine, countLine, DEFAULT_ALLOWED, differing, DISAGREE, disagreeLine, fixRange, graded, NEITHER_ADVICE, NO_TOOLS_ON_DEVICE, onApple, RUNS, UNSURE, unsureLine, secondVerdict, SETTLED, VERDICT_NAME, verdictFor, verdictLine, type Failure, type FixRecord, type Range, type Run, type Verdict } from "./record";
+import { APPLES, barInWords, brokeLine, CHROMES, costLine, countLine, DEFAULT_ALLOWED, differing, DISAGREE, disagreeLine, fixRange, graded, NEITHER_ADVICE, NO_TOOLS_ON_DEVICE, onApple, RUNS, UNSURE, unsureLine, secondVerdict, SETTLED, settledBasis, VERDICT_NAME, verdictFor, verdictLine, type Failure, type FixRecord, type Range, type Run, type Verdict } from "./record";
 import type { Cases } from "./run";
 
 const MAX_ALLOWED = 30;
@@ -38,7 +38,7 @@ const deviceMeter = (who: string, v: Verdict, allowed: number, other: boolean) =
 );
 
 /** One feature on the board. `v` is its verdict on the platform the board shows; `chrome` and `apple` are each on-device model's own. */
-function FeatureRow({ v, second, settled, chrome, apple, mine, selected, onSelect, allowed, named }: { v: Verdict; second?: Verdict; settled?: boolean; chrome: Verdict; apple?: Verdict; mine: boolean; selected: boolean; onSelect: () => void; allowed: number; named?: boolean }) {
+function FeatureRow({ v, second, settled, chrome, apple, mine, selected, onSelect, allowed, named }: { v: Verdict; second?: Verdict; settled?: FixRecord; chrome: Verdict; apple?: Verdict; mine: boolean; selected: boolean; onSelect: () => void; allowed: number; named?: boolean }) {
   const counted = v.kind === "device" || v.kind === "cloud" || v.kind === "fix";
   return (
     <li>
@@ -54,6 +54,7 @@ function FeatureRow({ v, second, settled, chrome, apple, mine, selected, onSelec
               {Math.round(v.range.low)} to {Math.round(v.range.high)} wrong in 100
             </span>
             {settled ? <span className="settled">{SETTLED}</span> : v.unsure && <span className="unsure">{UNSURE}</span>}
+            {settled && <small className="basis">{settledBasis(v.feature, settled)}</small>}
             {second && <span className="disagree">{DISAGREE}</span>}
             {v.kind === "device" && <span className="cost">{costLine(v)}</span>}
             {v.kind === "cloud" && v.pattern && <small>Its misses: {v.pattern}.</small>}
@@ -451,7 +452,7 @@ export function Board({ features, cases, mine = [], recordedOn, held, fixes, ope
   const row = (v: Verdict, named?: boolean) => {
     const i = verdicts.indexOf(v);
     return (
-      <FeatureRow key={v.feature.id} v={v} second={secondOf(v)} settled={v.kind === "device" && !!placed[i].fix} chrome={chrome[i]} apple={apple?.[i]} allowed={allowed} named={named} mine={!iphone && mine.includes(v.feature.id)} selected={shown === v} onSelect={() => select(v.feature.id)} />
+      <FeatureRow key={v.feature.id} v={v} second={secondOf(v)} settled={settledBy(v)} chrome={chrome[i]} apple={apple?.[i]} allowed={allowed} named={named} mine={!iphone && mine.includes(v.feature.id)} selected={shown === v} onSelect={() => select(v.feature.id)} />
     );
   };
 

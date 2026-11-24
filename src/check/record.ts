@@ -243,6 +243,12 @@ export const UNSURE = "Not enough inputs to tell";
 export const DISAGREE = "The two judges disagree";
 export const SETTLED = "Settled with one more line";
 
+/** What a settled count rests on: the inputs the line was written from, and the held-back ones it never saw. */
+export function settledBasis(feature: Feature, fix: FixRecord): string {
+  const held = feature.heldBack ?? [], kept = tally(feature, fix.held, held);
+  return `Its range comes from the ${feature.cases.length} inputs whose mistakes the line was written from. On ${held.length} held back that it never saw: ${kept.runsRight} of ${kept.runs} runs right.`;
+}
+
 /** For a model that got almost nothing right: the rules its answers broke most, by how many answers broke each. */
 export function brokeLine(v: Verdict): string | undefined {
   if (v.inputsRight * 10 >= v.inputs) return undefined;
