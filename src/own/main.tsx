@@ -122,8 +122,8 @@ function FeatureForm({ own, readOnly, onChange, onRemove, onProblem }: { own: Ow
       </label>
       <label>
         The answer's shape
-        <textarea value={own.shape} readOnly={readOnly} onChange={(e) => reworded({ shape: e.target.value })} rows={2} placeholder='{"team": "billing", "urgent": false}' />
-        <small>Leave it empty for plain text. Otherwise paste the JSON schema your app sends, or one example answer as JSON.</small>
+        <textarea className="shape" value={own.shape} readOnly={readOnly} onChange={(e) => reworded({ shape: e.target.value })} rows={2} placeholder='{"team": "billing", "urgent": false}' />
+        {!readOnly && <small>Leave it empty for plain text. Otherwise paste the JSON schema your app sends, or one example answer as JSON.</small>}
       </label>
 
       <h3>A few inputs your users send</h3>
@@ -160,8 +160,9 @@ function FeatureForm({ own, readOnly, onChange, onRemove, onProblem }: { own: Ow
             </span>
           </summary>
           <p className="quiet">
-            Hard ones included. Tick the ones a real user could send, and correct or clear any right answer that's wrong: the cloud model wrote those
-            too. One ticked input in four is kept out of the check, to prove a prompt fix on inputs it wasn't written from.
+            {!readOnly &&
+              "Hard ones included. Tick the ones a real user could send, and correct or clear any right answer that's wrong: the cloud model wrote those too. "}
+            One ticked input in four is kept out of the check, to prove a prompt fix on inputs it wasn't written from.
           </p>
           <p className="own-columns" data-by="cloud" aria-hidden="true">
             <span>Input</span>
@@ -296,8 +297,10 @@ function App() {
 
       {example ? (
         <p className="notice recording">
-          A recording, not a live check: "{example.feature.name}", the prompt <a href={example.from.link}>{example.from.app}</a> sends ({example.from.licence}),
-          run on {written(example.recorded.date)} in Chrome {example.recorded.chrome} on {example.recorded.machine}. Nothing is sent now.{" "}
+          <span>
+            A recording, not a live check: "{example.feature.name}", the prompt <a href={example.from.link}>{example.from.app}</a> sends ({example.from.licence}),
+            run on {written(example.recorded.date)} in Chrome {example.recorded.chrome} on {example.recorded.machine}. Nothing is sent now.
+          </span>
           <button className="plain" onClick={() => setExample(undefined)}>
             Clear the example
           </button>
@@ -352,6 +355,7 @@ function App() {
             held={shown.answers}
             fixes={shown.fixes}
             canRun={!example && device === "available" && !running}
+            canTry={!example}
             onFix={example ? undefined : (id, fix) => keep((now) => ({ ...now, fixes: { ...now.fixes, [id]: [...(now.fixes[id] ?? []).filter((f) => f.line !== fix.line), fix] } }))}
           />
           <footer>
