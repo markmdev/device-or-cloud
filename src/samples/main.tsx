@@ -3,7 +3,7 @@ import { createRoot } from "react-dom/client";
 import "../base.css";
 import { OutOfRequests, outOfRequests } from "../check/ask";
 import { Board } from "../check/board";
-import { RUNS, recordedOn, verdictFor, type Cases, type CheckRecord, type Verdict } from "../check/record";
+import { DEFAULT_ALLOWED, RUNS, recordedOn, secondVerdict, verdictFor, type Cases, type CheckRecord, type Verdict } from "../check/record";
 import { gradeAgain, gradeFeature, runCloud, runDevice } from "../check/run";
 import { CLOUD_MODEL, SECOND_GRADER } from "../firebase";
 import { NOT_RUN, SAMPLES } from ".";
@@ -13,14 +13,27 @@ const RECORD = recorded as CheckRecord;
 const FEATURES = SAMPLES.map((s) => s.feature);
 
 /**
- * The prompts whose verdict is "runs on the device": how many of those verdicts more inputs could no longer change,
- * and a sentence for the others, which only looked able to.
+ * The prompts whose verdict is "runs on the device": how many hold under both judges with a count more inputs could no
+ * longer change, and a sentence for the others, which only looked able to.
  */
-function found(device: Verdict[]): { sure: number; rest: string } {
-  const open = device.filter((v) => v.unsure), counts = open.map((v) => v.inputs), fewest = Math.min(...counts), most = Math.max(...counts);
+const WORDS = ["none", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve"];
+
+function found(device: Verdict[], cases: Record<string, Cases>, allowed: number): { sure: number; rest: string } {
+  const split = device.filter((v) => secondVerdict(v.feature, cases[v.feature.id], allowed));
+  const open = device.filter((v) => v.unsure && !split.includes(v)), counts = open.map((v) => v.inputs), fewest = Math.min(...counts), most = Math.max(...counts);
   const each = `${fewest === most ? fewest : `${fewest} to ${most}`} inputs${open.length > 1 ? " each" : ""}`;
-  return { sure: device.length - open.length, rest: open.length ? ` ${open.length} more looked able to, and ${each} were not enough to be sure.` : "" };
+  const more = open.length + split.length, them = WORDS[split.length];
+  const rest = !more
+    ? ""
+    : !split.length
+      ? ` ${more} more looked able to, and ${each} were not enough to be sure.`
+      : !open.length
+        ? ` ${more} more looked able to, but the two judges disagree on ${more === 1 ? "it" : "them"}.`
+        : ` ${more} more looked able to: for ${WORDS[open.length]}, ${each} were not enough to be sure, and the two judges disagree on ${them}.`;
+  return { sure: device.length - more, rest };
 }
+
+const HYBRID = "https://firebase.google.com/docs/ai-logic/hybrid-on-device-inference";
 
 const NOT_RUN_COUNT = NOT_RUN.reduce((n, group) => n + group.prompts.length, 0);
 
@@ -81,7 +94,7 @@ function App() {
   }
 
   const verdicts = FEATURES.map((f) => verdictFor(f, features[f.id]));
-  const onDevice = found(verdicts.filter((v) => v.kind === "device"));
+  const onDevice = found(verdicts.filter((v) => v.kind === "device"), features, DEFAULT_ALLOWED);
   const inputs = FEATURES.map((f) => f.cases.length), fewest = Math.min(...inputs), most = Math.max(...inputs);
   const done = running ? Object.values(features[running] ?? {}).filter((r) => r.device.length === RUNS).length : 0;
   const all = SAMPLES.length + NOT_RUN_COUNT;
@@ -123,25 +136,33 @@ function App() {
           {RECORD.cloudModel || CLOUD_MODEL} in the cloud. The other {NOT_RUN_COUNT} prompts are listed below, with why the check does not run
           them.
         </p>
+        <p className="lede">
+          Firebase's <a href={HYBRID}>page on hybrid inference</a> says the device does "only single-turn text generation (not chat)", takes no
+          tools such as function calling yet, and that server prompt templates "are not supported" in hybrid mode at all. So each prompt went as one
+          request, as a hybrid app has to send it: a chat's earlier turns inside that one request, each persona one message, the server template's
+          text as a plain prompt.
+        </p>
       </section>
 
       <Board
         features={FEATURES}
         cases={features}
         recordedOn="our laptop"
+        opensOn="sample_translation"
         canRun={false}
         handsOver={false}
-        said={(device) => `${found(device).sure} of the ${SAMPLES.length} text prompts in Firebase's sample apps can run on the device as written.${found(device).rest}`}
+        said={(device, allowed) => `${found(device, features, allowed).sure} of the ${SAMPLES.length} text prompts in Firebase's sample apps can run on the device as written.${found(device, features, allowed).rest}`}
       />
 
       <section className="sources">
         <h2>The {SAMPLES.length} prompts the check ran</h2>
         <ul className="ran">
-          {SAMPLES.map(({ feature, from, link }) => (
+          {SAMPLES.map(({ feature, from, link, sent }) => (
             <li key={feature.id}>
               <b>{feature.name}</b>
               <a href={link}>{from}</a>
               <small>{feature.graded ? "Judged by the cloud model, after what code can check" : "Checked by code"}</small>
+              {sent && <small>{sent}</small>}
             </li>
           ))}
         </ul>

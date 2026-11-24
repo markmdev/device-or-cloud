@@ -2,7 +2,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import type { ReactNode } from "react";
 import { AnswerText } from "../answer";
 import "../base.css";
-import { APPLES, CHROMES, countLine, DEFAULT_ALLOWED, graded, judge, NO_TOOLS_ON_DEVICE, recordedOn, RUNS, UNSURE, unsureLine, VERDICT_NAME, whereApple, type CaseRecord, type CheckRecord, type FixRecord, type Run, type Tally } from "../check/record";
+import { APPLES, CHROMES, countLine, DEFAULT_ALLOWED, DISAGREE, disagreeLine, graded, judge, NO_TOOLS_ON_DEVICE, recordedOn, RUNS, UNSURE, unsureLine, VERDICT_NAME, whereApple, type CaseRecord, type CheckRecord, type FixRecord, type Run, type Tally, type Verdict } from "../check/record";
 import type { Case, Feature } from "../features";
 import { readMarks } from "../labels";
 import { judgedInCheck, judges, markKey, MARKS_TO_SAY, type Mark } from "./judges";
@@ -112,12 +112,14 @@ function FeatureResults({ f }: { f: FeatureNumbers }) {
     <section className="feature-results" id={feature.id}>
       <h2>{feature.name}</h2>
       <p>
-        <b>{VERDICT_NAME[v.kind]}</b> {countLine(v)} {v.unsure && <span className="unsure">{unsureLine(v)}</span>}
+        <b>{VERDICT_NAME[v.kind]}</b> {countLine(v)} {v.unsure && <span className="unsure">{unsureLine(v)}</span>}{" "}
+        {f.second && <span className="disagree">{disagreeLine(v, f.second, DEFAULT_ALLOWED)}</span>}
       </p>
       {f.apple && (
         <p>
           <b>In the iPhone app: {VERDICT_NAME[f.apple.kind]}</b> {countLine(f.apple, APPLES)}{" "}
-          {f.apple.unsure && <span className="unsure">{unsureLine(f.apple, APPLES)}</span>}
+          {f.apple.unsure && <span className="unsure">{unsureLine(f.apple, APPLES)}</span>}{" "}
+          {f.secondApple && <span className="disagree">{disagreeLine(f.apple, f.secondApple, DEFAULT_ALLOWED, APPLES)}</span>}
         </p>
       )}
       <p>
@@ -302,10 +304,11 @@ export function ResultsPage({ record: RECORD, features, back, heading, wrote, ju
                 <td>
                   <a href={`#${f.feature.id}`}>{f.feature.name}</a>
                 </td>
-                {[f.verdict, ...(f.apple ? [f.apple] : [])].map((v, i) => (
+                {([[f.verdict, f.second], ...(f.apple ? [[f.apple, f.secondApple]] : [])] as [Verdict, Verdict?][]).map(([v, second], i) => (
                   <td key={i} data-verdict={v.kind}>
                     {VERDICT_NAME[v.kind].replace(/\.$/, "")}
                     {v.unsure && <span className="unsure">{UNSURE}</span>}
+                    {second && <span className="disagree">{DISAGREE}</span>}
                   </td>
                 ))}
                 <td>{f.verdict.inputs}</td>

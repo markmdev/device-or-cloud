@@ -83,11 +83,11 @@ export const summary: Feature = {
   check(answer, c) {
     const text = answer.trim();
     const count = words(text);
-    if (count > 25) return fail(`${count} words; the limit is 25.`);
-    if (/[.!?]\s+\S/.test(text)) return fail("More than one sentence.");
+    if (count > 25) return fail(`${count} words; the limit is 25.`, "more than 25 words");
+    if (/[.!?]\s+\S/.test(text)) return fail("More than one sentence.", "more than one sentence");
     const lower = text.toLowerCase();
     const missing = (c.expect as { keep: string[][] }).keep.find((ways) => !ways.some((w) => lower.includes(w)));
-    if (missing) return fail(`Leaves out "${missing[0]}".`);
+    if (missing) return fail(`Leaves out "${missing[0]}".`, "a detail of the note left out");
     return OK;
   },
   cases: rows.map(([kind, input, keep], i): Case => ({ id: `summary-${i + 1}`, input, expect: { keep }, kind })),

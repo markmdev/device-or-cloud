@@ -60,7 +60,7 @@ export function template(chrome: Placed[], apple?: Placed[]) {
       parameters[lineFor(feature)] = {
         defaultValue: { value: "" },
         conditionalValues: lines,
-        description: `${feature.name}: one more sentence at the end of its instruction. As written the on-device model is outside the bar. With this line the check found it within, on its own inputs and on inputs held back.`,
+        description: `${feature.name}: one more sentence at the end of its instruction. ${chrome[i].verdict.kind === "device" ? "As written the on-device model's range crosses the bar. With this line the check found it within the bar" : "As written the on-device model is outside the bar. With this line the check found it within"}, on its own inputs and on inputs held back.`,
         valueType: "STRING",
       };
     }
@@ -86,11 +86,12 @@ export function fixesFor(fixes: Record<string, FixRecord[]> | undefined, feature
   return (fixes?.[feature.id] ?? []).filter((fix) => (fix.on === "apple") === onIphone).sort((a, b) => place(a) - place(b));
 }
 
-/** Each feature on a platform, with the first line or setting that moves it to the device at this bar, where one does. */
 export const placedOn = (verdicts: Verdict[], fixes: Record<string, FixRecord[]> | undefined, onIphone: boolean, allowed: number): Placed[] =>
   verdicts.map((verdict) => {
-    const fix = verdict.kind === "cloud" ? fixesFor(fixes, verdict.feature, onIphone).find((fix) => moves(verdict.feature, fix, allowed)) : undefined;
-    return { verdict, fix, unsure: fix ? !!fixRange(verdict.feature, fix, allowed)?.unsure : verdict.kind === "device" && !!verdict.unsure };
+    const tried = fixesFor(fixes, verdict.feature, onIphone), f = verdict.feature;
+    const settles = (fix: FixRecord) => moves(f, fix, allowed) && !fixRange(f, fix, allowed)?.unsure;
+    const fix = verdict.kind === "cloud" ? tried.find((fix) => moves(f, fix, allowed)) : verdict.kind === "device" && verdict.unsure ? tried.find(settles) : undefined;
+    return { verdict, fix, unsure: fix ? !!fixRange(f, fix, allowed)?.unsure : verdict.kind === "device" && !!verdict.unsure };
   });
 
 export const templateText = (chrome: Placed[], apple?: Placed[]) => JSON.stringify(template(chrome, apple), null, 2) + "\n";

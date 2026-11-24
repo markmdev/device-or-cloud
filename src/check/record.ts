@@ -43,7 +43,6 @@ export type CheckRecord = {
   secondGrader?: string;
   /** Where Apple's runs were made. */
   apple?: { device: string; os: string; host: string; date: string };
-  /** Inputs recorded again later, on another Chrome. */
   again?: { chrome: string; date: string; cases: string[] };
   features: Record<string, Record<string, CaseRecord>>;
   /** The held-back inputs as the instruction stands, by feature. */
@@ -239,6 +238,46 @@ export function verdictLine(v: Verdict, who = CHROMES): string {
 }
 
 export const UNSURE = "Not enough inputs to tell";
+
+export const DISAGREE = "The two judges disagree";
+export const SETTLED = "Settled with one more line";
+
+export function settledBasis(feature: Feature, fix: FixRecord): string {
+  const held = feature.heldBack ?? [], kept = tally(feature, fix.held, held);
+  return `Its range comes from the ${feature.cases.length} inputs whose mistakes the line was written from. On ${held.length} held back that it never saw: ${kept.runsRight} of ${kept.runs} runs right.`;
+}
+
+export function brokeLine(v: Verdict): string | undefined {
+  if (v.inputsRight * 10 >= v.inputs) return undefined;
+  const broke = new Map<string, number>();
+  for (const f of v.failures) for (const d of f.device) if (!d.ok && d.rule) broke.set(d.rule, (broke.get(d.rule) ?? 0) + 1);
+  const top = [...broke].sort((a, b) => b[1] - a[1]).slice(0, 3);
+  if (!top.length) return undefined;
+  return `What it got wrong: ${top.map(([rule, n], i) => `${rule} in ${n}${i ? "" : ` of its ${v.runs} answers`}`).join(", ")}.`;
+}
+
+const bySecond = (cases: Cases = {}): Cases =>
+  Object.fromEntries(Object.entries(cases).map(([id, r]) => [id, r.second ? { ...r, grades: { ...r.grades, ...r.second } } : r]));
+
+export function secondVerdict(feature: Feature, cases: Cases | undefined, allowed = DEFAULT_ALLOWED): Verdict | undefined {
+  if (!feature.graded) return undefined;
+  const first = verdictFor(feature, cases, allowed), second = verdictFor(feature, bySecond(cases), allowed);
+  return second.kind !== first.kind || settles(first) !== settles(second) ? second : undefined;
+}
+
+const settles = (v: Verdict) => v.kind === "device" && !v.unsure;
+
+export function disagreeLine(first: Verdict, second: Verdict, allowed: number, who = CHROMES): string {
+  if (first.kind === second.kind)
+    return `${DISAGREE}: judged by the cloud model, ${who} is right on every run on ${first.inputsRight} of ${first.inputs} inputs; judged by the second model, on ${second.inputsRight}. By ${settles(first) ? "the second model" : "the cloud model"}, ${first.inputs} inputs are not enough to be sure.`;
+  const deviceFlips = within(first.runsRight, first.runs, allowed) !== within(second.runsRight, second.runs, allowed);
+  const [model, judge, a, b, of, unit] = deviceFlips
+    ? [who, "the cloud model", first.runsRight, second.runsRight, first.runs, "runs"]
+    : ["the cloud", "the cloud model itself", first.cloudRight, second.cloudRight, first.inputs, "inputs"];
+  const needs = Math.ceil((of * (100 - allowed)) / 100);
+  const by = VERDICT_NAME[second.kind].replace(/\.$/, "").replace(/^./, (c) => c.toLowerCase());
+  return `${DISAGREE}: judged by ${judge}, ${model} is right on ${a} of ${of} ${unit}; judged by the second model, on ${b}. The bar needs ${needs}, so by the second model, ${by}.`;
+}
 
 const inWords = (r: Range) => `${Math.round(r.low)} to ${Math.round(r.high)} wrong answers in 100`;
 

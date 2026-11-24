@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import type { Feature } from "../features";
 import { OutOfRequests, outOfRequests } from "./ask";
 import { missesOf, proposeLine, tryLine, type Tried } from "./fix";
-import { fixRange, moves, RUNS, shortOn, tally, UNSURE, type FixRecord } from "./record";
+import { fixRange, moves, RUNS, SETTLED, shortOn, tally, UNSURE, type FixRecord } from "./record";
 import type { Cases } from "./run";
 
 function Counts({ feature, who, base, heldBase, tried, cloud, allowed }: { feature: Feature; who: string; base: Cases; heldBase?: Cases; tried: Tried; cloud: boolean; allowed: number }) {
@@ -67,7 +67,7 @@ const STEADY = "Apple's model with its randomness off: it always gives its most 
  * What one more line in the instruction does for a feature: the lines already tried on `who`, and, with `canTry`, a line of the
  * reader's own. With onFix, the reader's line is also run in the cloud on the held-back inputs, so it gets its verdict and is kept.
  */
-export function Fixes({ feature, who, onDevice, base, heldBase, fixes, shipped, allowed, canRun, canTry, onFix }: {
+export function Fixes({ feature, who, onDevice, base, heldBase, fixes, shipped, allowed, canRun, whyNot, canTry, onFix }: {
   feature: Feature;
   /** The on-device model the lines were tried on. */
   who: string;
@@ -80,6 +80,7 @@ export function Fixes({ feature, who, onDevice, base, heldBase, fixes, shipped, 
   shipped?: FixRecord;
   allowed: number;
   canRun: boolean;
+  whyNot?: string;
   canTry: boolean;
   onFix?: (fix: FixRecord) => void;
 }) {
@@ -148,7 +149,13 @@ export function Fixes({ feature, who, onDevice, base, heldBase, fixes, shipped, 
           <p>
             <b>{outcome(feature, who, onDevice, heldBase, fix, allowed)}</b>
           </p>
-          {fix === shipped && <p className="shipped">The template under "Apply it" moves this feature with this {kindOf(fix)}: it is there beside the mode.</p>}
+          {fix === shipped && (
+            <p className="shipped">
+              {onDevice
+                ? `${SETTLED}: the template under "Apply it" ships this feature with this ${kindOf(fix)}, beside the mode.`
+                : `The template under "Apply it" moves this feature with this ${kindOf(fix)}: it is there beside the mode.`}
+            </p>
+          )}
         </article>
       ))}
       {canTry && (
@@ -167,6 +174,11 @@ export function Fixes({ feature, who, onDevice, base, heldBase, fixes, shipped, 
         </button>
         <p className="quiet">
           This runs on your computer.{" "}
+          {!canRun && whyNot && (
+            <>
+              <a href="#download">{whyNot}</a>.{" "}
+            </>
+          )}
           {onFix
             ? `The ${feature.heldBack?.length} held-back inputs then go to the cloud model once with the line, to see it still answers them right.`
             : feature.graded

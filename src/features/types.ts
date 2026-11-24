@@ -11,7 +11,7 @@ export type Case = {
   codeDecides?: boolean;
 };
 
-export type Check = { ok: true } | { ok: false; reason: string };
+export type Check = { ok: true } | { ok: false; reason: string; rule?: string };
 
 export type Feature = {
   id: string;
@@ -38,7 +38,7 @@ export type Feature = {
   rules?: { pass: string; unjudged: string };
 };
 
-const fail = (reason: string): Check => ({ ok: false, reason });
+const fail = (reason: string, rule?: string): Check => ({ ok: false, reason, ...(rule ? { rule } : {}) });
 const OK: Check = { ok: true };
 
 export function parse(answer: string): Record<string, unknown> | null {
