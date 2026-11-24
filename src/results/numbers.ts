@@ -10,7 +10,6 @@ export type FeatureNumbers = {
   verdict: Verdict;
   /** The verdict in the iPhone app, on Apple's model, where the record has its runs. */
   apple?: Verdict;
-  /** Each verdict as the second model's judgments would give it, where that is another verdict. */
   second?: Verdict;
   secondApple?: Verdict;
   /** The same counts for each kind of input; `apple` counts Apple's runs. */

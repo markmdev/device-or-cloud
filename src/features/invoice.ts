@@ -9,7 +9,6 @@ type Order = {
 
 const pounds = (pence: number) => `£${(pence / 100).toFixed(2)}`;
 
-/** The total to pay in pence: the goods, less the discount, plus VAT on what is left, then delivery. */
 export function totalOf(o: Order): number {
   const goods = o.lines.reduce((sum, [quantity, , unit]) => sum + quantity * unit, 0);
   return Math.round((goods * (100 - (o.discountPercent ?? 0)) * (100 + (o.vatPercent ?? 0))) / 10000) + (o.deliveryPence ?? 0);
@@ -18,7 +17,6 @@ export function totalOf(o: Order): number {
 const PENCE = /£(\d+(?:\.\d{1,2})?)/;
 const toPence = (text: string) => Math.round(Number(PENCE.exec(text)![1]) * 100);
 
-/** An order read back from the lines the shop's trade form takes; a line it can't read is returned as it is. */
 export function orderOf(text: string): Order | string {
   const order: Order = { lines: [] };
   for (const line of text.split("\n").map((l) => l.trim()).filter(Boolean)) {

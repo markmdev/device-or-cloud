@@ -217,7 +217,6 @@ function Proof({ v, cases, who, recordedOn }: { v: Verdict; cases: Cases; who: s
   );
 }
 
-/** What the line the template ships does for a device verdict that more inputs could still change. */
 function settledLine(feature: Feature, fix: FixRecord, allowed: number, who: string): string {
   const t = fixRange(feature, fix, allowed)!;
   return `${SETTLED}: with the line the template ships, ${who}'s count allows ${Math.round(t.range.low)} to ${Math.round(t.range.high)} wrong answers in 100, clear of the bar.`;
@@ -381,7 +380,6 @@ export function Board({ features, cases, mine = [], recordedOn, held, fixes, ope
   fixes?: Record<string, FixRecord[]>;
   /** The feature whose proof shows first. */
   opensOn?: string;
-  /** The same on the iPhone view. */
   opensOnIphone?: string;
   canRun: boolean;
   /** Given where a line tried on the page is also run in the cloud and kept: a developer's own feature. */

@@ -16,18 +16,20 @@ const FEATURES = SAMPLES.map((s) => s.feature);
  * The prompts whose verdict is "runs on the device": how many hold under both judges with a count more inputs could no
  * longer change, and a sentence for the others, which only looked able to.
  */
+const WORDS = ["none", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve"];
+
 function found(device: Verdict[], cases: Record<string, Cases>, allowed: number): { sure: number; rest: string } {
   const split = device.filter((v) => secondVerdict(v.feature, cases[v.feature.id], allowed));
   const open = device.filter((v) => v.unsure && !split.includes(v)), counts = open.map((v) => v.inputs), fewest = Math.min(...counts), most = Math.max(...counts);
   const each = `${fewest === most ? fewest : `${fewest} to ${most}`} inputs${open.length > 1 ? " each" : ""}`;
-  const more = open.length + split.length, them = split.length === 1 ? "one" : `${split.length}`;
+  const more = open.length + split.length, them = WORDS[split.length];
   const rest = !more
     ? ""
     : !split.length
       ? ` ${more} more looked able to, and ${each} were not enough to be sure.`
       : !open.length
         ? ` ${more} more looked able to, but the two judges disagree on ${more === 1 ? "it" : "them"}.`
-        : ` ${more} more looked able to: for ${open.length === 1 ? "one" : open.length}, ${each} were not enough to be sure, and the two judges disagree on ${them}.`;
+        : ` ${more} more looked able to: for ${WORDS[open.length]}, ${each} were not enough to be sure, and the two judges disagree on ${them}.`;
   return { sure: device.length - more, rest };
 }
 

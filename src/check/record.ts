@@ -43,7 +43,6 @@ export type CheckRecord = {
   secondGrader?: string;
   /** Where Apple's runs were made. */
   apple?: { device: string; os: string; host: string; date: string };
-  /** Inputs recorded again later, on another Chrome. */
   again?: { chrome: string; date: string; cases: string[] };
   features: Record<string, Record<string, CaseRecord>>;
   /** The held-back inputs as the instruction stands, by feature. */
@@ -243,13 +242,11 @@ export const UNSURE = "Not enough inputs to tell";
 export const DISAGREE = "The two judges disagree";
 export const SETTLED = "Settled with one more line";
 
-/** What a settled count rests on: the inputs the line was written from, and the held-back ones it never saw. */
 export function settledBasis(feature: Feature, fix: FixRecord): string {
   const held = feature.heldBack ?? [], kept = tally(feature, fix.held, held);
   return `Its range comes from the ${feature.cases.length} inputs whose mistakes the line was written from. On ${held.length} held back that it never saw: ${kept.runsRight} of ${kept.runs} runs right.`;
 }
 
-/** For a model that got almost nothing right: the rules its answers broke most, by how many answers broke each. */
 export function brokeLine(v: Verdict): string | undefined {
   if (v.inputsRight * 10 >= v.inputs) return undefined;
   const broke = new Map<string, number>();
@@ -262,15 +259,17 @@ export function brokeLine(v: Verdict): string | undefined {
 const bySecond = (cases: Cases = {}): Cases =>
   Object.fromEntries(Object.entries(cases).map(([id, r]) => [id, r.second ? { ...r, grades: { ...r.grades, ...r.second } } : r]));
 
-/** The verdict the second model's judgments give, where it isn't the verdict the cloud model's own judging gives. */
 export function secondVerdict(feature: Feature, cases: Cases | undefined, allowed = DEFAULT_ALLOWED): Verdict | undefined {
   if (!feature.graded) return undefined;
   const first = verdictFor(feature, cases, allowed), second = verdictFor(feature, bySecond(cases), allowed);
-  return second.kind !== first.kind ? second : undefined;
+  return second.kind !== first.kind || settles(first) !== settles(second) ? second : undefined;
 }
 
-/** The two counts the judges give, against the count the bar needs. */
+const settles = (v: Verdict) => v.kind === "device" && !v.unsure;
+
 export function disagreeLine(first: Verdict, second: Verdict, allowed: number, who = CHROMES): string {
+  if (first.kind === second.kind)
+    return `${DISAGREE}: judged by the cloud model, ${who} is right on every run on ${first.inputsRight} of ${first.inputs} inputs; judged by the second model, on ${second.inputsRight}. By ${settles(first) ? "the second model" : "the cloud model"}, ${first.inputs} inputs are not enough to be sure.`;
   const deviceFlips = within(first.runsRight, first.runs, allowed) !== within(second.runsRight, second.runs, allowed);
   const [model, judge, a, b, of, unit] = deviceFlips
     ? [who, "the cloud model", first.runsRight, second.runsRight, first.runs, "runs"]

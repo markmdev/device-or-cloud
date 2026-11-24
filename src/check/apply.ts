@@ -86,10 +86,6 @@ export function fixesFor(fixes: Record<string, FixRecord[]> | undefined, feature
   return (fixes?.[feature.id] ?? []).filter((fix) => (fix.on === "apple") === onIphone).sort((a, b) => place(a) - place(b));
 }
 
-/**
- * Each feature on a platform, with the line or setting the template ships with it, where one is needed: the first that moves a
- * feature kept in the cloud to the device at this bar, or the first that settles a device verdict whose range crosses the bar.
- */
 export const placedOn = (verdicts: Verdict[], fixes: Record<string, FixRecord[]> | undefined, onIphone: boolean, allowed: number): Placed[] =>
   verdicts.map((verdict) => {
     const tried = fixesFor(fixes, verdict.feature, onIphone), f = verdict.feature;

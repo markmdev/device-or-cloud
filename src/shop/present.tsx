@@ -9,11 +9,8 @@ type Shown = {
   heading: string;
   button: string;
   sample?: string;
-  /** The input's first line is the shop's own, not the customer's. */
   ownFirstLine?: true;
-  /** Where the check found neither model good enough and code can do it: the answer, worked out without a model. */
   inCode?(input: string): string;
-  /** What the customer is told about the feature before they use it. */
   note?: string;
   result(answer: Record<string, unknown>, text: string): ReactNode;
 };

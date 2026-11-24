@@ -29,7 +29,6 @@ function settings(): Record<string, Setting> {
 const ON_DEVICE: Mode[] = ["prefer_on_device", "only_on_device"];
 const IN_CODE = "Worked out in code, no model";
 
-/** What the customer is told when the model's answer didn't come: plain words, never the SDK's own message. */
 function plainProblem(e: unknown): string {
   if (!navigator.onLine) return "This feature runs in the cloud, so it needs a connection.";
   if (e instanceof OutOfRequests) return outOfRequests(e);
