@@ -473,8 +473,9 @@ export function Board({ features, cases, mine = [], recordedOn, held, fixes, ope
             <ul>{onDevice.map((v) => row(v))}</ul>
             {onDevice.length === 0 && (
               <p className="none">
-                Nothing yet. At this bar, {who} is wrong too often on every feature.
-                {firstOver && ` The first to cross is ${firstOver.name}, at ${firstOver.at}.`}
+                {features.length === 1
+                  ? `Nothing yet. At this bar, ${who} is wrong too often on it.${firstOver ? ` It would cross at ${firstOver.at}.` : ""}`
+                  : `Nothing yet. At this bar, ${who} is wrong too often on every feature.${firstOver ? ` The first to cross is ${firstOver.name}, at ${firstOver.at}.` : ""}`}
               </p>
             )}
           </section>

@@ -14,6 +14,8 @@ type Saved = { features: OwnFeature[]; answers: Record<string, Cases>; fixes: Re
 
 type Example = {
   recorded: { machine: string; chrome: string; date: string };
+  /** What we did with the right answers the cloud model wrote, in a sentence. */
+  corrected: string;
   from: { app: string; link: string; licence: string };
   feature: OwnFeature;
   answers: Cases;
@@ -117,7 +119,7 @@ function FeatureForm({ own, readOnly, onChange, onRemove, onProblem }: { own: Ow
         <input type="text" value={own.name} readOnly={readOnly} onChange={(e) => onChange({ ...own, name: e.target.value })} placeholder="Sort an incoming email" />
       </label>
       <label>
-        The instruction your app sends
+        {readOnly ? "The instruction the app sends" : "The instruction your app sends"}
         <textarea value={own.system} readOnly={readOnly} onChange={(e) => reworded({ system: e.target.value })} rows={4} />
       </label>
       <label>
@@ -362,9 +364,11 @@ function App() {
             <p>
               {judged.filter(hasExpect).length} of {example ? "the example's" : "your"} {judged.length} inputs have a right answer, and code compared every answer to it.
               {judged.some((i) => !hasExpect(i)) &&
-                ` The other ${judged.filter((i) => !hasExpect(i)).length} have none, so ${CLOUD_MODEL} judged each answer against your instruction, its own answers included; a failure shown above says which way it was judged.`}
+                ` The other ${judged.filter((i) => !hasExpect(i)).length} have none, so ${CLOUD_MODEL} judged each answer against ${example ? "the" : "your"} instruction, its own answers included; a failure shown above says which way it was judged.`}
               {wroteRight > 0 &&
-                ` ${wroteRight} of the right answers were written by ${CLOUD_MODEL} itself, which flatters its own score on them unless you corrected them.`}
+                (example
+                  ? ` ${wroteRight} of the right answers were written by ${CLOUD_MODEL} itself. ${example.corrected}`
+                  : ` ${wroteRight} of the right answers were written by ${CLOUD_MODEL} itself, which flatters its own score on them unless you corrected them.`)}
             </p>
           </footer>
         </>
