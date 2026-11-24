@@ -1,0 +1,3085 @@
+{
+ "recorded": {
+  "machine": "our laptop (32 GB)",
+  "chrome": "STAND-IN",
+  "date": "2026-11-24",
+  "cloudModel": "gemini-3.5-flash-lite"
+ },
+ "from": {
+  "app": "STAND-IN: the shop's mood feature",
+  "link": "https://example.com",
+  "licence": "Apache 2.0"
+ },
+ "feature": {
+  "id": "own-example",
+  "name": "STAND-IN Read a review's mood",
+  "system": "You read one product review from Larkfield, an online home and garden shop, and say how the buyer feels about the product overall. positive: happy with the product. negative: unhappy with the product. mixed: clear praise and a clear complaint about the product, with neither winning.",
+  "shape": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"label\": {\n      \"type\": \"string\",\n      \"enum\": [\n        \"positive\",\n        \"negative\",\n        \"mixed\"\n      ]\n    }\n  },\n  \"required\": [\n    \"label\"\n  ],\n  \"additionalProperties\": false\n}",
+  "inputs": [
+   {
+    "id": "mood-1",
+    "input": "Does exactly what it says. The blades are sharp and it was half the price of the big brands.",
+    "expect": "{\"label\":\"positive\"}",
+    "kind": "your own inputs",
+    "by": "you",
+    "ticked": true
+   },
+   {
+    "id": "mood-2",
+    "input": "Bought two for the patio. Sturdy, easy to put together, and they've survived a week of rain.",
+    "expect": "{\"label\":\"positive\"}",
+    "kind": "your own inputs",
+    "by": "you",
+    "ticked": true
+   },
+   {
+    "id": "mood-3",
+    "input": "Lovely soft throw, washes well. My daughter has claimed it.",
+    "expect": "{\"label\":\"positive\"}",
+    "kind": "your own inputs",
+    "by": "you",
+    "ticked": true
+   },
+   {
+    "id": "mood-4",
+    "input": "Arrived well packed. The colour matches the photos and the stitching is neat.",
+    "expect": "{\"label\":\"positive\"}",
+    "kind": "plain reviews",
+    "by": "cloud",
+    "ticked": true
+   },
+   {
+    "id": "mood-5",
+    "input": "Third one I've bought from here. Never had a problem.",
+    "expect": "{\"label\":\"positive\"}",
+    "kind": "plain reviews",
+    "by": "cloud",
+    "ticked": true
+   },
+   {
+    "id": "mood-6",
+    "input": "Stopped working after two days. Waste of money.",
+    "expect": "{\"label\":\"negative\"}",
+    "kind": "plain reviews",
+    "by": "cloud",
+    "ticked": true
+   },
+   {
+    "id": "mood-7",
+    "input": "The handle snapped the first time I lifted it. Cheap plastic.",
+    "expect": "{\"label\":\"negative\"}",
+    "kind": "plain reviews",
+    "by": "cloud",
+    "ticked": true
+   },
+   {
+    "id": "mood-8",
+    "input": "Nothing like the picture. Thin fabric and it smells of chemicals.",
+    "expect": "{\"label\":\"negative\"}",
+    "kind": "plain reviews",
+    "by": "cloud",
+    "ticked": false
+   },
+   {
+    "id": "mood-9",
+    "input": "Leaks from the base. I've tried three washers and it still drips.",
+    "expect": "{\"label\":\"negative\"}",
+    "kind": "plain reviews",
+    "by": "cloud",
+    "ticked": true
+   },
+   {
+    "id": "mood-10",
+    "input": "Wobbly, even after tightening every bolt. I wouldn't put anything heavy on it.",
+    "expect": "{\"label\":\"negative\"}",
+    "kind": "plain reviews",
+    "by": "cloud",
+    "ticked": true
+   },
+   {
+    "id": "mood-11",
+    "input": "Looks beautiful on the table, but the lid doesn't fit and steam escapes everywhere. I'm torn on whether to keep it.",
+    "expect": "{\"label\":\"mixed\"}",
+    "kind": "plain reviews",
+    "by": "cloud",
+    "ticked": true
+   },
+   {
+    "id": "mood-12",
+    "input": "Great light, terrible battery. It lasts an evening at most. I can't decide if I'd buy it again.",
+    "expect": "{\"label\":\"mixed\"}",
+    "kind": "plain reviews",
+    "by": "cloud",
+    "ticked": true
+   },
+   {
+    "id": "mood-13",
+    "input": "The cushions are comfortable but the covers faded badly in a month. Half happy, half annoyed.",
+    "expect": "{\"label\":\"mixed\"}",
+    "kind": "plain reviews",
+    "by": "cloud",
+    "ticked": true
+   },
+   {
+    "id": "mood-14",
+    "input": "Cuts well and feels solid, yet the safety catch is so fiddly that I avoid using it. Mixed feelings.",
+    "expect": "{\"label\":\"mixed\"}",
+    "kind": "plain reviews",
+    "by": "cloud",
+    "ticked": true
+   },
+   {
+    "id": "mood-15",
+    "input": "Good size and a nice finish; the drawers stick badly. Three stars: as much good as bad.",
+    "expect": "{\"label\":\"mixed\"}",
+    "kind": "plain reviews",
+    "by": "cloud",
+    "ticked": true
+   },
+   {
+    "id": "mood-16",
+    "input": "Oh brilliant, another kettle that turns itself off before the water boils. Just what I wanted.",
+    "expect": "{\"label\":\"negative\"}",
+    "kind": "sarcastic reviews",
+    "by": "cloud",
+    "ticked": true
+   },
+   {
+    "id": "mood-17",
+    "input": "If you enjoy assembling furniture with missing screws and holes that don't line up, this is the wardrobe for you.",
+    "expect": "{\"label\":\"negative\"}",
+    "kind": "sarcastic reviews",
+    "by": "cloud",
+    "ticked": true
+   },
+   {
+    "id": "mood-18",
+    "input": "I expected it to be flimsy at this price. It isn't. Not a single complaint.",
+    "expect": "{\"label\":\"positive\"}",
+    "kind": "praise written in negative words",
+    "by": "cloud",
+    "ticked": true
+   },
+   {
+    "id": "mood-19",
+    "input": "The courier was two days late and the box was battered, but the mirror itself is perfect and exactly what I wanted.",
+    "expect": "{\"label\":\"positive\"}",
+    "kind": "reviews that also judge the delivery or the service",
+    "by": "cloud",
+    "ticked": true
+   },
+   {
+    "id": "mood-20",
+    "input": "Five stars for the customer service, one star for the hedge trimmer, which is going back.",
+    "expect": "{\"label\":\"negative\"}",
+    "kind": "reviews that also judge the delivery or the service",
+    "by": "cloud",
+    "ticked": false
+   },
+   {
+    "id": "mood-21",
+    "input": "I wanted to love it. The design is clever. But it broke within a week and the replacement did too.",
+    "expect": "{\"label\":\"negative\"}",
+    "kind": "reviews that change direction halfway",
+    "by": "cloud",
+    "ticked": true
+   },
+   {
+    "id": "mood-22",
+    "input": "I was sceptical after the reviews here, but mine works fine and has done for six months. Happy.",
+    "expect": "{\"label\":\"positive\"}",
+    "kind": "reviews that change direction halfway",
+    "by": "cloud",
+    "ticked": true
+   },
+   {
+    "id": "mood-23",
+    "input": "Smaller than I pictured, which turned out to be a blessing: it fits the windowsill perfectly.",
+    "expect": "{\"label\":\"positive\"}",
+    "kind": "reviews that change direction halfway",
+    "by": "cloud",
+    "ticked": true
+   },
+   {
+    "id": "mood-24",
+    "input": "Would be perfect if it came in grey. As it is, still the best watering can I've owned.",
+    "expect": "{\"label\":\"positive\"}",
+    "kind": "reviews that change direction halfway",
+    "by": "cloud",
+    "ticked": true
+   },
+   {
+    "id": "mood-25",
+    "input": "Returned it. Enough said.",
+    "expect": "{\"label\":\"negative\"}",
+    "kind": "very short reviews",
+    "by": "cloud",
+    "ticked": true
+   },
+   {
+    "id": "mood-26",
+    "input": "Heats the whole greenhouse in ten minutes and barely moves the meter. Very pleased.",
+    "expect": "{\"label\":\"positive\"}",
+    "kind": "plain reviews",
+    "by": "cloud",
+    "ticked": true
+   },
+   {
+    "id": "mood-27",
+    "input": "Sturdy little step stool. Folds flat and holds my weight without a creak.",
+    "expect": "{\"label\":\"positive\"}",
+    "kind": "plain reviews",
+    "by": "cloud",
+    "ticked": true
+   },
+   {
+    "id": "mood-28",
+    "input": "The duvet cover is as soft as the description says and the buttons are sewn on properly.",
+    "expect": "{\"label\":\"positive\"}",
+    "kind": "plain reviews",
+    "by": "cloud",
+    "ticked": true
+   },
+   {
+    "id": "mood-29",
+    "input": "Easy to fit, looks smart, and the soft-close hinge actually works. Recommended.",
+    "expect": "{\"label\":\"positive\"}",
+    "kind": "plain reviews",
+    "by": "cloud",
+    "ticked": true
+   },
+   {
+    "id": "mood-30",
+    "input": "My tomatoes have never done better than in these grow bags.",
+    "expect": "{\"label\":\"positive\"}",
+    "kind": "plain reviews",
+    "by": "cloud",
+    "ticked": true
+   },
+   {
+    "id": "mood-31",
+    "input": "The zip broke on the second use and the seams are already fraying.",
+    "expect": "{\"label\":\"negative\"}",
+    "kind": "plain reviews",
+    "by": "cloud",
+    "ticked": true
+   },
+   {
+    "id": "mood-32",
+    "input": "Rusted within a month of being outside. So much for weatherproof.",
+    "expect": "{\"label\":\"negative\"}",
+    "kind": "plain reviews",
+    "by": "cloud",
+    "ticked": true
+   },
+   {
+    "id": "mood-33",
+    "input": "The timer is wildly inaccurate and the alarm is too quiet to hear from the next room.",
+    "expect": "{\"label\":\"negative\"}",
+    "kind": "plain reviews",
+    "by": "cloud",
+    "ticked": true
+   }
+  ]
+ },
+ "answers": {
+  "mood-1": {
+   "device": [
+    {
+     "text": "{\"label\": \"positive\"}",
+     "seconds": 0.772699999988079
+    },
+    {
+     "text": "{\"label\": \"positive\"}",
+     "seconds": 0.6215
+    },
+    {
+     "text": "{\"label\":\"positive\"}",
+     "seconds": 0.595
+    }
+   ],
+   "cloud": {
+    "text": "{\n  \"label\": \"positive\"\n}",
+    "seconds": 1.4275,
+    "tokensIn": 80,
+    "tokensOut": 11
+   },
+   "apple": [
+    {
+     "seconds": 0.591467792,
+     "text": "{\"label\": \"positive\"}"
+    },
+    {
+     "seconds": 0.58319575,
+     "text": "{\"label\": \"positive\"}"
+    },
+    {
+     "seconds": 0.586114125,
+     "text": "{\"label\": \"positive\"}"
+    }
+   ]
+  },
+  "mood-2": {
+   "device": [
+    {
+     "text": "{\"label\": \"positive\"}",
+     "seconds": 0.631699999988079
+    },
+    {
+     "text": "{\"label\": \"positive\"}",
+     "seconds": 0.6336000000238419
+    },
+    {
+     "text": "{\"label\": \"positive\"}",
+     "seconds": 0.627699999988079
+    }
+   ],
+   "cloud": {
+    "text": "{\n  \"label\": \"positive\"\n}",
+    "seconds": 0.8865,
+    "tokensIn": 83,
+    "tokensOut": 11
+   },
+   "apple": [
+    {
+     "text": "{\"label\": \"positive\"}",
+     "seconds": 0.59197025
+    },
+    {
+     "text": "{\"label\": \"positive\"}",
+     "seconds": 0.577018292
+    },
+    {
+     "text": "{\"label\": \"positive\"}",
+     "seconds": 0.589220375
+    }
+   ]
+  },
+  "mood-3": {
+   "device": [
+    {
+     "text": "{\"label\":\"positive\"}",
+     "seconds": 0.5896999999880791
+    },
+    {
+     "text": "{\"label\":\"positive\"}",
+     "seconds": 0.5785
+    },
+    {
+     "text": "{\"label\":\"positive\"}",
+     "seconds": 0.579
+    }
+   ],
+   "cloud": {
+    "text": "{\n  \"label\": \"positive\"\n}",
+    "seconds": 0.9345,
+    "tokensIn": 72,
+    "tokensOut": 11
+   },
+   "apple": [
+    {
+     "seconds": 0.5893895,
+     "text": "{\"label\": \"positive\"}"
+    },
+    {
+     "seconds": 0.578902166,
+     "text": "{\"label\": \"positive\"}"
+    },
+    {
+     "seconds": 0.567849542,
+     "text": "{\"label\": \"positive\"}"
+    }
+   ]
+  },
+  "mood-4": {
+   "device": [
+    {
+     "text": "{\"label\": \"positive\"}",
+     "seconds": 0.6333999999761581
+    },
+    {
+     "text": "{\"label\": \"positive\"}",
+     "seconds": 0.619
+    },
+    {
+     "text": "{\"label\":\"positive\"}",
+     "seconds": 0.5821000000238419
+    }
+   ],
+   "cloud": {
+    "text": "{\n  \"label\": \"positive\"\n}",
+    "seconds": 0.7604000000357628,
+    "tokensIn": 75,
+    "tokensOut": 11
+   },
+   "apple": [
+    {
+     "seconds": 0.58737025,
+     "text": "{\"label\": \"positive\"}"
+    },
+    {
+     "seconds": 0.615350125,
+     "text": "{\"label\": \"positive\"}"
+    },
+    {
+     "text": "{\"label\": \"positive\"}",
+     "seconds": 0.613637958
+    }
+   ]
+  },
+  "mood-5": {
+   "device": [
+    {
+     "text": "{\"label\": \"positive\"}",
+     "seconds": 0.6293000000119209
+    },
+    {
+     "text": "{\"label\": \"positive\"}",
+     "seconds": 0.6123999999761581
+    },
+    {
+     "text": "{\"label\": \"positive\"}",
+     "seconds": 0.6122000000476837
+    }
+   ],
+   "cloud": {
+    "text": "{\n  \"label\": \"positive\"\n}",
+    "seconds": 0.8415,
+    "tokensIn": 73,
+    "tokensOut": 11
+   },
+   "apple": [
+    {
+     "seconds": 0.579859708,
+     "text": "{\"label\": \"positive\"}"
+    },
+    {
+     "seconds": 0.57853975,
+     "text": "{\"label\": \"positive\"}"
+    },
+    {
+     "seconds": 0.579942458,
+     "text": "{\"label\": \"positive\"}"
+    }
+   ]
+  },
+  "mood-6": {
+   "device": [
+    {
+     "text": "{\"label\": \"negative\"}",
+     "seconds": 0.6155
+    },
+    {
+     "text": "{\"label\": \"negative\"}",
+     "seconds": 0.6080999999642372
+    },
+    {
+     "text": "{\"label\": \"negative\"}",
+     "seconds": 0.6551000000238418
+    }
+   ],
+   "cloud": {
+    "text": "{\n  \"label\": \"negative\"\n}",
+    "seconds": 1.089800000011921,
+    "tokensIn": 69,
+    "tokensOut": 11
+   },
+   "apple": [
+    {
+     "seconds": 0.600018209,
+     "text": "{\"label\": \"negative\"}"
+    },
+    {
+     "seconds": 0.590037166,
+     "text": "{\"label\": \"negative\"}"
+    },
+    {
+     "seconds": 0.603211541,
+     "text": "{\"label\": \"negative\"}"
+    }
+   ]
+  },
+  "mood-7": {
+   "device": [
+    {
+     "text": "{\"label\":\"negative\"}",
+     "seconds": 0.623
+    },
+    {
+     "text": "{\"label\": \"negative\"}",
+     "seconds": 0.6485
+    },
+    {
+     "text": "{\"label\": \"negative\"}",
+     "seconds": 0.6174000000357628
+    }
+   ],
+   "cloud": {
+    "text": "{\n  \"label\": \"negative\"\n}",
+    "seconds": 0.7081000000238419,
+    "tokensIn": 72,
+    "tokensOut": 11
+   },
+   "apple": [
+    {
+     "text": "{\"label\": \"negative\"}",
+     "seconds": 0.595839167
+    },
+    {
+     "text": "{\"label\": \"negative\"}",
+     "seconds": 0.605092375
+    },
+    {
+     "text": "{\"label\": \"negative\"}",
+     "seconds": 0.565411292
+    }
+   ]
+  },
+  "mood-8": {
+   "device": [
+    {
+     "text": "{\"label\": \"negative\"}",
+     "seconds": 0.6348000000119209
+    },
+    {
+     "text": "{\"label\": \"negative\"}",
+     "seconds": 0.6774000000357628
+    },
+    {
+     "text": "{\"label\": \"negative\"}",
+     "seconds": 0.674
+    }
+   ],
+   "cloud": {
+    "text": "{\n  \"label\": \"negative\"\n}",
+    "seconds": 0.9911000000238419,
+    "tokensIn": 72,
+    "tokensOut": 11
+   },
+   "apple": [
+    {
+     "seconds": 0.570677666,
+     "text": "{\"label\": \"negative\"}"
+    },
+    {
+     "seconds": 0.589762209,
+     "text": "{\"label\": \"negative\"}"
+    },
+    {
+     "seconds": 0.576260209,
+     "text": "{\"label\": \"negative\"}"
+    }
+   ]
+  },
+  "mood-9": {
+   "device": [
+    {
+     "text": "{\"label\":\"negative\"}",
+     "seconds": 0.6216999999880791
+    },
+    {
+     "text": "{\"label\":\"negative\"}",
+     "seconds": 0.6268000000119209
+    },
+    {
+     "text": "{\"label\":\"negative\"}",
+     "seconds": 0.5962999999523163
+    }
+   ],
+   "cloud": {
+    "text": "{\n  \"label\": \"negative\"\n}",
+    "seconds": 1.1261999999880792,
+    "tokensIn": 75,
+    "tokensOut": 11
+   },
+   "apple": [
+    {
+     "seconds": 0.559147917,
+     "text": "{\"label\": \"negative\"}"
+    },
+    {
+     "seconds": 0.5860925,
+     "text": "{\"label\": \"negative\"}"
+    },
+    {
+     "seconds": 0.583164709,
+     "text": "{\"label\": \"negative\"}"
+    }
+   ]
+  },
+  "mood-10": {
+   "device": [
+    {
+     "text": "{\"label\": \"negative\"}",
+     "seconds": 0.6432000000476837
+    },
+    {
+     "text": "{\"label\": \"negative\"}",
+     "seconds": 0.6365999999642372
+    },
+    {
+     "text": "{\"label\":\"negative\"}",
+     "seconds": 0.5988000000119209
+    }
+   ],
+   "cloud": {
+    "text": "{\n  \"label\": \"negative\"\n}",
+    "seconds": 0.9217000000476837,
+    "tokensIn": 78,
+    "tokensOut": 11
+   },
+   "apple": [
+    {
+     "seconds": 0.603536791,
+     "text": "{\"label\": \"negative\"}"
+    },
+    {
+     "seconds": 0.597033375,
+     "text": "{\"label\": \"negative\"}"
+    },
+    {
+     "seconds": 0.615080667,
+     "text": "{\"label\": \"negative\"}"
+    }
+   ]
+  },
+  "mood-11": {
+   "device": [
+    {
+     "text": "{\"label\": \"mixed\"}",
+     "seconds": 0.6597999999523163
+    },
+    {
+     "text": "{\"label\": \"mixed\"}",
+     "seconds": 0.644
+    },
+    {
+     "text": "{\"label\":\"mixed\"}",
+     "seconds": 0.616
+    }
+   ],
+   "cloud": {
+    "text": "{\n  \"label\": \"mixed\"\n}",
+    "seconds": 1.253800000011921,
+    "tokensIn": 87,
+    "tokensOut": 11
+   },
+   "apple": [
+    {
+     "seconds": 0.615126583,
+     "text": "{\"label\": \"mixed\"}"
+    },
+    {
+     "seconds": 0.630131125,
+     "text": "{\"label\": \"mixed\"}"
+    },
+    {
+     "text": "{\"label\": \"mixed\"}",
+     "seconds": 0.635354792
+    }
+   ]
+  },
+  "mood-12": {
+   "device": [
+    {
+     "text": "{\"label\":\"mixed\"}",
+     "seconds": 0.6206000000238419
+    },
+    {
+     "text": "{\"label\":\"mixed\"}",
+     "seconds": 0.6350999999642372
+    },
+    {
+     "text": "{\"label\": \"mixed\"}",
+     "seconds": 0.6454000000357628
+    }
+   ],
+   "cloud": {
+    "text": "{\n  \"label\": \"mixed\"\n}",
+    "seconds": 0.8955999999642372,
+    "tokensIn": 85,
+    "tokensOut": 11
+   },
+   "apple": [
+    {
+     "text": "{\"label\": \"negative\"}",
+     "seconds": 0.712204459
+    },
+    {
+     "text": "{\"label\": \"negative\"}",
+     "seconds": 0.661106333
+    },
+    {
+     "text": "{\"label\": \"negative\"}",
+     "seconds": 0.614107916
+    }
+   ]
+  },
+  "mood-13": {
+   "device": [
+    {
+     "text": "{\"label\": \"mixed\"}",
+     "seconds": 0.6522999999523162
+    },
+    {
+     "text": "{\"label\": \"mixed\"}",
+     "seconds": 0.6278000000119209
+    },
+    {
+     "text": "{\"label\": \"mixed\"}",
+     "seconds": 0.628
+    }
+   ],
+   "cloud": {
+    "text": "{\n  \"label\": \"mixed\"\n}",
+    "seconds": 0.8198000000119209,
+    "tokensIn": 78,
+    "tokensOut": 11
+   },
+   "apple": [
+    {
+     "text": "{\"label\": \"mixed\"}",
+     "seconds": 0.634044
+    },
+    {
+     "text": "{\"label\": \"mixed\"}",
+     "seconds": 0.616610417
+    },
+    {
+     "text": "{\"label\": \"mixed\"}",
+     "seconds": 0.602238917
+    }
+   ]
+  },
+  "mood-14": {
+   "device": [
+    {
+     "text": "{\"label\": \"mixed\"}",
+     "seconds": 0.6603000000119209
+    },
+    {
+     "text": "{\"label\": \"mixed\"}",
+     "seconds": 0.6345999999642372
+    },
+    {
+     "text": "{\"label\": \"mixed\"}",
+     "seconds": 0.6285
+    }
+   ],
+   "cloud": {
+    "text": "{\n  \"label\": \"mixed\"\n}",
+    "seconds": 1.135,
+    "tokensIn": 83,
+    "tokensOut": 11
+   },
+   "apple": [
+    {
+     "text": "{\"label\": \"mixed\"}",
+     "seconds": 0.597542416
+    },
+    {
+     "text": "{\"label\": \"mixed\"}",
+     "seconds": 0.616482542
+    },
+    {
+     "text": "{\"label\": \"mixed\"}",
+     "seconds": 0.612925792
+    }
+   ]
+  },
+  "mood-15": {
+   "device": [
+    {
+     "text": "{\"label\": \"mixed\"}",
+     "seconds": 0.649
+    },
+    {
+     "text": "{\"label\": \"mixed\"}",
+     "seconds": 0.626
+    },
+    {
+     "text": "{\"label\":\"mixed\"}",
+     "seconds": 0.600300000011921
+    }
+   ],
+   "cloud": {
+    "text": "{\n  \"label\": \"mixed\"\n}",
+    "seconds": 0.9065,
+    "tokensIn": 80,
+    "tokensOut": 11
+   },
+   "apple": [
+    {
+     "seconds": 0.644008583,
+     "text": "{\"label\": \"mixed\"}"
+    },
+    {
+     "seconds": 0.678970875,
+     "text": "{\"label\": \"mixed\"}"
+    },
+    {
+     "seconds": 0.648929875,
+     "text": "{\"label\": \"mixed\"}"
+    }
+   ]
+  },
+  "mood-16": {
+   "device": [
+    {
+     "text": "{\"label\": \"negative\"}",
+     "seconds": 0.669699999988079
+    },
+    {
+     "text": "{\"label\": \"negative\"}",
+     "seconds": 0.6313999999761581
+    },
+    {
+     "text": "{\"label\":\"negative\"}",
+     "seconds": 0.6159000000357628
+    }
+   ],
+   "cloud": {
+    "text": "{\n  \"label\": \"negative\"\n}",
+    "seconds": 1.2323000000119209,
+    "tokensIn": 78,
+    "tokensOut": 11
+   },
+   "apple": [
+    {
+     "text": "{\"label\": \"positive\"}",
+     "seconds": 0.6009055
+    },
+    {
+     "text": "{\"label\": \"positive\"}",
+     "seconds": 0.583943458
+    },
+    {
+     "text": "{\"label\": \"positive\"}",
+     "seconds": 0.586228541
+    }
+   ]
+  },
+  "mood-17": {
+   "device": [
+    {
+     "text": "{\"label\":\"negative\"}",
+     "seconds": 0.6235999999642372
+    },
+    {
+     "text": "{\"label\":\"negative\"}",
+     "seconds": 0.6016000000238418
+    },
+    {
+     "text": "{\"label\": \"negative\"}",
+     "seconds": 0.6310999999642373
+    }
+   ],
+   "cloud": {
+    "text": "{\n  \"label\": \"negative\"\n}",
+    "seconds": 0.9276000000238419,
+    "tokensIn": 83,
+    "tokensOut": 11
+   },
+   "apple": [
+    {
+     "text": "{\"label\": \"negative\"}",
+     "seconds": 0.6574765
+    },
+    {
+     "text": "{\"label\": \"negative\"}",
+     "seconds": 0.598206375
+    },
+    {
+     "text": "{\"label\": \"negative\"}",
+     "seconds": 0.612204541
+    }
+   ]
+  },
+  "mood-18": {
+   "device": [
+    {
+     "text": "{\"label\": \"positive\"}",
+     "seconds": 0.64
+    },
+    {
+     "text": "{\"label\":\"positive\"}",
+     "seconds": 0.596199999988079
+    },
+    {
+     "text": "{\"label\":\"positive\"}",
+     "seconds": 0.6046999999880791
+    }
+   ],
+   "cloud": {
+    "text": "{\n  \"label\": \"positive\"\n}",
+    "seconds": 1.0208000000119208,
+    "tokensIn": 79,
+    "tokensOut": 11
+   },
+   "apple": [
+    {
+     "seconds": 0.618056625,
+     "text": "{\"label\": \"positive\"}"
+    },
+    {
+     "seconds": 0.629132292,
+     "text": "{\"label\": \"positive\"}"
+    },
+    {
+     "seconds": 0.663758041,
+     "text": "{\"label\": \"positive\"}"
+    }
+   ]
+  },
+  "mood-19": {
+   "device": [
+    {
+     "text": "{\"label\": \"mixed\"}",
+     "seconds": 0.6338999999761581
+    },
+    {
+     "text": "{\"label\":\"mixed\"}",
+     "seconds": 0.601300000011921
+    },
+    {
+     "text": "{\"label\": \"mixed\"}",
+     "seconds": 0.6254000000357628
+    }
+   ],
+   "cloud": {
+    "text": "{\n  \"label\": \"mixed\"\n}",
+    "seconds": 1.0236999999880791,
+    "tokensIn": 83,
+    "tokensOut": 11
+   },
+   "apple": [
+    {
+     "text": "{\"label\": \"mixed\"}",
+     "seconds": 0.642875834
+    },
+    {
+     "text": "{\"label\": \"positive\"}",
+     "seconds": 0.616777875
+    },
+    {
+     "text": "{\"label\": \"mixed\"}",
+     "seconds": 0.601992167
+    }
+   ]
+  },
+  "mood-20": {
+   "device": [
+    {
+     "text": "{\"label\": \"mixed\"}",
+     "seconds": 0.648800000011921
+    },
+    {
+     "text": "{\"label\": \"mixed\"}",
+     "seconds": 0.6276000000238419
+    },
+    {
+     "text": "{\"label\": \"mixed\"}",
+     "seconds": 0.6292999999523163
+    }
+   ],
+   "cloud": {
+    "text": "{\n  \"label\": \"negative\"\n}",
+    "seconds": 0.904800000011921,
+    "tokensIn": 78,
+    "tokensOut": 11
+   },
+   "apple": [
+    {
+     "seconds": 0.600350209,
+     "text": "{\"label\": \"mixed\"}"
+    },
+    {
+     "seconds": 0.61627475,
+     "text": "{\"label\": \"positive\"}"
+    },
+    {
+     "seconds": 0.600675,
+     "text": "{\"label\": \"positive\"}"
+    }
+   ]
+  },
+  "mood-21": {
+   "device": [
+    {
+     "text": "{\"label\": \"mixed\"}",
+     "seconds": 0.6916000000238418
+    },
+    {
+     "text": "{\"label\": \"mixed\"}",
+     "seconds": 0.6701999999880791
+    },
+    {
+     "text": "{\"label\":\"mixed\"}",
+     "seconds": 0.6164000000357628
+    }
+   ],
+   "cloud": {
+    "text": "{\n  \"label\": \"negative\"\n}",
+    "seconds": 1.0050999999642372,
+    "tokensIn": 82,
+    "tokensOut": 11
+   },
+   "apple": [
+    {
+     "text": "{\"label\": \"negative\"}",
+     "seconds": 0.620988167
+    },
+    {
+     "text": "{\"label\": \"negative\"}",
+     "seconds": 0.616055833
+    },
+    {
+     "text": "{\"label\": \"negative\"}",
+     "seconds": 0.594859292
+    }
+   ]
+  },
+  "mood-22": {
+   "device": [
+    {
+     "text": "{\"label\":\"positive\"}",
+     "seconds": 0.6081000000238419
+    },
+    {
+     "text": "{\"label\": \"positive\"}",
+     "seconds": 0.6293999999761581
+    },
+    {
+     "text": "{\"label\": \"positive\"}",
+     "seconds": 0.662699999988079
+    }
+   ],
+   "cloud": {
+    "text": "{\"label\": \"positive\"}",
+    "seconds": 1.024,
+    "tokensIn": 80,
+    "tokensOut": 6
+   },
+   "apple": [
+    {
+     "text": "{\"label\": \"positive\"}",
+     "seconds": 0.605107042
+    },
+    {
+     "text": "{\"label\": \"positive\"}",
+     "seconds": 0.582321
+    },
+    {
+     "text": "{\"label\": \"positive\"}",
+     "seconds": 0.599010834
+    }
+   ]
+  },
+  "mood-23": {
+   "device": [
+    {
+     "text": "{\"label\": \"mixed\"}",
+     "seconds": 0.682800000011921
+    },
+    {
+     "text": "{\"label\": \"mixed\"}",
+     "seconds": 0.6281999999880791
+    },
+    {
+     "text": "{\"label\":\"mixed\"}",
+     "seconds": 0.617300000011921
+    }
+   ],
+   "cloud": {
+    "text": "{\n  \"label\": \"positive\"\n}",
+    "seconds": 0.7881999999880791,
+    "tokensIn": 78,
+    "tokensOut": 11
+   },
+   "apple": [
+    {
+     "seconds": 0.61373175,
+     "text": "{\"label\": \"positive\"}"
+    },
+    {
+     "seconds": 0.616465584,
+     "text": "{\"label\": \"positive\"}"
+    },
+    {
+     "seconds": 0.590761667,
+     "text": "{\"label\": \"positive\"}"
+    }
+   ]
+  },
+  "mood-24": {
+   "device": [
+    {
+     "text": "{\"label\":\"mixed\"}",
+     "seconds": 0.6161999999880791
+    },
+    {
+     "text": "{\"label\":\"mixed\"}",
+     "seconds": 0.6033999999761581
+    },
+    {
+     "text": "{\"label\":\"mixed\"}",
+     "seconds": 0.6041000000238419
+    }
+   ],
+   "cloud": {
+    "text": "{\n  \"label\": \"mixed\"\n}",
+    "seconds": 0.8397999999523162,
+    "tokensIn": 82,
+    "tokensOut": 11
+   },
+   "apple": [
+    {
+     "seconds": 0.614720208,
+     "text": "{\"label\": \"positive\"}"
+    },
+    {
+     "seconds": 0.663797667,
+     "text": "{\"label\": \"mixed\"}"
+    },
+    {
+     "seconds": 0.624703708,
+     "text": "{\"label\": \"positive\"}"
+    }
+   ]
+  },
+  "mood-25": {
+   "device": [
+    {
+     "text": "{\"label\":\"negative\"}",
+     "seconds": 0.5910999999642372
+    },
+    {
+     "text": "{\"label\": \"negative\"}",
+     "seconds": 0.6005
+    },
+    {
+     "text": "{\"label\": \"negative\"}",
+     "seconds": 0.5946000000238418
+    }
+   ],
+   "cloud": {
+    "text": "{\n  \"label\": \"negative\"\n}",
+    "seconds": 0.9286999999880791,
+    "tokensIn": 65,
+    "tokensOut": 11
+   },
+   "apple": [
+    {
+     "seconds": 0.569688291,
+     "text": "{\"label\": \"negative\"}"
+    },
+    {
+     "seconds": 0.554434959,
+     "text": "{\"label\": \"negative\"}"
+    },
+    {
+     "seconds": 0.5885245,
+     "text": "{\"label\": \"negative\"}"
+    }
+   ]
+  },
+  "mood-26": {
+   "device": [
+    {
+     "text": "{\"label\":\"positive\"}",
+     "seconds": 0.7191000000238419
+    },
+    {
+     "text": "{\"label\": \"positive\"}",
+     "seconds": 0.8370999999642372
+    },
+    {
+     "text": "{\"label\":\"positive\"}",
+     "seconds": 0.794699999988079
+    }
+   ],
+   "apple": [
+    {
+     "text": "{\"label\": \"positive\"}",
+     "seconds": 0.476049334
+    },
+    {
+     "text": "{\"label\": \"positive\"}",
+     "seconds": 0.442003375
+    },
+    {
+     "text": "{\"label\": \"positive\"}",
+     "seconds": 0.491901208
+    }
+   ],
+   "cloud": {
+    "text": "{\n  \"label\": \"positive\"\n}",
+    "seconds": 0.7131000000238419,
+    "tokensIn": 76,
+    "tokensOut": 11
+   }
+  },
+  "mood-27": {
+   "device": [
+    {
+     "text": "{\"label\": \"positive\"}",
+     "seconds": 1.0626000000238418
+    },
+    {
+     "text": "{\"label\":\"positive\"}",
+     "seconds": 0.9233999999761582
+    },
+    {
+     "text": "{\"label\":\"positive\"}",
+     "seconds": 0.899699999988079
+    }
+   ],
+   "apple": [
+    {
+     "text": "{\"label\": \"positive\"}",
+     "seconds": 0.44401725
+    },
+    {
+     "text": "{\"label\": \"positive\"}",
+     "seconds": 0.460244541
+    },
+    {
+     "seconds": 0.444600292,
+     "text": "{\"label\": \"positive\"}"
+    }
+   ],
+   "cloud": {
+    "text": "{\n  \"label\": \"positive\"\n}",
+    "seconds": 0.7464000000357628,
+    "tokensIn": 77,
+    "tokensOut": 11
+   }
+  },
+  "mood-28": {
+   "device": [
+    {
+     "text": "{\"label\":\"positive\"}",
+     "seconds": 0.841
+    },
+    {
+     "text": "{\"label\":\"positive\"}",
+     "seconds": 0.852199999988079
+    },
+    {
+     "text": "{\"label\":\"positive\"}",
+     "seconds": 0.825199999988079
+    }
+   ],
+   "apple": [
+    {
+     "seconds": 0.460357458,
+     "text": "{\"label\": \"positive\"}"
+    },
+    {
+     "seconds": 0.436192333,
+     "text": "{\"label\": \"positive\"}"
+    },
+    {
+     "seconds": 0.507747,
+     "text": "{\"label\": \"positive\"}"
+    }
+   ],
+   "cloud": {
+    "text": "{\n  \"label\": \"positive\"\n}",
+    "seconds": 0.8876000000238419,
+    "tokensIn": 77,
+    "tokensOut": 11
+   }
+  },
+  "mood-29": {
+   "device": [
+    {
+     "text": "{\"label\":\"positive\"}",
+     "seconds": 0.8413999999761581
+    },
+    {
+     "text": "{\"label\": \"positive\"}",
+     "seconds": 0.8811999999880791
+    },
+    {
+     "text": "{\"label\": \"positive\"}",
+     "seconds": 0.8591000000238419
+    }
+   ],
+   "apple": [
+    {
+     "text": "{\"label\": \"positive\"}",
+     "seconds": 0.437145708
+    },
+    {
+     "text": "{\"label\": \"positive\"}",
+     "seconds": 0.440744583
+    },
+    {
+     "text": "{\"label\": \"positive\"}",
+     "seconds": 0.448818041
+    }
+   ],
+   "cloud": {
+    "text": "{\n  \"label\": \"positive\"\n}",
+    "seconds": 1.2093999999761582,
+    "tokensIn": 77,
+    "tokensOut": 11
+   }
+  },
+  "mood-30": {
+   "device": [
+    {
+     "text": "{\"label\": \"positive\"}",
+     "seconds": 0.8548999999761582
+    },
+    {
+     "text": "{\"label\": \"positive\"}",
+     "seconds": 0.8469000000357628
+    },
+    {
+     "text": "{\"label\": \"positive\"}",
+     "seconds": 0.9198999999761581
+    }
+   ],
+   "apple": [
+    {
+     "seconds": 0.448320584,
+     "text": "{\"label\": \"positive\"}"
+    },
+    {
+     "seconds": 0.475325709,
+     "text": "{\"label\": \"positive\"}"
+    },
+    {
+     "seconds": 0.460741542,
+     "text": "{\"label\": \"positive\"}"
+    }
+   ],
+   "cloud": {
+    "text": "{\n  \"label\": \"positive\"\n}",
+    "seconds": 1.0745,
+    "tokensIn": 71,
+    "tokensOut": 11
+   }
+  },
+  "mood-31": {
+   "device": [
+    {
+     "text": "{\"label\": \"negative\"}",
+     "seconds": 0.8675
+    },
+    {
+     "text": "{\"label\": \"negative\"}",
+     "seconds": 0.8587000000476838
+    },
+    {
+     "text": "{\"label\": \"negative\"}",
+     "seconds": 0.8488999999761582
+    }
+   ],
+   "apple": [
+    {
+     "text": "{\"label\": \"negative\"}",
+     "seconds": 0.444707708
+    },
+    {
+     "text": "{\"label\": \"negative\"}",
+     "seconds": 0.451916042
+    },
+    {
+     "text": "{\"label\": \"negative\"}",
+     "seconds": 0.434368125
+    }
+   ],
+   "cloud": {
+    "text": "{\n  \"label\": \"negative\"\n}",
+    "seconds": 0.8455999999642372,
+    "tokensIn": 74,
+    "tokensOut": 11
+   }
+  },
+  "mood-32": {
+   "device": [
+    {
+     "text": "{\"label\":\"negative\"}",
+     "seconds": 0.8168999999761581
+    },
+    {
+     "text": "{\"label\": \"negative\"}",
+     "seconds": 0.852199999988079
+    },
+    {
+     "text": "{\"label\": \"negative\"}",
+     "seconds": 0.8533999999761581
+    }
+   ],
+   "apple": [
+    {
+     "text": "{\"label\": \"negative\"}",
+     "seconds": 0.445291542
+    },
+    {
+     "text": "{\"label\": \"negative\"}",
+     "seconds": 0.434781791
+    },
+    {
+     "text": "{\"label\": \"negative\"}",
+     "seconds": 0.459997875
+    }
+   ],
+   "cloud": {
+    "text": "{\n  \"label\": \"negative\"\n}",
+    "seconds": 1.276699999988079,
+    "tokensIn": 73,
+    "tokensOut": 11
+   }
+  },
+  "mood-33": {
+   "device": [
+    {
+     "text": "{\"label\": \"negative\"}",
+     "seconds": 0.8685999999642372
+    },
+    {
+     "text": "{\"label\": \"negative\"}",
+     "seconds": 0.8766000000238419
+    },
+    {
+     "text": "{\"label\": \"negative\"}",
+     "seconds": 0.8768999999761582
+    }
+   ],
+   "apple": [
+    {
+     "text": "{\"label\": \"negative\"}",
+     "seconds": 0.444965
+    },
+    {
+     "text": "{\"label\": \"negative\"}",
+     "seconds": 0.453039292
+    },
+    {
+     "text": "{\"label\": \"negative\"}",
+     "seconds": 0.435615208
+    }
+   ],
+   "cloud": {
+    "text": "{\n  \"label\": \"negative\"\n}",
+    "seconds": 1.021199999988079,
+    "tokensIn": 77,
+    "tokensOut": 11
+   }
+  }
+ },
+ "fixes": [
+  {
+   "line": "Do not classify a review as mixed simply because it contains a minor complaint alongside praise or a compliment alongside a final rejection; judge the review as positive or negative based on the ultimate satisfaction with the product itself.",
+   "by": "cloud",
+   "cases": {
+    "mood-1": {
+     "device": [
+      {
+       "text": "{\"label\": \"positive\"}",
+       "seconds": 0.821199999988079
+      },
+      {
+       "text": "{\"label\": \"positive\"}",
+       "seconds": 0.7665
+      },
+      {
+       "text": "{\"label\": \"positive\"}",
+       "seconds": 0.766800000011921
+      }
+     ]
+    },
+    "mood-2": {
+     "device": [
+      {
+       "text": "{\"label\": \"positive\"}",
+       "seconds": 0.7831999999880791
+      },
+      {
+       "text": "{\"label\":\"positive\"}",
+       "seconds": 0.741300000011921
+      },
+      {
+       "text": "{\"label\":\"positive\"}",
+       "seconds": 0.7381000000238419
+      }
+     ]
+    },
+    "mood-3": {
+     "device": [
+      {
+       "text": "{\"label\": \"positive\"}",
+       "seconds": 0.7658999999761581
+      },
+      {
+       "text": "{\"label\":\"positive\"}",
+       "seconds": 0.731300000011921
+      },
+      {
+       "text": "{\"label\": \"positive\"}",
+       "seconds": 0.7483000000119209
+      }
+     ]
+    },
+    "mood-4": {
+     "device": [
+      {
+       "text": "{\"label\":\"positive\"}",
+       "seconds": 0.754
+      },
+      {
+       "text": "{\"label\": \"positive\"}",
+       "seconds": 0.7531999999880791
+      },
+      {
+       "text": "{\"label\": \"positive\"}",
+       "seconds": 0.7501999999880791
+      }
+     ]
+    },
+    "mood-5": {
+     "device": [
+      {
+       "text": "{\"label\":\"positive\"}",
+       "seconds": 0.7351999999880791
+      },
+      {
+       "text": "{\"label\": \"positive\"}",
+       "seconds": 0.7553000000119209
+      },
+      {
+       "text": "{\"label\": \"positive\"}",
+       "seconds": 0.7678999999761581
+      }
+     ]
+    },
+    "mood-6": {
+     "device": [
+      {
+       "text": "{\"label\":\"negative\"}",
+       "seconds": 0.7252000000476837
+      },
+      {
+       "text": "{\"label\":\"negative\"}",
+       "seconds": 0.7096999999880791
+      },
+      {
+       "text": "{\"label\":\"negative\"}",
+       "seconds": 0.7113999999761581
+      }
+     ]
+    },
+    "mood-7": {
+     "device": [
+      {
+       "text": "{\"label\": \"negative\"}",
+       "seconds": 0.7536000000238419
+      },
+      {
+       "text": "{\"label\": \"negative\"}",
+       "seconds": 0.7478000000119209
+      },
+      {
+       "text": "{\"label\": \"negative\"}",
+       "seconds": 0.756
+      }
+     ]
+    },
+    "mood-8": {
+     "device": [
+      {
+       "text": "{\"label\": \"negative\"}",
+       "seconds": 0.772
+      },
+      {
+       "text": "{\"label\":\"negative\"}",
+       "seconds": 0.72
+      },
+      {
+       "text": "{\"label\": \"negative\"}",
+       "seconds": 0.7456999999880791
+      }
+     ]
+    },
+    "mood-9": {
+     "device": [
+      {
+       "text": "{\"label\": \"negative\"}",
+       "seconds": 0.7657000000476837
+      },
+      {
+       "text": "{\"label\":\"negative\"}",
+       "seconds": 0.7297999999523163
+      },
+      {
+       "text": "{\"label\": \"negative\"}",
+       "seconds": 0.7455
+      }
+     ]
+    },
+    "mood-10": {
+     "device": [
+      {
+       "text": "{\"label\": \"negative\"}",
+       "seconds": 0.7856000000238419
+      },
+      {
+       "text": "{\"label\": \"negative\"}",
+       "seconds": 0.7628999999761581
+      },
+      {
+       "text": "{\"label\": \"negative\"}",
+       "seconds": 0.7631999999880791
+      }
+     ]
+    },
+    "mood-11": {
+     "device": [
+      {
+       "text": "{\"label\":\"mixed\"}",
+       "seconds": 0.7591000000238418
+      },
+      {
+       "text": "{\"label\": \"mixed\"}",
+       "seconds": 0.7828999999761581
+      },
+      {
+       "text": "{\"label\":\"mixed\"}",
+       "seconds": 0.7466999999880791
+      }
+     ]
+    },
+    "mood-12": {
+     "device": [
+      {
+       "text": "{\"label\": \"negative\"}",
+       "seconds": 0.7907000000476837
+      },
+      {
+       "text": "{\"label\":\"negative\"}",
+       "seconds": 0.7443999999761581
+      },
+      {
+       "text": "{\"label\": \"negative\"}",
+       "seconds": 0.7791000000238418
+      }
+     ]
+    },
+    "mood-13": {
+     "device": [
+      {
+       "text": "{\"label\": \"mixed\"}",
+       "seconds": 0.789699999988079
+      },
+      {
+       "text": "{\"label\": \"mixed\"}",
+       "seconds": 0.764
+      },
+      {
+       "text": "{\"label\":\"negative\"}",
+       "seconds": 0.7366999999880791
+      }
+     ]
+    },
+    "mood-14": {
+     "device": [
+      {
+       "text": "{\"label\":\"mixed\"}",
+       "seconds": 0.7563999999761581
+      },
+      {
+       "text": "{\"label\":\"mixed\"}",
+       "seconds": 0.732
+      },
+      {
+       "text": "{\"label\":\"mixed\"}",
+       "seconds": 0.735300000011921
+      }
+     ]
+    },
+    "mood-15": {
+     "device": [
+      {
+       "text": "{\"label\": \"mixed\"}",
+       "seconds": 0.790699999988079
+      },
+      {
+       "text": "{\"label\": \"mixed\"}",
+       "seconds": 0.7726000000238419
+      },
+      {
+       "text": "{\"label\": \"mixed\"}",
+       "seconds": 0.7681999999880791
+      }
+     ]
+    },
+    "mood-16": {
+     "device": [
+      {
+       "text": "{\"label\":\"negative\"}",
+       "seconds": 0.7579000000357627
+      },
+      {
+       "text": "{\"label\": \"negative\"}",
+       "seconds": 0.774
+      },
+      {
+       "text": "{\"label\": \"negative\"}",
+       "seconds": 0.7620999999642372
+      }
+     ]
+    },
+    "mood-17": {
+     "device": [
+      {
+       "text": "{\"label\":\"negative\"}",
+       "seconds": 0.7546000000238419
+      },
+      {
+       "text": "{\"label\":\"negative\"}",
+       "seconds": 0.727199999988079
+      },
+      {
+       "text": "{\"label\":\"negative\"}",
+       "seconds": 0.7285
+      }
+     ]
+    },
+    "mood-18": {
+     "device": [
+      {
+       "text": "{\"label\":\"positive\"}",
+       "seconds": 0.743300000011921
+      },
+      {
+       "text": "{\"label\":\"positive\"}",
+       "seconds": 0.734
+      },
+      {
+       "text": "{\"label\":\"positive\"}",
+       "seconds": 0.7416999999880791
+      }
+     ]
+    },
+    "mood-19": {
+     "device": [
+      {
+       "text": "{\"label\":\"positive\"}",
+       "seconds": 0.7474000000357628
+      },
+      {
+       "text": "{\"label\": \"mixed\"}",
+       "seconds": 0.7658999999761581
+      },
+      {
+       "text": "{\"label\":\"mixed\"}",
+       "seconds": 0.7336999999880791
+      }
+     ]
+    },
+    "mood-20": {
+     "device": [
+      {
+       "text": "{\"label\": \"negative\"}",
+       "seconds": 0.772800000011921
+      },
+      {
+       "text": "{\"label\": \"negative\"}",
+       "seconds": 0.773
+      },
+      {
+       "text": "{\"label\": \"negative\"}",
+       "seconds": 0.7701000000238418
+      }
+     ]
+    },
+    "mood-21": {
+     "device": [
+      {
+       "text": "{\"label\": \"negative\"}",
+       "seconds": 0.7825999999642372
+      },
+      {
+       "text": "{\"label\": \"negative\"}",
+       "seconds": 0.7653000000119209
+      },
+      {
+       "text": "{\"label\": \"negative\"}",
+       "seconds": 0.7653999999761582
+      }
+     ]
+    },
+    "mood-22": {
+     "device": [
+      {
+       "text": "{\"label\":\"positive\"}",
+       "seconds": 0.7442000000476837
+      },
+      {
+       "text": "{\"label\": \"positive\"}",
+       "seconds": 0.7645999999642372
+      },
+      {
+       "text": "{\"label\": \"positive\"}",
+       "seconds": 0.774
+      }
+     ]
+    },
+    "mood-23": {
+     "device": [
+      {
+       "text": "{\"label\": \"positive\"}",
+       "seconds": 0.7853000000119209
+      },
+      {
+       "text": "{\"label\":\"positive\"}",
+       "seconds": 0.7346999999880791
+      },
+      {
+       "text": "{\"label\": \"positive\"}",
+       "seconds": 0.7683000000119209
+      }
+     ]
+    },
+    "mood-24": {
+     "device": [
+      {
+       "text": "{\"label\":\"positive\"}",
+       "seconds": 0.7621999999880791
+      },
+      {
+       "text": "{\"label\":\"positive\"}",
+       "seconds": 0.765800000011921
+      },
+      {
+       "text": "{\"label\":\"positive\"}",
+       "seconds": 0.7460999999642373
+      }
+     ]
+    },
+    "mood-25": {
+     "device": [
+      {
+       "text": "{\"label\": \"negative\"}",
+       "seconds": 0.754
+      },
+      {
+       "text": "{\"label\":\"negative\"}",
+       "seconds": 0.7066999999880791
+      },
+      {
+       "text": "{\"label\": \"negative\"}",
+       "seconds": 0.7376000000238419
+      }
+     ]
+    },
+    "mood-26": {
+     "device": [
+      {
+       "text": "{\"label\": \"positive\"}",
+       "seconds": 0.9988000000119209
+      },
+      {
+       "text": "{\"label\":\"positive\"}",
+       "seconds": 0.917800000011921
+      },
+      {
+       "text": "{\"label\": \"positive\"}",
+       "seconds": 1.004
+      }
+     ]
+    },
+    "mood-27": {
+     "device": [
+      {
+       "text": "{\"label\":\"positive\"}",
+       "seconds": 1.0043000000119209
+      },
+      {
+       "text": "{\"label\":\"positive\"}",
+       "seconds": 1.0325999999642372
+      },
+      {
+       "text": "{\"label\":\"positive\"}",
+       "seconds": 1.059600000023842
+      }
+     ]
+    },
+    "mood-28": {
+     "device": [
+      {
+       "text": "{\"label\": \"positive\"}",
+       "seconds": 1.006199999988079
+      },
+      {
+       "text": "{\"label\": \"positive\"}",
+       "seconds": 1.000699999988079
+      },
+      {
+       "text": "{\"label\": \"positive\"}",
+       "seconds": 1.000199999988079
+      }
+     ]
+    },
+    "mood-29": {
+     "device": [
+      {
+       "text": "{\"label\": \"positive\"}",
+       "seconds": 1.0127000000476838
+      },
+      {
+       "text": "{\"label\": \"positive\"}",
+       "seconds": 0.9782999999523163
+      },
+      {
+       "text": "{\"label\": \"positive\"}",
+       "seconds": 1.021
+      }
+     ]
+    },
+    "mood-30": {
+     "device": [
+      {
+       "text": "{\"label\": \"positive\"}",
+       "seconds": 0.9934000000357628
+      },
+      {
+       "text": "{\"label\": \"positive\"}",
+       "seconds": 0.9828999999761582
+      },
+      {
+       "text": "{\"label\": \"positive\"}",
+       "seconds": 1.106300000011921
+      }
+     ]
+    },
+    "mood-31": {
+     "device": [
+      {
+       "text": "{\"label\": \"negative\"}",
+       "seconds": 1.0128000000119208
+      },
+      {
+       "text": "{\"label\": \"negative\"}",
+       "seconds": 0.964
+      },
+      {
+       "text": "{\"label\":\"negative\"}",
+       "seconds": 0.927
+      }
+     ]
+    },
+    "mood-32": {
+     "device": [
+      {
+       "text": "{\"label\": \"negative\"}",
+       "seconds": 0.9685999999642372
+      },
+      {
+       "text": "{\"label\": \"negative\"}",
+       "seconds": 1.044
+      },
+      {
+       "text": "{\"label\":\"negative\"}",
+       "seconds": 0.9598000000119209
+      }
+     ]
+    },
+    "mood-33": {
+     "device": [
+      {
+       "text": "{\"label\": \"negative\"}",
+       "seconds": 0.9805999999642372
+      },
+      {
+       "text": "{\"label\": \"negative\"}",
+       "seconds": 0.994
+      },
+      {
+       "text": "{\"label\": \"negative\"}",
+       "seconds": 1.0181000000238418
+      }
+     ]
+    },
+    "mood-34": {
+     "device": [
+      {
+       "text": "{\"label\": \"negative\"}",
+       "seconds": 0.9757999999523163
+      },
+      {
+       "text": "{\"label\": \"negative\"}",
+       "seconds": 0.9839000000357628
+      },
+      {
+       "text": "{\"label\":\"negative\"}",
+       "seconds": 0.9395999999642373
+      }
+     ]
+    },
+    "mood-35": {
+     "device": [
+      {
+       "text": "{\"label\": \"negative\"}",
+       "seconds": 1.023300000011921
+      },
+      {
+       "text": "{\"label\": \"negative\"}",
+       "seconds": 1.2183000000119208
+      },
+      {
+       "text": "{\"label\":\"negative\"}",
+       "seconds": 0.9781000000238419
+      }
+     ]
+    },
+    "mood-36": {
+     "device": [
+      {
+       "text": "{\"label\":\"mixed\"}",
+       "seconds": 0.9715999999642372
+      },
+      {
+       "text": "{\"label\": \"mixed\"}",
+       "seconds": 1.011300000011921
+      },
+      {
+       "text": "{\"label\":\"mixed\"}",
+       "seconds": 0.9838999999761582
+      }
+     ]
+    },
+    "mood-37": {
+     "device": [
+      {
+       "text": "{\"label\":\"mixed\"}",
+       "seconds": 0.9508000000119209
+      },
+      {
+       "text": "{\"label\": \"mixed\"}",
+       "seconds": 1.013199999988079
+      },
+      {
+       "text": "{\"label\":\"negative\"}",
+       "seconds": 0.9934000000357628
+      }
+     ]
+    },
+    "mood-38": {
+     "device": [
+      {
+       "text": "{\"label\":\"mixed\"}",
+       "seconds": 0.936
+      },
+      {
+       "text": "{\"label\": \"mixed\"}",
+       "seconds": 1.0045999999642372
+      },
+      {
+       "text": "{\"label\": \"mixed\"}",
+       "seconds": 1.008
+      }
+     ]
+    },
+    "mood-39": {
+     "device": [
+      {
+       "text": "{\"label\": \"mixed\"}",
+       "seconds": 1.0066000000238418
+      },
+      {
+       "text": "{\"label\":\"mixed\"}",
+       "seconds": 0.9555
+      },
+      {
+       "text": "{\"label\":\"mixed\"}",
+       "seconds": 0.9676000000238418
+      }
+     ]
+    },
+    "mood-40": {
+     "device": [
+      {
+       "text": "{\"label\":\"mixed\"}",
+       "seconds": 0.9506999999880791
+      },
+      {
+       "text": "{\"label\": \"mixed\"}",
+       "seconds": 1.0148000000119208
+      },
+      {
+       "text": "{\"label\":\"mixed\"}",
+       "seconds": 0.957
+      }
+     ]
+    },
+    "mood-41": {
+     "device": [
+      {
+       "text": "{\"label\": \"negative\"}",
+       "seconds": 0.984
+      },
+      {
+       "text": "{\"label\": \"negative\"}",
+       "seconds": 1.016899999976158
+      },
+      {
+       "text": "{\"label\": \"negative\"}",
+       "seconds": 1.075699999988079
+      }
+     ]
+    },
+    "mood-42": {
+     "device": [
+      {
+       "text": "{\"label\":\"negative\"}",
+       "seconds": 1.0269000000357629
+      },
+      {
+       "text": "{\"label\": \"negative\"}",
+       "seconds": 1.106
+      },
+      {
+       "text": "{\"label\": \"negative\"}",
+       "seconds": 1.033199999988079
+      }
+     ]
+    },
+    "mood-43": {
+     "device": [
+      {
+       "text": "{\"label\": \"positive\"}",
+       "seconds": 1.0324000000357627
+      },
+      {
+       "text": "{\"label\":\"positive\"}",
+       "seconds": 0.9593999999761581
+      },
+      {
+       "text": "{\"label\": \"positive\"}",
+       "seconds": 1.0594000000357628
+      }
+     ]
+    },
+    "mood-44": {
+     "device": [
+      {
+       "text": "{\"label\": \"positive\"}",
+       "seconds": 1.0867999999523164
+      },
+      {
+       "text": "{\"label\": \"positive\"}",
+       "seconds": 1.1405
+      },
+      {
+       "text": "{\"label\": \"positive\"}",
+       "seconds": 1.0747000000476836
+      }
+     ]
+    },
+    "mood-45": {
+     "device": [
+      {
+       "text": "{\"label\": \"mixed\"}",
+       "seconds": 1.016
+      },
+      {
+       "text": "{\"label\":\"mixed\"}",
+       "seconds": 0.9498999999761581
+      },
+      {
+       "text": "{\"label\":\"mixed\"}",
+       "seconds": 0.9636000000238418
+      }
+     ]
+    },
+    "mood-46": {
+     "device": [
+      {
+       "text": "{\"label\": \"negative\"}",
+       "seconds": 1.0005999999642372
+      },
+      {
+       "text": "{\"label\":\"negative\"}",
+       "seconds": 0.9449000000357628
+      },
+      {
+       "text": "{\"label\": \"negative\"}",
+       "seconds": 1
+      }
+     ]
+    },
+    "mood-47": {
+     "device": [
+      {
+       "text": "{\"label\":\"positive\"}",
+       "seconds": 0.9783999999761581
+      },
+      {
+       "text": "{\"label\":\"positive\"}",
+       "seconds": 0.9816999999880791
+      },
+      {
+       "text": "{\"label\": \"positive\"}",
+       "seconds": 1.0434000000357628
+      }
+     ]
+    },
+    "mood-48": {
+     "device": [
+      {
+       "text": "{\"label\":\"positive\"}",
+       "seconds": 0.9635999999642372
+      },
+      {
+       "text": "{\"label\": \"positive\"}",
+       "seconds": 1.1605
+      },
+      {
+       "text": "{\"label\": \"positive\"}",
+       "seconds": 1.152
+      }
+     ]
+    },
+    "mood-49": {
+     "device": [
+      {
+       "text": "{\"label\": \"negative\"}",
+       "seconds": 1.1485
+      },
+      {
+       "text": "{\"label\": \"negative\"}",
+       "seconds": 1.129699999988079
+      },
+      {
+       "text": "{\"label\": \"negative\"}",
+       "seconds": 1.0295
+      }
+     ]
+    },
+    "mood-50": {
+     "device": [
+      {
+       "text": "{\"label\": \"positive\"}",
+       "seconds": 0.9613999999761581
+      },
+      {
+       "text": "{\"label\":\"positive\"}",
+       "seconds": 1.136100000023842
+      },
+      {
+       "text": "{\"label\":\"positive\"}",
+       "seconds": 0.9836999999880791
+      }
+     ]
+    }
+   },
+   "held": {
+    "mood-1": {
+     "device": [
+      {
+       "text": "{\"label\": \"positive\"}",
+       "seconds": 0.821199999988079
+      },
+      {
+       "text": "{\"label\": \"positive\"}",
+       "seconds": 0.7665
+      },
+      {
+       "text": "{\"label\": \"positive\"}",
+       "seconds": 0.766800000011921
+      }
+     ]
+    },
+    "mood-2": {
+     "device": [
+      {
+       "text": "{\"label\": \"positive\"}",
+       "seconds": 0.7831999999880791
+      },
+      {
+       "text": "{\"label\":\"positive\"}",
+       "seconds": 0.741300000011921
+      },
+      {
+       "text": "{\"label\":\"positive\"}",
+       "seconds": 0.7381000000238419
+      }
+     ]
+    },
+    "mood-3": {
+     "device": [
+      {
+       "text": "{\"label\": \"positive\"}",
+       "seconds": 0.7658999999761581
+      },
+      {
+       "text": "{\"label\":\"positive\"}",
+       "seconds": 0.731300000011921
+      },
+      {
+       "text": "{\"label\": \"positive\"}",
+       "seconds": 0.7483000000119209
+      }
+     ]
+    },
+    "mood-4": {
+     "device": [
+      {
+       "text": "{\"label\":\"positive\"}",
+       "seconds": 0.754
+      },
+      {
+       "text": "{\"label\": \"positive\"}",
+       "seconds": 0.7531999999880791
+      },
+      {
+       "text": "{\"label\": \"positive\"}",
+       "seconds": 0.7501999999880791
+      }
+     ]
+    },
+    "mood-5": {
+     "device": [
+      {
+       "text": "{\"label\":\"positive\"}",
+       "seconds": 0.7351999999880791
+      },
+      {
+       "text": "{\"label\": \"positive\"}",
+       "seconds": 0.7553000000119209
+      },
+      {
+       "text": "{\"label\": \"positive\"}",
+       "seconds": 0.7678999999761581
+      }
+     ]
+    },
+    "mood-6": {
+     "device": [
+      {
+       "text": "{\"label\":\"negative\"}",
+       "seconds": 0.7252000000476837
+      },
+      {
+       "text": "{\"label\":\"negative\"}",
+       "seconds": 0.7096999999880791
+      },
+      {
+       "text": "{\"label\":\"negative\"}",
+       "seconds": 0.7113999999761581
+      }
+     ]
+    },
+    "mood-7": {
+     "device": [
+      {
+       "text": "{\"label\": \"negative\"}",
+       "seconds": 0.7536000000238419
+      },
+      {
+       "text": "{\"label\": \"negative\"}",
+       "seconds": 0.7478000000119209
+      },
+      {
+       "text": "{\"label\": \"negative\"}",
+       "seconds": 0.756
+      }
+     ]
+    },
+    "mood-8": {
+     "device": [
+      {
+       "text": "{\"label\": \"negative\"}",
+       "seconds": 0.772
+      },
+      {
+       "text": "{\"label\":\"negative\"}",
+       "seconds": 0.72
+      },
+      {
+       "text": "{\"label\": \"negative\"}",
+       "seconds": 0.7456999999880791
+      }
+     ]
+    },
+    "mood-9": {
+     "device": [
+      {
+       "text": "{\"label\": \"negative\"}",
+       "seconds": 0.7657000000476837
+      },
+      {
+       "text": "{\"label\":\"negative\"}",
+       "seconds": 0.7297999999523163
+      },
+      {
+       "text": "{\"label\": \"negative\"}",
+       "seconds": 0.7455
+      }
+     ]
+    },
+    "mood-10": {
+     "device": [
+      {
+       "text": "{\"label\": \"negative\"}",
+       "seconds": 0.7856000000238419
+      },
+      {
+       "text": "{\"label\": \"negative\"}",
+       "seconds": 0.7628999999761581
+      },
+      {
+       "text": "{\"label\": \"negative\"}",
+       "seconds": 0.7631999999880791
+      }
+     ]
+    },
+    "mood-11": {
+     "device": [
+      {
+       "text": "{\"label\":\"mixed\"}",
+       "seconds": 0.7591000000238418
+      },
+      {
+       "text": "{\"label\": \"mixed\"}",
+       "seconds": 0.7828999999761581
+      },
+      {
+       "text": "{\"label\":\"mixed\"}",
+       "seconds": 0.7466999999880791
+      }
+     ]
+    },
+    "mood-12": {
+     "device": [
+      {
+       "text": "{\"label\": \"negative\"}",
+       "seconds": 0.7907000000476837
+      },
+      {
+       "text": "{\"label\":\"negative\"}",
+       "seconds": 0.7443999999761581
+      },
+      {
+       "text": "{\"label\": \"negative\"}",
+       "seconds": 0.7791000000238418
+      }
+     ]
+    },
+    "mood-13": {
+     "device": [
+      {
+       "text": "{\"label\": \"mixed\"}",
+       "seconds": 0.789699999988079
+      },
+      {
+       "text": "{\"label\": \"mixed\"}",
+       "seconds": 0.764
+      },
+      {
+       "text": "{\"label\":\"negative\"}",
+       "seconds": 0.7366999999880791
+      }
+     ]
+    },
+    "mood-14": {
+     "device": [
+      {
+       "text": "{\"label\":\"mixed\"}",
+       "seconds": 0.7563999999761581
+      },
+      {
+       "text": "{\"label\":\"mixed\"}",
+       "seconds": 0.732
+      },
+      {
+       "text": "{\"label\":\"mixed\"}",
+       "seconds": 0.735300000011921
+      }
+     ]
+    },
+    "mood-15": {
+     "device": [
+      {
+       "text": "{\"label\": \"mixed\"}",
+       "seconds": 0.790699999988079
+      },
+      {
+       "text": "{\"label\": \"mixed\"}",
+       "seconds": 0.7726000000238419
+      },
+      {
+       "text": "{\"label\": \"mixed\"}",
+       "seconds": 0.7681999999880791
+      }
+     ]
+    },
+    "mood-16": {
+     "device": [
+      {
+       "text": "{\"label\":\"negative\"}",
+       "seconds": 0.7579000000357627
+      },
+      {
+       "text": "{\"label\": \"negative\"}",
+       "seconds": 0.774
+      },
+      {
+       "text": "{\"label\": \"negative\"}",
+       "seconds": 0.7620999999642372
+      }
+     ]
+    },
+    "mood-17": {
+     "device": [
+      {
+       "text": "{\"label\":\"negative\"}",
+       "seconds": 0.7546000000238419
+      },
+      {
+       "text": "{\"label\":\"negative\"}",
+       "seconds": 0.727199999988079
+      },
+      {
+       "text": "{\"label\":\"negative\"}",
+       "seconds": 0.7285
+      }
+     ]
+    },
+    "mood-18": {
+     "device": [
+      {
+       "text": "{\"label\":\"positive\"}",
+       "seconds": 0.743300000011921
+      },
+      {
+       "text": "{\"label\":\"positive\"}",
+       "seconds": 0.734
+      },
+      {
+       "text": "{\"label\":\"positive\"}",
+       "seconds": 0.7416999999880791
+      }
+     ]
+    },
+    "mood-19": {
+     "device": [
+      {
+       "text": "{\"label\":\"positive\"}",
+       "seconds": 0.7474000000357628
+      },
+      {
+       "text": "{\"label\": \"mixed\"}",
+       "seconds": 0.7658999999761581
+      },
+      {
+       "text": "{\"label\":\"mixed\"}",
+       "seconds": 0.7336999999880791
+      }
+     ]
+    },
+    "mood-20": {
+     "device": [
+      {
+       "text": "{\"label\": \"negative\"}",
+       "seconds": 0.772800000011921
+      },
+      {
+       "text": "{\"label\": \"negative\"}",
+       "seconds": 0.773
+      },
+      {
+       "text": "{\"label\": \"negative\"}",
+       "seconds": 0.7701000000238418
+      }
+     ]
+    },
+    "mood-21": {
+     "device": [
+      {
+       "text": "{\"label\": \"negative\"}",
+       "seconds": 0.7825999999642372
+      },
+      {
+       "text": "{\"label\": \"negative\"}",
+       "seconds": 0.7653000000119209
+      },
+      {
+       "text": "{\"label\": \"negative\"}",
+       "seconds": 0.7653999999761582
+      }
+     ]
+    },
+    "mood-22": {
+     "device": [
+      {
+       "text": "{\"label\":\"positive\"}",
+       "seconds": 0.7442000000476837
+      },
+      {
+       "text": "{\"label\": \"positive\"}",
+       "seconds": 0.7645999999642372
+      },
+      {
+       "text": "{\"label\": \"positive\"}",
+       "seconds": 0.774
+      }
+     ]
+    },
+    "mood-23": {
+     "device": [
+      {
+       "text": "{\"label\": \"positive\"}",
+       "seconds": 0.7853000000119209
+      },
+      {
+       "text": "{\"label\":\"positive\"}",
+       "seconds": 0.7346999999880791
+      },
+      {
+       "text": "{\"label\": \"positive\"}",
+       "seconds": 0.7683000000119209
+      }
+     ]
+    },
+    "mood-24": {
+     "device": [
+      {
+       "text": "{\"label\":\"positive\"}",
+       "seconds": 0.7621999999880791
+      },
+      {
+       "text": "{\"label\":\"positive\"}",
+       "seconds": 0.765800000011921
+      },
+      {
+       "text": "{\"label\":\"positive\"}",
+       "seconds": 0.7460999999642373
+      }
+     ]
+    },
+    "mood-25": {
+     "device": [
+      {
+       "text": "{\"label\": \"negative\"}",
+       "seconds": 0.754
+      },
+      {
+       "text": "{\"label\":\"negative\"}",
+       "seconds": 0.7066999999880791
+      },
+      {
+       "text": "{\"label\": \"negative\"}",
+       "seconds": 0.7376000000238419
+      }
+     ]
+    },
+    "mood-26": {
+     "device": [
+      {
+       "text": "{\"label\": \"positive\"}",
+       "seconds": 0.9988000000119209
+      },
+      {
+       "text": "{\"label\":\"positive\"}",
+       "seconds": 0.917800000011921
+      },
+      {
+       "text": "{\"label\": \"positive\"}",
+       "seconds": 1.004
+      }
+     ]
+    },
+    "mood-27": {
+     "device": [
+      {
+       "text": "{\"label\":\"positive\"}",
+       "seconds": 1.0043000000119209
+      },
+      {
+       "text": "{\"label\":\"positive\"}",
+       "seconds": 1.0325999999642372
+      },
+      {
+       "text": "{\"label\":\"positive\"}",
+       "seconds": 1.059600000023842
+      }
+     ]
+    },
+    "mood-28": {
+     "device": [
+      {
+       "text": "{\"label\": \"positive\"}",
+       "seconds": 1.006199999988079
+      },
+      {
+       "text": "{\"label\": \"positive\"}",
+       "seconds": 1.000699999988079
+      },
+      {
+       "text": "{\"label\": \"positive\"}",
+       "seconds": 1.000199999988079
+      }
+     ]
+    },
+    "mood-29": {
+     "device": [
+      {
+       "text": "{\"label\": \"positive\"}",
+       "seconds": 1.0127000000476838
+      },
+      {
+       "text": "{\"label\": \"positive\"}",
+       "seconds": 0.9782999999523163
+      },
+      {
+       "text": "{\"label\": \"positive\"}",
+       "seconds": 1.021
+      }
+     ]
+    },
+    "mood-30": {
+     "device": [
+      {
+       "text": "{\"label\": \"positive\"}",
+       "seconds": 0.9934000000357628
+      },
+      {
+       "text": "{\"label\": \"positive\"}",
+       "seconds": 0.9828999999761582
+      },
+      {
+       "text": "{\"label\": \"positive\"}",
+       "seconds": 1.106300000011921
+      }
+     ]
+    },
+    "mood-31": {
+     "device": [
+      {
+       "text": "{\"label\": \"negative\"}",
+       "seconds": 1.0128000000119208
+      },
+      {
+       "text": "{\"label\": \"negative\"}",
+       "seconds": 0.964
+      },
+      {
+       "text": "{\"label\":\"negative\"}",
+       "seconds": 0.927
+      }
+     ]
+    },
+    "mood-32": {
+     "device": [
+      {
+       "text": "{\"label\": \"negative\"}",
+       "seconds": 0.9685999999642372
+      },
+      {
+       "text": "{\"label\": \"negative\"}",
+       "seconds": 1.044
+      },
+      {
+       "text": "{\"label\":\"negative\"}",
+       "seconds": 0.9598000000119209
+      }
+     ]
+    },
+    "mood-33": {
+     "device": [
+      {
+       "text": "{\"label\": \"negative\"}",
+       "seconds": 0.9805999999642372
+      },
+      {
+       "text": "{\"label\": \"negative\"}",
+       "seconds": 0.994
+      },
+      {
+       "text": "{\"label\": \"negative\"}",
+       "seconds": 1.0181000000238418
+      }
+     ]
+    },
+    "mood-34": {
+     "device": [
+      {
+       "text": "{\"label\": \"negative\"}",
+       "seconds": 0.9757999999523163
+      },
+      {
+       "text": "{\"label\": \"negative\"}",
+       "seconds": 0.9839000000357628
+      },
+      {
+       "text": "{\"label\":\"negative\"}",
+       "seconds": 0.9395999999642373
+      }
+     ]
+    },
+    "mood-35": {
+     "device": [
+      {
+       "text": "{\"label\": \"negative\"}",
+       "seconds": 1.023300000011921
+      },
+      {
+       "text": "{\"label\": \"negative\"}",
+       "seconds": 1.2183000000119208
+      },
+      {
+       "text": "{\"label\":\"negative\"}",
+       "seconds": 0.9781000000238419
+      }
+     ]
+    },
+    "mood-36": {
+     "device": [
+      {
+       "text": "{\"label\":\"mixed\"}",
+       "seconds": 0.9715999999642372
+      },
+      {
+       "text": "{\"label\": \"mixed\"}",
+       "seconds": 1.011300000011921
+      },
+      {
+       "text": "{\"label\":\"mixed\"}",
+       "seconds": 0.9838999999761582
+      }
+     ]
+    },
+    "mood-37": {
+     "device": [
+      {
+       "text": "{\"label\":\"mixed\"}",
+       "seconds": 0.9508000000119209
+      },
+      {
+       "text": "{\"label\": \"mixed\"}",
+       "seconds": 1.013199999988079
+      },
+      {
+       "text": "{\"label\":\"negative\"}",
+       "seconds": 0.9934000000357628
+      }
+     ]
+    },
+    "mood-38": {
+     "device": [
+      {
+       "text": "{\"label\":\"mixed\"}",
+       "seconds": 0.936
+      },
+      {
+       "text": "{\"label\": \"mixed\"}",
+       "seconds": 1.0045999999642372
+      },
+      {
+       "text": "{\"label\": \"mixed\"}",
+       "seconds": 1.008
+      }
+     ]
+    },
+    "mood-39": {
+     "device": [
+      {
+       "text": "{\"label\": \"mixed\"}",
+       "seconds": 1.0066000000238418
+      },
+      {
+       "text": "{\"label\":\"mixed\"}",
+       "seconds": 0.9555
+      },
+      {
+       "text": "{\"label\":\"mixed\"}",
+       "seconds": 0.9676000000238418
+      }
+     ]
+    },
+    "mood-40": {
+     "device": [
+      {
+       "text": "{\"label\":\"mixed\"}",
+       "seconds": 0.9506999999880791
+      },
+      {
+       "text": "{\"label\": \"mixed\"}",
+       "seconds": 1.0148000000119208
+      },
+      {
+       "text": "{\"label\":\"mixed\"}",
+       "seconds": 0.957
+      }
+     ]
+    },
+    "mood-41": {
+     "device": [
+      {
+       "text": "{\"label\": \"negative\"}",
+       "seconds": 0.984
+      },
+      {
+       "text": "{\"label\": \"negative\"}",
+       "seconds": 1.016899999976158
+      },
+      {
+       "text": "{\"label\": \"negative\"}",
+       "seconds": 1.075699999988079
+      }
+     ]
+    },
+    "mood-42": {
+     "device": [
+      {
+       "text": "{\"label\":\"negative\"}",
+       "seconds": 1.0269000000357629
+      },
+      {
+       "text": "{\"label\": \"negative\"}",
+       "seconds": 1.106
+      },
+      {
+       "text": "{\"label\": \"negative\"}",
+       "seconds": 1.033199999988079
+      }
+     ]
+    },
+    "mood-43": {
+     "device": [
+      {
+       "text": "{\"label\": \"positive\"}",
+       "seconds": 1.0324000000357627
+      },
+      {
+       "text": "{\"label\":\"positive\"}",
+       "seconds": 0.9593999999761581
+      },
+      {
+       "text": "{\"label\": \"positive\"}",
+       "seconds": 1.0594000000357628
+      }
+     ]
+    },
+    "mood-44": {
+     "device": [
+      {
+       "text": "{\"label\": \"positive\"}",
+       "seconds": 1.0867999999523164
+      },
+      {
+       "text": "{\"label\": \"positive\"}",
+       "seconds": 1.1405
+      },
+      {
+       "text": "{\"label\": \"positive\"}",
+       "seconds": 1.0747000000476836
+      }
+     ]
+    },
+    "mood-45": {
+     "device": [
+      {
+       "text": "{\"label\": \"mixed\"}",
+       "seconds": 1.016
+      },
+      {
+       "text": "{\"label\":\"mixed\"}",
+       "seconds": 0.9498999999761581
+      },
+      {
+       "text": "{\"label\":\"mixed\"}",
+       "seconds": 0.9636000000238418
+      }
+     ]
+    },
+    "mood-46": {
+     "device": [
+      {
+       "text": "{\"label\": \"negative\"}",
+       "seconds": 1.0005999999642372
+      },
+      {
+       "text": "{\"label\":\"negative\"}",
+       "seconds": 0.9449000000357628
+      },
+      {
+       "text": "{\"label\": \"negative\"}",
+       "seconds": 1
+      }
+     ]
+    },
+    "mood-47": {
+     "device": [
+      {
+       "text": "{\"label\":\"positive\"}",
+       "seconds": 0.9783999999761581
+      },
+      {
+       "text": "{\"label\":\"positive\"}",
+       "seconds": 0.9816999999880791
+      },
+      {
+       "text": "{\"label\": \"positive\"}",
+       "seconds": 1.0434000000357628
+      }
+     ]
+    },
+    "mood-48": {
+     "device": [
+      {
+       "text": "{\"label\":\"positive\"}",
+       "seconds": 0.9635999999642372
+      },
+      {
+       "text": "{\"label\": \"positive\"}",
+       "seconds": 1.1605
+      },
+      {
+       "text": "{\"label\": \"positive\"}",
+       "seconds": 1.152
+      }
+     ]
+    },
+    "mood-49": {
+     "device": [
+      {
+       "text": "{\"label\": \"negative\"}",
+       "seconds": 1.1485
+      },
+      {
+       "text": "{\"label\": \"negative\"}",
+       "seconds": 1.129699999988079
+      },
+      {
+       "text": "{\"label\": \"negative\"}",
+       "seconds": 1.0295
+      }
+     ]
+    },
+    "mood-50": {
+     "device": [
+      {
+       "text": "{\"label\": \"positive\"}",
+       "seconds": 0.9613999999761581
+      },
+      {
+       "text": "{\"label\":\"positive\"}",
+       "seconds": 1.136100000023842
+      },
+      {
+       "text": "{\"label\":\"positive\"}",
+       "seconds": 0.9836999999880791
+      }
+     ]
+    }
+   }
+  }
+ ]
+}
