@@ -372,7 +372,6 @@ export function Board({ features, cases, mine = [], recordedOn, held, fixes, ope
   fixes?: Record<string, FixRecord[]>;
   /** The feature whose proof shows first. */
   opensOn?: string;
-  /** The same on the iPhone view. */
   opensOnIphone?: string;
   canRun: boolean;
   canTry?: boolean;

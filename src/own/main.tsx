@@ -14,7 +14,6 @@ type Saved = { features: OwnFeature[]; answers: Record<string, Cases>; fixes: Re
 
 type Example = {
   recorded: { machine: string; chrome: string; date: string };
-  /** What we did with the right answers the cloud model wrote, in a sentence. */
   corrected: string;
   from: { app: string; link: string; licence: string };
   feature: OwnFeature;
@@ -300,7 +299,7 @@ function App() {
       {example ? (
         <p className="notice recording">
           <span>
-            A recording, not a live check: "{example.feature.name}", the prompt <a href={example.from.link}>{example.from.app}</a> sends ({example.from.licence}),
+            A recording, not a live check: "{example.feature.name}", the prompt {example.from.app} sends,
             run on {written(example.recorded.date)} in Chrome {example.recorded.chrome} on {example.recorded.machine}. Nothing is sent now.
           </span>
           <button className="plain" onClick={() => setExample(undefined)}>
@@ -370,6 +369,11 @@ function App() {
                   ? ` ${wroteRight} of the right answers were written by ${CLOUD_MODEL} itself. ${example.corrected}`
                   : ` ${wroteRight} of the right answers were written by ${CLOUD_MODEL} itself, which flatters its own score on them unless you corrected them.`)}
             </p>
+            {example && (
+              <p>
+                The instruction is the app's own, from <a href={example.from.link}>its source code</a> ({example.from.licence} licence).
+              </p>
+            )}
           </footer>
         </>
       )}

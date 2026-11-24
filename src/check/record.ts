@@ -43,7 +43,6 @@ export type CheckRecord = {
   secondGrader?: string;
   /** Where Apple's runs were made. */
   apple?: { device: string; os: string; host: string; date: string };
-  /** Inputs recorded again later, on another Chrome. */
   again?: { chrome: string; date: string; cases: string[] };
   features: Record<string, Record<string, CaseRecord>>;
   /** The held-back inputs as the instruction stands, by feature. */
