@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { createRoot } from "react-dom/client";
 import "../base.css";
 import { FEATURES, type Feature } from "../features";
-import { DownloadPanel } from "../download";
+import { DownloadPanel, whyNot } from "../download";
 import { CLOUD_MODEL, deviceState, SECOND_GRADER, type DeviceState } from "../firebase";
 import { OutOfRequests, outOfRequests } from "./ask";
 import { Board } from "./board";
@@ -198,7 +198,7 @@ function App() {
               </button>
               {device && device !== "available" && (
                 <a className="why" href="#download">
-                  {device === "unavailable" ? "This computer can't run Chrome's built-in model" : device === "downloading" ? "Chrome's built-in model is still downloading" : "It needs Chrome's built-in model first: download it under the board"}
+                  {whyNot(device)}
                 </a>
               )}
             </>
@@ -234,6 +234,7 @@ function App() {
         opensOn="email_address"
         opensOnIphone="ticket_route"
         canRun={device === "available" && !running}
+        whyNot={whyNot(device)}
         onPlatform={setIphone}
         below={
           device && (

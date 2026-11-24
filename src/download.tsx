@@ -5,6 +5,17 @@ import { deviceState, downloadDeviceModel, type DeviceState } from "./firebase";
  * Says plainly when Chrome's model isn't on this computer, and downloads it on a click.
  * `now` is what that means for the page; `toGetIt` is the sentence that leads to the download.
  */
+export const whyNot = (state?: DeviceState) =>
+  state === "unsupported"
+    ? "It needs Chrome's built-in model, which this browser doesn't have"
+    : state === "unavailable"
+      ? "This computer can't run Chrome's built-in model"
+      : state === "downloading"
+        ? "Chrome's built-in model is still downloading"
+        : state === "downloadable"
+          ? "It needs Chrome's built-in model first: download it under the board"
+          : undefined;
+
 export function DownloadPanel({ state, onState, now, toGetIt }: { state: DeviceState; onState: (s: DeviceState) => void; now: string; toGetIt: string }) {
   const [share, setShare] = useState(0);
   if (state === "available") return null;

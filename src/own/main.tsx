@@ -5,7 +5,7 @@ import { OutOfRequests, outOfRequests } from "../check/ask";
 import { Board } from "../check/board";
 import { ENOUGH_INPUTS, RUNS, type FixRecord } from "../check/record";
 import { gradeFeature, runCloud, runDevice, type Cases } from "../check/run";
-import { DownloadPanel } from "../download";
+import { DownloadPanel, whyNot } from "../download";
 import { CLOUD_MODEL, deviceState, type DeviceState } from "../firebase";
 import { blankFeature, blankInput, hasExpect, newId, problem, split, toFeature, type OwnFeature, type OwnInput } from "./feature";
 import { writeInputs, WRITTEN } from "./write";
@@ -315,6 +315,7 @@ function App() {
             held={saved.answers}
             fixes={saved.fixes}
             canRun={device === "available" && !running}
+            whyNot={whyNot(device)}
             onFix={(id, fix) => keep((now) => ({ ...now, fixes: { ...now.fixes, [id]: [...(now.fixes[id] ?? []).filter((f) => f.line !== fix.line), fix] } }))}
           />
           <footer>

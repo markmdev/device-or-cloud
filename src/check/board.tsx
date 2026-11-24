@@ -368,7 +368,7 @@ function Apply({ chrome, apple, children }: { chrome: Placed[]; apple?: Placed[]
 /**
  * The verdicts for a list of features: the bar, the two sides, the proof for one feature, its one-line fixes and the bottom line.
  */
-export function Board({ features, cases, mine = [], recordedOn, held, fixes, opensOn, opensOnIphone, canRun, onFix, onPlatform, below, belowOnIphone, said, handsOver = true, children }: {
+export function Board({ features, cases, mine = [], recordedOn, held, fixes, opensOn, opensOnIphone, canRun, whyNot, onFix, onPlatform, below, belowOnIphone, said, handsOver = true, children }: {
   features: Feature[];
   cases: Record<string, Cases>;
   /** Features whose device answers were made on this computer just now. */
@@ -382,6 +382,7 @@ export function Board({ features, cases, mine = [], recordedOn, held, fixes, ope
   opensOn?: string;
   opensOnIphone?: string;
   canRun: boolean;
+  whyNot?: string;
   /** Given where a line tried on the page is also run in the cloud and kept: a developer's own feature. */
   onFix?: (featureId: string, fix: FixRecord) => void;
   /** Shown right under the board, above the bottom line. */
@@ -530,6 +531,7 @@ export function Board({ features, cases, mine = [], recordedOn, held, fixes, ope
             shipped={placed[verdicts.indexOf(shown)].fix}
             allowed={allowed}
             canRun={canRun}
+            whyNot={whyNot}
             canTry={!iphone}
             onFix={onFix && ((fix) => onFix(shown.feature.id, fix))}
           />

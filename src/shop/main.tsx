@@ -96,7 +96,7 @@ function Card({ feature, mode, line, device }: { feature: Feature; device?: Devi
           {line && where === "on_device" && <small>with one added line</small>}
           {fellBack && <small>{fellBack}</small>}
         </span>
-        <span>{answer ? `${answer.seconds.toFixed(1)} s · ${source === "in_cloud" ? "needs a connection" : "works offline"}` : means}</span>
+        <span>{!answer ? means : where === "in_code" ? "works offline" : `${answer.seconds.toFixed(1)} s · ${source === "in_cloud" ? "needs a connection" : "works offline"}`}</span>
       </p>
     </article>
   );
