@@ -531,6 +531,7 @@ td[data-verdict] .unsure { display: block; margin-top: 2px; text-indent: 0; font
 .feature > .settled { order: -1; margin-top: -3px; padding-left: 116px; }
 .feature > .disagree { order: 1; }
 td[data-verdict] .disagree, .feature-results p .disagree { display: block; margin-top: 4px; }
+td[data-verdict] .disagree { margin-top: 2px; text-indent: 0; font-size: 12px; }
 
 @media (min-width: 901px) {
   .sides .feature .meter:not([data-other="true"]) { grid-template-columns: 100px 1fr 60px; }
