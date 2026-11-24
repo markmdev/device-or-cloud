@@ -50,6 +50,12 @@ function Card({ feature, mode, line, device }: { feature: Feature; device?: Devi
 
   const source = answer?.source;
   const where = source ?? (ON_DEVICE.includes(mode) ? "on_device" : "in_cloud");
+  const fellBack =
+    source === "in_cloud" && ON_DEVICE.includes(mode)
+      ? device === "available" ? "Set to run on this computer, but Chrome's model didn't take it"
+      : device === "downloadable" || device === "downloading" ? "Set to run on this computer once Chrome's model is here"
+      : "Set to run on this computer, which has no Chrome model"
+      : undefined;
   // What a card says before it has answered: where it is set to run, and what that means on this computer.
   const [set, means] =
     where === "in_cloud" ? ["Set to run in the cloud", "needs a connection"]
@@ -76,6 +82,7 @@ function Card({ feature, mode, line, device }: { feature: Feature; device?: Devi
         <span>
           {source ? SOURCE_LABEL[source] : set}
           {line && where === "on_device" && <small>with one added line</small>}
+          {fellBack && <small>{fellBack}</small>}
         </span>
         <span>{answer ? `${answer.seconds.toFixed(1)} s · ${source === "on_device" ? "works offline" : "needs a connection"}` : means}</span>
       </p>
