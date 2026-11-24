@@ -2,7 +2,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import type { ReactNode } from "react";
 import { AnswerText } from "../answer";
 import "../base.css";
-import { APPLES, CHROMES, countLine, DEFAULT_ALLOWED, graded, judge, RUNS, UNSURE, unsureLine, VERDICT_NAME, whereApple, type CaseRecord, type CheckRecord, type FixRecord, type Run, type Tally } from "../check/record";
+import { APPLES, CHROMES, countLine, DEFAULT_ALLOWED, graded, judge, NO_TOOLS_ON_DEVICE, recordedOn, RUNS, UNSURE, unsureLine, VERDICT_NAME, whereApple, type CaseRecord, type CheckRecord, type FixRecord, type Run, type Tally } from "../check/record";
 import type { Case, Feature } from "../features";
 import { readMarks } from "../labels";
 import { judgedInCheck, judges, markKey, MARKS_TO_SAY, type Mark } from "./judges";
@@ -133,7 +133,7 @@ function FeatureResults({ f }: { f: FeatureNumbers }) {
           <pre>{feature.history.map((turn) => `${turn.role === "user" ? "User" : "Model"}: ${turn.text}`).join("\n")}</pre>
         </>
       )}
-      {feature.tools && <p>The app offers the model a function to call. A right answer is a call of it with the right arguments, shown here as JSON.</p>}
+      {feature.tools && <p>The app offers the model a function to call. A right answer is a call of it with the right arguments, shown here as JSON. {NO_TOOLS_ON_DEVICE}</p>}
       <table>
         <thead>
           <tr>
@@ -202,13 +202,14 @@ function FeatureResults({ f }: { f: FeatureNumbers }) {
 function Judges({ marks, what, people }: { marks?: Map<string, Mark> | null; what: string; people: boolean }) {
   const { record: RECORD, features } = useContext(Shown);
   const j = judges(RECORD, marks ?? undefined, features), inCheck = judgedInCheck(RECORD, features).length;
+  const marked = people && !!marks && j.marked > 0;
   return (
     <section className="judges">
       <h2>Who judged the answers that have no single right answer</h2>
       <p>
         {what} Code checks what it can, and the cloud model, {RECORD.cloudModel}, judges the rest: {j.judged} answers in this record
         {RECORD.fixes && ", counting an answer again where a tried line gave it again"}. Its judgment decides those verdicts, and some of the
-        answers it judges are its own. So {people ? "two more judges look" : "one more judge looks"} at the same answers, without being told
+        answers it judges are its own. So {marked ? "two more judges look" : "one more judge looks"} at the same answers, without being told
         which model wrote which.
       </p>
       <ul>
@@ -218,15 +219,11 @@ function Judges({ marks, what, people }: { marks?: Map<string, Mark> | null; wha
             ? `${RECORD.secondGrader}, the cloud model's larger sibling, has judged ${j.second === j.judged ? `all ${j.judged}` : `${j.second} of the ${j.judged} so far`}, with the same request. It agrees with the cloud model on ${j.secondAgrees} of ${j.second}. Where they differ, it is the stricter one on ${j.secondStricter} and the more lenient on ${j.second - j.secondAgrees - j.secondStricter}.`
             : "A different model will judge them again with the same request. It has not yet."}
         </li>
-        {people && <li>
+        {marked && <li>
           <b>People.</b>{" "}
-          {marks === null
-            ? "People on our team mark the same answers. Their marks could not be read just now."
-            : !marks
-            ? "Reading their marks."
-            : j.marked >= MARKS_TO_SAY
-              ? `People on our team marked ${j.marked} of the check's ${inCheck} judged answers "good enough" or "not good enough", one at a time, without seeing a grade. The cloud model agrees with them on ${j.cloudAgrees} of ${j.marked}${j.markedAndSecond ? `, the second model on ${j.secondAgreesWithPeople} of ${j.markedAndSecond}` : ""}.`
-              : `People on our team are marking the check's ${inCheck} judged answers "good enough" or "not good enough", one at a time, without seeing a grade: ${j.marked} so far. How far the cloud model agrees with them shows here from ${MARKS_TO_SAY} marks.`}
+          {j.marked >= MARKS_TO_SAY
+            ? `People on our team marked ${j.marked} of the check's ${inCheck} judged answers "good enough" or "not good enough", one at a time, without seeing a grade. The cloud model agrees with them on ${j.cloudAgrees} of ${j.marked}${j.markedAndSecond ? `, the second model on ${j.secondAgreesWithPeople} of ${j.markedAndSecond}` : ""}.`
+            : `People on our team are marking the check's ${inCheck} judged answers "good enough" or "not good enough", one at a time, without seeing a grade: ${j.marked} so far. How far the cloud model agrees with them shows here from ${MARKS_TO_SAY} marks.`}
         </li>}
       </ul>
       <p className="quiet">Each judged answer below shows every judgment it has.</p>
@@ -258,7 +255,6 @@ export function ResultsPage({ record: RECORD, features, back, heading, wrote, ju
   const APPLE = RECORD.apple;
   const all = numbers(RECORD, features);
   const sum = (pick: (f: FeatureNumbers) => number) => all.reduce((n, f) => n + pick(f), 0);
-  const date = new Date(RECORD.date).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
   return (
     <main className="check results">
       <header>
@@ -270,7 +266,7 @@ export function ResultsPage({ record: RECORD, features, back, heading, wrote, ju
           Every input and every answer · <a href={back.href}>{back.label}</a>
         </p>
         <p className="quiet">
-          Recorded on {RECORD.machine}, Chrome {RECORD.chrome}, {date}
+          {recordedOn(RECORD)}
         </p>
         {APPLE && <p className="quiet">{whereApple(APPLE)}</p>}
       </header>
@@ -279,7 +275,7 @@ export function ResultsPage({ record: RECORD, features, back, heading, wrote, ju
         <h2>{heading}</h2>
         <p className="lede">
           {sum((f) => f.verdict.inputs)} inputs for {all.length} {RECORD.fixes ? "features" : "prompts"}. Each went through Firebase AI Logic {RUNS} times to the model built into Chrome{" "}
-          {RECORD.chrome}{APPLE && `, ${RUNS} times to Apple's on-device model from the shop's iPhone app`} and once to {RECORD.cloudModel} in the cloud.
+          {RECORD.chrome}{RECORD.again && ` (Chrome ${RECORD.again.chrome} for the ${RECORD.again.cases.length} recorded again)`}{APPLE && `, ${RUNS} times to Apple's on-device model from the shop's iPhone app`} and once to {RECORD.cloudModel} in the cloud.
           Chrome's model was right on every run on {sum((f) => f.verdict.inputsRight)} of {sum((f) => f.verdict.inputs)} inputs,{" "}
           {APPLE && `Apple's model on ${sum((f) => f.apple!.inputsRight)}, `}the cloud model on {sum((f) => f.verdict.cloudRight)}. Where a model's
           answer to one input changes from run to run, its runs are given too. The verdicts are at the default bar, up to {DEFAULT_ALLOWED} wrong

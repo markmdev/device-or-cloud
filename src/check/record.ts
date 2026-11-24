@@ -43,6 +43,8 @@ export type CheckRecord = {
   secondGrader?: string;
   /** Where Apple's runs were made. */
   apple?: { device: string; os: string; host: string; date: string };
+  /** Inputs recorded again later, on another Chrome. */
+  again?: { chrome: string; date: string; cases: string[] };
   features: Record<string, Record<string, CaseRecord>>;
   /** The held-back inputs as the instruction stands, by feature. */
   held?: Record<string, Record<string, CaseRecord>>;
@@ -56,6 +58,9 @@ export const onApple = (cases: Cases = {}): Cases => Object.fromEntries(Object.e
 
 /** A date of the record as the pages write it: 14 November 2026. */
 export const written = (iso: string) => new Date(iso).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
+
+export const recordedOn = (r: CheckRecord, date = written) =>
+  `Recorded on ${r.machine}, Chrome ${r.chrome}, ${date(r.date)}${r.again ? `; ${r.again.cases.length} inputs again on Chrome ${r.again.chrome}, ${date(r.again.date)}` : ""}`;
 
 /** Where Apple's runs were made, in a sentence. */
 export const whereApple = (a: NonNullable<CheckRecord["apple"]>) =>
@@ -267,9 +272,12 @@ export const VERDICT_NAME: Record<Verdict["kind"], string> = {
   device: "Runs on the device.",
   cloud: "Keep in the cloud.",
   fix: "Neither model is good enough.",
-  more: "Not enough inputs to tell.",
+  more: "Too few inputs for a verdict.",
   pending: "Waiting for answers.",
 };
 
 /** What to do about a feature neither model is good enough for. */
 export const NEITHER_ADVICE = "Change the prompt, or don't use a model for this: work it out in code.";
+
+export const NO_TOOLS_ON_DEVICE =
+  "On the web, Firebase's SDK hands Chrome's model the messages but not the function's declaration, so on the device the model can only answer in words: a function call needs the cloud.";

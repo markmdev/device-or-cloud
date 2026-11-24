@@ -131,11 +131,15 @@ export function Fixes({ feature, who, onDevice, base, heldBase, fixes, shipped, 
   return (
     <section className="fixes">
       <h2>{onDevice ? "Can one more line in the prompt mend what it still gets wrong?" : "Can one more line in the prompt move it?"}</h2>
-      <p className="quiet">
-        A line counts only if {who} is within the bar with it on the check's inputs and on {feature.heldBack?.length} inputs that were kept
-        out of the check, with the cloud model still within the bar on those.
-        {fixes.some((fix) => fix.steady) && " A setting is measured the same way."}
-      </p>
+      {!fixes.length && !canTry ? (
+        <p className="quiet">Nothing was tried on {who} for this feature.</p>
+      ) : (
+        <p className="quiet">
+          A line counts only if {who} is within the bar with it on the check's inputs and on {feature.heldBack?.length} inputs that were kept
+          out of the check, with the cloud model still within the bar on those.
+          {fixes.some((fix) => fix.steady) && " A setting is measured the same way."}
+        </p>
+      )}
       {fixes.map((fix) => (
         <article key={`${fix.line}${fix.steady}`} className="fix" data-kind={kindOf(fix)} data-moved={moves(feature, fix, allowed)}>
           <p className="quiet">{fix.steady ? "A setting, not a line" : BY[fix.by]}</p>

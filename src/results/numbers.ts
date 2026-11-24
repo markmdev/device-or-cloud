@@ -1,4 +1,4 @@
-import { APPLES, countLine, DEFAULT_ALLOWED, fixRange, moves, onApple, tally, UNSURE, unsureLine, VERDICT_NAME, verdictFor, whereApple, type CheckRecord, type FixRecord, type Tally, type Verdict } from "../check/record";
+import { APPLES, countLine, DEFAULT_ALLOWED, fixRange, moves, onApple, recordedOn, tally, UNSURE, unsureLine, VERDICT_NAME, verdictFor, whereApple, type CheckRecord, type FixRecord, type Tally, type Verdict } from "../check/record";
 import { FEATURES, type Feature } from "../features";
 import { judgedInCheck, judges, MARKS_TO_SAY, type Mark } from "./judges";
 
@@ -57,7 +57,7 @@ export function printed(record: CheckRecord, marks?: Map<string, Mark>): string 
   const apples = (t?: Parameters<typeof onDevice>[0]) => (t ? `, Apple's model ${onDevice(t)}` : "");
   const allows = (v: Verdict, who?: string) => `${countLine(v, who)}${v.unsure ? ` ${unsureLine(v, who)}` : ""}`;
   const lines = [
-    `Recorded on ${record.machine}, Chrome ${record.chrome}, ${record.date}. Cloud model: ${record.cloudModel}.`,
+    `${recordedOn(record, (iso) => iso)}. Cloud model: ${record.cloudModel}.`,
     ...(a ? [whereApple(a)] : []),
     `Bar: up to ${DEFAULT_ALLOWED} wrong answers in 100.`,
   ];

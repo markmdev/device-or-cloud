@@ -13878,5 +13878,14 @@
    }
   }
  },
- "secondGrader": "gemini-3.5-flash"
+ "secondGrader": "gemini-3.5-flash",
+ "again": {
+  "chrome": "158",
+  "date": "2026-11-23",
+  "cases": [
+   "travel-11",
+   "travel-24",
+   "translation-16"
+  ]
+ }
 }

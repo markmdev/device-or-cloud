@@ -9,7 +9,7 @@ import { Board } from "./board";
 import { heldBackOf, missesOf, proposeLine, withLine } from "./fix";
 import { APPLE_LINES, OUR_LINES } from "./lines";
 import recorded from "./recorded.json";
-import { onApple, RUNS, verdictFor, whereApple, written, type CheckRecord, type FixRecord } from "./record";
+import { onApple, recordedOn, RUNS, verdictFor, whereApple, written, type CheckRecord, type FixRecord } from "./record";
 import { gradeAgain, gradeFeature, runCloud, runDevice, type Cases } from "./run";
 
 const RECORD = recorded as CheckRecord;
@@ -164,7 +164,6 @@ function App() {
     sessionStorage.setItem("record", JSON.stringify(record));
   }
 
-  const date = written(RECORD.date);
   const runningName = FEATURES.find((f) => f.id === running)?.name;
   const done = running ? Object.values(features[running] ?? {}).filter((r) => r.device.length === RUNS).length : 0;
 
@@ -184,7 +183,7 @@ function App() {
             ? `Recorded in the iPhone app on an iOS ${RECORD.apple.os} simulator, on our laptop's copy of Apple's model, ${written(RECORD.apple.date)}`
             : mine.length === FEATURES.length
               ? `Run on this computer just now, Chrome ${chromeVersion()}`
-              : `Recorded on ${RECORD.machine}, Chrome ${RECORD.chrome}, ${date}`}
+              : recordedOn(RECORD)}
         </p>
         {running ? (
           <button onClick={() => (stop.current = true)}>
@@ -226,6 +225,7 @@ function App() {
         held={RECORD.held}
         fixes={RECORD.fixes}
         opensOn="email_address"
+        opensOnIphone="ticket_route"
         canRun={device === "available" && !running}
         onPlatform={setIphone}
         below={
