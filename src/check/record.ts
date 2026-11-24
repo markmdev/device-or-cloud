@@ -266,10 +266,12 @@ export function secondVerdict(feature: Feature, cases: Cases | undefined, allowe
 /** The two counts the judges give, against the count the bar needs. */
 export function disagreeLine(first: Verdict, second: Verdict, allowed: number, who = CHROMES): string {
   const deviceFlips = within(first.runsRight, first.runs, allowed) !== within(second.runsRight, second.runs, allowed);
-  const [what, a, b, of] = deviceFlips ? [`${who} right on`, first.runsRight, second.runsRight, first.runs] : ["the cloud model right on", first.cloudRight, second.cloudRight, first.inputs];
+  const [model, judge, a, b, of, unit] = deviceFlips
+    ? [who, "the cloud model", first.runsRight, second.runsRight, first.runs, "runs"]
+    : ["the cloud", "the cloud model itself", first.cloudRight, second.cloudRight, first.inputs, "inputs"];
   const needs = Math.ceil((of * (100 - allowed)) / 100);
   const by = VERDICT_NAME[second.kind].replace(/\.$/, "").replace(/^./, (c) => c.toLowerCase());
-  return `${DISAGREE}: the cloud model's own judging counts ${what} ${a} of ${of}${deviceFlips ? " runs" : ""}, the second model ${b}, and the bar needs ${needs}. By the second model, ${by}.`;
+  return `${DISAGREE}: judged by ${judge}, ${model} is right on ${a} of ${of} ${unit}; judged by the second model, on ${b}. The bar needs ${needs}, so by the second model, ${by}.`;
 }
 
 const inWords = (r: Range) => `${Math.round(r.low)} to ${Math.round(r.high)} wrong answers in 100`;
