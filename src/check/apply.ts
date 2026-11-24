@@ -60,7 +60,7 @@ export function template(chrome: Placed[], apple?: Placed[]) {
       parameters[lineFor(feature)] = {
         defaultValue: { value: "" },
         conditionalValues: lines,
-        description: `${feature.name}: one more sentence at the end of its instruction. As written the on-device model is outside the bar. With this line the check found it within, on its own inputs and on inputs held back.`,
+        description: `${feature.name}: one more sentence at the end of its instruction. ${chrome[i].verdict.kind === "device" ? "As written the on-device model's range crosses the bar. With this line the check found it within the bar" : "As written the on-device model is outside the bar. With this line the check found it within"}, on its own inputs and on inputs held back.`,
         valueType: "STRING",
       };
     }

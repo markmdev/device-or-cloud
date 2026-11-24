@@ -24,7 +24,19 @@
           "value": "prefer_on_device"
         }
       },
-      "description": "Route a support ticket. Chrome on the web: on the device, 47 of 50 inputs right on every run. The iPhone app: on the device with steady_ticket_route; as written, 39 of 50 inputs right on every run.",
+      "description": "Route a support ticket. Chrome on the web: on the device with line_ticket_route; as written, 47 of 50 inputs right on every run. The iPhone app: on the device with steady_ticket_route; as written, 39 of 50 inputs right on every run.",
+      "valueType": "STRING"
+    },
+    "line_ticket_route": {
+      "defaultValue": {
+        "value": ""
+      },
+      "conditionalValues": {
+        "Chrome on the web": {
+          "value": "Classify messages about missing refunds or money not yet received as billing rather than returns."
+        }
+      },
+      "description": "Route a support ticket: one more sentence at the end of its instruction. As written the on-device model's range crosses the bar. With this line the check found it within the bar, on its own inputs and on inputs held back.",
       "valueType": "STRING"
     },
     "steady_ticket_route": {
@@ -72,7 +84,19 @@
           "value": "prefer_on_device"
         }
       },
-      "description": "Pull fields from a receipt. Chrome on the web: on the device, 46 of 50 inputs right on every run. The iPhone app: in the cloud, 37 of 50 inputs right on every run on the device.",
+      "description": "Pull fields from a receipt. Chrome on the web: on the device with line_receipt_fields; as written, 46 of 50 inputs right on every run. The iPhone app: in the cloud, 37 of 50 inputs right on every run on the device.",
+      "valueType": "STRING"
+    },
+    "line_receipt_fields": {
+      "defaultValue": {
+        "value": ""
+      },
+      "conditionalValues": {
+        "Chrome on the web": {
+          "value": "Dates on these receipts are written day first, so 03/04/2026 is 3 April 2026, and the total is the amount charged for the goods and any service, never the cash handed over or the change given."
+        }
+      },
+      "description": "Pull fields from a receipt: one more sentence at the end of its instruction. As written the on-device model's range crosses the bar. With this line the check found it within the bar, on its own inputs and on inputs held back.",
       "valueType": "STRING"
     },
     "mode_product_title": {
