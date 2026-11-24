@@ -226,6 +226,7 @@ function App() {
         held={RECORD.held}
         fixes={RECORD.fixes}
         opensOn="email_address"
+        opensOnIphone="ticket_route"
         canRun={device === "available" && !running}
         onPlatform={setIphone}
         below={

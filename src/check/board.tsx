@@ -360,7 +360,7 @@ function Apply({ chrome, apple, children }: { chrome: Placed[]; apple?: Placed[]
 /**
  * The verdicts for a list of features: the bar, the two sides, the proof for one feature, its one-line fixes and the bottom line.
  */
-export function Board({ features, cases, mine = [], recordedOn, held, fixes, opensOn, canRun, onFix, onPlatform, below, belowOnIphone, said, handsOver = true, children }: {
+export function Board({ features, cases, mine = [], recordedOn, held, fixes, opensOn, opensOnIphone, canRun, onFix, onPlatform, below, belowOnIphone, said, handsOver = true, children }: {
   features: Feature[];
   cases: Record<string, Cases>;
   /** Features whose device answers were made on this computer just now. */
@@ -372,6 +372,8 @@ export function Board({ features, cases, mine = [], recordedOn, held, fixes, ope
   fixes?: Record<string, FixRecord[]>;
   /** The feature whose proof shows first. */
   opensOn?: string;
+  /** The same on the iPhone view. */
+  opensOnIphone?: string;
   canRun: boolean;
   /** Given where a line tried on the page is also run in the cloud and kept: a developer's own feature. */
   onFix?: (featureId: string, fix: FixRecord) => void;
@@ -388,7 +390,7 @@ export function Board({ features, cases, mine = [], recordedOn, held, fixes, ope
   /** A note under "Apply it" about where this template is in use. */
   children?: ReactNode;
 }) {
-  const [selected, setSelected] = useState(opensOn);
+  const [selected, setSelected] = useState<string>();
   // The slider's own position is kept apart from the bar the verdicts use: the verdicts follow a moment later when
   // a feature crosses the line, and a slider that waited for them would snap back under a held key.
   const [bar, setBarNow] = useState(DEFAULT_ALLOWED);
@@ -422,7 +424,8 @@ export function Board({ features, cases, mine = [], recordedOn, held, fixes, ope
     // A newer move of the slider skips this transition; its update still runs, so it takes the newest position.
     document.startViewTransition(() => flushSync(() => setAllowed(latestBar.current))).ready.catch(() => {});
   }
-  const shown = verdicts.find((v) => v.feature.id === selected) ?? verdicts.find((v) => v.kind === "cloud") ?? verdicts.find((v) => v.failures.length) ?? verdicts[0];
+  const opening = selected ?? (iphone ? opensOnIphone : opensOn);
+  const shown = verdicts.find((v) => v.feature.id === opening) ?? verdicts.find((v) => v.kind === "cloud") ?? verdicts.find((v) => v.failures.length) ?? verdicts[0];
   const proof = useRef<HTMLDivElement>(null);
   function select(id: string) {
     setSelected(id);
