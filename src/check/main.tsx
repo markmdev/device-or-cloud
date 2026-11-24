@@ -192,9 +192,16 @@ function App() {
         ) : (
           device !== "unsupported" &&
           !iphone && (
-            <button onClick={runHere} disabled={device !== "available"}>
-              Run it on your own computer
-            </button>
+            <>
+              <button onClick={runHere} disabled={device !== "available"}>
+                Run it on your own computer
+              </button>
+              {device && device !== "available" && (
+                <a className="why" href="#download">
+                  {device === "unavailable" ? "This computer can't run Chrome's built-in model" : device === "downloading" ? "Chrome's built-in model is still downloading" : "It needs Chrome's built-in model first: download it under the board"}
+                </a>
+              )}
+            </>
           )
         )}
         {import.meta.env.DEV && !running && <button onClick={recordEverything}>Record everything</button>}

@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
 import { SOURCE_LABEL } from "../answer";
 import "../base.css";
-import { ask, type Answer } from "../check/ask";
+import { ask, OutOfRequests, outOfRequests, type Answer } from "../check/ask";
 import { withLine } from "../check/fix";
 import { DownloadPanel } from "../download";
 import { FEATURES, type Feature } from "../features";
@@ -27,6 +27,16 @@ function settings(): Record<string, Setting> {
 }
 
 const ON_DEVICE: Mode[] = ["prefer_on_device", "only_on_device"];
+const IN_CODE = "Worked out in code, no model";
+
+/** What the customer is told when the model's answer didn't come: plain words, never the SDK's own message. */
+function plainProblem(e: unknown): string {
+  if (!navigator.onLine) return "This feature runs in the cloud, so it needs a connection.";
+  if (e instanceof OutOfRequests) return outOfRequests(e);
+  const message = e instanceof Error ? e.message : String(e);
+  if (/app check/i.test(message)) return "The cloud model didn't answer: this browser couldn't show it is this site's page, which Firebase App Check asks of every request. An ad blocker or a strict network can stop that.";
+  return "The cloud model didn't answer just now. Try again in a minute.";
+}
 
 function Card({ feature, mode, line, device }: { feature: Feature; device?: DeviceState } & Setting) {
   const shown = SHOWN[feature.id];
@@ -40,16 +50,17 @@ function Card({ feature, mode, line, device }: { feature: Feature; device?: Devi
     setBusy(true);
     setAnswer(undefined);
     setProblem(undefined);
+    const started = performance.now();
     try {
-      setAnswer(await ask(line ? withLine(feature, line) : feature, mode, added + input));
+      setAnswer(shown.inCode ? { text: shown.inCode(added + input), seconds: (performance.now() - started) / 1000 } : await ask(line ? withLine(feature, line) : feature, mode, added + input));
     } catch (e) {
-      setProblem(navigator.onLine ? (e instanceof Error ? e.message : String(e)) : "This feature runs in the cloud, so it needs a connection.");
+      setProblem(shown.inCode ? (e as Error).message : plainProblem(e));
     }
     setBusy(false);
   }
 
   const source = answer?.source;
-  const where = source ?? (ON_DEVICE.includes(mode) ? "on_device" : "in_cloud");
+  const where = shown.inCode ? "in_code" : (source ?? (ON_DEVICE.includes(mode) ? "on_device" : "in_cloud"));
   const fellBack =
     source === "in_cloud" && ON_DEVICE.includes(mode)
       ? device === "available" ? "Set to run on this computer, but Chrome's model didn't take it"
@@ -58,7 +69,8 @@ function Card({ feature, mode, line, device }: { feature: Feature; device?: Devi
       : undefined;
   // What a card says before it has answered: where it is set to run, and what that means on this computer.
   const [set, means] =
-    where === "in_cloud" ? ["Set to run in the cloud", "needs a connection"]
+    where === "in_code" ? [IN_CODE, "works offline"]
+    : where === "in_cloud" ? ["Set to run in the cloud", "needs a connection"]
     : device === "available" ? ["Set to run on this computer", "works offline"]
     : device === "downloadable" || device === "downloading" ? ["Set to run on this computer once Chrome's model is here", "in the cloud until then"]
     : ["Set to run on a computer that has Chrome's model", "in the cloud here"];
@@ -66,6 +78,7 @@ function Card({ feature, mode, line, device }: { feature: Feature; device?: Devi
     <article className="card" data-feature={feature.id}>
       <p className="label">{shown.label}</p>
       <h2>{shown.heading}</h2>
+      {shown.note && <p className="note">{shown.note}</p>}
       <textarea value={input} onChange={(e) => setInput(e.target.value)} rows={Math.min(8, input.split("\n").length + 2)} />
       {added && <p className="adds">The shop adds its own line first: “{added.trim()}”</p>}
       <p className="actions">
@@ -84,7 +97,7 @@ function Card({ feature, mode, line, device }: { feature: Feature; device?: Devi
           {line && where === "on_device" && <small>with one added line</small>}
           {fellBack && <small>{fellBack}</small>}
         </span>
-        <span>{answer ? `${answer.seconds.toFixed(1)} s · ${source === "on_device" ? "works offline" : "needs a connection"}` : means}</span>
+        <span>{answer ? `${answer.seconds.toFixed(1)} s · ${source === "in_cloud" ? "needs a connection" : "works offline"}` : means}</span>
       </p>
     </article>
   );

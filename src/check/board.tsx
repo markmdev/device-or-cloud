@@ -6,7 +6,7 @@ import { parse, shown } from "../features/types";
 import { CLOUD_MODEL } from "../firebase";
 import { appCode, CHROME, DEPLOY, fixesFor, IPHONE, parameterFor, placedOn, runsOnDevice, swiftCode, TEMPLATE_FILE, templateText, type Placed } from "./apply";
 import { Fixes } from "./fixes";
-import { APPLES, barInWords, CHROMES, costLine, countLine, DEFAULT_ALLOWED, differing, graded, NEITHER_ADVICE, NO_TOOLS_ON_DEVICE, onApple, RUNS, UNSURE, unsureLine, VERDICT_NAME, verdictFor, verdictLine, type Failure, type FixRecord, type Range, type Run, type Verdict } from "./record";
+import { APPLES, barInWords, brokeLine, CHROMES, costLine, countLine, DEFAULT_ALLOWED, differing, DISAGREE, disagreeLine, fixRange, graded, NEITHER_ADVICE, NO_TOOLS_ON_DEVICE, onApple, RUNS, UNSURE, unsureLine, secondVerdict, SETTLED, VERDICT_NAME, verdictFor, verdictLine, type Failure, type FixRecord, type Range, type Run, type Verdict } from "./record";
 import type { Cases } from "./run";
 
 const MAX_ALLOWED = 30;
@@ -38,7 +38,7 @@ const deviceMeter = (who: string, v: Verdict, allowed: number, other: boolean) =
 );
 
 /** One feature on the board. `v` is its verdict on the platform the board shows; `chrome` and `apple` are each on-device model's own. */
-function FeatureRow({ v, chrome, apple, mine, selected, onSelect, allowed, named }: { v: Verdict; chrome: Verdict; apple?: Verdict; mine: boolean; selected: boolean; onSelect: () => void; allowed: number; named?: boolean }) {
+function FeatureRow({ v, second, settled, chrome, apple, mine, selected, onSelect, allowed, named }: { v: Verdict; second?: Verdict; settled?: boolean; chrome: Verdict; apple?: Verdict; mine: boolean; selected: boolean; onSelect: () => void; allowed: number; named?: boolean }) {
   const counted = v.kind === "device" || v.kind === "cloud" || v.kind === "fix";
   return (
     <li>
@@ -53,9 +53,11 @@ function FeatureRow({ v, chrome, apple, mine, selected, onSelect, allowed, named
             <span className="range">
               {Math.round(v.range.low)} to {Math.round(v.range.high)} wrong in 100
             </span>
-            {v.unsure && <span className="unsure">{UNSURE}</span>}
+            {settled ? <span className="settled">{SETTLED}</span> : v.unsure && <span className="unsure">{UNSURE}</span>}
+            {second && <span className="disagree">{DISAGREE}</span>}
             {v.kind === "device" && <span className="cost">{costLine(v)}</span>}
             {v.kind === "cloud" && v.pattern && <small>Its misses: {v.pattern}.</small>}
+            {brokeLine(v) && <small>{brokeLine(v)}</small>}
             {v.kind === "fix" && <small>{NEITHER_ADVICE}</small>}
             {v.feature.tools && <small>{NO_TOOLS_ON_DEVICE}</small>}
           </>
@@ -214,9 +216,15 @@ function Proof({ v, cases, who, recordedOn }: { v: Verdict; cases: Cases; who: s
   );
 }
 
+/** What the line the template ships does for a device verdict that more inputs could still change. */
+function settledLine(feature: Feature, fix: FixRecord, allowed: number, who: string): string {
+  const t = fixRange(feature, fix, allowed)!;
+  return `${SETTLED}: with the line the template ships, ${who}'s count allows ${Math.round(t.range.low)} to ${Math.round(t.range.high)} wrong answers in 100, clear of the bar.`;
+}
+
 /** Beside a side's count: how many of its features more inputs could still move. */
-function Unsure({ of }: { of: Verdict[] }) {
-  const n = of.filter((v) => v.unsure).length;
+function Unsure({ of, unsure }: { of: Verdict[]; unsure: (v: Verdict) => boolean }) {
+  const n = of.filter(unsure).length;
   if (!n) return null;
   return (
     <small>
@@ -412,6 +420,8 @@ export function Board({ features, cases, mine = [], recordedOn, held, fixes, ope
   const verdicts = iphone ? apple! : chrome;
   const chromePlaced = placedOn(chrome, fixes, false, allowed), applePlaced = apple && placedOn(apple, fixes, true, allowed);
   const placed = iphone ? applePlaced! : chromePlaced;
+  const secondOf = (v: Verdict) => secondVerdict(v.feature, seen(v.feature.id), allowed);
+  const settledBy = (v: Verdict) => (v.kind === "device" ? placed[verdicts.indexOf(v)].fix : undefined);
   const onDevice = verdicts.filter((v) => v.kind === "device"), inCloud = verdicts.filter((v) => v.kind === "cloud");
   const neither = verdicts.filter((v) => v.kind !== "device" && v.kind !== "cloud");
 
@@ -426,6 +436,7 @@ export function Board({ features, cases, mine = [], recordedOn, held, fixes, ope
   }
   const opening = selected ?? (iphone ? opensOnIphone : opensOn);
   const shown = verdicts.find((v) => v.feature.id === opening) ?? verdicts.find((v) => v.kind === "cloud") ?? verdicts.find((v) => v.failures.length) ?? verdicts[0];
+  const shownSettledBy = settledBy(shown);
   const proof = useRef<HTMLDivElement>(null);
   function select(id: string) {
     setSelected(id);
@@ -440,7 +451,7 @@ export function Board({ features, cases, mine = [], recordedOn, held, fixes, ope
   const row = (v: Verdict, named?: boolean) => {
     const i = verdicts.indexOf(v);
     return (
-      <FeatureRow key={v.feature.id} v={v} chrome={chrome[i]} apple={apple?.[i]} allowed={allowed} named={named} mine={!iphone && mine.includes(v.feature.id)} selected={shown === v} onSelect={() => select(v.feature.id)} />
+      <FeatureRow key={v.feature.id} v={v} second={secondOf(v)} settled={v.kind === "device" && !!placed[i].fix} chrome={chrome[i]} apple={apple?.[i]} allowed={allowed} named={named} mine={!iphone && mine.includes(v.feature.id)} selected={shown === v} onSelect={() => select(v.feature.id)} />
     );
   };
 
@@ -467,7 +478,7 @@ export function Board({ features, cases, mine = [], recordedOn, held, fixes, ope
           <section className="side device">
             <h2>
               <b>{onDevice.length}</b> <span>run on the device</span>
-              <Unsure of={onDevice} />
+              <Unsure of={onDevice} unsure={(v) => placed[verdicts.indexOf(v)].unsure} />
             </h2>
             <ul>{onDevice.map((v) => row(v))}</ul>
             {onDevice.length === 0 && (
@@ -480,7 +491,7 @@ export function Board({ features, cases, mine = [], recordedOn, held, fixes, ope
           <section className="side cloud">
             <h2>
               <b>{inCloud.length}</b> <span>stay in the cloud</span>
-              <Unsure of={inCloud} />
+              <Unsure of={inCloud} unsure={(v) => !!v.unsure} />
             </h2>
             <ul>{inCloud.map((v) => row(v))}</ul>
             {inCloud.length === 0 && <p className="none">Nothing has to stay here at this bar.</p>}
@@ -502,7 +513,9 @@ export function Board({ features, cases, mine = [], recordedOn, held, fixes, ope
           />
           {(shown.kind === "device" || shown.kind === "cloud" || shown.kind === "fix") && (
             <p className="tally">
-              {countLine(shown, who)} {shown.unsure && <b>{unsureLine(shown, who)}</b>}
+              {countLine(shown, who)} {shown.unsure && <b>{unsureLine(shown, who)}</b>}{" "}
+              {secondOf(shown) && <b>{disagreeLine(shown, secondOf(shown)!, allowed, who)}</b>}
+              {shownSettledBy && <span className="settled">{settledLine(shown.feature, shownSettledBy, allowed, who)}</span>}
             </p>
           )}
         </div>

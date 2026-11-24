@@ -1,4 +1,4 @@
-import { APPLES, countLine, DEFAULT_ALLOWED, fixRange, moves, onApple, recordedOn, tally, UNSURE, unsureLine, VERDICT_NAME, verdictFor, whereApple, type CheckRecord, type FixRecord, type Tally, type Verdict } from "../check/record";
+import { APPLES, countLine, DEFAULT_ALLOWED, disagreeLine, fixRange, moves, onApple, recordedOn, secondVerdict, tally, UNSURE, unsureLine, VERDICT_NAME, verdictFor, whereApple, type CheckRecord, type FixRecord, type Tally, type Verdict } from "../check/record";
 import { FEATURES, type Feature } from "../features";
 import { judgedInCheck, judges, MARKS_TO_SAY, type Mark } from "./judges";
 
@@ -10,6 +10,9 @@ export type FeatureNumbers = {
   verdict: Verdict;
   /** The verdict in the iPhone app, on Apple's model, where the record has its runs. */
   apple?: Verdict;
+  /** Each verdict as the second model's judgments would give it, where that is another verdict. */
+  second?: Verdict;
+  secondApple?: Verdict;
   /** The same counts for each kind of input; `apple` counts Apple's runs. */
   kinds: { kind: string; inputs: number; tally: Tally; apple?: Tally }[];
   /** The held-back inputs as the instruction stands. */
@@ -29,6 +32,8 @@ export function numbers(record: CheckRecord, features: Feature[] = FEATURES): Fe
       feature,
       verdict: verdictFor(feature, cases),
       apple: apple && verdictFor(feature, apple),
+      second: secondVerdict(feature, cases),
+      secondApple: apple && secondVerdict(feature, apple),
       kinds: kinds.map((kind) => {
         const inputs = feature.cases.filter((c) => c.kind === kind);
         return { kind, inputs: inputs.length, tally: tally(feature, cases, inputs), apple: apple && tally(feature, apple, inputs) };
@@ -63,8 +68,8 @@ export function printed(record: CheckRecord, marks?: Map<string, Mark>): string 
   ];
   for (const f of all) {
     const v = f.verdict;
-    lines.push("", `${f.feature.name}: ${VERDICT_NAME[v.kind]} ${allows(v)}`);
-    if (f.apple) lines.push(`  In the iPhone app: ${VERDICT_NAME[f.apple.kind]} ${allows(f.apple, APPLES)}`);
+    lines.push("", `${f.feature.name}: ${VERDICT_NAME[v.kind]} ${allows(v)}${f.second ? ` ${disagreeLine(v, f.second, DEFAULT_ALLOWED)}` : ""}`);
+    if (f.apple) lines.push(`  In the iPhone app: ${VERDICT_NAME[f.apple.kind]} ${allows(f.apple, APPLES)}${f.secondApple ? ` ${disagreeLine(f.apple, f.secondApple, DEFAULT_ALLOWED, APPLES)}` : ""}`);
     for (const k of f.kinds) lines.push(`    ${k.kind}: Chrome's model ${onDevice(k.tally)}${apples(k.apple)}, the cloud ${k.tally.cloudRight} of ${k.tally.cloud}`);
     if (f.held) lines.push(`  ${f.feature.heldBack?.length} inputs held back: Chrome's model ${onDevice(f.held)}${apples(f.heldApple)}, the cloud ${f.held.cloudRight} of ${f.held.cloud}`);
     for (const x of f.fixes) {

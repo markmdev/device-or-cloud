@@ -240,6 +240,38 @@ export function verdictLine(v: Verdict, who = CHROMES): string {
 
 export const UNSURE = "Not enough inputs to tell";
 
+export const DISAGREE = "The two judges disagree";
+export const SETTLED = "Settled with one more line";
+
+/** For a model that got almost nothing right: the rules its answers broke most, by how many answers broke each. */
+export function brokeLine(v: Verdict): string | undefined {
+  if (v.inputsRight * 10 >= v.inputs) return undefined;
+  const broke = new Map<string, number>();
+  for (const f of v.failures) for (const d of f.device) if (!d.ok && d.rule) broke.set(d.rule, (broke.get(d.rule) ?? 0) + 1);
+  const top = [...broke].sort((a, b) => b[1] - a[1]).slice(0, 3);
+  if (!top.length) return undefined;
+  return `What it got wrong: ${top.map(([rule, n], i) => `${rule} in ${n}${i ? "" : ` of its ${v.runs} answers`}`).join(", ")}.`;
+}
+
+const bySecond = (cases: Cases = {}): Cases =>
+  Object.fromEntries(Object.entries(cases).map(([id, r]) => [id, r.second ? { ...r, grades: { ...r.grades, ...r.second } } : r]));
+
+/** The verdict the second model's judgments give, where it isn't the verdict the cloud model's own judging gives. */
+export function secondVerdict(feature: Feature, cases: Cases | undefined, allowed = DEFAULT_ALLOWED): Verdict | undefined {
+  if (!feature.graded) return undefined;
+  const first = verdictFor(feature, cases, allowed), second = verdictFor(feature, bySecond(cases), allowed);
+  return second.kind !== first.kind ? second : undefined;
+}
+
+/** The two counts the judges give, against the count the bar needs. */
+export function disagreeLine(first: Verdict, second: Verdict, allowed: number, who = CHROMES): string {
+  const deviceFlips = within(first.runsRight, first.runs, allowed) !== within(second.runsRight, second.runs, allowed);
+  const [what, a, b, of] = deviceFlips ? [`${who} right on`, first.runsRight, second.runsRight, first.runs] : ["the cloud model right on", first.cloudRight, second.cloudRight, first.inputs];
+  const needs = Math.ceil((of * (100 - allowed)) / 100);
+  const by = VERDICT_NAME[second.kind].replace(/\.$/, "").replace(/^./, (c) => c.toLowerCase());
+  return `${DISAGREE}: the cloud model's own judging counts ${what} ${a} of ${of}${deviceFlips ? " runs" : ""}, the second model ${b}, and the bar needs ${needs}. By the second model, ${by}.`;
+}
+
 const inWords = (r: Range) => `${Math.round(r.low)} to ${Math.round(r.high)} wrong answers in 100`;
 
 /** A model's count in a sentence: its inputs right on every run, the ones that vary, and the range that allows. */

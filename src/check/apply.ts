@@ -86,11 +86,16 @@ export function fixesFor(fixes: Record<string, FixRecord[]> | undefined, feature
   return (fixes?.[feature.id] ?? []).filter((fix) => (fix.on === "apple") === onIphone).sort((a, b) => place(a) - place(b));
 }
 
-/** Each feature on a platform, with the first line or setting that moves it to the device at this bar, where one does. */
+/**
+ * Each feature on a platform, with the line or setting the template ships with it, where one is needed: the first that moves a
+ * feature kept in the cloud to the device at this bar, or the first that settles a device verdict whose range crosses the bar.
+ */
 export const placedOn = (verdicts: Verdict[], fixes: Record<string, FixRecord[]> | undefined, onIphone: boolean, allowed: number): Placed[] =>
   verdicts.map((verdict) => {
-    const fix = verdict.kind === "cloud" ? fixesFor(fixes, verdict.feature, onIphone).find((fix) => moves(verdict.feature, fix, allowed)) : undefined;
-    return { verdict, fix, unsure: fix ? !!fixRange(verdict.feature, fix, allowed)?.unsure : verdict.kind === "device" && !!verdict.unsure };
+    const tried = fixesFor(fixes, verdict.feature, onIphone), f = verdict.feature;
+    const settles = (fix: FixRecord) => moves(f, fix, allowed) && !fixRange(f, fix, allowed)?.unsure;
+    const fix = verdict.kind === "cloud" ? tried.find((fix) => moves(f, fix, allowed)) : verdict.kind === "device" && verdict.unsure ? tried.find(settles) : undefined;
+    return { verdict, fix, unsure: fix ? !!fixRange(f, fix, allowed)?.unsure : verdict.kind === "device" && !!verdict.unsure };
   });
 
 export const templateText = (chrome: Placed[], apple?: Placed[]) => JSON.stringify(template(chrome, apple), null, 2) + "\n";

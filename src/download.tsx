@@ -17,7 +17,7 @@ export function DownloadPanel({ state, onState, now, toGetIt }: { state: DeviceS
     }
   }
   return (
-    <aside className="download" data-state={state}>
+    <aside className="download" id="download" data-state={state}>
       {state === "unsupported" && <p>{now} This browser has no built-in model. Chrome on a computer has one.</p>}
       {state === "unavailable" && <p>{now} This computer can't run Chrome's built-in model.</p>}
       {state === "downloadable" && (

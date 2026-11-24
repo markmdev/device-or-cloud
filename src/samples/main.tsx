@@ -22,6 +22,8 @@ function found(device: Verdict[]): { sure: number; rest: string } {
   return { sure: device.length - open.length, rest: open.length ? ` ${open.length} more looked able to, and ${each} were not enough to be sure.` : "" };
 }
 
+const HYBRID = "https://firebase.google.com/docs/ai-logic/hybrid-on-device-inference";
+
 const NOT_RUN_COUNT = NOT_RUN.reduce((n, group) => n + group.prompts.length, 0);
 
 function App() {
@@ -123,12 +125,19 @@ function App() {
           {RECORD.cloudModel || CLOUD_MODEL} in the cloud. The other {NOT_RUN_COUNT} prompts are listed below, with why the check does not run
           them.
         </p>
+        <p className="lede">
+          Firebase's <a href={HYBRID}>page on hybrid inference</a> says the device does "only single-turn text generation (not chat)", takes no
+          tools such as function calling yet, and that server prompt templates "are not supported" in hybrid mode at all. So each prompt went as one
+          request, as a hybrid app has to send it: a chat's earlier turns inside that one request, each persona one message, the server template's
+          text as a plain prompt.
+        </p>
       </section>
 
       <Board
         features={FEATURES}
         cases={features}
         recordedOn="our laptop"
+        opensOn="sample_translation"
         canRun={false}
         handsOver={false}
         said={(device) => `${found(device).sure} of the ${SAMPLES.length} text prompts in Firebase's sample apps can run on the device as written.${found(device).rest}`}
@@ -137,11 +146,12 @@ function App() {
       <section className="sources">
         <h2>The {SAMPLES.length} prompts the check ran</h2>
         <ul className="ran">
-          {SAMPLES.map(({ feature, from, link }) => (
+          {SAMPLES.map(({ feature, from, link, sent }) => (
             <li key={feature.id}>
               <b>{feature.name}</b>
               <a href={link}>{from}</a>
               <small>{feature.graded ? "Judged by the cloud model, after what code can check" : "Checked by code"}</small>
+              {sent && <small>{sent}</small>}
             </li>
           ))}
         </ul>

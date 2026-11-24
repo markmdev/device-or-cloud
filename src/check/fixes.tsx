@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import type { Feature } from "../features";
 import { OutOfRequests, outOfRequests } from "./ask";
 import { missesOf, proposeLine, tryLine, type Tried } from "./fix";
-import { fixRange, moves, RUNS, shortOn, tally, UNSURE, type FixRecord } from "./record";
+import { fixRange, moves, RUNS, SETTLED, shortOn, tally, UNSURE, type FixRecord } from "./record";
 import type { Cases } from "./run";
 
 function Counts({ feature, who, base, heldBase, tried, cloud, allowed }: { feature: Feature; who: string; base: Cases; heldBase?: Cases; tried: Tried; cloud: boolean; allowed: number }) {
@@ -148,7 +148,13 @@ export function Fixes({ feature, who, onDevice, base, heldBase, fixes, shipped, 
           <p>
             <b>{outcome(feature, who, onDevice, heldBase, fix, allowed)}</b>
           </p>
-          {fix === shipped && <p className="shipped">The template under "Apply it" moves this feature with this {kindOf(fix)}: it is there beside the mode.</p>}
+          {fix === shipped && (
+            <p className="shipped">
+              {onDevice
+                ? `${SETTLED}: the template under "Apply it" ships this feature with this ${kindOf(fix)}, beside the mode.`
+                : `The template under "Apply it" moves this feature with this ${kindOf(fix)}: it is there beside the mode.`}
+            </p>
+          )}
         </article>
       ))}
       {canTry && (
