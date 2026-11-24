@@ -2,7 +2,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import type { ReactNode } from "react";
 import { AnswerText } from "../answer";
 import "../base.css";
-import { APPLES, CHROMES, countLine, DEFAULT_ALLOWED, graded, judge, RUNS, UNSURE, unsureLine, VERDICT_NAME, whereApple, type CaseRecord, type CheckRecord, type FixRecord, type Run, type Tally } from "../check/record";
+import { APPLES, CHROMES, countLine, DEFAULT_ALLOWED, graded, judge, NO_TOOLS_ON_DEVICE, RUNS, UNSURE, unsureLine, VERDICT_NAME, whereApple, type CaseRecord, type CheckRecord, type FixRecord, type Run, type Tally } from "../check/record";
 import type { Case, Feature } from "../features";
 import { readMarks } from "../labels";
 import { judgedInCheck, judges, markKey, MARKS_TO_SAY, type Mark } from "./judges";
@@ -133,7 +133,7 @@ function FeatureResults({ f }: { f: FeatureNumbers }) {
           <pre>{feature.history.map((turn) => `${turn.role === "user" ? "User" : "Model"}: ${turn.text}`).join("\n")}</pre>
         </>
       )}
-      {feature.tools && <p>The app offers the model a function to call. A right answer is a call of it with the right arguments, shown here as JSON.</p>}
+      {feature.tools && <p>The app offers the model a function to call. A right answer is a call of it with the right arguments, shown here as JSON. {NO_TOOLS_ON_DEVICE}</p>}
       <table>
         <thead>
           <tr>

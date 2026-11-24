@@ -6,7 +6,7 @@ import { parse, shown } from "../features/types";
 import { CLOUD_MODEL } from "../firebase";
 import { appCode, CHROME, DEPLOY, fixesFor, IPHONE, parameterFor, placedOn, runsOnDevice, swiftCode, TEMPLATE_FILE, templateText, type Placed } from "./apply";
 import { Fixes } from "./fixes";
-import { APPLES, barInWords, CHROMES, costLine, countLine, DEFAULT_ALLOWED, differing, graded, NEITHER_ADVICE, onApple, RUNS, UNSURE, unsureLine, VERDICT_NAME, verdictFor, verdictLine, type Failure, type FixRecord, type Range, type Run, type Verdict } from "./record";
+import { APPLES, barInWords, CHROMES, costLine, countLine, DEFAULT_ALLOWED, differing, graded, NEITHER_ADVICE, NO_TOOLS_ON_DEVICE, onApple, RUNS, UNSURE, unsureLine, VERDICT_NAME, verdictFor, verdictLine, type Failure, type FixRecord, type Range, type Run, type Verdict } from "./record";
 import type { Cases } from "./run";
 
 const MAX_ALLOWED = 30;
@@ -57,6 +57,7 @@ function FeatureRow({ v, chrome, apple, mine, selected, onSelect, allowed, named
             {v.kind === "device" && <span className="cost">{costLine(v)}</span>}
             {v.kind === "cloud" && v.pattern && <small>Its misses: {v.pattern}.</small>}
             {v.kind === "fix" && <small>{NEITHER_ADVICE}</small>}
+            {v.feature.tools && <small>{NO_TOOLS_ON_DEVICE}</small>}
           </>
         ) : (
           <span>{verdictLine(v, v === apple ? APPLES : CHROMES)}</span>

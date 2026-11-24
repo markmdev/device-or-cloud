@@ -273,3 +273,6 @@ export const VERDICT_NAME: Record<Verdict["kind"], string> = {
 
 /** What to do about a feature neither model is good enough for. */
 export const NEITHER_ADVICE = "Change the prompt, or don't use a model for this: work it out in code.";
+
+export const NO_TOOLS_ON_DEVICE =
+  "On the web, Firebase's SDK hands Chrome's model the messages but not the function's declaration, so on the device the model can only answer in words: a function call needs the cloud.";
