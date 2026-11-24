@@ -236,7 +236,7 @@ function Unsure({ of, unsure }: { of: Verdict[]; unsure: (v: Verdict) => boolean
 const NEXT = ["a first", "a second", "a third", "a fourth", "a fifth", "a sixth", "a seventh", "an eighth"];
 
 /** `afterFixes` counts the features on the device once each has its line or setting; `bySetting`, that a setting alone does it. */
-function BottomLine({ verdicts, allowed, afterFixes, bySetting, shop, iphone, said }: { verdicts: Verdict[]; allowed: number; afterFixes: number; bySetting: boolean; shop: boolean; iphone: boolean; said?: (onDevice: Verdict[]) => string }) {
+function BottomLine({ verdicts, allowed, afterFixes, bySetting, shop, iphone, said }: { verdicts: Verdict[]; allowed: number; afterFixes: number; bySetting: boolean; shop: boolean; iphone: boolean; said?: (onDevice: Verdict[], allowed: number) => string }) {
   const device = verdicts.filter((v) => v.kind === "device"), onDevice = device.length, more = afterFixes - onDevice;
   const change = bySetting ? "with the model's randomness switched off" : "after one added line in its prompt";
   const whose = shop ? "its" : "your", devices = iphone ? "iPhones" : "devices";
@@ -245,7 +245,7 @@ function BottomLine({ verdicts, allowed, afterFixes, bySetting, shop, iphone, sa
       <h2>
         {barInWords(allowed)},{" "}
         {said
-          ? said(device)
+          ? said(device, allowed)
           : verdicts.length === 1
           ? onDevice
             ? `this feature can run on your users' own ${devices}.`
@@ -392,7 +392,7 @@ export function Board({ features, cases, mine = [], recordedOn, held, fixes, ope
   /** The same place on the iPhone view. */
   belowOnIphone?: ReactNode;
   /** The bottom line's count in the page's own words, where the features aren't an app's own. */
-  said?: (onDevice: Verdict[]) => string;
+  said?: (onDevice: Verdict[], allowed: number) => string;
   /** False where the page hands over no template: nothing follows the bottom line. */
   handsOver?: boolean;
   /** A note under "Apply it" about where this template is in use. */

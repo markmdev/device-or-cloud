@@ -3,7 +3,7 @@ import { createRoot } from "react-dom/client";
 import "../base.css";
 import { OutOfRequests, outOfRequests } from "../check/ask";
 import { Board } from "../check/board";
-import { RUNS, recordedOn, verdictFor, type Cases, type CheckRecord, type Verdict } from "../check/record";
+import { DEFAULT_ALLOWED, RUNS, recordedOn, secondVerdict, verdictFor, type Cases, type CheckRecord, type Verdict } from "../check/record";
 import { gradeAgain, gradeFeature, runCloud, runDevice } from "../check/run";
 import { CLOUD_MODEL, SECOND_GRADER } from "../firebase";
 import { NOT_RUN, SAMPLES } from ".";
@@ -13,13 +13,22 @@ const RECORD = recorded as CheckRecord;
 const FEATURES = SAMPLES.map((s) => s.feature);
 
 /**
- * The prompts whose verdict is "runs on the device": how many of those verdicts more inputs could no longer change,
- * and a sentence for the others, which only looked able to.
+ * The prompts whose verdict is "runs on the device": how many hold under both judges with a count more inputs could no
+ * longer change, and a sentence for the others, which only looked able to.
  */
-function found(device: Verdict[]): { sure: number; rest: string } {
-  const open = device.filter((v) => v.unsure), counts = open.map((v) => v.inputs), fewest = Math.min(...counts), most = Math.max(...counts);
+function found(device: Verdict[], cases: Record<string, Cases>, allowed: number): { sure: number; rest: string } {
+  const split = device.filter((v) => secondVerdict(v.feature, cases[v.feature.id], allowed));
+  const open = device.filter((v) => v.unsure && !split.includes(v)), counts = open.map((v) => v.inputs), fewest = Math.min(...counts), most = Math.max(...counts);
   const each = `${fewest === most ? fewest : `${fewest} to ${most}`} inputs${open.length > 1 ? " each" : ""}`;
-  return { sure: device.length - open.length, rest: open.length ? ` ${open.length} more looked able to, and ${each} were not enough to be sure.` : "" };
+  const more = open.length + split.length, them = split.length === 1 ? "one" : `${split.length}`;
+  const rest = !more
+    ? ""
+    : !split.length
+      ? ` ${more} more looked able to, and ${each} were not enough to be sure.`
+      : !open.length
+        ? ` ${more} more looked able to, but the two judges disagree on ${more === 1 ? "it" : "them"}.`
+        : ` ${more} more looked able to: for ${open.length === 1 ? "one" : open.length}, ${each} were not enough to be sure, and the two judges disagree on ${them}.`;
+  return { sure: device.length - more, rest };
 }
 
 const HYBRID = "https://firebase.google.com/docs/ai-logic/hybrid-on-device-inference";
@@ -83,7 +92,7 @@ function App() {
   }
 
   const verdicts = FEATURES.map((f) => verdictFor(f, features[f.id]));
-  const onDevice = found(verdicts.filter((v) => v.kind === "device"));
+  const onDevice = found(verdicts.filter((v) => v.kind === "device"), features, DEFAULT_ALLOWED);
   const inputs = FEATURES.map((f) => f.cases.length), fewest = Math.min(...inputs), most = Math.max(...inputs);
   const done = running ? Object.values(features[running] ?? {}).filter((r) => r.device.length === RUNS).length : 0;
   const all = SAMPLES.length + NOT_RUN_COUNT;
@@ -140,7 +149,7 @@ function App() {
         opensOn="sample_translation"
         canRun={false}
         handsOver={false}
-        said={(device) => `${found(device).sure} of the ${SAMPLES.length} text prompts in Firebase's sample apps can run on the device as written.${found(device).rest}`}
+        said={(device, allowed) => `${found(device, features, allowed).sure} of the ${SAMPLES.length} text prompts in Firebase's sample apps can run on the device as written.${found(device, features, allowed).rest}`}
       />
 
       <section className="sources">
