@@ -363,7 +363,7 @@ function App() {
           />
           <footer>
             <p>
-              {judged.filter(hasExpect).length} of {example ? "the example's" : "your"} {judged.length} inputs have a right answer, and code compared every answer to it.
+              {judged.every(hasExpect) ? `All ${judged.length} of ${example ? "the example's" : "your"} inputs` : `${judged.filter(hasExpect).length} of ${example ? "the example's" : "your"} ${judged.length} inputs`} have a right answer, and code compared every answer to it.
               {judged.some((i) => !hasExpect(i)) &&
                 ` The other ${judged.filter((i) => !hasExpect(i)).length} have none, so ${CLOUD_MODEL} judged each answer against ${example ? "the" : "your"} instruction, its own answers included; a failure shown above says which way it was judged.`}
               {wroteRight > 0 &&
