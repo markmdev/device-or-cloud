@@ -10,7 +10,8 @@ const template = JSON.parse(readFileSync("remoteconfig.template.json", "utf8"));
 const valueOn = (platform, key) => template.parameters[key] && (template.parameters[key].conditionalValues?.[platform] ?? template.parameters[key].defaultValue).value;
 const ids = Object.keys(template.parameters).filter((key) => key.startsWith("mode_")).map((key) => key.replace("mode_", ""));
 const modes = ids.map((id) => [id, valueOn("Chrome on the web", `mode_${id}`)]);
-const asWritten = (platform) => ids.filter((id) => valueOn(platform, `mode_${id}`) === "prefer_on_device" && !valueOn(platform, `line_${id}`) && valueOn(platform, `steady_${id}`) !== "true").length;
+const settledByLine = (id) => /range crosses the bar/.test(template.parameters[`line_${id}`]?.description ?? "");
+const asWritten = (platform) => ids.filter((id) => valueOn(platform, `mode_${id}`) === "prefer_on_device" && (!valueOn(platform, `line_${id}`) || settledByLine(id)) && valueOn(platform, `steady_${id}`) !== "true").length;
 const browser = await chromium.connectOverCDP(process.env.CDP);
 const context = await browser.newContext({ viewport: { width: 1440, height: 1000 } });
 if (process.env.APPCHECK_DEBUG_TOKEN) await context.addInitScript((token) => { self.FIREBASE_APPCHECK_DEBUG_TOKEN = token; }, process.env.APPCHECK_DEBUG_TOKEN);
@@ -133,7 +134,14 @@ await page.goto(`${site}/shop/`);
 await page.locator(".card").first().waitFor();
 for (const [id, mode] of modes) {
   const card = page.locator(`[data-feature="${id}"]`);
+  const inCode = (await card.locator(".badge").getAttribute("data-source")) === "in_code";
   await card.locator(".actions button").first().click();
+  if (inCode) {
+    await card.locator(".result > :not(.quiet)").first().waitFor({ timeout: 10_000 }).catch(() => {});
+    const said = await card.locator(".badge").innerText();
+    expect(/Worked out in code, no model/.test(said) && /works offline/.test(said) && !(await card.locator(".result .wrong").count()) && (await card.locator(".result > :not(.quiet)").count()) > 0, `shop: ${id} is worked out in code, with no model`);
+    continue;
+  }
   await card.locator('.badge[data-ran="true"]').waitFor({ timeout: 90_000 }).catch(() => {});
   const want = mode === "prefer_on_device" ? "on_device" : "in_cloud";
   const ran = (await card.locator(".badge").getAttribute("data-source")) === want && (await card.locator(".badge").getAttribute("data-ran")) === "true";
