@@ -368,7 +368,7 @@ function Apply({ chrome, apple, children }: { chrome: Placed[]; apple?: Placed[]
 /**
  * The verdicts for a list of features: the bar, the two sides, the proof for one feature, its one-line fixes and the bottom line.
  */
-export function Board({ features, cases, mine = [], recordedOn, held, fixes, opensOn, opensOnIphone, canRun, whyNot, onFix, onPlatform, below, belowOnIphone, said, handsOver = true, children }: {
+export function Board({ features, cases, mine = [], recordedOn, held, fixes, opensOn, opensOnIphone, canRun, whyNot, canTry = true, onFix, onPlatform, below, belowOnIphone, said, handsOver = true, children }: {
   features: Feature[];
   cases: Record<string, Cases>;
   /** Features whose device answers were made on this computer just now. */
@@ -383,6 +383,7 @@ export function Board({ features, cases, mine = [], recordedOn, held, fixes, ope
   opensOnIphone?: string;
   canRun: boolean;
   whyNot?: string;
+  canTry?: boolean;
   /** Given where a line tried on the page is also run in the cloud and kept: a developer's own feature. */
   onFix?: (featureId: string, fix: FixRecord) => void;
   /** Shown right under the board, above the bottom line. */
@@ -483,8 +484,9 @@ export function Board({ features, cases, mine = [], recordedOn, held, fixes, ope
             <ul>{onDevice.map((v) => row(v))}</ul>
             {onDevice.length === 0 && (
               <p className="none">
-                Nothing yet. At this bar, {who} is wrong too often on every feature.
-                {firstOver && ` The first to cross is ${firstOver.name}, at ${firstOver.at}.`}
+                {features.length === 1
+                  ? `Nothing yet. At this bar, ${who} is wrong too often on it.${firstOver ? ` It would cross at ${firstOver.at}.` : ""}`
+                  : `Nothing yet. At this bar, ${who} is wrong too often on every feature.${firstOver ? ` The first to cross is ${firstOver.name}, at ${firstOver.at}.` : ""}`}
               </p>
             )}
           </section>
@@ -532,7 +534,7 @@ export function Board({ features, cases, mine = [], recordedOn, held, fixes, ope
             allowed={allowed}
             canRun={canRun}
             whyNot={whyNot}
-            canTry={!iphone}
+            canTry={canTry && !iphone}
             onFix={onFix && ((fix) => onFix(shown.feature.id, fix))}
           />
         )}

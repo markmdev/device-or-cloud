@@ -3,7 +3,7 @@ import { createRoot } from "react-dom/client";
 import "../base.css";
 import { OutOfRequests, outOfRequests } from "../check/ask";
 import { Board } from "../check/board";
-import { ENOUGH_INPUTS, RUNS, type FixRecord } from "../check/record";
+import { ENOUGH_INPUTS, RUNS, written, type FixRecord } from "../check/record";
 import { gradeFeature, runCloud, runDevice, type Cases } from "../check/run";
 import { DownloadPanel, whyNot } from "../download";
 import { CLOUD_MODEL, deviceState, type DeviceState } from "../firebase";
@@ -11,6 +11,21 @@ import { blankFeature, blankInput, hasExpect, newId, problem, split, toFeature, 
 import { writeInputs, WRITTEN } from "./write";
 
 type Saved = { features: OwnFeature[]; answers: Record<string, Cases>; fixes: Record<string, FixRecord[]> };
+
+type Example = {
+  recorded: { machine: string; chrome: string; date: string };
+  corrected: string;
+  from: { app: string; link: string; licence: string };
+  feature: OwnFeature;
+  answers: Cases;
+  fixes: FixRecord[];
+};
+
+const asSaved = (example: Example): Saved => ({
+  features: [example.feature],
+  answers: { [example.feature.id]: example.answers },
+  fixes: { [example.feature.id]: example.fixes },
+});
 
 const KEY = "own-check";
 
@@ -40,34 +55,36 @@ function cloudRequests(own: OwnFeature): number {
   return inCheck.length + Math.ceil(judged / 25);
 }
 
-function InputRow({ input, shaped, onChange, onRemove }: { input: OwnInput; shaped: boolean; onChange: (next: OwnInput) => void; onRemove: () => void }) {
+function InputRow({ input, shaped, readOnly, onChange, onRemove }: { input: OwnInput; shaped: boolean; readOnly: boolean; onChange: (next: OwnInput) => void; onRemove: () => void }) {
   const written = input.by === "cloud";
   return (
     <li className="own-input" data-by={input.by} data-ticked={input.ticked}>
       {written && (
         <label className="tick" title="A real user could send this">
-          <input type="checkbox" checked={input.ticked} onChange={(e) => onChange({ ...input, ticked: e.target.checked })} />
+          <input type="checkbox" checked={input.ticked} disabled={readOnly} onChange={(e) => onChange({ ...input, ticked: e.target.checked })} />
           <span>A real user could send this</span>
         </label>
       )}
       <label>
         <span>Input</span>
         {/* New text is a new input: answers given for the old text don't carry over. */}
-        <textarea value={input.input} onChange={(e) => onChange({ ...input, id: newId("input"), input: e.target.value })} rows={1} />
+        <textarea value={input.input} readOnly={readOnly} onChange={(e) => onChange({ ...input, id: newId("input"), input: e.target.value })} rows={1} />
       </label>
       <label>
         <span>Right answer, if there is one</span>
-        <textarea value={input.expect} onChange={(e) => onChange({ ...input, expect: e.target.value })} rows={1} placeholder={shaped ? "As JSON, like the answer's shape" : ""} />
+        <textarea value={input.expect} readOnly={readOnly} onChange={(e) => onChange({ ...input, expect: e.target.value })} rows={1} placeholder={shaped ? "As JSON, like the answer's shape" : ""} />
       </label>
       {written && <small className="kind">{input.kind}</small>}
-      <button className="plain" onClick={onRemove} aria-label="Remove this input">
-        Remove
-      </button>
+      {!readOnly && (
+        <button className="plain" onClick={onRemove} aria-label="Remove this input">
+          Remove
+        </button>
+      )}
     </li>
   );
 }
 
-function FeatureForm({ own, onChange, onRemove, onProblem }: { own: OwnFeature; onChange: (next: OwnFeature) => void; onRemove?: () => void; onProblem: (e: unknown) => void }) {
+function FeatureForm({ own, readOnly, onChange, onRemove, onProblem }: { own: OwnFeature; readOnly: boolean; onChange: (next: OwnFeature) => void; onRemove?: () => void; onProblem: (e: unknown) => void }) {
   const [writing, setWriting] = useState(false);
   const { inCheck, heldBack } = split(own);
   const yours = own.inputs.filter((i) => i.by === "you"), written = own.inputs.filter((i) => i.by === "cloud");
@@ -89,7 +106,7 @@ function FeatureForm({ own, onChange, onRemove, onProblem }: { own: OwnFeature; 
   }
 
   return (
-    <details className="own-feature" open>
+    <details className="own-feature" open={!readOnly}>
       <summary>
         <strong>{own.name.trim() || "A feature of your app"}</strong>
         <span>
@@ -98,16 +115,16 @@ function FeatureForm({ own, onChange, onRemove, onProblem }: { own: OwnFeature; 
       </summary>
       <label>
         What the feature does
-        <input type="text" value={own.name} onChange={(e) => onChange({ ...own, name: e.target.value })} placeholder="Sort an incoming email" />
+        <input type="text" value={own.name} readOnly={readOnly} onChange={(e) => onChange({ ...own, name: e.target.value })} placeholder="Sort an incoming email" />
       </label>
       <label>
-        The instruction your app sends
-        <textarea value={own.system} onChange={(e) => reworded({ system: e.target.value })} rows={4} />
+        {readOnly ? "The instruction the app sends" : "The instruction your app sends"}
+        <textarea value={own.system} readOnly={readOnly} onChange={(e) => reworded({ system: e.target.value })} rows={4} />
       </label>
       <label>
         The answer's shape
-        <textarea value={own.shape} onChange={(e) => reworded({ shape: e.target.value })} rows={2} placeholder='{"team": "billing", "urgent": false}' />
-        <small>Leave it empty for plain text. Otherwise paste the JSON schema your app sends, or one example answer as JSON.</small>
+        <textarea className="shape" value={own.shape} readOnly={readOnly} onChange={(e) => reworded({ shape: e.target.value })} rows={2} placeholder='{"team": "billing", "urgent": false}' />
+        {!readOnly && <small>Leave it empty for plain text. Otherwise paste the JSON schema your app sends, or one example answer as JSON.</small>}
       </label>
 
       <h3>A few inputs your users send</h3>
@@ -121,24 +138,32 @@ function FeatureForm({ own, onChange, onRemove, onProblem }: { own: OwnFeature; 
       </p>
       <ul>
         {yours.map((i) => (
-          <InputRow key={own.inputs.indexOf(i)} input={i} shaped={shaped} onChange={(next) => setInput(next, i)} onRemove={() => remove(i)} />
+          <InputRow key={own.inputs.indexOf(i)} input={i} shaped={shaped} readOnly={readOnly} onChange={(next) => setInput(next, i)} onRemove={() => remove(i)} />
         ))}
       </ul>
-      <p className="actions">
-        <button className="plain" onClick={() => onChange({ ...own, inputs: [...yours, blankInput(), ...written] })}>
-          Add an input
-        </button>
-        <button onClick={write} disabled={writing || !!stops}>
-          {writing ? "The cloud model is writing" : `Have the cloud model write ${WRITTEN} more`}
-        </button>
-      </p>
+      {!readOnly && (
+        <p className="actions">
+          <button className="plain" onClick={() => onChange({ ...own, inputs: [...yours, blankInput(), ...written] })}>
+            Add an input
+          </button>
+          <button onClick={write} disabled={writing || !!stops}>
+            {writing ? "The cloud model is writing" : `Have the cloud model write ${WRITTEN} more`}
+          </button>
+        </p>
+      )}
 
       {written.length > 0 && (
-        <>
-          <h3>Written by the cloud model from yours</h3>
+        <details className="written" open={!readOnly}>
+          <summary>
+            <h3>Written by the cloud model from yours</h3>
+            <span>
+              {written.length} input{written.length === 1 ? "" : "s"}, {written.filter((i) => i.ticked).length} ticked
+            </span>
+          </summary>
           <p className="quiet">
-            Hard ones included. Tick the ones a real user could send, and correct or clear any right answer that's wrong: the cloud model wrote those
-            too. One ticked input in four is kept out of the check, to prove a prompt fix on inputs it wasn't written from.
+            {!readOnly &&
+              "Hard ones included. Tick the ones a real user could send, and correct or clear any right answer that's wrong: the cloud model wrote those too. "}
+            One ticked input in four is kept out of the check, to prove a prompt fix on inputs it wasn't written from.
           </p>
           <p className="own-columns" data-by="cloud" aria-hidden="true">
             <span>Input</span>
@@ -146,10 +171,10 @@ function FeatureForm({ own, onChange, onRemove, onProblem }: { own: OwnFeature; 
           </p>
           <ul>
             {written.map((i) => (
-              <InputRow key={own.inputs.indexOf(i)} input={i} shaped={shaped} onChange={(next) => setInput(next, i)} onRemove={() => remove(i)} />
+              <InputRow key={own.inputs.indexOf(i)} input={i} shaped={shaped} readOnly={readOnly} onChange={(next) => setInput(next, i)} onRemove={() => remove(i)} />
             ))}
           </ul>
-        </>
+        </details>
       )}
 
       {stops && <p className="wrong">{stops}</p>}
@@ -177,7 +202,9 @@ function App() {
   const [device, setDevice] = useState<DeviceState>();
   const [running, setRunning] = useState<string>();
   const [notice, setNotice] = useState<string>();
+  const [example, setExample] = useState<Example>();
   const stop = useRef(false);
+  const shown = example ? asSaved(example) : saved;
 
   useEffect(() => {
     deviceState().then(setDevice);
@@ -224,13 +251,13 @@ function App() {
     setRunning(undefined);
   }
 
-  const ready = saved.features.filter((own) => !problem(own));
+  const ready = shown.features.filter((own) => !problem(own));
   // Two features with one name still need a Remote Config parameter each.
   const features = ready.map(toFeature).map((f, at, all) => {
     const earlier = all.slice(0, at).filter((other) => other.key === f.key).length;
     return earlier ? { ...f, key: `${f.key}_${earlier + 1}` } : f;
   });
-  const started = features.filter((f) => Object.keys(saved.answers[f.id] ?? {}).length > 0);
+  const started = features.filter((f) => Object.keys(shown.answers[f.id] ?? {}).length > 0);
   const requests = ready.reduce((sum, own) => sum + cloudRequests(own), 0);
   const answered = (id: string) => Object.values(saved.answers[id] ?? {}).filter((r) => r.device.length === RUNS).length;
   const runningOwn = ready.find((own) => own.id === running);
@@ -257,6 +284,7 @@ function App() {
           onState={setDevice}
           now="Your prompts can't be checked here without Chrome's built-in model."
           toGetIt="Chrome downloads it once: about 4 GB, 12 minutes on our laptop."
+          example={example ? undefined : () => import("./example.json").then((m) => setExample(m.default as Example))}
         />
       )}
 
@@ -268,22 +296,35 @@ function App() {
         </p>
       </section>
 
-      <p className="notice">
-        What you paste is sent to Google's free Gemini tier, and Google may use what is sent to that tier to improve its products. Paste nothing
-        private. What Chrome's model does stays on this computer, and your features are kept only in this browser.
-      </p>
+      {example ? (
+        <p className="notice recording">
+          <span>
+            A recording, not a live check: "{example.feature.name}", the prompt {example.from.app} sends,
+            run on {written(example.recorded.date)} in Chrome {example.recorded.chrome} on {example.recorded.machine}. Nothing is sent now.
+          </span>
+          <button className="plain" onClick={() => setExample(undefined)}>
+            Clear the example
+          </button>
+        </p>
+      ) : (
+        <p className="notice">
+          What you paste is sent to Google's free Gemini tier, and Google may use what is sent to that tier to improve its products. Paste nothing
+          private. What Chrome's model does stays on this computer, and your features are kept only in this browser.
+        </p>
+      )}
 
       <section className="own-features">
-        {saved.features.map((own, at) => (
+        {shown.features.map((own, at) => (
           <FeatureForm
-            key={at}
+            key={`${example ? "example" : "own"}-${at}`}
             own={own}
+            readOnly={!!example}
             onChange={(next) => setFeature(next, at)}
             onRemove={saved.features.length > 1 ? () => keep((now) => ({ ...now, features: now.features.filter((_, i) => i !== at) })) : undefined}
             onProblem={say}
           />
         ))}
-        <p className="actions">
+        {!example && <p className="actions">
           <button className="plain" onClick={() => keep((now) => ({ ...now, features: [...now.features, blankFeature()] }))} disabled={!!running}>
             Add another feature
           </button>
@@ -296,8 +337,8 @@ function App() {
               Run the check
             </button>
           )}
-        </p>
-        {ready.length > 0 && (
+        </p>}
+        {!example && ready.length > 0 && (
           <p className="quiet">
             The cloud side uses about {requests} of the 500 free cloud requests this site shares each day, at most 15 a minute, so it takes a few
             minutes. Inputs already answered aren't sent again.
@@ -311,21 +352,30 @@ function App() {
         <>
           <Board
             features={started}
-            cases={saved.answers}
-            held={saved.answers}
-            fixes={saved.fixes}
-            canRun={device === "available" && !running}
-            whyNot={whyNot(device)}
-            onFix={(id, fix) => keep((now) => ({ ...now, fixes: { ...now.fixes, [id]: [...(now.fixes[id] ?? []).filter((f) => f.line !== fix.line), fix] } }))}
+            cases={shown.answers}
+            held={shown.answers}
+            fixes={shown.fixes}
+            recordedOn={example ? "our laptop" : undefined}
+            canRun={!example && device === "available" && !running}
+            whyNot={example ? undefined : whyNot(device)}
+            canTry={!example}
+            onFix={example ? undefined : (id, fix) => keep((now) => ({ ...now, fixes: { ...now.fixes, [id]: [...(now.fixes[id] ?? []).filter((f) => f.line !== fix.line), fix] } }))}
           />
           <footer>
             <p>
-              {judged.filter(hasExpect).length} of your {judged.length} inputs have a right answer, and code compared every answer to it.
+              {judged.every(hasExpect) ? `All ${judged.length} of ${example ? "the example's" : "your"} inputs` : `${judged.filter(hasExpect).length} of ${example ? "the example's" : "your"} ${judged.length} inputs`} have a right answer, and code compared every answer to it.
               {judged.some((i) => !hasExpect(i)) &&
-                ` The other ${judged.filter((i) => !hasExpect(i)).length} have none, so ${CLOUD_MODEL} judged each answer against your instruction, its own answers included; a failure shown above says which way it was judged.`}
+                ` The other ${judged.filter((i) => !hasExpect(i)).length} have none, so ${CLOUD_MODEL} judged each answer against ${example ? "the" : "your"} instruction, its own answers included; a failure shown above says which way it was judged.`}
               {wroteRight > 0 &&
-                ` ${wroteRight} of the right answers were written by ${CLOUD_MODEL} itself, which flatters its own score on them unless you corrected them.`}
+                (example
+                  ? ` ${wroteRight} of the right answers were written by ${CLOUD_MODEL} itself. ${example.corrected}`
+                  : ` ${wroteRight} of the right answers were written by ${CLOUD_MODEL} itself, which flatters its own score on them unless you corrected them.`)}
             </p>
+            {example && (
+              <p>
+                The instruction is the app's own, from <a href={example.from.link}>its source code</a> ({example.from.licence} licence).
+              </p>
+            )}
           </footer>
         </>
       )}
