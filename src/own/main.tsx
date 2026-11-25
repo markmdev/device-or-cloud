@@ -106,7 +106,7 @@ function FeatureForm({ own, readOnly, onChange, onRemove, onProblem }: { own: Ow
   }
 
   return (
-    <details className="own-feature" open>
+    <details className="own-feature" open={!readOnly}>
       <summary>
         <strong>{own.name.trim() || "A feature of your app"}</strong>
         <span>
