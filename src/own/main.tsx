@@ -5,7 +5,7 @@ import { OutOfRequests, outOfRequests } from "../check/ask";
 import { Board } from "../check/board";
 import { ENOUGH_INPUTS, RUNS, written, type FixRecord } from "../check/record";
 import { gradeFeature, runCloud, runDevice, type Cases } from "../check/run";
-import { DownloadPanel } from "../download";
+import { DownloadPanel, whyNot } from "../download";
 import { CLOUD_MODEL, deviceState, type DeviceState } from "../firebase";
 import { blankFeature, blankInput, hasExpect, newId, problem, split, toFeature, type OwnFeature, type OwnInput } from "./feature";
 import { writeInputs, WRITTEN } from "./write";
@@ -356,6 +356,7 @@ function App() {
             held={shown.answers}
             fixes={shown.fixes}
             canRun={!example && device === "available" && !running}
+            whyNot={example ? undefined : whyNot(device)}
             canTry={!example}
             onFix={example ? undefined : (id, fix) => keep((now) => ({ ...now, fixes: { ...now.fixes, [id]: [...(now.fixes[id] ?? []).filter((f) => f.line !== fix.line), fix] } }))}
           />

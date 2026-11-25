@@ -9,9 +9,30 @@ type Order = {
 
 const pounds = (pence: number) => `£${(pence / 100).toFixed(2)}`;
 
-function toCase(o: Order, i: number): Case {
+export function totalOf(o: Order): number {
   const goods = o.lines.reduce((sum, [quantity, , unit]) => sum + quantity * unit, 0);
-  const total = Math.round((goods * (100 - (o.discountPercent ?? 0)) * (100 + (o.vatPercent ?? 0))) / 10000) + (o.deliveryPence ?? 0);
+  return Math.round((goods * (100 - (o.discountPercent ?? 0)) * (100 + (o.vatPercent ?? 0))) / 10000) + (o.deliveryPence ?? 0);
+}
+
+const PENCE = /£(\d+(?:\.\d{1,2})?)/;
+const toPence = (text: string) => Math.round(Number(PENCE.exec(text)![1]) * 100);
+
+export function orderOf(text: string): Order | string {
+  const order: Order = { lines: [] };
+  for (const line of text.split("\n").map((l) => l.trim()).filter(Boolean)) {
+    const item = /^(\d+) x (.+) at £\d+(?:\.\d{1,2})? each$/i.exec(line);
+    const percent = /(\d+(?:\.\d+)?)%/.exec(line);
+    if (item) order.lines.push([Number(item[1]), item[2], toPence(line)]);
+    else if (/^discount:/i.test(line) && percent) order.discountPercent = Number(percent[1]);
+    else if (/^vat:/i.test(line) && percent) order.vatPercent = Number(percent[1]);
+    else if (/^delivery:/i.test(line) && PENCE.test(line)) order.deliveryPence = toPence(line);
+    else return line;
+  }
+  return order.lines.length ? order : text.trim();
+}
+
+function toCase(o: Order, i: number): Case {
+  const total = totalOf(o);
   const lines = [
     ...o.lines.map(([quantity, item, unit]) => `${quantity} x ${item} at ${pounds(unit)} each`),
     ...(o.discountPercent ? [`Discount: ${o.discountPercent}% off the goods`] : []),

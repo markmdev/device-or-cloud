@@ -15,22 +15,22 @@ const IOS = "https://github.com/firebase/quickstart-ios/blob/892ecac8dee09313b5b
 const ANDROID = "https://github.com/firebase/quickstart-android/blob/153d77572e27715fae8e94269debefb5c25507b8/firebase-ai/app/src/main/java/com/google/firebase/quickstart/ai/feature/";
 
 /** One fixed prompt of Firebase's own sample apps, with where it is in their repositories. */
-export type Sample = { feature: Feature; from: string; link: string };
+export type Sample = { feature: Feature; from: string; link: string; sent?: string };
 
 /** The prompts that are text in and text out, and whose text is in the repositories: the ones the check runs. */
 export const SAMPLES: Sample[] = [
   { feature: genre, from: "Structured output with enum values, web quickstart", link: `${WEB}ai-samples/src/features/structured-output/service.ts` },
-  { feature: weather, from: "Function calling, web, iOS and Android quickstarts", link: `${WEB}ai-samples/src/features/function-calling/service.ts` },
+  { feature: weather, from: "Function calling, web, iOS and Android quickstarts", link: `${WEB}ai-samples/src/features/function-calling/service.ts`, sent: "Needs a function call, which the device doesn't take yet." },
   { feature: characters, from: "Structured output with a schema, web quickstart", link: `${WEB}ai-samples/src/features/structured-output/service.ts` },
-  { feature: invoiceTemplate, from: "Server prompt template, web and Android quickstarts", link: `${WEB}ai-samples/src/features/server-prompt-templates/README.md` },
+  { feature: invoiceTemplate, from: "Server prompt template, web and Android quickstarts", link: `${WEB}ai-samples/src/features/server-prompt-templates/README.md`, sent: "A server prompt template in the sample, which hybrid mode doesn't take. Its text went as one plain request." },
   { feature: svg, from: "SVG generator, Android quickstart", link: `${ANDROID}text/SvgViewModel.kt` },
   { feature: translation, from: "Translation, Android quickstart", link: `${ANDROID}text/TranslationViewModel.kt` },
-  { feature: travel, from: "Travel tips, iOS and Android quickstarts", link: IOS },
-  { feature: courses, from: "Chatbot recommendations for courses, iOS and Android quickstarts", link: IOS },
-  { feature: pirate, from: "Persona \"Pirate Captain\", web quickstart's chat app", link: `${WEB}ai-react-app/src/config/personas.ts` },
-  { feature: shakespeare, from: "Persona \"Shakespearean Poet\", web quickstart's chat app", link: `${WEB}ai-react-app/src/config/personas.ts` },
-  { feature: teenager, from: "Persona \"Sarcastic Teenager\", web quickstart's chat app", link: `${WEB}ai-react-app/src/config/personas.ts` },
-  { feature: seniorDev, from: "Persona \"Helpful Senior Developer\", web quickstart's chat app", link: `${WEB}ai-react-app/src/config/personas.ts` },
+  { feature: travel, from: "Travel tips, iOS and Android quickstarts", link: IOS, sent: "A chat in the sample, two turns in. Each input went as one request, with those turns inside it." },
+  { feature: courses, from: "Chatbot recommendations for courses, iOS and Android quickstarts", link: IOS, sent: "A chat in the sample. Each input went as one request, as the chat's first message." },
+  { feature: pirate, from: "Persona \"Pirate Captain\", web quickstart's chat app", link: `${WEB}ai-react-app/src/config/personas.ts`, sent: "A chat persona in the sample. Each input went as one request: the persona and one message." },
+  { feature: shakespeare, from: "Persona \"Shakespearean Poet\", web quickstart's chat app", link: `${WEB}ai-react-app/src/config/personas.ts`, sent: "A chat persona in the sample. Each input went as one request: the persona and one message." },
+  { feature: teenager, from: "Persona \"Sarcastic Teenager\", web quickstart's chat app", link: `${WEB}ai-react-app/src/config/personas.ts`, sent: "A chat persona in the sample. Each input went as one request: the persona and one message." },
+  { feature: seniorDev, from: "Persona \"Helpful Senior Developer\", web quickstart's chat app", link: `${WEB}ai-react-app/src/config/personas.ts`, sent: "A chat persona in the sample. Each input went as one request: the persona and one message." },
 ];
 
 /** The fixed prompts the check does not run, each once however many of the apps send it, with why. */

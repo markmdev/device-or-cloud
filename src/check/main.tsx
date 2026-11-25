@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { createRoot } from "react-dom/client";
 import "../base.css";
 import { FEATURES, type Feature } from "../features";
-import { DownloadPanel } from "../download";
+import { DownloadPanel, whyNot } from "../download";
 import { CLOUD_MODEL, deviceState, SECOND_GRADER, type DeviceState } from "../firebase";
 import { OutOfRequests, outOfRequests } from "./ask";
 import { Board } from "./board";
@@ -192,9 +192,16 @@ function App() {
         ) : (
           device !== "unsupported" &&
           !iphone && (
-            <button onClick={runHere} disabled={device !== "available"}>
-              Run it on your own computer
-            </button>
+            <>
+              <button onClick={runHere} disabled={device !== "available"}>
+                Run it on your own computer
+              </button>
+              {device && device !== "available" && (
+                <a className="why" href="#download">
+                  {whyNot(device)}
+                </a>
+              )}
+            </>
           )
         )}
         {import.meta.env.DEV && !running && <button onClick={recordEverything}>Record everything</button>}
@@ -227,6 +234,7 @@ function App() {
         opensOn="email_address"
         opensOnIphone="ticket_route"
         canRun={device === "available" && !running}
+        whyNot={whyNot(device)}
         onPlatform={setIphone}
         below={
           device && (

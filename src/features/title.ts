@@ -87,15 +87,15 @@ export const title: Feature = {
   check(answer, c) {
     const text = answer.trim();
     const lower = text.toLowerCase();
-    if (text.length > 60) return fail(`${text.length} characters; the limit is 60.`);
-    if (!/^[A-Z0-9]/.test(text)) return fail("Doesn't start with a capital letter.");
-    if (text.includes("!")) return fail("Has an exclamation mark.");
+    if (text.length > 60) return fail(`${text.length} characters; the limit is 60.`, "longer than 60 characters");
+    if (!/^[A-Z0-9]/.test(text)) return fail("Doesn't start with a capital letter.", "no capital letter first");
+    if (text.includes("!")) return fail("Has an exclamation mark.", "an exclamation mark");
     const shouted = text.split(/[^A-Za-z-]+/).find((w) => w.length > 3 && w === w.toUpperCase() && !/^USB/.test(w));
-    if (shouted) return fail(`"${shouted}" is written all in capitals.`);
+    if (shouted) return fail(`"${shouted}" is written all in capitals.`, "a word all in capitals");
     const talk = SALES_TALK.find((w) => new RegExp(`\\b${w}\\b`).test(lower));
-    if (talk) return fail(`Has sales talk: "${talk}".`);
+    if (talk) return fail(`Has sales talk: "${talk}".`, "sales talk");
     const missing = (c.expect as Expect).keep.find((ways) => !ways.some((w) => lower.includes(w)));
-    if (missing) return fail(`Leaves out "${missing[0]}".`);
+    if (missing) return fail(`Leaves out "${missing[0]}".`, "a detail of the notes left out");
     return OK;
   },
   cases: rows.map(([kind, input, keep, example], i): Case => ({ id: `title-${i + 1}`, input, expect: { keep, example }, kind })),
