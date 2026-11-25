@@ -355,6 +355,7 @@ function App() {
             cases={shown.answers}
             held={shown.answers}
             fixes={shown.fixes}
+            recordedOn={example ? "our laptop" : undefined}
             canRun={!example && device === "available" && !running}
             whyNot={example ? undefined : whyNot(device)}
             canTry={!example}

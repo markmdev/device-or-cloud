@@ -1,3086 +1,1824 @@
 {
  "recorded": {
   "machine": "our laptop (32 GB)",
-  "chrome": "STAND-IN",
-  "date": "2026-11-24",
-  "cloudModel": "gemini-3.5-flash-lite"
+  "chrome": "158",
+  "date": "2026-11-25"
  },
- "corrected": "STAND-IN: what we did with them.",
+ "corrected": "We took the free-worded description out of each, filled in the one it left empty, corrected 6 dates where it broke the prompt's own rule that a day written once applies to the entries after it, and left out 3 inputs whose right answer we couldn't settle.",
  "from": {
   "app": "a live notes-and-finances app (open source)",
-  "link": "https://example.com",
-  "licence": "Apache 2.0"
+  "link": "https://github.com/ardeman/project-catatsaja-reactrouter/blob/134e27cff305f5b67e01f26382ee6eb21f602e74/app/apis/ai/entries.ts",
+  "licence": "MIT"
  },
  "feature": {
-  "id": "own-example",
-  "name": "STAND-IN Read a review's mood",
-  "system": "You read one product review from Larkfield, an online home and garden shop, and say how the buyer feels about the product overall. positive: happy with the product. negative: unhappy with the product. mixed: clear praise and a clear complaint about the product, with neither winning.",
-  "shape": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"label\": {\n      \"type\": \"string\",\n      \"enum\": [\n        \"positive\",\n        \"negative\",\n        \"mixed\"\n      ]\n    }\n  },\n  \"required\": [\n    \"label\"\n  ],\n  \"additionalProperties\": false\n}",
+  "id": "own-catat-entries",
+  "name": "Turn a money note into entries",
+  "system": "Turn this note of money spent or received into entries. Today is 2026-11-25 (Wednesday).\n- One entry per thing paid or received, in the order written. description: what it was, short, in the note's own language and words (capitalise the first letter), without the amount or the date.\n- type: \"income\" for money received (salary/gaji, bonus, payment received, refund, sold something), otherwise \"expense\".\n- quantity and unitPrice: \"2 kopi 18rb\" is quantity 2 at 18000 each only when the price is clearly per item (\"2x18rb\", \"@18rb\", \"18rb each\"); otherwise quantity 1 and unitPrice the amount written.\n- Amounts are plain numbers: rb/ribu/k = thousand, jt/juta = million, \"1,5jt\" and \"1.5jt\" = 1500000, \"Rp 25.000\" = 25000, \"$3.50\" = 3.5.\n- date as YYYY-MM-DD from words like today/hari ini, yesterday/kemarin, kemarin lusa (2 days ago), a weekday (\"Senin\" = the most recent Monday, not in the future), or a written date (day first: 5/10 is 5 October). Use \"\" when the note gives no day for that entry; a day written once applies to the entries that follow it.\n- currency: the ISO 4217 code when the note names one (Rp/IDR, $/USD, S$/SGD, RM/MYR, €/EUR, ¥/JPY), else \"\".\n- Leave out anything without an amount. Never guess amounts. If the note has no money in it, return no entries.\n\nNote:",
+  "shape": "{\"type\": \"object\", \"properties\": {\"currency\": {\"type\": \"string\"}, \"entries\": {\"type\": \"array\", \"items\": {\"type\": \"object\", \"properties\": {\"description\": {\"type\": \"string\"}, \"type\": {\"type\": \"string\", \"enum\": [\"income\", \"expense\"]}, \"quantity\": {\"type\": \"number\"}, \"unitPrice\": {\"type\": \"number\"}, \"date\": {\"type\": \"string\"}}, \"required\": [\"description\", \"type\", \"quantity\", \"unitPrice\", \"date\"]}}}, \"required\": [\"currency\", \"entries\"]}",
   "inputs": [
    {
-    "id": "mood-1",
-    "input": "Does exactly what it says. The blades are sharp and it was half the price of the big brands.",
-    "expect": "{\"label\":\"positive\"}",
+    "id": "seed-1",
+    "input": "kopi 18rb, makan siang 45rb",
+    "expect": "{\"currency\": \"\", \"entries\": [{\"type\": \"expense\", \"quantity\": 1, \"unitPrice\": 18000, \"date\": \"\"}, {\"type\": \"expense\", \"quantity\": 1, \"unitPrice\": 45000, \"date\": \"\"}]}",
     "kind": "your own inputs",
     "by": "you",
     "ticked": true
    },
    {
-    "id": "mood-2",
-    "input": "Bought two for the patio. Sturdy, easy to put together, and they've survived a week of rain.",
-    "expect": "{\"label\":\"positive\"}",
+    "id": "seed-2",
+    "input": "Yesterday: groceries $42.30, refund from the shoe shop $15",
+    "expect": "{\"currency\": \"USD\", \"entries\": [{\"type\": \"expense\", \"quantity\": 1, \"unitPrice\": 42.3, \"date\": \"2026-11-24\"}, {\"type\": \"income\", \"quantity\": 1, \"unitPrice\": 15, \"date\": \"2026-11-24\"}]}",
     "kind": "your own inputs",
     "by": "you",
     "ticked": true
    },
    {
-    "id": "mood-3",
-    "input": "Lovely soft throw, washes well. My daughter has claimed it.",
-    "expect": "{\"label\":\"positive\"}",
+    "id": "seed-3",
+    "input": "gaji masuk Rp 8.500.000 hari ini",
+    "expect": "{\"currency\": \"IDR\", \"entries\": [{\"type\": \"income\", \"quantity\": 1, \"unitPrice\": 8500000, \"date\": \"2026-11-25\"}]}",
     "kind": "your own inputs",
     "by": "you",
     "ticked": true
    },
    {
-    "id": "mood-4",
-    "input": "Arrived well packed. The colour matches the photos and the stitching is neat.",
-    "expect": "{\"label\":\"positive\"}",
-    "kind": "plain reviews",
+    "id": "input-eieqn8py",
+    "input": "beli pulsa 25rb, bensin 30rb",
+    "expect": "{\"currency\":\"\",\"entries\":[{\"type\":\"expense\",\"quantity\":1,\"unitPrice\":25000,\"date\":\"\"},{\"type\":\"expense\",\"quantity\":1,\"unitPrice\":30000,\"date\":\"\"}]}",
+    "kind": "ordinary messages",
     "by": "cloud",
     "ticked": true
    },
    {
-    "id": "mood-5",
-    "input": "Third one I've bought from here. Never had a problem.",
-    "expect": "{\"label\":\"positive\"}",
-    "kind": "plain reviews",
+    "id": "input-ltuyqhts",
+    "input": "lunch $12, coffee $4",
+    "expect": "{\"currency\":\"USD\",\"entries\":[{\"type\":\"expense\",\"quantity\":1,\"unitPrice\":12,\"date\":\"\"},{\"type\":\"expense\",\"quantity\":1,\"unitPrice\":4,\"date\":\"\"}]}",
+    "kind": "ordinary messages",
     "by": "cloud",
     "ticked": true
    },
    {
-    "id": "mood-6",
-    "input": "Stopped working after two days. Waste of money.",
-    "expect": "{\"label\":\"negative\"}",
-    "kind": "plain reviews",
+    "id": "input-bwk0gu65",
+    "input": "bayar listrik 350.000",
+    "expect": "{\"currency\":\"\",\"entries\":[{\"type\":\"expense\",\"quantity\":1,\"unitPrice\":350000,\"date\":\"\"}]}",
+    "kind": "ordinary messages",
     "by": "cloud",
     "ticked": true
    },
    {
-    "id": "mood-7",
-    "input": "The handle snapped the first time I lifted it. Cheap plastic.",
-    "expect": "{\"label\":\"negative\"}",
-    "kind": "plain reviews",
+    "id": "input-u0t85t8w",
+    "input": "yesterday: dinner €45.50",
+    "expect": "{\"currency\":\"EUR\",\"entries\":[{\"type\":\"expense\",\"quantity\":1,\"unitPrice\":45.5,\"date\":\"2026-11-24\"}]}",
+    "kind": "ordinary messages",
     "by": "cloud",
     "ticked": true
    },
    {
-    "id": "mood-8",
-    "input": "Nothing like the picture. Thin fabric and it smells of chemicals.",
-    "expect": "{\"label\":\"negative\"}",
-    "kind": "plain reviews",
+    "id": "input-ojq5xs7z",
+    "input": "terima pembayaran proyek 2,5jt",
+    "expect": "{\"currency\":\"\",\"entries\":[{\"type\":\"income\",\"quantity\":1,\"unitPrice\":2500000,\"date\":\"\"}]}",
+    "kind": "ordinary messages",
+    "by": "cloud",
+    "ticked": true
+   },
+   {
+    "id": "input-p988cf3p",
+    "input": "parkir 5000",
+    "expect": "{\"currency\":\"\",\"entries\":[{\"type\":\"expense\",\"quantity\":1,\"unitPrice\":5000,\"date\":\"\"}]}",
+    "kind": "ordinary messages",
+    "by": "cloud",
+    "ticked": true
+   },
+   {
+    "id": "input-6k3ocfu5",
+    "input": "3 kopi @18rb, roti 15rb",
+    "expect": "{\"currency\":\"\",\"entries\":[{\"type\":\"expense\",\"quantity\":3,\"unitPrice\":18000,\"date\":\"\"},{\"type\":\"expense\",\"quantity\":1,\"unitPrice\":15000,\"date\":\"\"}]}",
+    "kind": "ordinary messages",
+    "by": "cloud",
+    "ticked": true
+   },
+   {
+    "id": "input-ziaxymw9",
+    "input": "sold old table RM 120",
+    "expect": "{\"currency\":\"MYR\",\"entries\":[{\"type\":\"income\",\"quantity\":1,\"unitPrice\":120,\"date\":\"\"}]}",
+    "kind": "ordinary messages",
+    "by": "cloud",
+    "ticked": true
+   },
+   {
+    "id": "input-y3zaqv1y",
+    "input": "kemarin: taksi 45rb",
+    "expect": "{\"currency\":\"\",\"entries\":[{\"type\":\"expense\",\"quantity\":1,\"unitPrice\":45000,\"date\":\"2026-11-24\"}]}",
+    "kind": "ordinary messages",
+    "by": "cloud",
+    "ticked": true
+   },
+   {
+    "id": "input-3j0tv159",
+    "input": "beli air galon 22.000",
+    "expect": "{\"currency\":\"\",\"entries\":[{\"type\":\"expense\",\"quantity\":1,\"unitPrice\":22000,\"date\":\"\"}]}",
+    "kind": "ordinary messages",
+    "by": "cloud",
+    "ticked": true
+   },
+   {
+    "id": "input-n1ub2klp",
+    "input": "12/11: buku Rp 75.000, pensil Rp 5.000",
+    "expect": "{\"currency\":\"IDR\",\"entries\":[{\"type\":\"expense\",\"quantity\":1,\"unitPrice\":75000,\"date\":\"2026-11-12\"},{\"type\":\"expense\",\"quantity\":1,\"unitPrice\":5000,\"date\":\"2026-11-12\"}]}",
+    "kind": "dates written day first",
+    "by": "cloud",
+    "ticked": true
+   },
+   {
+    "id": "input-livjz90u",
+    "input": "15/10: tiket bioskop 55rb",
+    "expect": "{\"currency\":\"\",\"entries\":[{\"type\":\"expense\",\"quantity\":1,\"unitPrice\":55000,\"date\":\"2026-10-15\"}]}",
+    "kind": "dates written day first",
+    "by": "cloud",
+    "ticked": true
+   },
+   {
+    "id": "input-jpsqllnm",
+    "input": "today we spent total 150rb on groceries",
+    "expect": "{\"currency\":\"\",\"entries\":[{\"type\":\"expense\",\"quantity\":1,\"unitPrice\":150000,\"date\":\"2026-11-25\"}]}",
+    "kind": "amounts that have to be added up",
+    "by": "cloud",
+    "ticked": true
+   },
+   {
+    "id": "input-dqmms9bv",
+    "input": "kemarin beli baju 120rb dan celana 180rb",
+    "expect": "{\"currency\":\"\",\"entries\":[{\"type\":\"expense\",\"quantity\":1,\"unitPrice\":120000,\"date\":\"2026-11-24\"},{\"type\":\"expense\",\"quantity\":1,\"unitPrice\":180000,\"date\":\"2026-11-24\"}]}",
+    "kind": "amounts that have to be added up",
+    "by": "cloud",
+    "ticked": true
+   },
+   {
+    "id": "input-8gy3d0d4",
+    "input": "makan siang enak banget sama teman",
+    "expect": "{\"currency\":\"\",\"entries\":[]}",
+    "kind": "something the instruction asks for that is missing from the input",
+    "by": "cloud",
+    "ticked": true
+   },
+   {
+    "id": "input-ym5gsqqp",
+    "input": "ketemu klien lama ngobrol banyak soal masa depan",
+    "expect": "{\"currency\":\"\",\"entries\":[]}",
+    "kind": "something the instruction asks for that is missing from the input",
+    "by": "cloud",
+    "ticked": true
+   },
+   {
+    "id": "input-k32cob7y",
+    "input": "Meeting at the downtown office took two hours, then went to the supermarket and bought apples $3.50, milk $2.20, and a magazine $5.00, then drove home and watered the plants.",
+    "expect": "{\"currency\":\"USD\",\"entries\":[{\"type\":\"expense\",\"quantity\":1,\"unitPrice\":3.5,\"date\":\"\"},{\"type\":\"expense\",\"quantity\":1,\"unitPrice\":2.2,\"date\":\"\"},{\"type\":\"expense\",\"quantity\":1,\"unitPrice\":5,\"date\":\"\"}]}",
+    "kind": "a long text with the needed part buried in it",
+    "by": "cloud",
+    "ticked": true
+   },
+   {
+    "id": "input-wn81twbr",
+    "input": "Waking up early was nice, walked the dog in the park, bought a pastry for 18rb, checked emails, and received a freelance bonus of Rp 1.500.000 in the afternoon.",
+    "expect": "{\"currency\":\"IDR\",\"entries\":[{\"type\":\"expense\",\"quantity\":1,\"unitPrice\":18000,\"date\":\"\"},{\"type\":\"income\",\"quantity\":1,\"unitPrice\":1500000,\"date\":\"\"}]}",
+    "kind": "a long text with the needed part buried in it",
+    "by": "cloud",
+    "ticked": true
+   },
+   {
+    "id": "input-lle379ko",
+    "input": "beli obat 45rb, tolong catat juga saldo rekening 5jt",
+    "expect": "{\"currency\":\"\",\"entries\":[{\"type\":\"expense\",\"quantity\":1,\"unitPrice\":45000,\"date\":\"\"},{\"type\":\"income\",\"quantity\":1,\"unitPrice\":5000000,\"date\":\"\"}]}",
+    "kind": "two requests in one message",
     "by": "cloud",
     "ticked": false
    },
    {
-    "id": "mood-9",
-    "input": "Leaks from the base. I've tried three washers and it still drips.",
-    "expect": "{\"label\":\"negative\"}",
-    "kind": "plain reviews",
+    "id": "input-kr04agr7",
+    "input": "bayar wifi 200rb dan ingatkan saya cuci baju",
+    "expect": "{\"currency\":\"\",\"entries\":[{\"type\":\"expense\",\"quantity\":1,\"unitPrice\":200000,\"date\":\"\"}]}",
+    "kind": "two requests in one message",
     "by": "cloud",
     "ticked": true
    },
    {
-    "id": "mood-10",
-    "input": "Wobbly, even after tightening every bolt. I wouldn't put anything heavy on it.",
-    "expect": "{\"label\":\"negative\"}",
-    "kind": "plain reviews",
+    "id": "input-hi6wu2sz",
+    "input": "dapat pinjaman dari teman 500rb",
+    "expect": "{\"currency\":\"\",\"entries\":[{\"type\":\"income\",\"quantity\":1,\"unitPrice\":500000,\"date\":\"\"}]}",
+    "kind": "a word that points to the wrong answer",
     "by": "cloud",
     "ticked": true
    },
    {
-    "id": "mood-11",
-    "input": "Looks beautiful on the table, but the lid doesn't fit and steam escapes everywhere. I'm torn on whether to keep it.",
-    "expect": "{\"label\":\"mixed\"}",
-    "kind": "plain reviews",
+    "id": "input-2a7v4bc4",
+    "input": "bayar hutang ke bank 1.2jt",
+    "expect": "{\"currency\":\"\",\"entries\":[{\"type\":\"expense\",\"quantity\":1,\"unitPrice\":1200000,\"date\":\"\"}]}",
+    "kind": "a word that points to the wrong answer",
     "by": "cloud",
     "ticked": true
    },
    {
-    "id": "mood-12",
-    "input": "Great light, terrible battery. It lasts an evening at most. I can't decide if I'd buy it again.",
-    "expect": "{\"label\":\"mixed\"}",
-    "kind": "plain reviews",
+    "id": "input-zu6dmzsk",
+    "input": "makann miang 25rb, kopii 18rb",
+    "expect": "{\"currency\":\"\",\"entries\":[{\"type\":\"expense\",\"quantity\":1,\"unitPrice\":25000,\"date\":\"\"},{\"type\":\"expense\",\"quantity\":1,\"unitPrice\":18000,\"date\":\"\"}]}",
+    "kind": "typing mistakes",
     "by": "cloud",
     "ticked": true
    },
    {
-    "id": "mood-13",
-    "input": "The cushions are comfortable but the covers faded badly in a month. Half happy, half annoyed.",
-    "expect": "{\"label\":\"mixed\"}",
-    "kind": "plain reviews",
+    "id": "input-4e9ye8bd",
+    "input": "belanja bulanan d supermarket Rp 450.000",
+    "expect": "{\"currency\":\"IDR\",\"entries\":[{\"type\":\"expense\",\"quantity\":1,\"unitPrice\":450000,\"date\":\"\"}]}",
+    "kind": "typing mistakes",
     "by": "cloud",
     "ticked": true
    },
    {
-    "id": "mood-14",
-    "input": "Cuts well and feels solid, yet the safety catch is so fiddly that I avoid using it. Mixed feelings.",
-    "expect": "{\"label\":\"mixed\"}",
-    "kind": "plain reviews",
+    "id": "input-djfz2nxp",
+    "input": "Senin kemarin: bensin 50rb, toll 15rb",
+    "expect": "{\"currency\":\"\",\"entries\":[{\"type\":\"expense\",\"quantity\":1,\"unitPrice\":50000,\"date\":\"2026-11-23\"},{\"type\":\"expense\",\"quantity\":1,\"unitPrice\":15000,\"date\":\"2026-11-23\"}]}",
+    "kind": "ordinary messages",
     "by": "cloud",
     "ticked": true
    },
    {
-    "id": "mood-15",
-    "input": "Good size and a nice finish; the drawers stick badly. Three stars: as much good as bad.",
-    "expect": "{\"label\":\"mixed\"}",
-    "kind": "plain reviews",
+    "id": "input-fy174lvr",
+    "input": "kemarin lusa dapat cashback Rp 10.000",
+    "expect": "{\"currency\":\"IDR\",\"entries\":[{\"type\":\"income\",\"quantity\":1,\"unitPrice\":10000,\"date\":\"2026-11-23\"}]}",
+    "kind": "ordinary messages",
     "by": "cloud",
     "ticked": true
    },
    {
-    "id": "mood-16",
-    "input": "Oh brilliant, another kettle that turns itself off before the water boils. Just what I wanted.",
-    "expect": "{\"label\":\"negative\"}",
-    "kind": "sarcastic reviews",
+    "id": "input-4v9irjxz",
+    "input": "01/11: sewa kamar Rp 1.200.000",
+    "expect": "{\"currency\":\"IDR\",\"entries\":[{\"type\":\"expense\",\"quantity\":1,\"unitPrice\":1200000,\"date\":\"2026-11-01\"}]}",
+    "kind": "dates written day first",
     "by": "cloud",
     "ticked": true
    },
    {
-    "id": "mood-17",
-    "input": "If you enjoy assembling furniture with missing screws and holes that don't line up, this is the wardrobe for you.",
-    "expect": "{\"label\":\"negative\"}",
-    "kind": "sarcastic reviews",
-    "by": "cloud",
-    "ticked": true
-   },
-   {
-    "id": "mood-18",
-    "input": "I expected it to be flimsy at this price. It isn't. Not a single complaint.",
-    "expect": "{\"label\":\"positive\"}",
-    "kind": "praise written in negative words",
-    "by": "cloud",
-    "ticked": true
-   },
-   {
-    "id": "mood-19",
-    "input": "The courier was two days late and the box was battered, but the mirror itself is perfect and exactly what I wanted.",
-    "expect": "{\"label\":\"positive\"}",
-    "kind": "reviews that also judge the delivery or the service",
-    "by": "cloud",
-    "ticked": true
-   },
-   {
-    "id": "mood-20",
-    "input": "Five stars for the customer service, one star for the hedge trimmer, which is going back.",
-    "expect": "{\"label\":\"negative\"}",
-    "kind": "reviews that also judge the delivery or the service",
+    "id": "input-xfl5awh7",
+    "input": "refunded item cost $14.25",
+    "expect": "{\"currency\":\"USD\",\"entries\":[{\"type\":\"income\",\"quantity\":1,\"unitPrice\":14.25,\"date\":\"\"}]}",
+    "kind": "ordinary messages",
     "by": "cloud",
     "ticked": false
    },
    {
-    "id": "mood-21",
-    "input": "I wanted to love it. The design is clever. But it broke within a week and the replacement did too.",
-    "expect": "{\"label\":\"negative\"}",
-    "kind": "reviews that change direction halfway",
+    "id": "input-w6yw3fz8",
+    "input": "beli 4 buah apel @5rb",
+    "expect": "{\"currency\":\"\",\"entries\":[{\"type\":\"expense\",\"quantity\":4,\"unitPrice\":5000,\"date\":\"\"}]}",
+    "kind": "ordinary messages",
     "by": "cloud",
     "ticked": true
    },
    {
-    "id": "mood-22",
-    "input": "I was sceptical after the reviews here, but mine works fine and has done for six months. Happy.",
-    "expect": "{\"label\":\"positive\"}",
-    "kind": "reviews that change direction halfway",
+    "id": "input-8fnyxigv",
+    "input": "hanya catatan kosong hari ini",
+    "expect": "{\"currency\":\"\",\"entries\":[]}",
+    "kind": "something the instruction asks for that is missing from the input",
     "by": "cloud",
     "ticked": true
    },
    {
-    "id": "mood-23",
-    "input": "Smaller than I pictured, which turned out to be a blessing: it fits the windowsill perfectly.",
-    "expect": "{\"label\":\"positive\"}",
-    "kind": "reviews that change direction halfway",
+    "id": "input-xibc3rqm",
+    "input": "nonton bioskop 50k, parkir 5k",
+    "expect": "{\"currency\":\"\",\"entries\":[{\"type\":\"expense\",\"quantity\":1,\"unitPrice\":50000,\"date\":\"\"},{\"type\":\"expense\",\"quantity\":1,\"unitPrice\":5000,\"date\":\"\"}]}",
+    "kind": "ordinary messages",
     "by": "cloud",
     "ticked": true
    },
    {
-    "id": "mood-24",
-    "input": "Would be perfect if it came in grey. As it is, still the best watering can I've owned.",
-    "expect": "{\"label\":\"positive\"}",
-    "kind": "reviews that change direction halfway",
+    "id": "input-y34x44cb",
+    "input": "Yesterday: taxi 15 USD, coffee 4 USD",
+    "expect": "{\"currency\":\"USD\",\"entries\":[{\"type\":\"expense\",\"quantity\":1,\"unitPrice\":15,\"date\":\"2026-11-24\"},{\"type\":\"expense\",\"quantity\":1,\"unitPrice\":4,\"date\":\"2026-11-24\"}]}",
+    "kind": "ordinary messages",
     "by": "cloud",
     "ticked": true
    },
    {
-    "id": "mood-25",
-    "input": "Returned it. Enough said.",
-    "expect": "{\"label\":\"negative\"}",
-    "kind": "very short reviews",
+    "id": "input-0ktezdtm",
+    "input": "kemarin beli bensin 35rb",
+    "expect": "{\"currency\":\"\",\"entries\":[{\"type\":\"expense\",\"quantity\":1,\"unitPrice\":35000,\"date\":\"2026-11-24\"}]}",
+    "kind": "ordinary messages",
     "by": "cloud",
     "ticked": true
    },
    {
-    "id": "mood-26",
-    "input": "Heats the whole greenhouse in ten minutes and barely moves the meter. Very pleased.",
-    "expect": "{\"label\":\"positive\"}",
-    "kind": "plain reviews",
+    "id": "input-73u3zes1",
+    "input": "23/11: beli buku 75.000",
+    "expect": "{\"currency\":\"\",\"entries\":[{\"type\":\"expense\",\"quantity\":1,\"unitPrice\":75000,\"date\":\"2026-11-23\"}]}",
+    "kind": "dates written day first",
     "by": "cloud",
     "ticked": true
    },
    {
-    "id": "mood-27",
-    "input": "Sturdy little step stool. Folds flat and holds my weight without a creak.",
-    "expect": "{\"label\":\"positive\"}",
-    "kind": "plain reviews",
+    "id": "input-y8em1ptx",
+    "input": "11/24: dinner €28",
+    "expect": "{\"currency\":\"EUR\",\"entries\":[{\"type\":\"expense\",\"quantity\":1,\"unitPrice\":28,\"date\":\"2026-11-24\"}]}",
+    "kind": "dates written month first",
     "by": "cloud",
     "ticked": true
    },
    {
-    "id": "mood-28",
-    "input": "The duvet cover is as soft as the description says and the buttons are sewn on properly.",
-    "expect": "{\"label\":\"positive\"}",
-    "kind": "plain reviews",
+    "id": "input-iyhuifyy",
+    "input": "Kemarin lusa dapat fee project 1.2jt",
+    "expect": "{\"currency\":\"\",\"entries\":[{\"type\":\"income\",\"quantity\":1,\"unitPrice\":1200000,\"date\":\"2026-11-23\"}]}",
+    "kind": "ordinary messages",
     "by": "cloud",
     "ticked": true
    },
    {
-    "id": "mood-29",
-    "input": "Easy to fit, looks smart, and the soft-close hinge actually works. Recommended.",
-    "expect": "{\"label\":\"positive\"}",
-    "kind": "plain reviews",
+    "id": "input-mmwa6riu",
+    "input": "Hari Selasa bayar listrik 150rb dan beli pulsa 25rb",
+    "expect": "{\"currency\":\"\",\"entries\":[{\"type\":\"expense\",\"quantity\":1,\"unitPrice\":150000,\"date\":\"2026-11-24\"},{\"type\":\"expense\",\"quantity\":1,\"unitPrice\":25000,\"date\":\"2026-11-24\"}]}",
+    "kind": "ordinary messages",
     "by": "cloud",
     "ticked": true
    },
    {
-    "id": "mood-30",
-    "input": "My tomatoes have never done better than in these grow bags.",
-    "expect": "{\"label\":\"positive\"}",
-    "kind": "plain reviews",
+    "id": "input-wym4deee",
+    "input": "3x kopi @15rb, roti 12rb",
+    "expect": "{\"currency\":\"\",\"entries\":[{\"type\":\"expense\",\"quantity\":3,\"unitPrice\":15000,\"date\":\"\"},{\"type\":\"expense\",\"quantity\":1,\"unitPrice\":12000,\"date\":\"\"}]}",
+    "kind": "ordinary messages",
     "by": "cloud",
     "ticked": true
    },
    {
-    "id": "mood-31",
-    "input": "The zip broke on the second use and the seams are already fraying.",
-    "expect": "{\"label\":\"negative\"}",
-    "kind": "plain reviews",
+    "id": "input-b7xtq98b",
+    "input": "jual barang bekas dapet 450rb",
+    "expect": "{\"currency\":\"\",\"entries\":[{\"type\":\"income\",\"quantity\":1,\"unitPrice\":450000,\"date\":\"\"}]}",
+    "kind": "ordinary messages",
     "by": "cloud",
     "ticked": true
    },
    {
-    "id": "mood-32",
-    "input": "Rusted within a month of being outside. So much for weatherproof.",
-    "expect": "{\"label\":\"negative\"}",
-    "kind": "plain reviews",
+    "id": "input-tqd5j5mc",
+    "input": "bayar cicilan 1,5jt",
+    "expect": "{\"currency\":\"\",\"entries\":[{\"type\":\"expense\",\"quantity\":1,\"unitPrice\":1500000,\"date\":\"\"}]}",
+    "kind": "ordinary messages",
     "by": "cloud",
     "ticked": true
    },
    {
-    "id": "mood-33",
-    "input": "The timer is wildly inaccurate and the alarm is too quiet to hear from the next room.",
-    "expect": "{\"label\":\"negative\"}",
-    "kind": "plain reviews",
+    "id": "input-zkgi67xb",
+    "input": "laundry 30k",
+    "expect": "{\"currency\":\"\",\"entries\":[{\"type\":\"expense\",\"quantity\":1,\"unitPrice\":30000,\"date\":\"\"}]}",
+    "kind": "ordinary messages",
+    "by": "cloud",
+    "ticked": true
+   },
+   {
+    "id": "input-esqv094a",
+    "input": "kemarin beli buah 45rb, terus sorenya jual meja 300rb",
+    "expect": "{\"currency\":\"\",\"entries\":[{\"type\":\"expense\",\"quantity\":1,\"unitPrice\":45000,\"date\":\"2026-11-24\"},{\"type\":\"income\",\"quantity\":1,\"unitPrice\":300000,\"date\":\"2026-11-24\"}]}",
+    "kind": "ordinary messages",
+    "by": "cloud",
+    "ticked": true
+   },
+   {
+    "id": "input-a898uhn2",
+    "input": "Meeting tadi pagi di kafe, pesan teh 20rb. Jangan lupa nanti malam mau beli kado",
+    "expect": "{\"currency\":\"\",\"entries\":[{\"type\":\"expense\",\"quantity\":1,\"unitPrice\":20000,\"date\":\"2026-11-25\"}]}",
+    "kind": "long texts with the needed part buried in it",
+    "by": "cloud",
+    "ticked": true
+   },
+   {
+    "id": "input-1wpuipy4",
+    "input": "Hari ini dapat refund tiket pesawat Rp 750.000 dan bonus akhir tahun 2.5jt",
+    "expect": "{\"currency\":\"IDR\",\"entries\":[{\"type\":\"income\",\"quantity\":1,\"unitPrice\":750000,\"date\":\"2026-11-25\"},{\"type\":\"income\",\"quantity\":1,\"unitPrice\":2500000,\"date\":\"2026-11-25\"}]}",
+    "kind": "ordinary messages",
+    "by": "cloud",
+    "ticked": true
+   },
+   {
+    "id": "input-1nzjlfxs",
+    "input": "beli obat di apotek 85.500",
+    "expect": "{\"currency\":\"\",\"entries\":[{\"type\":\"expense\",\"quantity\":1,\"unitPrice\":85500,\"date\":\"\"}]}",
+    "kind": "ordinary messages",
+    "by": "cloud",
+    "ticked": true
+   },
+   {
+    "id": "input-pymev305",
+    "input": "Kemarin: beli sepatu S$85, makan S$22",
+    "expect": "{\"currency\":\"SGD\",\"entries\":[{\"type\":\"expense\",\"quantity\":1,\"unitPrice\":85,\"date\":\"2026-11-24\"},{\"type\":\"expense\",\"quantity\":1,\"unitPrice\":22,\"date\":\"2026-11-24\"}]}",
+    "kind": "ordinary messages",
+    "by": "cloud",
+    "ticked": true
+   },
+   {
+    "id": "input-8bjbofsp",
+    "input": "bayar wifi 275rb",
+    "expect": "{\"currency\":\"\",\"entries\":[{\"type\":\"expense\",\"quantity\":1,\"unitPrice\":275000,\"date\":\"\"}]}",
+    "kind": "ordinary messages",
+    "by": "cloud",
+    "ticked": true
+   },
+   {
+    "id": "input-07gur8k0",
+    "input": "catatan pengeluaran: beli pulpen 5rb, kertas hvs 45rb",
+    "expect": "{\"currency\":\"\",\"entries\":[{\"type\":\"expense\",\"quantity\":1,\"unitPrice\":5000,\"date\":\"\"},{\"type\":\"expense\",\"quantity\":1,\"unitPrice\":45000,\"date\":\"\"}]}",
+    "kind": "ordinary messages",
+    "by": "cloud",
+    "ticked": true
+   },
+   {
+    "id": "input-l4ejah8v",
+    "input": "kemarin lusa isi e-toll 100k",
+    "expect": "{\"currency\":\"\",\"entries\":[{\"type\":\"expense\",\"quantity\":1,\"unitPrice\":100000,\"date\":\"2026-11-23\"}]}",
+    "kind": "ordinary messages",
+    "by": "cloud",
+    "ticked": true
+   },
+   {
+    "id": "input-ns9wgrxo",
+    "input": "terima kiriman uang dari ibu 500rb",
+    "expect": "{\"currency\":\"\",\"entries\":[{\"type\":\"income\",\"quantity\":1,\"unitPrice\":500000,\"date\":\"\"}]}",
+    "kind": "ordinary messages",
+    "by": "cloud",
+    "ticked": true
+   },
+   {
+    "id": "input-ripr0qbp",
+    "input": "beli sate 25rb, es teh 5rb",
+    "expect": "{\"currency\":\"\",\"entries\":[{\"type\":\"expense\",\"quantity\":1,\"unitPrice\":25000,\"date\":\"\"},{\"type\":\"expense\",\"quantity\":1,\"unitPrice\":5000,\"date\":\"\"}]}",
+    "kind": "ordinary messages",
+    "by": "cloud",
+    "ticked": true
+   },
+   {
+    "id": "input-z4zuj3wg",
+    "input": "Bayar cicilan motor 750rb dan terima komisi penjualan 400rb hari ini",
+    "expect": "{\"currency\":\"\",\"entries\":[{\"type\":\"expense\",\"quantity\":1,\"unitPrice\":750000,\"date\":\"2026-11-25\"},{\"type\":\"income\",\"quantity\":1,\"unitPrice\":400000,\"date\":\"\"}]}",
+    "kind": "ordinary messages",
+    "by": "cloud",
+    "ticked": false
+   },
+   {
+    "id": "input-11u3g20j",
+    "input": "kemarin bayar service AC 200rb",
+    "expect": "{\"currency\":\"\",\"entries\":[{\"type\":\"expense\",\"quantity\":1,\"unitPrice\":200000,\"date\":\"2026-11-24\"}]}",
+    "kind": "ordinary messages",
+    "by": "cloud",
+    "ticked": true
+   },
+   {
+    "id": "input-t3houmee",
+    "input": "21/11 beli jaket 350rb",
+    "expect": "{\"currency\":\"\",\"entries\":[{\"type\":\"expense\",\"quantity\":1,\"unitPrice\":350000,\"date\":\"2026-11-21\"}]}",
+    "kind": "dates written day first",
+    "by": "cloud",
+    "ticked": true
+   },
+   {
+    "id": "input-jq4mroqx",
+    "input": "11/22 beli tiket kereta 150rb",
+    "expect": "{\"currency\":\"\",\"entries\":[{\"type\":\"expense\",\"quantity\":1,\"unitPrice\":150000,\"date\":\"2026-11-22\"}]}",
+    "kind": "dates written month first",
+    "by": "cloud",
+    "ticked": true
+   },
+   {
+    "id": "input-bg3f0n5e",
+    "input": "Kemarin siang beli makan 35rb dan donat 10rb",
+    "expect": "{\"currency\":\"\",\"entries\":[{\"type\":\"expense\",\"quantity\":1,\"unitPrice\":35000,\"date\":\"2026-11-24\"},{\"type\":\"expense\",\"quantity\":1,\"unitPrice\":10000,\"date\":\"2026-11-24\"}]}",
+    "kind": "ordinary messages",
+    "by": "cloud",
+    "ticked": true
+   },
+   {
+    "id": "input-jhb13jsa",
+    "input": "2x burger @45rb",
+    "expect": "{\"currency\":\"\",\"entries\":[{\"type\":\"expense\",\"quantity\":2,\"unitPrice\":45000,\"date\":\"\"}]}",
+    "kind": "ordinary messages",
+    "by": "cloud",
+    "ticked": true
+   },
+   {
+    "id": "input-yl4804ny",
+    "input": "terima gajih Rp 6.000.000",
+    "expect": "{\"currency\":\"IDR\",\"entries\":[{\"type\":\"income\",\"quantity\":1,\"unitPrice\":6000000,\"date\":\"\"}]}",
+    "kind": "ordinary messages",
+    "by": "cloud",
+    "ticked": true
+   },
+   {
+    "id": "input-jsk3eqr2",
+    "input": "beli air mineral 6000",
+    "expect": "{\"currency\":\"\",\"entries\":[{\"type\":\"expense\",\"quantity\":1,\"unitPrice\":6000,\"date\":\"\"}]}",
+    "kind": "ordinary messages",
+    "by": "cloud",
+    "ticked": true
+   },
+   {
+    "id": "input-or1spyk9",
+    "input": "bayar iuran sampah 20rb hari ini",
+    "expect": "{\"currency\":\"\",\"entries\":[{\"type\":\"expense\",\"quantity\":1,\"unitPrice\":20000,\"date\":\"2026-11-25\"}]}",
+    "kind": "ordinary messages",
     "by": "cloud",
     "ticked": true
    }
   ]
  },
  "answers": {
-  "mood-1": {
+  "seed-1": {
    "device": [
     {
-     "text": "{\"label\": \"positive\"}",
-     "seconds": 0.772699999988079
+     "text": "{\n  \"currency\": \"\",\n  \"entries\": [\n    {\n      \"description\": \"Coffee\",\n      \"type\": \"expense\",\n      \"quantity\": 2,\n      \"unitPrice\": 18000,\n      \"date\": \"2026-11-25\"\n    },\n    {\n      \"description\": \"Lunch\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 45000,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+     "seconds": 13.794800000011922
     },
     {
-     "text": "{\"label\": \"positive\"}",
-     "seconds": 0.6215
+     "text": "{\n  \"currency\": \"IDR\",\n  \"entries\": [\n    {\n      \"description\": \"Two coffees\",\n      \"type\": \"expense\",\n      \"quantity\": 2,\n      \"unitPrice\": 18000,\n      \"date\": \"2026-11-25\"\n    },\n    {\n      \"description\": \"Lunch\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 45000,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+     "seconds": 5.705800000011921
     },
     {
-     "text": "{\"label\":\"positive\"}",
-     "seconds": 0.595
+     "text": "{\n  \"currency\": \"\",\n  \"entries\": [\n    {\n      \"description\": \"Kopi 18rb\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 18000,\n      \"date\": \"2026-11-25\"\n    },\n    {\n      \"description\": \"Makan Siang 45rb\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 45000,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+     "seconds": 5.9775
     }
    ],
    "cloud": {
-    "text": "{\n  \"label\": \"positive\"\n}",
-    "seconds": 1.4275,
-    "tokensIn": 80,
-    "tokensOut": 11
+    "text": "{\n  \"currency\": \"IDR\",\n  \"entries\": [\n    {\n      \"description\": \"Kopi\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 18000,\n      \"date\": \"2026-11-25\"\n    },\n    {\n      \"description\": \"Makan siang\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 45000,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+    "seconds": 3.517199999988079,
+    "tokensIn": 422,
+    "tokensOut": 144
    },
-   "apple": [
-    {
-     "seconds": 0.591467792,
-     "text": "{\"label\": \"positive\"}"
-    },
-    {
-     "seconds": 0.58319575,
-     "text": "{\"label\": \"positive\"}"
-    },
-    {
-     "seconds": 0.586114125,
-     "text": "{\"label\": \"positive\"}"
-    }
-   ]
+   "grades": {}
   },
-  "mood-2": {
+  "seed-2": {
    "device": [
     {
-     "text": "{\"label\": \"positive\"}",
-     "seconds": 0.631699999988079
+     "text": "{\n  \"currency\": \"$\",\n  \"entries\": [\n    {\n      \"description\": \"Groceries\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 42.30,\n      \"date\": \"2026-11-24\"\n    },\n    {\n      \"description\": \"Refund from the shoe shop\",\n      \"type\": \"income\",\n      \"quantity\": 1,\n      \"unitPrice\": 15,\n      \"date\": \"2026-11-24\"\n    }\n  ]\n}",
+     "seconds": 5.725899999976158
     },
     {
-     "text": "{\"label\": \"positive\"}",
-     "seconds": 0.6336000000238419
+     "text": "{\"currency\":\"$\",\"entries\":[{\"description\":\"Groceries\",\"type\":\"expense\",\"quantity\":1,\"unitPrice\":42.30,\"date\":\"2026-11-24\",\"ref\":\"yesterday\"},{\"description\":\"Refund from the shoe shop\",\"type\":\"income\",\"quantity\":1,\"unitPrice\":15,\"date\":\"2026-11-24\",\"ref\":\"yesterday\"}]}",
+     "seconds": 4.038399999976158
     },
     {
-     "text": "{\"label\": \"positive\"}",
-     "seconds": 0.627699999988079
+     "text": "{\"currency\":\"$\",\"entries\":[{\"description\":\"Groceries\",\"type\":\"expense\",\"quantity\":1,\"unitPrice\":42.30,\"date\":\"2026-11-24\"}, {\"description\":\"Refund from the shoe shop\",\"type\":\"income\",\"quantity\":1,\"unitPrice\":15,\"date\":\"2026-11-24\"}]}",
+     "seconds": 3.7234000000357628
     }
    ],
    "cloud": {
-    "text": "{\n  \"label\": \"positive\"\n}",
-    "seconds": 0.8865,
-    "tokensIn": 83,
-    "tokensOut": 11
+    "text": "{\n  \"currency\": \"USD\",\n  \"entries\": [\n    {\n      \"description\": \"Groceries\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 42.30,\n      \"date\": \"2026-11-24\"\n    },\n    {\n      \"description\": \"Refund from the shoe shop\",\n      \"type\": \"income\",\n      \"quantity\": 1,\n      \"unitPrice\": 15.00,\n      \"date\": \"2026-11-24\"\n    }\n  ]\n}",
+    "seconds": 1.421199999988079,
+    "tokensIn": 427,
+    "tokensOut": 145
    },
-   "apple": [
-    {
-     "text": "{\"label\": \"positive\"}",
-     "seconds": 0.59197025
-    },
-    {
-     "text": "{\"label\": \"positive\"}",
-     "seconds": 0.577018292
-    },
-    {
-     "text": "{\"label\": \"positive\"}",
-     "seconds": 0.589220375
-    }
-   ]
+   "grades": {}
   },
-  "mood-3": {
+  "seed-3": {
    "device": [
     {
-     "text": "{\"label\":\"positive\"}",
-     "seconds": 0.5896999999880791
+     "text": "{\"currency\":\"IDR\",\"entries\":[{\"description\":\"Gaji Masuk\", \"type\":\"income\", \"quantity\":1, \"unitPrice\":8500000, \"date\":\"2026-11-25\"}]}",
+     "seconds": 2.858699999988079
     },
     {
-     "text": "{\"label\":\"positive\"}",
-     "seconds": 0.5785
+     "text": "{\n  \"currency\": \"IDR\",\n  \"entries\": [\n    {\n      \"description\": \"Gaji Masuk\",\n      \"type\": \"income\",\n      \"quantity\": 1,\n      \"unitPrice\": 8500000,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+     "seconds": 3.9608999999761583
     },
     {
-     "text": "{\"label\":\"positive\"}",
-     "seconds": 0.579
+     "text": "{\"currency\": \"Rp\", \"entries\": [{\"description\": \"Gaji masuk\", \"type\": \"income\", \"quantity\": 1, \"unitPrice\": 8500000, \"date\": \"2026-11-25\"}]}",
+     "seconds": 3.131
     }
    ],
    "cloud": {
-    "text": "{\n  \"label\": \"positive\"\n}",
-    "seconds": 0.9345,
-    "tokensIn": 72,
-    "tokensOut": 11
+    "text": "{\"currency\": \"IDR\", \"entries\": [{\"description\": \"Gaji masuk\", \"type\": \"income\", \"quantity\": 1, \"unitPrice\": 8500000, \"date\": \"2026-11-25\"}]}",
+    "seconds": 1.202199999988079,
+    "tokensIn": 425,
+    "tokensOut": 59
    },
-   "apple": [
-    {
-     "seconds": 0.5893895,
-     "text": "{\"label\": \"positive\"}"
-    },
-    {
-     "seconds": 0.578902166,
-     "text": "{\"label\": \"positive\"}"
-    },
-    {
-     "seconds": 0.567849542,
-     "text": "{\"label\": \"positive\"}"
-    }
-   ]
+   "grades": {}
   },
-  "mood-4": {
+  "input-eieqn8py": {
    "device": [
     {
-     "text": "{\"label\": \"positive\"}",
-     "seconds": 0.6333999999761581
+     "text": "{\n  \"currency\": \"IDR\",\n  \"entries\": [\n    {\n      \"description\": \"Beli pulsa\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 25000,\n      \"date\": \"2026-11-25\"\n    },\n    {\n      \"description\": \"Bensin\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 30000,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+     "seconds": 5.830899999976158
     },
     {
-     "text": "{\"label\": \"positive\"}",
-     "seconds": 0.619
+     "text": "{\n  \"currency\": \"Rp\",\n  \"entries\": [\n    {\n      \"description\": \"Beli pulsa\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 25000,\n      \"date\": \"2026-11-25\"\n    },\n    {\n      \"description\": \"Bensin\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 30000,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+     "seconds": 5.760199999988079
     },
     {
-     "text": "{\"label\":\"positive\"}",
-     "seconds": 0.5821000000238419
+     "text": "{\"currency\": \"IDR\", \"entries\": [{\"description\": \"Buy Mobile Credit\", \"type\": \"expense\", \"quantity\": 1, \"unitPrice\": 25000, \"date\": \"2026-11-25\"}, {\"description\": \"Gasoline\", \"type\": \"expense\", \"quantity\": 1, \"unitPrice\": 30000, \"date\": \"2026-11-25\"}]}",
+     "seconds": 4.434699999988079
     }
    ],
    "cloud": {
-    "text": "{\n  \"label\": \"positive\"\n}",
-    "seconds": 0.7604000000357628,
-    "tokensIn": 75,
-    "tokensOut": 11
+    "text": "{\"currency\":\"IDR\",\"entries\":[{\"description\":\"Pulsa\",\"type\":\"expense\",\"quantity\":1,\"unitPrice\":25000,\"date\":\"2026-11-25\"},{\"description\":\"Bensin\",\"type\":\"expense\",\"quantity\":1,\"unitPrice\":30000,\"date\":\"2026-11-25\"}]}",
+    "seconds": 0.9838999999761582,
+    "tokensIn": 423,
+    "tokensOut": 79
    },
-   "apple": [
-    {
-     "seconds": 0.58737025,
-     "text": "{\"label\": \"positive\"}"
-    },
-    {
-     "seconds": 0.615350125,
-     "text": "{\"label\": \"positive\"}"
-    },
-    {
-     "text": "{\"label\": \"positive\"}",
-     "seconds": 0.613637958
-    }
-   ]
+   "grades": {}
   },
-  "mood-5": {
+  "input-ltuyqhts": {
    "device": [
     {
-     "text": "{\"label\": \"positive\"}",
-     "seconds": 0.6293000000119209
+     "text": "{\n  \"currency\": \"$\",\n  \"entries\": [\n    {\n      \"description\": \"Lunch\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 12,\n      \"date\": \"2026-11-25\"\n    },\n    {\n      \"description\": \"Coffee\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 4,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+     "seconds": 5.433399999976158
     },
     {
-     "text": "{\"label\": \"positive\"}",
-     "seconds": 0.6123999999761581
+     "text": "{\n  \"currency\": \"USD\",\n  \"entries\": [\n    {\n      \"description\": \"Lunch\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 12,\n      \"date\": \"2026-11-25\"\n    },\n    {\n      \"description\": \"Coffee\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 4,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+     "seconds": 5.470100000023842
     },
     {
-     "text": "{\"label\": \"positive\"}",
-     "seconds": 0.6122000000476837
+     "text": "{\"currency\":\"$\",\"entries\":[{\"description\":\"Lunch\",\"type\":\"expense\",\"quantity\":1,\"unitPrice\":12,\"date\":\"2026-11-25\"}, {\"description\":\"Coffee\",\"type\":\"expense\",\"quantity\":1,\"unitPrice\":4,\"date\":\"2026-11-25\"}]}",
+     "seconds": 3.473
     }
    ],
    "cloud": {
-    "text": "{\n  \"label\": \"positive\"\n}",
-    "seconds": 0.8415,
-    "tokensIn": 73,
-    "tokensOut": 11
+    "text": "{\"currency\": \"USD\", \"entries\": [{\"description\": \"Lunch\", \"type\": \"expense\", \"quantity\": 1, \"unitPrice\": 12.0, \"date\": \"2026-11-25\"}, {\"description\": \"Coffee\", \"type\": \"expense\", \"quantity\": 1, \"unitPrice\": 4.0, \"date\": \"2026-11-25\"}]}",
+    "seconds": 5.838,
+    "tokensIn": 417,
+    "tokensOut": 95
    },
-   "apple": [
-    {
-     "seconds": 0.579859708,
-     "text": "{\"label\": \"positive\"}"
-    },
-    {
-     "seconds": 0.57853975,
-     "text": "{\"label\": \"positive\"}"
-    },
-    {
-     "seconds": 0.579942458,
-     "text": "{\"label\": \"positive\"}"
-    }
-   ]
+   "grades": {}
   },
-  "mood-6": {
+  "input-bwk0gu65": {
    "device": [
     {
-     "text": "{\"label\": \"negative\"}",
-     "seconds": 0.6155
+     "text": "{\n  \"currency\": \"IDR\",\n  \"entries\": [\n    {\n      \"description\": \"Pay Electricity\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 350000,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+     "seconds": 3.945699999988079
     },
     {
-     "text": "{\"label\": \"negative\"}",
-     "seconds": 0.6080999999642372
+     "text": "{\n  \"currency\": \"IDR\",\n  \"entries\": [\n    {\n      \"description\": \"Bayar Listrik\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 350000,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+     "seconds": 3.982100000023842
     },
     {
-     "text": "{\"label\": \"negative\"}",
-     "seconds": 0.6551000000238418
+     "text": "{\n  \"currency\": \"IDR\",\n  \"entries\": [\n    {\n      \"description\": \"Bayar Listrik\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 350000,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+     "seconds": 3.954899999976158
     }
    ],
    "cloud": {
-    "text": "{\n  \"label\": \"negative\"\n}",
-    "seconds": 1.089800000011921,
-    "tokensIn": 69,
-    "tokensOut": 11
+    "text": "{\n  \"currency\": \"IDR\",\n  \"entries\": [\n    {\n      \"description\": \"Bayar listrik\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 350000,\n      \"date\": \"\"\n    }\n  ]\n}",
+    "seconds": 1.513300000011921,
+    "tokensIn": 420,
+    "tokensOut": 73
    },
-   "apple": [
-    {
-     "seconds": 0.600018209,
-     "text": "{\"label\": \"negative\"}"
-    },
-    {
-     "seconds": 0.590037166,
-     "text": "{\"label\": \"negative\"}"
-    },
-    {
-     "seconds": 0.603211541,
-     "text": "{\"label\": \"negative\"}"
-    }
-   ]
+   "grades": {}
   },
-  "mood-7": {
+  "input-ojq5xs7z": {
    "device": [
     {
-     "text": "{\"label\":\"negative\"}",
-     "seconds": 0.623
+     "text": "{\n  \"currency\": \"IDR\",\n  \"entries\": [\n    {\n      \"description\": \"Terima pembayaran proyek\",\n      \"type\": \"income\",\n      \"quantity\": 1,\n      \"unitPrice\": 2500000,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+     "seconds": 4.025600000023842
     },
     {
-     "text": "{\"label\": \"negative\"}",
-     "seconds": 0.6485
+     "text": "{\n  \"currency\": \"IDR\",\n  \"entries\": [\n    {\n      \"description\": \"Terima pembayaran proyek\",\n      \"type\": \"income\",\n      \"quantity\": 1,\n      \"unitPrice\": 2500000,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+     "seconds": 4.0255
     },
     {
-     "text": "{\"label\": \"negative\"}",
-     "seconds": 0.6174000000357628
+     "text": "{\n  \"currency\": \"IDR\",\n  \"entries\": [\n    {\n      \"description\": \"Terima pembayaran proyek\",\n      \"type\": \"income\",\n      \"quantity\": 1,\n      \"unitPrice\": 2500000,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+     "seconds": 3.982199999988079
     }
    ],
    "cloud": {
-    "text": "{\n  \"label\": \"negative\"\n}",
-    "seconds": 0.7081000000238419,
-    "tokensIn": 72,
-    "tokensOut": 11
+    "text": "{\"currency\": \"IDR\", \"entries\": [{\"description\": \"Terima pembayaran proyek\", \"type\": \"income\", \"quantity\": 1, \"unitPrice\": 2500000, \"date\": \"2026-11-25\"}]}",
+    "seconds": 5.3515,
+    "tokensIn": 418,
+    "tokensOut": 60
    },
-   "apple": [
-    {
-     "text": "{\"label\": \"negative\"}",
-     "seconds": 0.595839167
-    },
-    {
-     "text": "{\"label\": \"negative\"}",
-     "seconds": 0.605092375
-    },
-    {
-     "text": "{\"label\": \"negative\"}",
-     "seconds": 0.565411292
-    }
-   ]
+   "grades": {}
   },
-  "mood-8": {
+  "input-p988cf3p": {
    "device": [
     {
-     "text": "{\"label\": \"negative\"}",
-     "seconds": 0.6348000000119209
+     "text": "{\n  \"currency\": \"IDR\",\n  \"entries\": [\n    {\n      \"description\": \"Parkir\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 5000,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+     "seconds": 4.033299999952316
     },
     {
-     "text": "{\"label\": \"negative\"}",
-     "seconds": 0.6774000000357628
+     "text": "{\"currency\":\"IDR\", \"entries\": [{\"description\": \"Parkir\", \"type\": \"expense\", \"quantity\": 1, \"unitPrice\": 5000, \"date\": \"2026-11-25\"}]}",
+     "seconds": 2.9415
     },
     {
-     "text": "{\"label\": \"negative\"}",
-     "seconds": 0.674
+     "text": "{\n  \"currency\": \"\",\n  \"entries\": [\n    {\n      \"description\": \"Parkir\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 5000,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+     "seconds": 3.768600000023842
     }
    ],
    "cloud": {
-    "text": "{\n  \"label\": \"negative\"\n}",
-    "seconds": 0.9911000000238419,
-    "tokensIn": 72,
-    "tokensOut": 11
+    "text": "{\"currency\":\"IDR\",\"entries\":[{\"description\":\"Parkir\",\"type\":\"expense\",\"quantity\":1,\"unitPrice\":5000,\"date\":\"\"}]}",
+    "seconds": 0.9189000000357628,
+    "tokensIn": 416,
+    "tokensOut": 33
    },
-   "apple": [
-    {
-     "seconds": 0.570677666,
-     "text": "{\"label\": \"negative\"}"
-    },
-    {
-     "seconds": 0.589762209,
-     "text": "{\"label\": \"negative\"}"
-    },
-    {
-     "seconds": 0.576260209,
-     "text": "{\"label\": \"negative\"}"
-    }
-   ]
+   "grades": {}
   },
-  "mood-9": {
+  "input-6k3ocfu5": {
    "device": [
     {
-     "text": "{\"label\":\"negative\"}",
-     "seconds": 0.6216999999880791
+     "text": "{\"currency\":\"IDR\", \"entries\": [{\"description\": \"3 Kopit\", \"type\": \"expense\", \"quantity\": 3, \"unitPrice\": 18000, \"date\": \"2026-11-25\"}, {\"description\": \"Roti\", \"type\": \"expense\", \"quantity\": 1, \"unitPrice\": 15000, \"date\": \"2026-11-25\"}]}",
+     "seconds": 4.554199999988079
     },
     {
-     "text": "{\"label\":\"negative\"}",
-     "seconds": 0.6268000000119209
+     "text": "{\"currency\":\"IDR\",\"entries\":[{\"description\":\"3 Kopi @18rb\",\"type\":\"expense\",\"quantity\":3,\"unitPrice\":18000,\"date\":\"2026-11-25\"},{\"description\":\"Roti 15rb\",\"type\":\"expense\",\"quantity\":1,\"unitPrice\":15000,\"date\":\"2026-11-25\"}]}",
+     "seconds": 4.053600000023842
     },
     {
-     "text": "{\"label\":\"negative\"}",
-     "seconds": 0.5962999999523163
+     "text": "{\"currency\":\"IDR\",\"entries\":[{\"description\":\"3 Kopi\", \"type\":\"expense\", \"quantity\":3, \"unitPrice\":18000, \"date\":\"2026-11-25\"},{\"description\":\"Roti\", \"type\":\"expense\", \"quantity\":1, \"unitPrice\":15000, \"date\":\"2026-11-25\"}]}",
+     "seconds": 4.138600000023842
     }
    ],
    "cloud": {
-    "text": "{\n  \"label\": \"negative\"\n}",
-    "seconds": 1.1261999999880792,
-    "tokensIn": 75,
-    "tokensOut": 11
+    "text": "{\n  \"currency\": \"IDR\",\n  \"entries\": [\n    {\n      \"description\": \"Kopi\",\n      \"type\": \"expense\",\n      \"quantity\": 3,\n      \"unitPrice\": 18000,\n      \"date\": \"2026-11-25\"\n    },\n    {\n      \"description\": \"Roti\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 15000,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+    "seconds": 1.7598999999761582,
+    "tokensIn": 421,
+    "tokensOut": 143
    },
-   "apple": [
-    {
-     "seconds": 0.559147917,
-     "text": "{\"label\": \"negative\"}"
-    },
-    {
-     "seconds": 0.5860925,
-     "text": "{\"label\": \"negative\"}"
-    },
-    {
-     "seconds": 0.583164709,
-     "text": "{\"label\": \"negative\"}"
-    }
-   ]
+   "grades": {}
   },
-  "mood-10": {
+  "input-y3zaqv1y": {
    "device": [
     {
-     "text": "{\"label\": \"negative\"}",
-     "seconds": 0.6432000000476837
+     "text": "{\n  \"currency\": \"IDR\",\n  \"entries\": [\n    {\n      \"description\": \"Taxi\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 45,\n      \"date\": \"2026-11-24\"\n    }\n  ]\n}",
+     "seconds": 3.675
     },
     {
-     "text": "{\"label\": \"negative\"}",
-     "seconds": 0.6365999999642372
+     "text": "{\n  \"currency\": \"Rp\",\n  \"entries\": [\n    {\n      \"description\": \"Taxi\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 45,\n      \"date\": \"2026-11-24\"\n    }\n  ]\n}",
+     "seconds": 3.625
     },
     {
-     "text": "{\"label\":\"negative\"}",
-     "seconds": 0.5988000000119209
+     "text": "{\n  \"currency\": \"Rp\",\n  \"entries\": [\n    {\n      \"description\": \"Taksi\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 45,\n      \"date\": \"2026-11-24\"\n    }\n  ]\n}",
+     "seconds": 3.667300000011921
     }
    ],
    "cloud": {
-    "text": "{\n  \"label\": \"negative\"\n}",
-    "seconds": 0.9217000000476837,
-    "tokensIn": 78,
-    "tokensOut": 11
+    "text": "{\"currency\":\"IDR\",\"entries\":[{\"description\":\"Taksi\",\"type\":\"expense\",\"quantity\":1,\"unitPrice\":45000,\"date\":\"2026-11-24\"}]}",
+    "seconds": 1.2,
+    "tokensIn": 418,
+    "tokensOut": 44
    },
-   "apple": [
-    {
-     "seconds": 0.603536791,
-     "text": "{\"label\": \"negative\"}"
-    },
-    {
-     "seconds": 0.597033375,
-     "text": "{\"label\": \"negative\"}"
-    },
-    {
-     "seconds": 0.615080667,
-     "text": "{\"label\": \"negative\"}"
-    }
-   ]
+   "grades": {}
   },
-  "mood-11": {
+  "input-3j0tv159": {
    "device": [
     {
-     "text": "{\"label\": \"mixed\"}",
-     "seconds": 0.6597999999523163
+     "text": "{\n  \"currency\": \"IDR\",\n  \"entries\": [\n    {\n      \"description\": \"Beli Air Galon\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 22000,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+     "seconds": 4.031100000023842
     },
     {
-     "text": "{\"label\": \"mixed\"}",
-     "seconds": 0.644
+     "text": "{\n  \"currency\": \"IDR\",\n  \"entries\": [\n    {\n      \"description\": \"Beli Air Galon\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 22000,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+     "seconds": 3.957099999964237
     },
     {
-     "text": "{\"label\":\"mixed\"}",
-     "seconds": 0.616
+     "text": "{\n  \"currency\": \"IDR\",\n  \"entries\": [\n    {\n      \"description\": \"Beli Air Galon\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 22000,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+     "seconds": 3.945100000023842
     }
    ],
    "cloud": {
-    "text": "{\n  \"label\": \"mixed\"\n}",
-    "seconds": 1.253800000011921,
-    "tokensIn": 87,
-    "tokensOut": 11
+    "text": "{\n  \"currency\": \"IDR\",\n  \"entries\": [\n    {\n      \"description\": \"Beli air galon\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 22000,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+    "seconds": 1.028699999988079,
+    "tokensIn": 420,
+    "tokensOut": 85
    },
-   "apple": [
-    {
-     "seconds": 0.615126583,
-     "text": "{\"label\": \"mixed\"}"
-    },
-    {
-     "seconds": 0.630131125,
-     "text": "{\"label\": \"mixed\"}"
-    },
-    {
-     "text": "{\"label\": \"mixed\"}",
-     "seconds": 0.635354792
-    }
-   ]
+   "grades": {}
   },
-  "mood-12": {
+  "input-n1ub2klp": {
    "device": [
     {
-     "text": "{\"label\":\"mixed\"}",
-     "seconds": 0.6206000000238419
+     "text": "{\"currency\": \"Rp\", \"entries\": [{\"description\": \"Buku\", \"type\": \"expense\", \"quantity\": 1, \"unitPrice\": 75000, \"date\": \"2026-11-12\"}, {\"description\": \"Pensil\", \"type\": \"expense\", \"quantity\": 1, \"unitPrice\": 5000, \"date\": \"2026-11-12\"}]}",
+     "seconds": 4.508300000011921
     },
     {
-     "text": "{\"label\":\"mixed\"}",
-     "seconds": 0.6350999999642372
+     "text": "{\"currency\":\"IDR\",\"entries\":[{\"description\":\"Buku\",\"type\":\"expense\",\"quantity\":1,\"unitPrice\":75000,\"date\":\"2026-11-12\"}, {\"description\":\"Pensil\",\"type\":\"expense\",\"quantity\":1,\"unitPrice\":5000,\"date\":\"2026-11-12\"}]}",
+     "seconds": 3.761199999988079
     },
     {
-     "text": "{\"label\": \"mixed\"}",
-     "seconds": 0.6454000000357628
+     "text": "{\n  \"currency\": \"IDR\",\n  \"entries\": [\n    {\n      \"description\": \"Buku\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 75000,\n      \"date\": \"2012-11-12\"\n    },\n    {\n      \"description\": \"Pensil\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 5000,\n      \"date\": \"2012-11-12\"\n    }\n  ]\n}",
+     "seconds": 5.7645
     }
    ],
    "cloud": {
-    "text": "{\n  \"label\": \"mixed\"\n}",
-    "seconds": 0.8955999999642372,
-    "tokensIn": 85,
-    "tokensOut": 11
+    "text": "{\n  \"currency\": \"IDR\",\n  \"entries\": [\n    {\n      \"description\": \"Buku\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 75000,\n      \"date\": \"2026-11-12\"\n    },\n    {\n      \"description\": \"Pensil\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 5000,\n      \"date\": \"2026-11-12\"\n    }\n  ]\n}",
+    "seconds": 1.898399999976158,
+    "tokensIn": 434,
+    "tokensOut": 142
    },
-   "apple": [
-    {
-     "text": "{\"label\": \"negative\"}",
-     "seconds": 0.712204459
-    },
-    {
-     "text": "{\"label\": \"negative\"}",
-     "seconds": 0.661106333
-    },
-    {
-     "text": "{\"label\": \"negative\"}",
-     "seconds": 0.614107916
-    }
-   ]
+   "grades": {}
   },
-  "mood-13": {
+  "input-jpsqllnm": {
    "device": [
     {
-     "text": "{\"label\": \"mixed\"}",
-     "seconds": 0.6522999999523162
+     "text": "{\n  \"currency\": \"\",\n  \"entries\": [\n    {\n      \"description\": \"Groceries\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 150000,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+     "seconds": 4.321199999988079
     },
     {
-     "text": "{\"label\": \"mixed\"}",
-     "seconds": 0.6278000000119209
+     "text": "{\n  \"currency\": \"\",\n  \"entries\": [\n    {\n      \"description\": \"Groceries\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 150000,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+     "seconds": 3.878300000011921
     },
     {
-     "text": "{\"label\": \"mixed\"}",
-     "seconds": 0.628
+     "text": "{\n  \"currency\": \"\",\n  \"entries\": [\n    {\n      \"description\": \"Groceries\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 150,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+     "seconds": 3.593699999988079
     }
    ],
    "cloud": {
-    "text": "{\n  \"label\": \"mixed\"\n}",
-    "seconds": 0.8198000000119209,
-    "tokensIn": 78,
-    "tokensOut": 11
+    "text": "{\"currency\": \"IDR\", \"entries\": [{\"description\": \"Groceries\", \"type\": \"expense\", \"quantity\": 1, \"unitPrice\": 150000, \"date\": \"2026-11-25\"}]}",
+    "seconds": 1.279,
+    "tokensIn": 420,
+    "tokensOut": 57
    },
-   "apple": [
-    {
-     "text": "{\"label\": \"mixed\"}",
-     "seconds": 0.634044
-    },
-    {
-     "text": "{\"label\": \"mixed\"}",
-     "seconds": 0.616610417
-    },
-    {
-     "text": "{\"label\": \"mixed\"}",
-     "seconds": 0.602238917
-    }
-   ]
+   "grades": {}
   },
-  "mood-14": {
+  "input-dqmms9bv": {
    "device": [
     {
-     "text": "{\"label\": \"mixed\"}",
-     "seconds": 0.6603000000119209
+     "text": "{\n  \"currency\": \"\",\n  \"entries\": [\n    {\n      \"description\": \"Baju\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 120,\n      \"date\": \"2026-11-24\"\n    },\n    {\n      \"description\": \"Celana\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 180,\n      \"date\": \"2026-11-24\"\n    }\n  ]\n}",
+     "seconds": 5.542700000047684
     },
     {
-     "text": "{\"label\": \"mixed\"}",
-     "seconds": 0.6345999999642372
+     "text": "{\n  \"currency\": \"\",\n  \"entries\": [\n    {\n      \"description\": \"Bought clothes\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 120000,\n      \"date\": \"2026-11-24\"\n    },\n    {\n      \"description\": \"Bought pants\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 180000,\n      \"date\": \"2026-11-24\"\n    }\n  ]\n}",
+     "seconds": 5.728100000023842
     },
     {
-     "text": "{\"label\": \"mixed\"}",
-     "seconds": 0.6285
+     "text": "{\n  \"currency\": \"IDR\",\n  \"entries\": [\n    {\n      \"description\": \"Baju\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 120000,\n      \"date\": \"2026-11-24\"\n    },\n    {\n      \"description\": \"Celana\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 180000,\n      \"date\": \"2026-11-24\"\n    }\n  ]\n}",
+     "seconds": 5.767699999988079
     }
    ],
    "cloud": {
-    "text": "{\n  \"label\": \"mixed\"\n}",
-    "seconds": 1.135,
-    "tokensIn": 83,
-    "tokensOut": 11
+    "text": "{\"currency\":\"IDR\",\"entries\":[{\"description\":\"Baju\",\"type\":\"expense\",\"quantity\":1,\"unitPrice\":120000,\"date\":\"2026-11-24\"},{\"description\":\"Celana\",\"type\":\"expense\",\"quantity\":1,\"unitPrice\":180000,\"date\":\"2026-11-24\"}]}",
+    "seconds": 1.4741000000238418,
+    "tokensIn": 426,
+    "tokensOut": 81
    },
-   "apple": [
-    {
-     "text": "{\"label\": \"mixed\"}",
-     "seconds": 0.597542416
-    },
-    {
-     "text": "{\"label\": \"mixed\"}",
-     "seconds": 0.616482542
-    },
-    {
-     "text": "{\"label\": \"mixed\"}",
-     "seconds": 0.612925792
-    }
-   ]
+   "grades": {}
   },
-  "mood-15": {
+  "input-8gy3d0d4": {
    "device": [
     {
-     "text": "{\"label\": \"mixed\"}",
-     "seconds": 0.649
+     "text": "{\"currency\": \"\", \"entries\": [{\"description\": \"Lunch with a friend\", \"type\": \"expense\", \"quantity\": 1, \"unitPrice\": 18000, \"date\": \"2026-11-25\"}]}",
+     "seconds": 2.9238999999761583
     },
     {
-     "text": "{\"label\": \"mixed\"}",
-     "seconds": 0.626
+     "text": "{\"currency\": \"\", \"entries\": [{\"description\": \"Lunch with friend\", \"type\": \"expense\", \"quantity\": 1, \"unitPrice\": 0, \"date\": \"2026-11-25\"}]}",
+     "seconds": 2.823800000011921
     },
     {
-     "text": "{\"label\":\"mixed\"}",
-     "seconds": 0.600300000011921
+     "text": "{\"currency\": \"\", \"entries\": [{\"description\": \"Lunch with a friend\", \"type\": \"expense\", \"quantity\": 1, \"unitPrice\": 0, \"date\": \"2026-11-25\"}]}",
+     "seconds": 2.819
     }
    ],
    "cloud": {
-    "text": "{\n  \"label\": \"mixed\"\n}",
-    "seconds": 0.9065,
-    "tokensIn": 80,
-    "tokensOut": 11
+    "text": "{\n  \"currency\": \"\",\n  \"entries\": []\n}",
+    "seconds": 0.9135999999642372,
+    "tokensIn": 416,
+    "tokensOut": 15
    },
-   "apple": [
-    {
-     "seconds": 0.644008583,
-     "text": "{\"label\": \"mixed\"}"
-    },
-    {
-     "seconds": 0.678970875,
-     "text": "{\"label\": \"mixed\"}"
-    },
-    {
-     "seconds": 0.648929875,
-     "text": "{\"label\": \"mixed\"}"
-    }
-   ]
+   "grades": {}
   },
-  "mood-16": {
+  "input-k32cob7y": {
    "device": [
     {
-     "text": "{\"label\": \"negative\"}",
-     "seconds": 0.669699999988079
+     "text": "{\n  \"currency\": \"$\",\n  \"entries\": [\n    {\n      \"description\": \"Apples\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 3.50,\n      \"date\": \"2026-11-25\"\n    },\n    {\n      \"description\": \"Milk\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 2.20,\n      \"date\": \"2026-11-25\"\n    },\n    {\n      \"description\": \"Magazine\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 5.00,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+     "seconds": 7.7904000000357625
     },
     {
-     "text": "{\"label\": \"negative\"}",
-     "seconds": 0.6313999999761581
+     "text": "{\n  \"currency\": \"$\",\n  \"entries\": [\n    {\n      \"description\": \"Bought Apples\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 3.50,\n      \"date\": \"2026-11-25\"\n    },\n    {\n      \"description\": \"Bought Milk\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 2.20,\n      \"date\": \"2026-11-25\"\n    },\n    {\n      \"description\": \"Bought Magazine\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 5.00,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+     "seconds": 7.784699999988079
     },
     {
-     "text": "{\"label\":\"negative\"}",
-     "seconds": 0.6159000000357628
+     "text": "{\n  \"currency\": \"$\",\n  \"entries\": [\n    {\n      \"description\": \"Bought Apples\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 3.50,\n      \"date\": \"2026-11-25\"\n    },\n    {\n      \"description\": \"Bought Milk\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 2.20,\n      \"date\": \"2026-11-25\"\n    },\n    {\n      \"description\": \"Bought Magazine\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 5.00,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+     "seconds": 7.884099999964238
     }
    ],
    "cloud": {
-    "text": "{\n  \"label\": \"negative\"\n}",
-    "seconds": 1.2323000000119209,
-    "tokensIn": 78,
-    "tokensOut": 11
+    "text": "{\"currency\": \"USD\", \"entries\": [{\"description\": \"Apples\", \"type\": \"expense\", \"quantity\": 1, \"unitPrice\": 3.5, \"date\": \"2026-11-25\"}, {\"description\": \"Milk\", \"type\": \"expense\", \"quantity\": 1, \"unitPrice\": 2.2, \"date\": \"2026-11-25\"}, {\"description\": \"Magazine\", \"type\": \"expense\", \"quantity\": 1, \"unitPrice\": 5.0, \"date\": \"2026-11-25\"}]}",
+    "seconds": 5.102800000011921,
+    "tokensIn": 456,
+    "tokensOut": 137
    },
-   "apple": [
-    {
-     "text": "{\"label\": \"positive\"}",
-     "seconds": 0.6009055
-    },
-    {
-     "text": "{\"label\": \"positive\"}",
-     "seconds": 0.583943458
-    },
-    {
-     "text": "{\"label\": \"positive\"}",
-     "seconds": 0.586228541
-    }
-   ]
+   "grades": {}
   },
-  "mood-17": {
+  "input-wn81twbr": {
    "device": [
     {
-     "text": "{\"label\":\"negative\"}",
-     "seconds": 0.6235999999642372
+     "text": "{\n  \"currency\": \"IDR\",\n  \"entries\": [\n    {\n      \"description\": \"Walked the dog in the park\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 0,\n      \"date\": \"2026-11-25\"\n    },\n    {\n      \"description\": \"Bought a pastry\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 18000,\n      \"date\": \"2026-11-25\"\n    },\n    {\n      \"description\": \"Received a freelance bonus\",\n      \"type\": \"income\",\n      \"quantity\": 1,\n      \"unitPrice\": 1500000,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+     "seconds": 10.293099999964237
     },
     {
-     "text": "{\"label\":\"negative\"}",
-     "seconds": 0.6016000000238418
+     "text": "{\n  \"currency\": \"IDR\",\n  \"entries\": [\n    {\n      \"description\": \"Bought a pastry\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 18000,\n      \"date\": \"2026-11-25\"\n    },\n    {\n      \"description\": \"Received freelance bonus\",\n      \"type\": \"income\",\n      \"quantity\": 1,\n      \"unitPrice\": 1500000,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+     "seconds": 7.591600000023842
     },
     {
-     "text": "{\"label\": \"negative\"}",
-     "seconds": 0.6310999999642373
+     "text": "{\n  \"currency\": \"IDR\",\n  \"entries\": [\n    {\n      \"description\": \"Walked The Dog In The Park\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 0,\n      \"date\": \"2026-11-25\"\n    },\n    {\n      \"description\": \"Bought A Pastry\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 18000,\n      \"date\": \"2026-11-25\"\n    },\n    {\n      \"description\": \"Received A Freelance Bonus\",\n      \"type\": \"income\",\n      \"quantity\": 1,\n      \"unitPrice\": 1500000,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+     "seconds": 10.121199999988079
     }
    ],
    "cloud": {
-    "text": "{\n  \"label\": \"negative\"\n}",
-    "seconds": 0.9276000000238419,
-    "tokensIn": 83,
-    "tokensOut": 11
+    "text": "{\"currency\": \"IDR\", \"entries\": [{\"description\": \"Pastry\", \"type\": \"expense\", \"quantity\": 1, \"unitPrice\": 18000, \"date\": \"2026-11-25\"}, {\"description\": \"Freelance bonus\", \"type\": \"income\", \"quantity\": 1, \"unitPrice\": 1500000, \"date\": \"2026-11-25\"}]}",
+    "seconds": 1.2583000000119209,
+    "tokensIn": 456,
+    "tokensOut": 104
    },
-   "apple": [
-    {
-     "text": "{\"label\": \"negative\"}",
-     "seconds": 0.6574765
-    },
-    {
-     "text": "{\"label\": \"negative\"}",
-     "seconds": 0.598206375
-    },
-    {
-     "text": "{\"label\": \"negative\"}",
-     "seconds": 0.612204541
-    }
-   ]
+   "grades": {}
   },
-  "mood-18": {
+  "input-kr04agr7": {
    "device": [
     {
-     "text": "{\"label\": \"positive\"}",
-     "seconds": 0.64
+     "text": "{\n  \"currency\": \"IDR\",\n  \"entries\": [\n    {\n      \"description\": \"Bayar Wifi\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 200000,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+     "seconds": 4.771699999988079
     },
     {
-     "text": "{\"label\":\"positive\"}",
-     "seconds": 0.596199999988079
+     "text": "{\n  \"currency\": \"IDR\",\n  \"entries\": [\n    {\n      \"description\": \"Bayar Wifi\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 200,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+     "seconds": 5.993899999976158
     },
     {
-     "text": "{\"label\":\"positive\"}",
-     "seconds": 0.6046999999880791
+     "text": "{\n  \"currency\": \"IDR\",\n  \"entries\": [\n    {\n      \"description\": \"Pay Wifi\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 200000,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+     "seconds": 4.816199999988079
     }
    ],
    "cloud": {
-    "text": "{\n  \"label\": \"positive\"\n}",
-    "seconds": 1.0208000000119208,
-    "tokensIn": 79,
-    "tokensOut": 11
+    "text": "{\n  \"currency\": \"IDR\",\n  \"entries\": [\n    {\n      \"description\": \"Bayar wifi\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 200000,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+    "seconds": 1.0755,
+    "tokensIn": 424,
+    "tokensOut": 84
    },
-   "apple": [
-    {
-     "seconds": 0.618056625,
-     "text": "{\"label\": \"positive\"}"
-    },
-    {
-     "seconds": 0.629132292,
-     "text": "{\"label\": \"positive\"}"
-    },
-    {
-     "seconds": 0.663758041,
-     "text": "{\"label\": \"positive\"}"
-    }
-   ]
+   "grades": {}
   },
-  "mood-19": {
+  "input-2a7v4bc4": {
    "device": [
     {
-     "text": "{\"label\": \"mixed\"}",
-     "seconds": 0.6338999999761581
+     "text": "{\n  \"currency\": \"IDR\",\n  \"entries\": [\n    {\n      \"description\": \"Pay debt to bank\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 1200000,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+     "seconds": 5.014800000011921
     },
     {
-     "text": "{\"label\":\"mixed\"}",
-     "seconds": 0.601300000011921
+     "text": "{\n  \"currency\": \"\",\n  \"entries\": [\n    {\n      \"description\": \"Pay Debt to Bank\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 1200000,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+     "seconds": 5.444800000011921
     },
     {
-     "text": "{\"label\": \"mixed\"}",
-     "seconds": 0.6254000000357628
+     "text": "{\n  \"currency\": \"IDR\",\n  \"entries\": [\n    {\n      \"description\": \"Pay debt to bank\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 1200000,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+     "seconds": 4.664300000011921
     }
    ],
    "cloud": {
-    "text": "{\n  \"label\": \"mixed\"\n}",
-    "seconds": 1.0236999999880791,
-    "tokensIn": 83,
-    "tokensOut": 11
+    "text": "{\n  \"currency\": \"IDR\",\n  \"entries\": [\n    {\n      \"description\": \"Bayar hutang ke bank\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 1200000,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+    "seconds": 0.9768000000119209,
+    "tokensIn": 420,
+    "tokensOut": 88
    },
-   "apple": [
-    {
-     "text": "{\"label\": \"mixed\"}",
-     "seconds": 0.642875834
-    },
-    {
-     "text": "{\"label\": \"positive\"}",
-     "seconds": 0.616777875
-    },
-    {
-     "text": "{\"label\": \"mixed\"}",
-     "seconds": 0.601992167
-    }
-   ]
+   "grades": {}
   },
-  "mood-20": {
+  "input-zu6dmzsk": {
    "device": [
     {
-     "text": "{\"label\": \"mixed\"}",
-     "seconds": 0.648800000011921
+     "text": "{\n  \"currency\": \"IDR\",\n  \"entries\": [\n    {\n      \"description\": \"Makann Miang\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 25000,\n      \"date\": \"2026-11-25\"\n    },\n    {\n      \"description\": \"Kopii\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 18000,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+     "seconds": 7.112
     },
     {
-     "text": "{\"label\": \"mixed\"}",
-     "seconds": 0.6276000000238419
+     "text": "{\n  \"currency\": \"IDR\",\n  \"entries\": [\n    {\n      \"description\": \"Makann Miang\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 25000,\n      \"date\": \"2026-11-25\"\n    },\n    {\n      \"description\": \"Kopii\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 18000,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+     "seconds": 7.315299999952316
     },
     {
-     "text": "{\"label\": \"mixed\"}",
-     "seconds": 0.6292999999523163
+     "text": "{\n  \"currency\": \"IDR\",\n  \"entries\": [\n    {\n      \"description\": \"Makann Miang\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 25000,\n      \"date\": \"2026-11-25\"\n    },\n    {\n      \"description\": \"Kopii\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 18000,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+     "seconds": 7.0925
     }
    ],
    "cloud": {
-    "text": "{\n  \"label\": \"negative\"\n}",
-    "seconds": 0.904800000011921,
-    "tokensIn": 78,
-    "tokensOut": 11
+    "text": "{\n  \"currency\": \"IDR\",\n  \"entries\": [\n    {\n      \"description\": \"Makann miang\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 25000,\n      \"date\": \"2026-11-25\"\n    },\n    {\n      \"description\": \"Kopii\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 18000,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+    "seconds": 5.612,
+    "tokensIn": 424,
+    "tokensOut": 146
    },
-   "apple": [
-    {
-     "seconds": 0.600350209,
-     "text": "{\"label\": \"mixed\"}"
-    },
-    {
-     "seconds": 0.61627475,
-     "text": "{\"label\": \"positive\"}"
-    },
-    {
-     "seconds": 0.600675,
-     "text": "{\"label\": \"positive\"}"
-    }
-   ]
+   "grades": {}
   },
-  "mood-21": {
+  "input-4e9ye8bd": {
    "device": [
     {
-     "text": "{\"label\": \"mixed\"}",
-     "seconds": 0.6916000000238418
+     "text": "{\n  \"currency\": \"Rp\",\n  \"entries\": [\n    {\n      \"description\": \"Belanja Bulanan D Supermarket\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 450000,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+     "seconds": 4.8433999999761586
     },
     {
-     "text": "{\"label\": \"mixed\"}",
-     "seconds": 0.6701999999880791
+     "text": "{\"currency\": \"Rp\", \"entries\": [{\"description\": \"Belanja bulanan d supermarket\", \"type\": \"expense\", \"quantity\": 1, \"unitPrice\": 450000, \"date\": \"2026-11-25\"}]}",
+     "seconds": 3.704199999988079
     },
     {
-     "text": "{\"label\":\"mixed\"}",
-     "seconds": 0.6164000000357628
+     "text": "{\n  \"currency\": \"IDR\",\n  \"entries\": [\n    {\n      \"description\": \"Belanja bulanan d supermarket\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 450000,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+     "seconds": 5.129100000023842
     }
    ],
    "cloud": {
-    "text": "{\n  \"label\": \"negative\"\n}",
-    "seconds": 1.0050999999642372,
-    "tokensIn": 82,
-    "tokensOut": 11
+    "text": "{\"currency\": \"IDR\", \"entries\": [{\"description\": \"Belanja bulanan d supermarket\", \"type\": \"expense\", \"quantity\": 1, \"unitPrice\": 450000, \"date\": \"2026-11-25\"}]}",
+    "seconds": 0.8753000000119209,
+    "tokensIn": 424,
+    "tokensOut": 61
    },
-   "apple": [
-    {
-     "text": "{\"label\": \"negative\"}",
-     "seconds": 0.620988167
-    },
-    {
-     "text": "{\"label\": \"negative\"}",
-     "seconds": 0.616055833
-    },
-    {
-     "text": "{\"label\": \"negative\"}",
-     "seconds": 0.594859292
-    }
-   ]
+   "grades": {}
   },
-  "mood-22": {
+  "input-fy174lvr": {
    "device": [
     {
-     "text": "{\"label\":\"positive\"}",
-     "seconds": 0.6081000000238419
+     "text": "{\"currency\":\"Rp\",\"entries\":[{\"description\":\"Dapat cashback\",\"type\":\"income\",\"quantity\":1,\"unitPrice\":10000,\"date\":\"2026-11-23\"}]}",
+     "seconds": 3.118600000023842
     },
     {
-     "text": "{\"label\": \"positive\"}",
-     "seconds": 0.6293999999761581
+     "text": "{\n  \"currency\": \"Rp\",\n  \"entries\": [\n    {\n      \"description\": \"Dapat Cashback\",\n      \"type\": \"income\",\n      \"quantity\": 1,\n      \"unitPrice\": 10000,\n      \"date\": \"2026-11-23\"\n    }\n  ]\n}",
+     "seconds": 4.534
     },
     {
-     "text": "{\"label\": \"positive\"}",
-     "seconds": 0.662699999988079
+     "text": "{\n  \"currency\": \"Rp\",\n  \"entries\": [\n    {\n      \"description\": \"Received cashback\",\n      \"type\": \"income\",\n      \"quantity\": 1,\n      \"unitPrice\": 10000,\n      \"date\": \"2026-11-23\"\n    }\n  ]\n}",
+     "seconds": 5.063199999988079
     }
    ],
    "cloud": {
-    "text": "{\"label\": \"positive\"}",
-    "seconds": 1.024,
-    "tokensIn": 80,
-    "tokensOut": 6
+    "text": "{\"currency\": \"IDR\", \"entries\": [{\"description\": \"Cashback\", \"type\": \"income\", \"quantity\": 1, \"unitPrice\": 10000, \"date\": \"2026-11-23\"}]}",
+    "seconds": 1.2082000000476838,
+    "tokensIn": 423,
+    "tokensOut": 56
    },
-   "apple": [
-    {
-     "text": "{\"label\": \"positive\"}",
-     "seconds": 0.605107042
-    },
-    {
-     "text": "{\"label\": \"positive\"}",
-     "seconds": 0.582321
-    },
-    {
-     "text": "{\"label\": \"positive\"}",
-     "seconds": 0.599010834
-    }
-   ]
+   "grades": {}
   },
-  "mood-23": {
+  "input-4v9irjxz": {
    "device": [
     {
-     "text": "{\"label\": \"mixed\"}",
-     "seconds": 0.682800000011921
+     "text": "{\n  \"currency\": \"Rp\",\n  \"entries\": [\n    {\n      \"description\": \"Sewa Kamar\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 1200000,\n      \"date\": \"2026-11-01\"\n    }\n  ]\n}",
+     "seconds": 5.212800000011921
     },
     {
-     "text": "{\"label\": \"mixed\"}",
-     "seconds": 0.6281999999880791
+     "text": "{\n  \"currency\": \"IDR\",\n  \"entries\": [\n    {\n      \"description\": \"Rent Room\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 1200000,\n      \"date\": \"2026-11-01\"\n    }\n  ]\n}",
+     "seconds": 4.5404000000357625
     },
     {
-     "text": "{\"label\":\"mixed\"}",
-     "seconds": 0.617300000011921
+     "text": "{\n  \"currency\": \"Rp\",\n  \"entries\": [\n    {\n      \"description\": \"Rent Room\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 1200000,\n      \"date\": \"2026-11-01\"\n    }\n  ]\n}",
+     "seconds": 5.266699999988079
     }
    ],
    "cloud": {
-    "text": "{\n  \"label\": \"positive\"\n}",
-    "seconds": 0.7881999999880791,
-    "tokensIn": 78,
-    "tokensOut": 11
+    "text": "{\n  \"currency\": \"IDR\",\n  \"entries\": [\n    {\n      \"description\": \"Sewa kamar\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 1200000,\n      \"date\": \"2026-11-01\"\n    }\n  ]\n}",
+    "seconds": 0.920699999988079,
+    "tokensIn": 429,
+    "tokensOut": 85
    },
-   "apple": [
-    {
-     "seconds": 0.61373175,
-     "text": "{\"label\": \"positive\"}"
-    },
-    {
-     "seconds": 0.616465584,
-     "text": "{\"label\": \"positive\"}"
-    },
-    {
-     "seconds": 0.590761667,
-     "text": "{\"label\": \"positive\"}"
-    }
-   ]
+   "grades": {}
   },
-  "mood-24": {
+  "input-w6yw3fz8": {
    "device": [
     {
-     "text": "{\"label\":\"mixed\"}",
-     "seconds": 0.6161999999880791
+     "text": "{\n  \"currency\": \"Rp\",\n  \"entries\": [\n    {\n      \"description\": \"Beli 4 buah apel @5rb\",\n      \"type\": \"expense\",\n      \"quantity\": 4,\n      \"unitPrice\": 5,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+     "seconds": 5.255600000023842
     },
     {
-     "text": "{\"label\":\"mixed\"}",
-     "seconds": 0.6033999999761581
+     "text": "{\n  \"currency\": \"IDR\",\n  \"entries\": [\n    {\n      \"description\": \"Beli 4 buah apel @5rb\",\n      \"type\": \"expense\",\n      \"quantity\": 4,\n      \"unitPrice\": 5,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+     "seconds": 4.729399999976158
     },
     {
-     "text": "{\"label\":\"mixed\"}",
-     "seconds": 0.6041000000238419
+     "text": "{\n  \"currency\": \"IDR\",\n  \"entries\": [\n    {\n      \"description\": \"Buy 4 apples @5rb\",\n      \"type\": \"expense\",\n      \"quantity\": 4,\n      \"unitPrice\": 5000,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+     "seconds": 4.942300000011921
     }
    ],
    "cloud": {
-    "text": "{\n  \"label\": \"mixed\"\n}",
-    "seconds": 0.8397999999523162,
-    "tokensIn": 82,
-    "tokensOut": 11
+    "text": "{\n  \"currency\": \"IDR\",\n  \"entries\": [\n    {\n      \"description\": \"Beli apel\",\n      \"type\": \"expense\",\n      \"quantity\": 4,\n      \"unitPrice\": 5000,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+    "seconds": 1.1774000000357627,
+    "tokensIn": 417,
+    "tokensOut": 82
    },
-   "apple": [
-    {
-     "seconds": 0.614720208,
-     "text": "{\"label\": \"positive\"}"
-    },
-    {
-     "seconds": 0.663797667,
-     "text": "{\"label\": \"mixed\"}"
-    },
-    {
-     "seconds": 0.624703708,
-     "text": "{\"label\": \"positive\"}"
-    }
-   ]
+   "grades": {}
   },
-  "mood-25": {
+  "input-xibc3rqm": {
    "device": [
     {
-     "text": "{\"label\":\"negative\"}",
-     "seconds": 0.5910999999642372
+     "text": "{\n  \"currency\": \"IDR\",\n  \"entries\": [\n    {\n      \"description\": \"Watch movie\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 50000,\n      \"date\": \"2026-11-25\"\n    },\n    {\n      \"description\": \"Parking\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 5000,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+     "seconds": 7.696
     },
     {
-     "text": "{\"label\": \"negative\"}",
-     "seconds": 0.6005
+     "text": "{\n  \"currency\": \"IDR\",\n  \"entries\": [\n    {\n      \"description\": \"Nonton bioskop\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 50000,\n      \"date\": \"2026-11-25\"\n    },\n    {\n      \"description\": \"Parkir\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 5000,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+     "seconds": 8.5885
     },
     {
-     "text": "{\"label\": \"negative\"}",
-     "seconds": 0.5946000000238418
+     "text": "{\n  \"currency\": \"IDR\",\n  \"entries\": [\n    {\n      \"description\": \"Nonton bioskop\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 50000,\n      \"date\": \"2026-11-25\"\n    },\n    {\n      \"description\": \"Parkir\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 5000,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+     "seconds": 7.425900000035763
     }
    ],
    "cloud": {
-    "text": "{\n  \"label\": \"negative\"\n}",
-    "seconds": 0.9286999999880791,
-    "tokensIn": 65,
-    "tokensOut": 11
+    "text": "{\n  \"currency\": \"IDR\",\n  \"entries\": [\n    {\n      \"description\": \"Nonton bioskop\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 50000,\n      \"date\": \"2026-11-25\"\n    },\n    {\n      \"description\": \"Parkir\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 5000,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+    "seconds": 3.670300000011921,
+    "tokensIn": 423,
+    "tokensOut": 144
    },
-   "apple": [
-    {
-     "seconds": 0.569688291,
-     "text": "{\"label\": \"negative\"}"
-    },
-    {
-     "seconds": 0.554434959,
-     "text": "{\"label\": \"negative\"}"
-    },
-    {
-     "seconds": 0.5885245,
-     "text": "{\"label\": \"negative\"}"
-    }
-   ]
+   "grades": {}
   },
-  "mood-26": {
+  "input-y34x44cb": {
    "device": [
     {
-     "text": "{\"label\":\"positive\"}",
-     "seconds": 0.7191000000238419
+     "text": "{\n  \"currency\": \"USD\",\n  \"entries\": [\n    {\n      \"description\": \"Taxi\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 15,\n      \"date\": \"2026-11-24\"\n    },\n    {\n      \"description\": \"Coffee\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 4,\n      \"date\": \"2026-11-24\"\n    }\n  ]\n}",
+     "seconds": 7.072699999988079
     },
     {
-     "text": "{\"label\": \"positive\"}",
-     "seconds": 0.8370999999642372
+     "text": "{\n  \"currency\": \"USD\",\n  \"entries\": [\n    {\n      \"description\": \"Taxi\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 15,\n      \"date\": \"2026-11-24\"\n    },\n    {\n      \"description\": \"Coffee\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 4,\n      \"date\": \"2026-11-24\"\n    }\n  ]\n}",
+     "seconds": 7.366200000047684
     },
     {
-     "text": "{\"label\":\"positive\"}",
-     "seconds": 0.794699999988079
-    }
-   ],
-   "apple": [
-    {
-     "text": "{\"label\": \"positive\"}",
-     "seconds": 0.476049334
-    },
-    {
-     "text": "{\"label\": \"positive\"}",
-     "seconds": 0.442003375
-    },
-    {
-     "text": "{\"label\": \"positive\"}",
-     "seconds": 0.491901208
+     "text": "{\n  \"currency\": \"USD\",\n  \"entries\": [\n    {\n      \"description\": \"Taxi\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 15,\n      \"date\": \"2026-11-24\"\n    },\n    {\n      \"description\": \"Coffee\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 4,\n      \"date\": \"2026-11-24\"\n    }\n  ]\n}",
+     "seconds": 6.7400999999642375
     }
    ],
    "cloud": {
-    "text": "{\n  \"label\": \"positive\"\n}",
-    "seconds": 0.7131000000238419,
-    "tokensIn": 76,
-    "tokensOut": 11
-   }
+    "text": "{\"currency\": \"USD\", \"entries\": [{\"description\": \"Taxi\", \"type\": \"expense\", \"quantity\": 1, \"unitPrice\": 15, \"date\": \"2026-11-24\"}, {\"description\": \"Coffee\", \"type\": \"expense\", \"quantity\": 1, \"unitPrice\": 4, \"date\": \"2026-11-24\"}]}",
+    "seconds": 3.8952000000476836,
+    "tokensIn": 421,
+    "tokensOut": 91
+   },
+   "grades": {}
   },
-  "mood-27": {
+  "input-0ktezdtm": {
    "device": [
     {
-     "text": "{\"label\": \"positive\"}",
-     "seconds": 1.0626000000238418
+     "text": "{\"currency\": \"\", \"entries\": [{\"description\": \"Bensin\", \"type\": \"expense\", \"quantity\": 1, \"unitPrice\": 35000, \"date\": \"2026-11-24\"}]}",
+     "seconds": 4.129899999976158
     },
     {
-     "text": "{\"label\":\"positive\"}",
-     "seconds": 0.9233999999761582
+     "text": "{\n  \"currency\": \"\",\n  \"entries\": [\n    {\n      \"description\": \"Beli Bensin\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 35,\n      \"date\": \"2026-11-24\"\n    }\n  ]\n}",
+     "seconds": 5.500199999988079
     },
     {
-     "text": "{\"label\":\"positive\"}",
-     "seconds": 0.899699999988079
-    }
-   ],
-   "apple": [
-    {
-     "text": "{\"label\": \"positive\"}",
-     "seconds": 0.44401725
-    },
-    {
-     "text": "{\"label\": \"positive\"}",
-     "seconds": 0.460244541
-    },
-    {
-     "seconds": 0.444600292,
-     "text": "{\"label\": \"positive\"}"
+     "text": "{\"currency\":\"IDR\",\"entries\":[{\"description\":\"Bought gasoline\",\"type\":\"expense\",\"quantity\":1,\"unitPrice\":35000,\"date\": \"2026-11-24\"}]}",
+     "seconds": 3.4181000000238417
     }
    ],
    "cloud": {
-    "text": "{\n  \"label\": \"positive\"\n}",
-    "seconds": 0.7464000000357628,
-    "tokensIn": 77,
-    "tokensOut": 11
-   }
+    "text": "{\n  \"currency\": \"IDR\",\n  \"entries\": [\n    {\n      \"description\": \"Beli bensin\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 35000,\n      \"date\": \"2026-11-24\"\n    }\n  ]\n}",
+    "seconds": 1.164300000011921,
+    "tokensIn": 418,
+    "tokensOut": 84
+   },
+   "grades": {}
   },
-  "mood-28": {
+  "input-y8em1ptx": {
    "device": [
     {
-     "text": "{\"label\":\"positive\"}",
-     "seconds": 0.841
+     "text": "{\"currency\":\"€\",\"entries\":[{\"description\":\"Dinner\",\"type\":\"expense\",\"quantity\":1,\"unitPrice\":28,\"date\":\"2026-11-24\"}]}",
+     "seconds": 2.840100000023842
     },
     {
-     "text": "{\"label\":\"positive\"}",
-     "seconds": 0.852199999988079
+     "text": "{\"currency\": \"EUR\", \"entries\": [{\"description\": \"Dinner\", \"type\": \"expense\", \"quantity\": 1, \"unitPrice\": 28, \"date\": \"2026-11-24\"}]}",
+     "seconds": 3.774300000011921
     },
     {
-     "text": "{\"label\":\"positive\"}",
-     "seconds": 0.825199999988079
-    }
-   ],
-   "apple": [
-    {
-     "seconds": 0.460357458,
-     "text": "{\"label\": \"positive\"}"
-    },
-    {
-     "seconds": 0.436192333,
-     "text": "{\"label\": \"positive\"}"
-    },
-    {
-     "seconds": 0.507747,
-     "text": "{\"label\": \"positive\"}"
+     "text": "{\n  \"currency\": \"EUR\",\n  \"entries\": [\n    {\n      \"description\": \"Dinner\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 28,\n      \"date\": \"2026-11-24\"\n    }\n  ]\n}",
+     "seconds": 5.089899999976158
     }
    ],
    "cloud": {
-    "text": "{\n  \"label\": \"positive\"\n}",
-    "seconds": 0.8876000000238419,
-    "tokensIn": 77,
-    "tokensOut": 11
-   }
+    "text": "{\"currency\": \"EUR\", \"entries\": [{\"description\": \"Dinner\", \"type\": \"expense\", \"quantity\": 1, \"unitPrice\": 28, \"date\": \"2026-11-24\"}]}",
+    "seconds": 2.0905999999642373,
+    "tokensIn": 419,
+    "tokensOut": 51
+   },
+   "grades": {}
   },
-  "mood-29": {
+  "input-iyhuifyy": {
    "device": [
     {
-     "text": "{\"label\":\"positive\"}",
-     "seconds": 0.8413999999761581
+     "text": "{\"currency\":\"IDR\",\"entries\": [{\"description\": \"Received fee project\", \"type\": \"income\", \"quantity\": 1, \"unitPrice\": 1200000, \"date\": \"2026-11-23\"}]}",
+     "seconds": 4.326600000023842
     },
     {
-     "text": "{\"label\": \"positive\"}",
-     "seconds": 0.8811999999880791
+     "text": "{\n  \"currency\": \"IDR\",\n  \"entries\": [\n    {\n      \"description\": \"Dapat fee project\",\n      \"type\": \"income\",\n      \"quantity\": 1,\n      \"unitPrice\": 1200000,\n      \"date\": \"2026-11-23\"\n    }\n  ]\n}",
+     "seconds": 4.702199999988079
     },
     {
-     "text": "{\"label\": \"positive\"}",
-     "seconds": 0.8591000000238419
-    }
-   ],
-   "apple": [
-    {
-     "text": "{\"label\": \"positive\"}",
-     "seconds": 0.437145708
-    },
-    {
-     "text": "{\"label\": \"positive\"}",
-     "seconds": 0.440744583
-    },
-    {
-     "text": "{\"label\": \"positive\"}",
-     "seconds": 0.448818041
+     "text": "{\n  \"currency\": \"IDR\",\n  \"entries\": [\n    {\n      \"description\": \"Dapat fee project\",\n      \"type\": \"income\",\n      \"quantity\": 1,\n      \"unitPrice\": 1200000,\n      \"date\": \"2026-11-23\"\n    }\n  ]\n}",
+     "seconds": 4.985699999988079
     }
    ],
    "cloud": {
-    "text": "{\n  \"label\": \"positive\"\n}",
-    "seconds": 1.2093999999761582,
-    "tokensIn": 77,
-    "tokensOut": 11
-   }
+    "text": "{\"currency\": \"IDR\", \"entries\": [{\"description\": \"Fee project\", \"type\": \"income\", \"quantity\": 1, \"unitPrice\": 1200000, \"date\": \"2026-11-23\"}]}",
+    "seconds": 7.976599999964237,
+    "tokensIn": 421,
+    "tokensOut": 58
+   },
+   "grades": {}
   },
-  "mood-30": {
+  "input-mmwa6riu": {
    "device": [
     {
-     "text": "{\"label\": \"positive\"}",
-     "seconds": 0.8548999999761582
+     "text": "{\"currency\":\"IDR\",\"entries\":[{\"description\":\"Pay Electricity\",\"type\":\"expense\",\"quantity\":1,\"unitPrice\":150000,\"date\":\"2026-11-25\"},{\"description\":\"Buy Credits\",\"type\":\"expense\",\"quantity\":1,\"unitPrice\":25000,\"date\":\"2026-11-25\"}]}",
+     "seconds": 4.918800000011921
     },
     {
-     "text": "{\"label\": \"positive\"}",
-     "seconds": 0.8469000000357628
+     "text": "{\"currency\": \"Rp\", \"entries\": [{\"description\": \"Pay electricity\", \"type\": \"expense\", \"quantity\": 1, \"unitPrice\": 150000, \"date\": \"2026-11-25\"}, {\"description\": \"Buy airtime\", \"type\": \"expense\", \"quantity\": 1, \"unitPrice\": 25000, \"date\": \"2026-11-26\"}]}",
+     "seconds": 5.961199999988079
     },
     {
-     "text": "{\"label\": \"positive\"}",
-     "seconds": 0.9198999999761581
-    }
-   ],
-   "apple": [
-    {
-     "seconds": 0.448320584,
-     "text": "{\"label\": \"positive\"}"
-    },
-    {
-     "seconds": 0.475325709,
-     "text": "{\"label\": \"positive\"}"
-    },
-    {
-     "seconds": 0.460741542,
-     "text": "{\"label\": \"positive\"}"
+     "text": "{\"currency\": \"IDR\", \"entries\": [{\"description\": \"Pay Electricity\", \"type\": \"expense\", \"quantity\": 1, \"unitPrice\": 150000, \"date\": \"2026-11-25\"}, {\"description\": \"Buy Airtime\", \"type\": \"expense\", \"quantity\": 1, \"unitPrice\": 25000, \"date\": \"2026-11-25\"}]}",
+     "seconds": 6.700400000035763
     }
    ],
    "cloud": {
-    "text": "{\n  \"label\": \"positive\"\n}",
-    "seconds": 1.0745,
-    "tokensIn": 71,
-    "tokensOut": 11
-   }
+    "text": "{\n  \"currency\": \"IDR\",\n  \"entries\": [\n    {\n      \"description\": \"Bayar listrik\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 150000,\n      \"date\": \"2026-11-24\"\n    },\n    {\n      \"description\": \"Beli pulsa\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 25000,\n      \"date\": \"2026-11-24\"\n    }\n  ]\n}",
+    "seconds": 1.5726000000238418,
+    "tokensIn": 427,
+    "tokensOut": 147
+   },
+   "grades": {}
   },
-  "mood-31": {
+  "input-b7xtq98b": {
    "device": [
     {
-     "text": "{\"label\": \"negative\"}",
-     "seconds": 0.8675
+     "text": "{\n  \"currency\": \"IDR\",\n  \"entries\": [\n    {\n      \"description\": \"Jual barang bekas dapet\",\n      \"type\": \"income\",\n      \"quantity\": 1,\n      \"unitPrice\": 450000,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+     "seconds": 5.566699999988079
     },
     {
-     "text": "{\"label\": \"negative\"}",
-     "seconds": 0.8587000000476838
+     "text": "{\n  \"currency\": \"Rp\",\n  \"entries\": [\n    {\n      \"description\": \"Jual Barang Bekas Dapet\",\n      \"type\": \"income\",\n      \"quantity\": 1,\n      \"unitPrice\": 450000,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+     "seconds": 5.371099999964237
     },
     {
-     "text": "{\"label\": \"negative\"}",
-     "seconds": 0.8488999999761582
-    }
-   ],
-   "apple": [
-    {
-     "text": "{\"label\": \"negative\"}",
-     "seconds": 0.444707708
-    },
-    {
-     "text": "{\"label\": \"negative\"}",
-     "seconds": 0.451916042
-    },
-    {
-     "text": "{\"label\": \"negative\"}",
-     "seconds": 0.434368125
+     "text": "{\n  \"currency\": \"IDR\",\n  \"entries\": [\n    {\n      \"description\": \"Jual Barang Bekas Dapet\",\n      \"type\": \"income\",\n      \"quantity\": 1,\n      \"unitPrice\": 450000,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+     "seconds": 5.262800000011921
     }
    ],
    "cloud": {
-    "text": "{\n  \"label\": \"negative\"\n}",
-    "seconds": 0.8455999999642372,
-    "tokensIn": 74,
-    "tokensOut": 11
-   }
+    "text": "{\n  \"currency\": \"IDR\",\n  \"entries\": [\n    {\n      \"description\": \"Jual barang bekas\",\n      \"type\": \"income\",\n      \"quantity\": 1,\n      \"unitPrice\": 450000,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+    "seconds": 1.174800000011921,
+    "tokensIn": 420,
+    "tokensOut": 85
+   },
+   "grades": {}
   },
-  "mood-32": {
+  "input-tqd5j5mc": {
    "device": [
     {
-     "text": "{\"label\":\"negative\"}",
-     "seconds": 0.8168999999761581
+     "text": "{\n  \"currency\": \"\",\n  \"entries\": [\n    {\n      \"description\": \"Bayar cicilan\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 1500000,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+     "seconds": 4.387899999976158
     },
     {
-     "text": "{\"label\": \"negative\"}",
-     "seconds": 0.852199999988079
+     "text": "{\"currency\":\"IDR\", \"entries\": [{\"description\":\"Bayar Cicilan\", \"type\":\"expense\", \"quantity\": 1, \"unitPrice\": 1500000, \"date\": \"2026-11-25\"}]}",
+     "seconds": 3.3517000000476838
     },
     {
-     "text": "{\"label\": \"negative\"}",
-     "seconds": 0.8533999999761581
-    }
-   ],
-   "apple": [
-    {
-     "text": "{\"label\": \"negative\"}",
-     "seconds": 0.445291542
-    },
-    {
-     "text": "{\"label\": \"negative\"}",
-     "seconds": 0.434781791
-    },
-    {
-     "text": "{\"label\": \"negative\"}",
-     "seconds": 0.459997875
+     "text": "{\n  \"currency\": \"IDR\",\n  \"entries\": [\n    {\n      \"description\": \"Pay installment\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 1500000,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+     "seconds": 4.6863999999761585
     }
    ],
    "cloud": {
-    "text": "{\n  \"label\": \"negative\"\n}",
-    "seconds": 1.276699999988079,
-    "tokensIn": 73,
-    "tokensOut": 11
-   }
+    "text": "{\"currency\":\"IDR\",\"entries\":[{\"description\":\"Bayar cicilan\",\"type\":\"expense\",\"quantity\":1,\"unitPrice\":1500000,\"date\":\"\"}]}",
+    "seconds": 1.468600000023842,
+    "tokensIn": 418,
+    "tokensOut": 38
+   },
+   "grades": {}
   },
-  "mood-33": {
+  "input-zkgi67xb": {
    "device": [
     {
-     "text": "{\"label\": \"negative\"}",
-     "seconds": 0.8685999999642372
+     "text": "{\n  \"currency\": \"IDR\",\n  \"entries\": [\n    {\n      \"description\": \"Laundry\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 30000,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+     "seconds": 5.092399999976158
     },
     {
-     "text": "{\"label\": \"negative\"}",
-     "seconds": 0.8766000000238419
+     "text": "{\"currency\":\"IDR\", \"entries\": [{\"description\": \"Laundry\", \"type\": \"expense\", \"quantity\": 1, \"unitPrice\": 30000, \"date\": \"2026-11-25\"}]}",
+     "seconds": 3.403199999988079
     },
     {
-     "text": "{\"label\": \"negative\"}",
-     "seconds": 0.8768999999761582
-    }
-   ],
-   "apple": [
-    {
-     "text": "{\"label\": \"negative\"}",
-     "seconds": 0.444965
-    },
-    {
-     "text": "{\"label\": \"negative\"}",
-     "seconds": 0.453039292
-    },
-    {
-     "text": "{\"label\": \"negative\"}",
-     "seconds": 0.435615208
+     "text": "{\n  \"currency\": \"IDR\",\n  \"entries\": [\n    {\n      \"description\": \"Laundry\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 30000,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+     "seconds": 4.346
     }
    ],
    "cloud": {
-    "text": "{\n  \"label\": \"negative\"\n}",
-    "seconds": 1.021199999988079,
-    "tokensIn": 77,
-    "tokensOut": 11
-   }
+    "text": "{\"currency\": \"IDR\", \"entries\": [{\"description\": \"Laundry\", \"type\": \"expense\", \"quantity\": 1, \"unitPrice\": 30000, \"date\": \"2026-11-25\"}]}",
+    "seconds": 8.058199999988078,
+    "tokensIn": 415,
+    "tokensOut": 55
+   },
+   "grades": {}
+  },
+  "input-a898uhn2": {
+   "device": [
+    {
+     "text": "{\n  \"currency\": \"\",\n  \"entries\": [\n    {\n      \"description\": \"Meeting Tadi Pagi Di Kafe, Pesan Teh\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 20000,\n      \"date\": \"2026-11-25\"\n    },\n    {\n      \"description\": \"Jangan Lupa Nanti Malam Mau Beli Kado\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 0,\n      \"date\": \"\"\n    }\n  ]\n}",
+     "seconds": 6.8810999999642375
+    },
+    {
+     "text": "{\n  \"currency\": \"\",\n  \"entries\": [\n    {\n      \"description\": \"Teh\",\n      \"type\": \"expense\",\n      \"quantity\": 2,\n      \"unitPrice\": 10000,\n      \"date\": \"2026-11-25\"\n    },\n    {\n      \"description\": \"Beli kado\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 0,\n      \"date\": \"\"\n    }\n  ]\n}",
+     "seconds": 6.7431000000238415
+    },
+    {
+     "text": "{\"currency\": \"\", \"entries\": [{\"description\": \"Teh\", \"type\": \"expense\", \"quantity\": 2, \"unitPrice\": 20000, \"date\": \"2026-11-25\"}]}",
+     "seconds": 3.653399999976158
+    }
+   ],
+   "cloud": {
+    "text": "{\"currency\": \"IDR\", \"entries\": [{\"description\": \"Teh\", \"type\": \"expense\", \"quantity\": 1, \"unitPrice\": 20000, \"date\": \"2026-11-25\"}]}",
+    "seconds": 0.9574000000357628,
+    "tokensIn": 431,
+    "tokensOut": 56
+   },
+   "grades": {}
+  },
+  "input-1wpuipy4": {
+   "device": [
+    {
+     "text": "{\n  \"currency\": \"Rp\",\n  \"entries\": [\n    {\n      \"description\": \"Refund tiket pesawat\",\n      \"type\": \"income\",\n      \"quantity\": 1,\n      \"unitPrice\": 750000,\n      \"date\": \"2026-11-25\"\n    },\n    {\n      \"description\": \"Bonus akhir tahun\",\n      \"type\": \"income\",\n      \"quantity\": 1,\n      \"unitPrice\": 2500000,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+     "seconds": 7.867599999964237
+    },
+    {
+     "text": "{\n  \"currency\": \"Rp\",\n  \"entries\": [\n    {\n      \"description\": \"Refund Tiket Pesawat\",\n      \"type\": \"income\",\n      \"quantity\": 1,\n      \"unitPrice\": 750000,\n      \"date\": \"2026-11-25\"\n    },\n    {\n      \"description\": \"Bonus Akhir Tahun\",\n      \"type\": \"income\",\n      \"quantity\": 1,\n      \"unitPrice\": 2500000,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+     "seconds": 7.5789000000357625
+    },
+    {
+     "text": "{\n  \"currency\": \"Rp\",\n  \"entries\": [\n    {\n      \"description\": \"Refund Tiket Pesawat\",\n      \"type\": \"income\",\n      \"quantity\": 1,\n      \"unitPrice\": 750000,\n      \"date\": \"2026-11-25\"\n    },\n    {\n      \"description\": \"Bonus Akhir Tahun\",\n      \"type\": \"income\",\n      \"quantity\": 1,\n      \"unitPrice\": 2500000,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+     "seconds": 7.707800000011921
+    }
+   ],
+   "cloud": {
+    "text": "{\n  \"currency\": \"IDR\",\n  \"entries\": [\n    {\n      \"description\": \"Refund tiket pesawat\",\n      \"type\": \"income\",\n      \"quantity\": 1,\n      \"unitPrice\": 750000,\n      \"date\": \"2026-11-25\"\n    },\n    {\n      \"description\": \"Bonus akhir tahun\",\n      \"type\": \"income\",\n      \"quantity\": 1,\n      \"unitPrice\": 2500000,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+    "seconds": 1.745300000011921,
+    "tokensIn": 433,
+    "tokensOut": 148
+   },
+   "grades": {}
+  },
+  "input-1nzjlfxs": {
+   "device": [
+    {
+     "text": "{\n  \"currency\": \"IDR\",\n  \"entries\": [\n    {\n      \"description\": \"Beli Obat Di Apotek\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 85.5,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+     "seconds": 4.788700000047684
+    },
+    {
+     "text": "{\n  \"currency\": \"IDR\",\n  \"entries\": [\n    {\n      \"description\": \"Beli Obat di Apotek\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 85.500,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+     "seconds": 4.290199999988079
+    },
+    {
+     "text": "{\n  \"currency\": \"IDR\",\n  \"entries\": [\n    {\n      \"description\": \"Beli Obat Di Apotek\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 85.5,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+     "seconds": 4.543900000035763
+    }
+   ],
+   "cloud": {
+    "text": "{\"currency\": \"IDR\", \"entries\": [{\"description\": \"Beli obat di apotek\", \"type\": \"expense\", \"quantity\": 1, \"unitPrice\": 85500, \"date\": \"2026-11-25\"}]}",
+    "seconds": 5.370400000035763,
+    "tokensIn": 421,
+    "tokensOut": 60
+   },
+   "grades": {}
+  },
+  "input-8bjbofsp": {
+   "device": [
+    {
+     "text": "{\"currency\":\"IDR\",\"entries\":[{\"description\":\"Pay Wifi\",\"type\":\"expense\",\"quantity\":1,\"unitPrice\":275,\"date\":\"2026-11-25\"}]}",
+     "seconds": 3.131200000047684
+    },
+    {
+     "text": "{\"currency\":\"IDR\",\"entries\":[{\"description\":\"Pay Wifi\",\"type\":\"expense\",\"quantity\":1,\"unitPrice\":275,\"date\":\"2026-11-25\"}]}",
+     "seconds": 3.254399999976158
+    },
+    {
+     "text": "{\"currency\": \"IDR\", \"entries\": [{\"description\": \"Pay Wifi\", \"type\": \"expense\", \"quantity\": 1, \"unitPrice\": 275000, \"date\": \"2026-11-25\"}]}",
+     "seconds": 3.554899999976158
+    }
+   ],
+   "cloud": {
+    "text": "{\"currency\":\"IDR\",\"entries\":[{\"description\":\"Bayar wifi\",\"type\":\"expense\",\"quantity\":1,\"unitPrice\":275000,\"date\":\"2026-11-25\"}]}",
+    "seconds": 1.468,
+    "tokensIn": 417,
+    "tokensOut": 46
+   },
+   "grades": {}
+  },
+  "input-07gur8k0": {
+   "device": [
+    {
+     "text": "{\n  \"currency\": \"IDR\",\n  \"entries\": [\n    {\n      \"description\": \"Beli Pulpen\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 5000,\n      \"date\": \"2026-11-25\"\n    },\n    {\n      \"description\": \"Kertas Hvs\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 45000,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+     "seconds": 7.157100000023842
+    },
+    {
+     "text": "{\n  \"currency\": \"IDR\",\n  \"entries\": [\n    {\n      \"description\": \"Beli pulpen\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 5000,\n      \"date\": \"2026-11-25\"\n    },\n    {\n      \"description\": \"Kertas Hvs\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 45000,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+     "seconds": 6.491800000011921
+    },
+    {
+     "text": "{\n  \"currency\": \"IDR\",\n  \"entries\": [\n    {\n      \"description\": \"Beli Pulpen\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 5000,\n      \"date\": \"2026-11-25\"\n    },\n    {\n      \"description\": \"Kertas Hvs\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 45000,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+     "seconds": 7.5645
+    }
+   ],
+   "cloud": {
+    "text": "{\"currency\": \"IDR\", \"entries\": [{\"description\": \"Beli pulpen\", \"type\": \"expense\", \"quantity\": 1, \"unitPrice\": 5000, \"date\": \"2026-11-25\"}, {\"description\": \"Kertas hvs\", \"type\": \"expense\", \"quantity\": 1, \"unitPrice\": 45000, \"date\": \"2026-11-25\"}]}",
+    "seconds": 4.0055,
+    "tokensIn": 429,
+    "tokensOut": 104
+   },
+   "grades": {}
+  },
+  "input-l4ejah8v": {
+   "device": [
+    {
+     "text": "{\n  \"currency\": \"IDR\",\n  \"entries\": [\n    {\n      \"description\": \"Top up E-toll\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 100000,\n      \"date\": \"2026-11-23\"\n    }\n  ]\n}",
+     "seconds": 4.780400000035763
+    },
+    {
+     "text": "{\n  \"currency\": \"IDR\",\n  \"entries\": [\n    {\n      \"description\": \"Top up e-toll\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 100000,\n      \"date\": \"2026-11-23\"\n    }\n  ]\n}",
+     "seconds": 4.476199999988079
+    },
+    {
+     "text": "{\"currency\": \"IDR\", \"entries\": [{\"description\": \"Top up E-toll\", \"type\": \"expense\", \"quantity\": 1, \"unitPrice\": 100000, \"date\": \"2026-11-23\"}]}",
+     "seconds": 3.119100000023842
+    }
+   ],
+   "cloud": {
+    "text": "{\"currency\": \"IDR\", \"entries\": [{\"description\": \"Isi e-toll\", \"type\": \"expense\", \"quantity\": 1, \"unitPrice\": 100000, \"date\": \"2026-11-23\"}]}",
+    "seconds": 3.731,
+    "tokensIn": 422,
+    "tokensOut": 60
+   },
+   "grades": {}
+  },
+  "input-ripr0qbp": {
+   "device": [
+    {
+     "text": "{\n  \"currency\": \"IDR\",\n  \"entries\": [\n    {\n      \"description\": \"Beli Sate\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 25000,\n      \"date\": \"2026-11-25\"\n    },\n    {\n      \"description\": \"Es Teh\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 5000,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+     "seconds": 6.042
+    },
+    {
+     "text": "{\n  \"currency\": \"Rp\",\n  \"entries\": [\n    {\n      \"description\": \"Beli Sate\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 25000,\n      \"date\": \"2026-11-25\"\n    },\n    {\n      \"description\": \"Es Teh\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 5000,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+     "seconds": 5.799699999988079
+    },
+    {
+     "text": "{\n  \"currency\": \"IDR\",\n  \"entries\": [\n    {\n      \"description\": \"Beli Sate\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 25000,\n      \"date\": \"2026-11-25\"\n    },\n    {\n      \"description\": \"Es Teh\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 5000,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+     "seconds": 6.034
+    }
+   ],
+   "cloud": {
+    "text": "{\n  \"currency\": \"IDR\",\n  \"entries\": [\n    {\n      \"description\": \"Beli sate\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 25000,\n      \"date\": \"2026-11-25\"\n    },\n    {\n      \"description\": \"Es teh\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 5000,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+    "seconds": 4.269300000011921,
+    "tokensIn": 422,
+    "tokensOut": 144
+   },
+   "grades": {}
+  },
+  "input-11u3g20j": {
+   "device": [
+    {
+     "text": "{\"currency\":\"IDR\",\"entries\":[{\"description\":\"Bayar service AC\",\"type\":\"expense\",\"quantity\":1,\"unitPrice\":200,\"date\":\"2026-11-24\"}]}",
+     "seconds": 2.8549000000357627
+    },
+    {
+     "text": "{\"currency\":\"IDR\",\"entries\":[{\"description\":\"Bayar Service Ac\",\"type\":\"expense\",\"quantity\":1,\"unitPrice\":200,\"date\":\"2026-11-24\"}]}",
+     "seconds": 2.683099999964237
+    },
+    {
+     "text": "{\"currency\":\"IDR\",\"entries\":[{\"description\":\"Paid Air Conditioner Service\",\"type\":\"expense\",\"quantity\":1,\"unitPrice\":200000,\"date\":\"2026-11-24\"}]}",
+     "seconds": 2.769199999988079
+    }
+   ],
+   "cloud": {
+    "text": "{\"currency\": \"IDR\", \"entries\": [{\"description\": \"Service AC\", \"type\": \"expense\", \"quantity\": 1, \"unitPrice\": 200000, \"date\": \"2026-11-24\"}]}",
+    "seconds": 0.9270999999642372,
+    "tokensIn": 420,
+    "tokensOut": 57
+   },
+   "grades": {}
+  },
+  "input-t3houmee": {
+   "device": [
+    {
+     "text": "{\n  \"currency\": \"Rp\",\n  \"entries\": [\n    {\n      \"description\": \"Beli jaket\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 350,\n      \"date\": \"2026-11-21\"\n    }\n  ]\n}",
+     "seconds": 3.939
+    },
+    {
+     "text": "{\n  \"currency\": \"\",\n  \"entries\": [\n    {\n      \"description\": \"Beli Jaket\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 350000,\n      \"date\": \"2026-11-21\"\n    }\n  ]\n}",
+     "seconds": 3.9903999999761584
+    },
+    {
+     "text": "{\n  \"currency\": \"\",\n  \"entries\": [\n    {\n      \"description\": \"Beli Jaket\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 350000,\n      \"date\": \"2026-11-21\"\n    }\n  ]\n}",
+     "seconds": 4.4356999999880795
+    }
+   ],
+   "cloud": {
+    "text": "{\"currency\": \"IDR\", \"entries\": [{\"description\": \"Beli jaket\", \"type\": \"expense\", \"quantity\": 1, \"unitPrice\": 350000, \"date\": \"2026-11-21\"}]}",
+    "seconds": 1.8226000000238418,
+    "tokensIn": 422,
+    "tokensOut": 59
+   },
+   "grades": {}
+  },
+  "input-bg3f0n5e": {
+   "device": [
+    {
+     "text": "{\n  \"currency\": \"\",\n  \"entries\": [\n    {\n      \"description\": \"Beli Makan\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 35000,\n      \"date\": \"2026-11-24\"\n    },\n    {\n      \"description\": \"Beli Donat\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 10000,\n      \"date\": \"2026-11-24\"\n    }\n  ]\n}",
+     "seconds": 6.307099999964238
+    },
+    {
+     "text": "{\n  \"currency\": \"\",\n  \"entries\": [\n    {\n      \"description\": \"Beli Makan\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 35000,\n      \"date\": \"2026-11-24\"\n    },\n    {\n      \"description\": \"Donat\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 10000,\n      \"date\": \"2026-11-24\"\n    }\n  ]\n}",
+     "seconds": 5.7272000000476835
+    },
+    {
+     "text": "{\n  \"currency\": \"\",\n  \"entries\": [\n    {\n      \"description\": \"Beli Makan\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 35000,\n      \"date\": \"2026-11-24\"\n    },\n    {\n      \"description\": \"Beli Donat\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 10000,\n      \"date\": \"2026-11-24\"\n    }\n  ]\n}",
+     "seconds": 5.8047999999523165
+    }
+   ],
+   "cloud": {
+    "text": "{\"currency\": \"IDR\", \"entries\": [{\"description\": \"Beli makan\", \"type\": \"expense\", \"quantity\": 1, \"unitPrice\": 35000, \"date\": \"2026-11-24\"}, {\"description\": \"Donat\", \"type\": \"expense\", \"quantity\": 1, \"unitPrice\": 10000, \"date\": \"2026-11-24\"}]}",
+    "seconds": 5.851699999988079,
+    "tokensIn": 425,
+    "tokensOut": 102
+   },
+   "grades": {}
+  },
+  "input-jhb13jsa": {
+   "device": [
+    {
+     "text": "{\"currency\":\"IDR\",\"entries\":[{\"description\":\"2x Burger\", \"type\":\"expense\", \"quantity\":2, \"unitPrice\":45000, \"date\":\"2026-11-25\"}]}",
+     "seconds": 2.820100000023842
+    },
+    {
+     "text": "{\n  \"currency\": \"\",\n  \"entries\": [\n    {\n      \"description\": \"2x Burger\",\n      \"type\": \"expense\",\n      \"quantity\": 2,\n      \"unitPrice\": 45000,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+     "seconds": 3.808899999976158
+    },
+    {
+     "text": "{\n  \"currency\": \"IDR\",\n  \"entries\": [\n    {\n      \"description\": \"2x Burger\",\n      \"type\": \"expense\",\n      \"quantity\": 2,\n      \"unitPrice\": 45000,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+     "seconds": 3.896699999988079
+    }
+   ],
+   "cloud": {
+    "text": "{\"currency\": \"IDR\", \"entries\": [{\"description\": \"Burger\", \"type\": \"expense\", \"quantity\": 2, \"unitPrice\": 45000, \"date\": \"2026-11-25\"}]}",
+    "seconds": 0.8941000000238418,
+    "tokensIn": 416,
+    "tokensOut": 55
+   },
+   "grades": {}
+  },
+  "input-yl4804ny": {
+   "device": [
+    {
+     "text": "{\n  \"currency\": \"IDR\",\n  \"entries\": [\n    {\n      \"description\": \"Terima Gaji\",\n      \"type\": \"income\",\n      \"quantity\": 1,\n      \"unitPrice\": 6000000,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+     "seconds": 3.9601999999880793
+    },
+    {
+     "text": "{\n  \"currency\": \"IDR\",\n  \"entries\": [\n    {\n      \"description\": \"Terima Gaji\",\n      \"type\": \"income\",\n      \"quantity\": 1,\n      \"unitPrice\": 6000000,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+     "seconds": 3.941399999976158
+    },
+    {
+     "text": "{\n  \"currency\": \"IDR\",\n  \"entries\": [\n    {\n      \"description\": \"Terima Gaji\",\n      \"type\": \"income\",\n      \"quantity\": 1,\n      \"unitPrice\": 6000000,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+     "seconds": 4.035699999988079
+    }
+   ],
+   "cloud": {
+    "text": "{\"currency\": \"IDR\", \"entries\": [{\"description\": \"Terima gajih\", \"type\": \"income\", \"quantity\": 1, \"unitPrice\": 6000000, \"date\": \"2026-11-25\"}]}",
+    "seconds": 2.6815,
+    "tokensIn": 425,
+    "tokensOut": 61
+   },
+   "grades": {}
+  },
+  "input-or1spyk9": {
+   "device": [
+    {
+     "text": "{\n  \"currency\": \"IDR\",\n  \"entries\": [\n    {\n      \"description\": \"Pay Garbage Fee\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 20000,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+     "seconds": 4.320700000047684
+    },
+    {
+     "text": "{\n  \"currency\": \"IDR\",\n  \"entries\": [\n    {\n      \"description\": \"Pay Garbage Fee\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 20000,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+     "seconds": 4.089199999988079
+    },
+    {
+     "text": "{\n  \"currency\": \"IDR\",\n  \"entries\": [\n    {\n      \"description\": \"Pay Garbage Fee\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 20000,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+     "seconds": 4.028399999976158
+    }
+   ],
+   "cloud": {
+    "text": "{\n  \"currency\": \"IDR\",\n  \"entries\": [\n    {\n      \"description\": \"Iuran sampah\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 20000,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+    "seconds": 1.492899999976158,
+    "tokensIn": 420,
+    "tokensOut": 83
+   },
+   "grades": {}
+  },
+  "input-u0t85t8w": {
+   "device": [
+    {
+     "text": "{\n  \"currency\": \"EUR\",\n  \"entries\": [\n    {\n      \"description\": \"Dinner\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 45.50,\n      \"date\": \"2026-11-24\"\n    }\n  ]\n}",
+     "seconds": 3.872800000011921
+    },
+    {
+     "text": "{\"currency\": \"EUR\", \"entries\": [{\"description\": \"Dinner\", \"type\": \"expense\", \"quantity\": 1, \"unitPrice\": 45.50, \"date\": \"2026-11-24\"}]}",
+     "seconds": 2.993100000023842
+    },
+    {
+     "text": "{\n  \"currency\": \"€\",\n  \"entries\": [\n    {\n      \"description\": \"Dinner\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 45.50,\n      \"date\": \"2026-11-24\"\n    }\n  ]\n}",
+     "seconds": 3.8405999999642373
+    }
+   ],
+   "grades": {}
+  },
+  "input-ziaxymw9": {
+   "device": [
+    {
+     "text": "{\n  \"currency\": \"RM\",\n  \"entries\": [\n    {\n      \"description\": \"Sold old table\",\n      \"type\": \"income\",\n      \"quantity\": 1,\n      \"unitPrice\": 120,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+     "seconds": 4.102599999964237
+    },
+    {
+     "text": "{\n  \"currency\": \"RM\",\n  \"entries\": [\n    {\n      \"description\": \"Sold old table\",\n      \"type\": \"income\",\n      \"quantity\": 1,\n      \"unitPrice\": 120,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+     "seconds": 3.907800000011921
+    },
+    {
+     "text": "{\n  \"currency\": \"RM\",\n  \"entries\": [\n    {\n      \"description\": \"Sold old table\",\n      \"type\": \"income\",\n      \"quantity\": 1,\n      \"unitPrice\": 120,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+     "seconds": 3.880399999976158
+    }
+   ],
+   "grades": {}
+  },
+  "input-livjz90u": {
+   "device": [
+    {
+     "text": "{\n  \"currency\": \"\",\n  \"entries\": [\n    {\n      \"description\": \"Tiket Bioskop\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 55,\n      \"date\": \"2026-10-15\"\n    }\n  ]\n}",
+     "seconds": 3.796199999988079
+    },
+    {
+     "text": "{\"currency\":\"IDR\",\"entries\":[{\"description\":\"Tiket bioskop\",\"type\":\"expense\",\"quantity\":1,\"unitPrice\":55000,\"date\":\"2026-10-15\"}]}",
+     "seconds": 2.708199999988079
+    },
+    {
+     "text": "{\"currency\":\"IDR\", \"entries\": [{\"description\": \"Tiket bioskop\", \"type\": \"expense\", \"quantity\": 1, \"unitPrice\": 55, \"date\": \"2026-10-15\"}]}",
+     "seconds": 3.015300000011921
+    }
+   ],
+   "grades": {}
+  },
+  "input-ym5gsqqp": {
+   "device": [
+    {
+     "text": "{\"currency\":\"\",\"entries\":[{\"description\":\"Met with old client and talked a lot about the future\", \"type\":\"expense\", \"quantity\":1, \"unitPrice\":0, \"date\":\"2026-11-25\"}]}",
+     "seconds": 2.845800000011921
+    },
+    {
+     "text": "{\"currency\": \"\", \"entries\": [{\"description\": \"Met with old client and talked a lot about the future\", \"type\": \"income\", \"quantity\": 1, \"unitPrice\": 0, \"date\": \"2026-11-25\"}]}",
+     "seconds": 3.035600000023842
+    },
+    {
+     "text": "{\"currency\":\"\",\"entries\":[{\"description\":\"Met with old client, talked a lot about the future\",\"type\":\"expense\",\"quantity\":1,\"unitPrice\":0,\"date\":\"2026-11-25\"}]}",
+     "seconds": 2.629300000011921
+    }
+   ],
+   "grades": {}
+  },
+  "input-hi6wu2sz": {
+   "device": [
+    {
+     "text": "{\n  \"currency\": \"IDR\",\n  \"entries\": [\n    {\n      \"description\": \"Pinjaman dari teman\",\n      \"type\": \"income\",\n      \"quantity\": 1,\n      \"unitPrice\": 500000,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+     "seconds": 3.941099999964237
+    },
+    {
+     "text": "{\n  \"currency\": \"Rp\",\n  \"entries\": [\n    {\n      \"description\": \"Borrow money from a friend\",\n      \"type\": \"income\",\n      \"quantity\": 1,\n      \"unitPrice\": 500000,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+     "seconds": 3.879800000011921
+    },
+    {
+     "text": "{\n  \"currency\": \"IDR\",\n  \"entries\": [\n    {\n      \"description\": \"Received loan from a friend\",\n      \"type\": \"income\",\n      \"quantity\": 1,\n      \"unitPrice\": 500000,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+     "seconds": 3.895800000011921
+    }
+   ],
+   "grades": {}
+  },
+  "input-djfz2nxp": {
+   "device": [
+    {
+     "text": "{\"currency\":\"IDR\",\"entries\":[\n  {\n    \"description\": \"Bensin\",\n    \"type\": \"expense\",\n    \"quantity\": 1,\n    \"unitPrice\": 50000,\n    \"date\": \"2026-11-24\"\n  },\n  {\n    \"description\": \"Toll\",\n    \"type\": \"expense\",\n    \"quantity\": 1,\n    \"unitPrice\": 15000,\n    \"date\": \"2026-11-24\"\n  }\n]}",
+     "seconds": 5.355300000011921
+    },
+    {
+     "text": "{\n  \"currency\": \"IDR\",\n  \"entries\": [\n    {\n      \"description\": \"Bensin\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 50000,\n      \"date\": \"2026-11-24\"\n    },\n    {\n      \"description\": \"Toll\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 15000,\n      \"date\": \"2026-11-24\"\n    }\n  ]\n}",
+     "seconds": 5.814799999952316
+    },
+    {
+     "text": "{\"currency\": \"\", \"entries\": [{\"description\": \"Bensin\", \"type\": \"expense\", \"quantity\": 1, \"unitPrice\": 50000, \"date\": \"2026-11-24\"}, {\"description\": \"Toll\", \"type\": \"expense\", \"quantity\": 1, \"unitPrice\": 15000, \"date\": \"2026-11-24\"}]}",
+     "seconds": 4.2838000000119205
+    }
+   ],
+   "grades": {}
+  },
+  "input-8fnyxigv": {
+   "device": [
+    {
+     "text": "{\"currency\":\"\",\"entries\":[]}",
+     "seconds": 1.355199999988079
+    },
+    {
+     "text": "{\"currency\": \"\", \"entries\": []}",
+     "seconds": 1.441300000011921
+    },
+    {
+     "text": "{\"currency\":\"\",\"entries\": []}",
+     "seconds": 1.3664000000357628
+    }
+   ],
+   "grades": {}
+  },
+  "input-73u3zes1": {
+   "device": [
+    {
+     "text": "{\n  \"currency\": \"Rp\",\n  \"entries\": [\n    {\n      \"description\": \"Beli Buku\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 75000,\n      \"date\": \"2026-11-23\"\n    }\n  ]\n}",
+     "seconds": 3.776300000011921
+    },
+    {
+     "text": "{\n  \"currency\": \"IDR\",\n  \"entries\": [\n    {\n      \"description\": \"Beli Buku\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 75000,\n      \"date\": \"2026-11-23\"\n    }\n  ]\n}",
+     "seconds": 3.8235
+    },
+    {
+     "text": "{\n  \"currency\": \"IDR\",\n  \"entries\": [\n    {\n      \"description\": \"Beli Buku\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 75000,\n      \"date\": \"2026-11-23\"\n    }\n  ]\n}",
+     "seconds": 3.826899999976158
+    }
+   ],
+   "grades": {}
+  },
+  "input-wym4deee": {
+   "device": [
+    {
+     "text": "{\n  \"currency\": \"IDR\",\n  \"entries\": [\n    {\n      \"description\": \"Three Coffees\",\n      \"type\": \"expense\",\n      \"quantity\": 3,\n      \"unitPrice\": 15000,\n      \"date\": \"2026-11-25\"\n    },\n    {\n      \"description\": \"Roti\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 12000,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+     "seconds": 5.800199999988079
+    },
+    {
+     "text": "{\"currency\":\"IDR\",\"entries\":[{\"description\":\"3x Kopi\", \"type\":\"expense\", \"quantity\":3, \"unitPrice\":15000, \"date\":\"2026-11-25\"},{\"description\":\"Roti\", \"type\":\"expense\", \"quantity\":1, \"unitPrice\":12000, \"date\":\"2026-11-25\"}]}",
+     "seconds": 3.9893000000119208
+    },
+    {
+     "text": "{\n  \"currency\": \"\",\n  \"entries\": [\n    {\n      \"description\": \"Three coffees\",\n      \"type\": \"expense\",\n      \"quantity\": 3,\n      \"unitPrice\": 15000,\n      \"date\": \"2026-11-25\"\n    },\n    {\n      \"description\": \"One pastry\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 12000,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+     "seconds": 5.575300000011921
+    }
+   ],
+   "grades": {}
+  },
+  "input-esqv094a": {
+   "device": [
+    {
+     "text": "{\n  \"currency\": \"\",\n  \"entries\": [\n    {\n      \"description\": \"Buah\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 45000,\n      \"date\": \"2026-11-24\"\n    },\n    {\n      \"description\": \"Jual Meja\",\n      \"type\": \"income\",\n      \"quantity\": 1,\n      \"unitPrice\": 300000,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+     "seconds": 5.686
+    },
+    {
+     "text": "{\n  \"currency\": \"\",\n  \"entries\": [\n    {\n      \"description\": \"Beli Buah\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 45000,\n      \"date\": \"2026-11-24\"\n    },\n    {\n      \"description\": \"Jual Meja\",\n      \"type\": \"income\",\n      \"quantity\": 1,\n      \"unitPrice\": 300000,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+     "seconds": 5.712
+    },
+    {
+     "text": "{\"currency\": \"\", \"entries\": [{\"description\": \"Buah\", \"type\": \"expense\", \"quantity\": 45, \"unitPrice\": 10000, \"date\": \"2026-11-24\"}, {\"description\": \"Jual meja\", \"type\": \"income\", \"quantity\": 1, \"unitPrice\": 300000, \"date\": \"2026-11-24\"}]}",
+     "seconds": 4.364699999988079
+    }
+   ],
+   "grades": {}
+  },
+  "input-pymev305": {
+   "device": [
+    {
+     "text": "{\n  \"currency\": \"S$\",\n  \"entries\": [\n    {\n      \"description\": \"Beli Sepatu\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 85,\n      \"date\": \"2026-11-24\"\n    },\n    {\n      \"description\": \"Makan\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 22,\n      \"date\": \"2026-11-24\"\n    }\n  ]\n}",
+     "seconds": 5.621
+    },
+    {
+     "text": "{\n  \"currency\": \"S$\",\n  \"entries\": [\n    {\n      \"description\": \"Beli sepatu\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 85,\n      \"date\": \"2026-11-24\"\n    },\n    {\n      \"description\": \"Makan\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 22,\n      \"date\": \"2026-11-24\"\n    }\n  ]\n}",
+     "seconds": 5.510700000047684
+    },
+    {
+     "text": "{\n  \"currency\": \"S$\",\n  \"entries\": [\n    {\n      \"description\": \"Buy shoes\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 85,\n      \"date\": \"2026-11-24\"\n    },\n    {\n      \"description\": \"Eat\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 22,\n      \"date\": \"2026-11-24\"\n    }\n  ]\n}",
+     "seconds": 5.522
+    }
+   ],
+   "grades": {}
+  },
+  "input-ns9wgrxo": {
+   "device": [
+    {
+     "text": "{\n  \"currency\": \"IDR\",\n  \"entries\": [\n    {\n      \"description\": \"Received money from mother\",\n      \"type\": \"income\",\n      \"quantity\": 1,\n      \"unitPrice\": 500000,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+     "seconds": 3.898600000023842
+    },
+    {
+     "text": "{\n  \"currency\": \"IDR\",\n  \"entries\": [\n    {\n      \"description\": \"Terima Kiriman Uang Dari Ibu\",\n      \"type\": \"income\",\n      \"quantity\": 1,\n      \"unitPrice\": 500000,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+     "seconds": 4.068199999988079
+    },
+    {
+     "text": "{\n  \"currency\": \"IDR\",\n  \"entries\": [\n    {\n      \"description\": \"Terima kiriman uang dari ibu\",\n      \"type\": \"income\",\n      \"quantity\": 1,\n      \"unitPrice\": 500000,\n      \"date\": \"2026-11-25\"\n    }\n  ]\n}",
+     "seconds": 4.0545
+    }
+   ],
+   "grades": {}
+  },
+  "input-jq4mroqx": {
+   "device": [
+    {
+     "text": "{\n  \"currency\": \"Rp\",\n  \"entries\": [\n    {\n      \"description\": \"Beli tiket kereta\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 150000,\n      \"date\": \"2026-11-22\"\n    }\n  ]\n}",
+     "seconds": 3.892100000023842
+    },
+    {
+     "text": "{\n  \"currency\": \"IDR\",\n  \"entries\": [\n    {\n      \"description\": \"Beli Tiket Kereta\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 150,\n      \"date\": \"2026-11-22\"\n    }\n  ]\n}",
+     "seconds": 3.8842999999523165
+    },
+    {
+     "text": "{\n  \"currency\": \"Rp\",\n  \"entries\": [\n    {\n      \"description\": \"Beli tiket kereta\",\n      \"type\": \"expense\",\n      \"quantity\": 1,\n      \"unitPrice\": 150000,\n      \"date\": \"2026-11-22\"\n    }\n  ]\n}",
+     "seconds": 3.872900000035763
+    }
+   ],
+   "grades": {}
+  },
+  "input-jsk3eqr2": {
+   "device": [
+    {
+     "text": "{\"currency\":\"IDR\", \"entries\": [{\"description\": \"Beli Air Mineral\", \"type\": \"expense\", \"quantity\": 1, \"unitPrice\": 6000, \"date\": \"2026-11-25\"}]}",
+     "seconds": 2.966699999988079
+    },
+    {
+     "text": "{\"currency\":\"IDR\",\"entries\":[{\"description\":\"Beli Air Mineral\",\"type\":\"expense\",\"quantity\":1,\"unitPrice\":6000,\"date\":\"2026-11-25\"}]}",
+     "seconds": 2.6495
+    },
+    {
+     "text": "{\"currency\":\"IDR\",\"entries\":[{\"description\":\"Beli Air Mineral\",\"type\":\"expense\",\"quantity\":6000,\"unitPrice\":1,\"date\":\"2026-11-25\"}]}",
+     "seconds": 2.603699999988079
+    }
+   ],
+   "grades": {}
   }
  },
- "fixes": [
-  {
-   "line": "Do not classify a review as mixed simply because it contains a minor complaint alongside praise or a compliment alongside a final rejection; judge the review as positive or negative based on the ultimate satisfaction with the product itself.",
-   "by": "cloud",
-   "cases": {
-    "mood-1": {
-     "device": [
-      {
-       "text": "{\"label\": \"positive\"}",
-       "seconds": 0.821199999988079
-      },
-      {
-       "text": "{\"label\": \"positive\"}",
-       "seconds": 0.7665
-      },
-      {
-       "text": "{\"label\": \"positive\"}",
-       "seconds": 0.766800000011921
-      }
-     ]
-    },
-    "mood-2": {
-     "device": [
-      {
-       "text": "{\"label\": \"positive\"}",
-       "seconds": 0.7831999999880791
-      },
-      {
-       "text": "{\"label\":\"positive\"}",
-       "seconds": 0.741300000011921
-      },
-      {
-       "text": "{\"label\":\"positive\"}",
-       "seconds": 0.7381000000238419
-      }
-     ]
-    },
-    "mood-3": {
-     "device": [
-      {
-       "text": "{\"label\": \"positive\"}",
-       "seconds": 0.7658999999761581
-      },
-      {
-       "text": "{\"label\":\"positive\"}",
-       "seconds": 0.731300000011921
-      },
-      {
-       "text": "{\"label\": \"positive\"}",
-       "seconds": 0.7483000000119209
-      }
-     ]
-    },
-    "mood-4": {
-     "device": [
-      {
-       "text": "{\"label\":\"positive\"}",
-       "seconds": 0.754
-      },
-      {
-       "text": "{\"label\": \"positive\"}",
-       "seconds": 0.7531999999880791
-      },
-      {
-       "text": "{\"label\": \"positive\"}",
-       "seconds": 0.7501999999880791
-      }
-     ]
-    },
-    "mood-5": {
-     "device": [
-      {
-       "text": "{\"label\":\"positive\"}",
-       "seconds": 0.7351999999880791
-      },
-      {
-       "text": "{\"label\": \"positive\"}",
-       "seconds": 0.7553000000119209
-      },
-      {
-       "text": "{\"label\": \"positive\"}",
-       "seconds": 0.7678999999761581
-      }
-     ]
-    },
-    "mood-6": {
-     "device": [
-      {
-       "text": "{\"label\":\"negative\"}",
-       "seconds": 0.7252000000476837
-      },
-      {
-       "text": "{\"label\":\"negative\"}",
-       "seconds": 0.7096999999880791
-      },
-      {
-       "text": "{\"label\":\"negative\"}",
-       "seconds": 0.7113999999761581
-      }
-     ]
-    },
-    "mood-7": {
-     "device": [
-      {
-       "text": "{\"label\": \"negative\"}",
-       "seconds": 0.7536000000238419
-      },
-      {
-       "text": "{\"label\": \"negative\"}",
-       "seconds": 0.7478000000119209
-      },
-      {
-       "text": "{\"label\": \"negative\"}",
-       "seconds": 0.756
-      }
-     ]
-    },
-    "mood-8": {
-     "device": [
-      {
-       "text": "{\"label\": \"negative\"}",
-       "seconds": 0.772
-      },
-      {
-       "text": "{\"label\":\"negative\"}",
-       "seconds": 0.72
-      },
-      {
-       "text": "{\"label\": \"negative\"}",
-       "seconds": 0.7456999999880791
-      }
-     ]
-    },
-    "mood-9": {
-     "device": [
-      {
-       "text": "{\"label\": \"negative\"}",
-       "seconds": 0.7657000000476837
-      },
-      {
-       "text": "{\"label\":\"negative\"}",
-       "seconds": 0.7297999999523163
-      },
-      {
-       "text": "{\"label\": \"negative\"}",
-       "seconds": 0.7455
-      }
-     ]
-    },
-    "mood-10": {
-     "device": [
-      {
-       "text": "{\"label\": \"negative\"}",
-       "seconds": 0.7856000000238419
-      },
-      {
-       "text": "{\"label\": \"negative\"}",
-       "seconds": 0.7628999999761581
-      },
-      {
-       "text": "{\"label\": \"negative\"}",
-       "seconds": 0.7631999999880791
-      }
-     ]
-    },
-    "mood-11": {
-     "device": [
-      {
-       "text": "{\"label\":\"mixed\"}",
-       "seconds": 0.7591000000238418
-      },
-      {
-       "text": "{\"label\": \"mixed\"}",
-       "seconds": 0.7828999999761581
-      },
-      {
-       "text": "{\"label\":\"mixed\"}",
-       "seconds": 0.7466999999880791
-      }
-     ]
-    },
-    "mood-12": {
-     "device": [
-      {
-       "text": "{\"label\": \"negative\"}",
-       "seconds": 0.7907000000476837
-      },
-      {
-       "text": "{\"label\":\"negative\"}",
-       "seconds": 0.7443999999761581
-      },
-      {
-       "text": "{\"label\": \"negative\"}",
-       "seconds": 0.7791000000238418
-      }
-     ]
-    },
-    "mood-13": {
-     "device": [
-      {
-       "text": "{\"label\": \"mixed\"}",
-       "seconds": 0.789699999988079
-      },
-      {
-       "text": "{\"label\": \"mixed\"}",
-       "seconds": 0.764
-      },
-      {
-       "text": "{\"label\":\"negative\"}",
-       "seconds": 0.7366999999880791
-      }
-     ]
-    },
-    "mood-14": {
-     "device": [
-      {
-       "text": "{\"label\":\"mixed\"}",
-       "seconds": 0.7563999999761581
-      },
-      {
-       "text": "{\"label\":\"mixed\"}",
-       "seconds": 0.732
-      },
-      {
-       "text": "{\"label\":\"mixed\"}",
-       "seconds": 0.735300000011921
-      }
-     ]
-    },
-    "mood-15": {
-     "device": [
-      {
-       "text": "{\"label\": \"mixed\"}",
-       "seconds": 0.790699999988079
-      },
-      {
-       "text": "{\"label\": \"mixed\"}",
-       "seconds": 0.7726000000238419
-      },
-      {
-       "text": "{\"label\": \"mixed\"}",
-       "seconds": 0.7681999999880791
-      }
-     ]
-    },
-    "mood-16": {
-     "device": [
-      {
-       "text": "{\"label\":\"negative\"}",
-       "seconds": 0.7579000000357627
-      },
-      {
-       "text": "{\"label\": \"negative\"}",
-       "seconds": 0.774
-      },
-      {
-       "text": "{\"label\": \"negative\"}",
-       "seconds": 0.7620999999642372
-      }
-     ]
-    },
-    "mood-17": {
-     "device": [
-      {
-       "text": "{\"label\":\"negative\"}",
-       "seconds": 0.7546000000238419
-      },
-      {
-       "text": "{\"label\":\"negative\"}",
-       "seconds": 0.727199999988079
-      },
-      {
-       "text": "{\"label\":\"negative\"}",
-       "seconds": 0.7285
-      }
-     ]
-    },
-    "mood-18": {
-     "device": [
-      {
-       "text": "{\"label\":\"positive\"}",
-       "seconds": 0.743300000011921
-      },
-      {
-       "text": "{\"label\":\"positive\"}",
-       "seconds": 0.734
-      },
-      {
-       "text": "{\"label\":\"positive\"}",
-       "seconds": 0.7416999999880791
-      }
-     ]
-    },
-    "mood-19": {
-     "device": [
-      {
-       "text": "{\"label\":\"positive\"}",
-       "seconds": 0.7474000000357628
-      },
-      {
-       "text": "{\"label\": \"mixed\"}",
-       "seconds": 0.7658999999761581
-      },
-      {
-       "text": "{\"label\":\"mixed\"}",
-       "seconds": 0.7336999999880791
-      }
-     ]
-    },
-    "mood-20": {
-     "device": [
-      {
-       "text": "{\"label\": \"negative\"}",
-       "seconds": 0.772800000011921
-      },
-      {
-       "text": "{\"label\": \"negative\"}",
-       "seconds": 0.773
-      },
-      {
-       "text": "{\"label\": \"negative\"}",
-       "seconds": 0.7701000000238418
-      }
-     ]
-    },
-    "mood-21": {
-     "device": [
-      {
-       "text": "{\"label\": \"negative\"}",
-       "seconds": 0.7825999999642372
-      },
-      {
-       "text": "{\"label\": \"negative\"}",
-       "seconds": 0.7653000000119209
-      },
-      {
-       "text": "{\"label\": \"negative\"}",
-       "seconds": 0.7653999999761582
-      }
-     ]
-    },
-    "mood-22": {
-     "device": [
-      {
-       "text": "{\"label\":\"positive\"}",
-       "seconds": 0.7442000000476837
-      },
-      {
-       "text": "{\"label\": \"positive\"}",
-       "seconds": 0.7645999999642372
-      },
-      {
-       "text": "{\"label\": \"positive\"}",
-       "seconds": 0.774
-      }
-     ]
-    },
-    "mood-23": {
-     "device": [
-      {
-       "text": "{\"label\": \"positive\"}",
-       "seconds": 0.7853000000119209
-      },
-      {
-       "text": "{\"label\":\"positive\"}",
-       "seconds": 0.7346999999880791
-      },
-      {
-       "text": "{\"label\": \"positive\"}",
-       "seconds": 0.7683000000119209
-      }
-     ]
-    },
-    "mood-24": {
-     "device": [
-      {
-       "text": "{\"label\":\"positive\"}",
-       "seconds": 0.7621999999880791
-      },
-      {
-       "text": "{\"label\":\"positive\"}",
-       "seconds": 0.765800000011921
-      },
-      {
-       "text": "{\"label\":\"positive\"}",
-       "seconds": 0.7460999999642373
-      }
-     ]
-    },
-    "mood-25": {
-     "device": [
-      {
-       "text": "{\"label\": \"negative\"}",
-       "seconds": 0.754
-      },
-      {
-       "text": "{\"label\":\"negative\"}",
-       "seconds": 0.7066999999880791
-      },
-      {
-       "text": "{\"label\": \"negative\"}",
-       "seconds": 0.7376000000238419
-      }
-     ]
-    },
-    "mood-26": {
-     "device": [
-      {
-       "text": "{\"label\": \"positive\"}",
-       "seconds": 0.9988000000119209
-      },
-      {
-       "text": "{\"label\":\"positive\"}",
-       "seconds": 0.917800000011921
-      },
-      {
-       "text": "{\"label\": \"positive\"}",
-       "seconds": 1.004
-      }
-     ]
-    },
-    "mood-27": {
-     "device": [
-      {
-       "text": "{\"label\":\"positive\"}",
-       "seconds": 1.0043000000119209
-      },
-      {
-       "text": "{\"label\":\"positive\"}",
-       "seconds": 1.0325999999642372
-      },
-      {
-       "text": "{\"label\":\"positive\"}",
-       "seconds": 1.059600000023842
-      }
-     ]
-    },
-    "mood-28": {
-     "device": [
-      {
-       "text": "{\"label\": \"positive\"}",
-       "seconds": 1.006199999988079
-      },
-      {
-       "text": "{\"label\": \"positive\"}",
-       "seconds": 1.000699999988079
-      },
-      {
-       "text": "{\"label\": \"positive\"}",
-       "seconds": 1.000199999988079
-      }
-     ]
-    },
-    "mood-29": {
-     "device": [
-      {
-       "text": "{\"label\": \"positive\"}",
-       "seconds": 1.0127000000476838
-      },
-      {
-       "text": "{\"label\": \"positive\"}",
-       "seconds": 0.9782999999523163
-      },
-      {
-       "text": "{\"label\": \"positive\"}",
-       "seconds": 1.021
-      }
-     ]
-    },
-    "mood-30": {
-     "device": [
-      {
-       "text": "{\"label\": \"positive\"}",
-       "seconds": 0.9934000000357628
-      },
-      {
-       "text": "{\"label\": \"positive\"}",
-       "seconds": 0.9828999999761582
-      },
-      {
-       "text": "{\"label\": \"positive\"}",
-       "seconds": 1.106300000011921
-      }
-     ]
-    },
-    "mood-31": {
-     "device": [
-      {
-       "text": "{\"label\": \"negative\"}",
-       "seconds": 1.0128000000119208
-      },
-      {
-       "text": "{\"label\": \"negative\"}",
-       "seconds": 0.964
-      },
-      {
-       "text": "{\"label\":\"negative\"}",
-       "seconds": 0.927
-      }
-     ]
-    },
-    "mood-32": {
-     "device": [
-      {
-       "text": "{\"label\": \"negative\"}",
-       "seconds": 0.9685999999642372
-      },
-      {
-       "text": "{\"label\": \"negative\"}",
-       "seconds": 1.044
-      },
-      {
-       "text": "{\"label\":\"negative\"}",
-       "seconds": 0.9598000000119209
-      }
-     ]
-    },
-    "mood-33": {
-     "device": [
-      {
-       "text": "{\"label\": \"negative\"}",
-       "seconds": 0.9805999999642372
-      },
-      {
-       "text": "{\"label\": \"negative\"}",
-       "seconds": 0.994
-      },
-      {
-       "text": "{\"label\": \"negative\"}",
-       "seconds": 1.0181000000238418
-      }
-     ]
-    },
-    "mood-34": {
-     "device": [
-      {
-       "text": "{\"label\": \"negative\"}",
-       "seconds": 0.9757999999523163
-      },
-      {
-       "text": "{\"label\": \"negative\"}",
-       "seconds": 0.9839000000357628
-      },
-      {
-       "text": "{\"label\":\"negative\"}",
-       "seconds": 0.9395999999642373
-      }
-     ]
-    },
-    "mood-35": {
-     "device": [
-      {
-       "text": "{\"label\": \"negative\"}",
-       "seconds": 1.023300000011921
-      },
-      {
-       "text": "{\"label\": \"negative\"}",
-       "seconds": 1.2183000000119208
-      },
-      {
-       "text": "{\"label\":\"negative\"}",
-       "seconds": 0.9781000000238419
-      }
-     ]
-    },
-    "mood-36": {
-     "device": [
-      {
-       "text": "{\"label\":\"mixed\"}",
-       "seconds": 0.9715999999642372
-      },
-      {
-       "text": "{\"label\": \"mixed\"}",
-       "seconds": 1.011300000011921
-      },
-      {
-       "text": "{\"label\":\"mixed\"}",
-       "seconds": 0.9838999999761582
-      }
-     ]
-    },
-    "mood-37": {
-     "device": [
-      {
-       "text": "{\"label\":\"mixed\"}",
-       "seconds": 0.9508000000119209
-      },
-      {
-       "text": "{\"label\": \"mixed\"}",
-       "seconds": 1.013199999988079
-      },
-      {
-       "text": "{\"label\":\"negative\"}",
-       "seconds": 0.9934000000357628
-      }
-     ]
-    },
-    "mood-38": {
-     "device": [
-      {
-       "text": "{\"label\":\"mixed\"}",
-       "seconds": 0.936
-      },
-      {
-       "text": "{\"label\": \"mixed\"}",
-       "seconds": 1.0045999999642372
-      },
-      {
-       "text": "{\"label\": \"mixed\"}",
-       "seconds": 1.008
-      }
-     ]
-    },
-    "mood-39": {
-     "device": [
-      {
-       "text": "{\"label\": \"mixed\"}",
-       "seconds": 1.0066000000238418
-      },
-      {
-       "text": "{\"label\":\"mixed\"}",
-       "seconds": 0.9555
-      },
-      {
-       "text": "{\"label\":\"mixed\"}",
-       "seconds": 0.9676000000238418
-      }
-     ]
-    },
-    "mood-40": {
-     "device": [
-      {
-       "text": "{\"label\":\"mixed\"}",
-       "seconds": 0.9506999999880791
-      },
-      {
-       "text": "{\"label\": \"mixed\"}",
-       "seconds": 1.0148000000119208
-      },
-      {
-       "text": "{\"label\":\"mixed\"}",
-       "seconds": 0.957
-      }
-     ]
-    },
-    "mood-41": {
-     "device": [
-      {
-       "text": "{\"label\": \"negative\"}",
-       "seconds": 0.984
-      },
-      {
-       "text": "{\"label\": \"negative\"}",
-       "seconds": 1.016899999976158
-      },
-      {
-       "text": "{\"label\": \"negative\"}",
-       "seconds": 1.075699999988079
-      }
-     ]
-    },
-    "mood-42": {
-     "device": [
-      {
-       "text": "{\"label\":\"negative\"}",
-       "seconds": 1.0269000000357629
-      },
-      {
-       "text": "{\"label\": \"negative\"}",
-       "seconds": 1.106
-      },
-      {
-       "text": "{\"label\": \"negative\"}",
-       "seconds": 1.033199999988079
-      }
-     ]
-    },
-    "mood-43": {
-     "device": [
-      {
-       "text": "{\"label\": \"positive\"}",
-       "seconds": 1.0324000000357627
-      },
-      {
-       "text": "{\"label\":\"positive\"}",
-       "seconds": 0.9593999999761581
-      },
-      {
-       "text": "{\"label\": \"positive\"}",
-       "seconds": 1.0594000000357628
-      }
-     ]
-    },
-    "mood-44": {
-     "device": [
-      {
-       "text": "{\"label\": \"positive\"}",
-       "seconds": 1.0867999999523164
-      },
-      {
-       "text": "{\"label\": \"positive\"}",
-       "seconds": 1.1405
-      },
-      {
-       "text": "{\"label\": \"positive\"}",
-       "seconds": 1.0747000000476836
-      }
-     ]
-    },
-    "mood-45": {
-     "device": [
-      {
-       "text": "{\"label\": \"mixed\"}",
-       "seconds": 1.016
-      },
-      {
-       "text": "{\"label\":\"mixed\"}",
-       "seconds": 0.9498999999761581
-      },
-      {
-       "text": "{\"label\":\"mixed\"}",
-       "seconds": 0.9636000000238418
-      }
-     ]
-    },
-    "mood-46": {
-     "device": [
-      {
-       "text": "{\"label\": \"negative\"}",
-       "seconds": 1.0005999999642372
-      },
-      {
-       "text": "{\"label\":\"negative\"}",
-       "seconds": 0.9449000000357628
-      },
-      {
-       "text": "{\"label\": \"negative\"}",
-       "seconds": 1
-      }
-     ]
-    },
-    "mood-47": {
-     "device": [
-      {
-       "text": "{\"label\":\"positive\"}",
-       "seconds": 0.9783999999761581
-      },
-      {
-       "text": "{\"label\":\"positive\"}",
-       "seconds": 0.9816999999880791
-      },
-      {
-       "text": "{\"label\": \"positive\"}",
-       "seconds": 1.0434000000357628
-      }
-     ]
-    },
-    "mood-48": {
-     "device": [
-      {
-       "text": "{\"label\":\"positive\"}",
-       "seconds": 0.9635999999642372
-      },
-      {
-       "text": "{\"label\": \"positive\"}",
-       "seconds": 1.1605
-      },
-      {
-       "text": "{\"label\": \"positive\"}",
-       "seconds": 1.152
-      }
-     ]
-    },
-    "mood-49": {
-     "device": [
-      {
-       "text": "{\"label\": \"negative\"}",
-       "seconds": 1.1485
-      },
-      {
-       "text": "{\"label\": \"negative\"}",
-       "seconds": 1.129699999988079
-      },
-      {
-       "text": "{\"label\": \"negative\"}",
-       "seconds": 1.0295
-      }
-     ]
-    },
-    "mood-50": {
-     "device": [
-      {
-       "text": "{\"label\": \"positive\"}",
-       "seconds": 0.9613999999761581
-      },
-      {
-       "text": "{\"label\":\"positive\"}",
-       "seconds": 1.136100000023842
-      },
-      {
-       "text": "{\"label\":\"positive\"}",
-       "seconds": 0.9836999999880791
-      }
-     ]
-    }
-   },
-   "held": {
-    "mood-1": {
-     "device": [
-      {
-       "text": "{\"label\": \"positive\"}",
-       "seconds": 0.821199999988079
-      },
-      {
-       "text": "{\"label\": \"positive\"}",
-       "seconds": 0.7665
-      },
-      {
-       "text": "{\"label\": \"positive\"}",
-       "seconds": 0.766800000011921
-      }
-     ]
-    },
-    "mood-2": {
-     "device": [
-      {
-       "text": "{\"label\": \"positive\"}",
-       "seconds": 0.7831999999880791
-      },
-      {
-       "text": "{\"label\":\"positive\"}",
-       "seconds": 0.741300000011921
-      },
-      {
-       "text": "{\"label\":\"positive\"}",
-       "seconds": 0.7381000000238419
-      }
-     ]
-    },
-    "mood-3": {
-     "device": [
-      {
-       "text": "{\"label\": \"positive\"}",
-       "seconds": 0.7658999999761581
-      },
-      {
-       "text": "{\"label\":\"positive\"}",
-       "seconds": 0.731300000011921
-      },
-      {
-       "text": "{\"label\": \"positive\"}",
-       "seconds": 0.7483000000119209
-      }
-     ]
-    },
-    "mood-4": {
-     "device": [
-      {
-       "text": "{\"label\":\"positive\"}",
-       "seconds": 0.754
-      },
-      {
-       "text": "{\"label\": \"positive\"}",
-       "seconds": 0.7531999999880791
-      },
-      {
-       "text": "{\"label\": \"positive\"}",
-       "seconds": 0.7501999999880791
-      }
-     ]
-    },
-    "mood-5": {
-     "device": [
-      {
-       "text": "{\"label\":\"positive\"}",
-       "seconds": 0.7351999999880791
-      },
-      {
-       "text": "{\"label\": \"positive\"}",
-       "seconds": 0.7553000000119209
-      },
-      {
-       "text": "{\"label\": \"positive\"}",
-       "seconds": 0.7678999999761581
-      }
-     ]
-    },
-    "mood-6": {
-     "device": [
-      {
-       "text": "{\"label\":\"negative\"}",
-       "seconds": 0.7252000000476837
-      },
-      {
-       "text": "{\"label\":\"negative\"}",
-       "seconds": 0.7096999999880791
-      },
-      {
-       "text": "{\"label\":\"negative\"}",
-       "seconds": 0.7113999999761581
-      }
-     ]
-    },
-    "mood-7": {
-     "device": [
-      {
-       "text": "{\"label\": \"negative\"}",
-       "seconds": 0.7536000000238419
-      },
-      {
-       "text": "{\"label\": \"negative\"}",
-       "seconds": 0.7478000000119209
-      },
-      {
-       "text": "{\"label\": \"negative\"}",
-       "seconds": 0.756
-      }
-     ]
-    },
-    "mood-8": {
-     "device": [
-      {
-       "text": "{\"label\": \"negative\"}",
-       "seconds": 0.772
-      },
-      {
-       "text": "{\"label\":\"negative\"}",
-       "seconds": 0.72
-      },
-      {
-       "text": "{\"label\": \"negative\"}",
-       "seconds": 0.7456999999880791
-      }
-     ]
-    },
-    "mood-9": {
-     "device": [
-      {
-       "text": "{\"label\": \"negative\"}",
-       "seconds": 0.7657000000476837
-      },
-      {
-       "text": "{\"label\":\"negative\"}",
-       "seconds": 0.7297999999523163
-      },
-      {
-       "text": "{\"label\": \"negative\"}",
-       "seconds": 0.7455
-      }
-     ]
-    },
-    "mood-10": {
-     "device": [
-      {
-       "text": "{\"label\": \"negative\"}",
-       "seconds": 0.7856000000238419
-      },
-      {
-       "text": "{\"label\": \"negative\"}",
-       "seconds": 0.7628999999761581
-      },
-      {
-       "text": "{\"label\": \"negative\"}",
-       "seconds": 0.7631999999880791
-      }
-     ]
-    },
-    "mood-11": {
-     "device": [
-      {
-       "text": "{\"label\":\"mixed\"}",
-       "seconds": 0.7591000000238418
-      },
-      {
-       "text": "{\"label\": \"mixed\"}",
-       "seconds": 0.7828999999761581
-      },
-      {
-       "text": "{\"label\":\"mixed\"}",
-       "seconds": 0.7466999999880791
-      }
-     ]
-    },
-    "mood-12": {
-     "device": [
-      {
-       "text": "{\"label\": \"negative\"}",
-       "seconds": 0.7907000000476837
-      },
-      {
-       "text": "{\"label\":\"negative\"}",
-       "seconds": 0.7443999999761581
-      },
-      {
-       "text": "{\"label\": \"negative\"}",
-       "seconds": 0.7791000000238418
-      }
-     ]
-    },
-    "mood-13": {
-     "device": [
-      {
-       "text": "{\"label\": \"mixed\"}",
-       "seconds": 0.789699999988079
-      },
-      {
-       "text": "{\"label\": \"mixed\"}",
-       "seconds": 0.764
-      },
-      {
-       "text": "{\"label\":\"negative\"}",
-       "seconds": 0.7366999999880791
-      }
-     ]
-    },
-    "mood-14": {
-     "device": [
-      {
-       "text": "{\"label\":\"mixed\"}",
-       "seconds": 0.7563999999761581
-      },
-      {
-       "text": "{\"label\":\"mixed\"}",
-       "seconds": 0.732
-      },
-      {
-       "text": "{\"label\":\"mixed\"}",
-       "seconds": 0.735300000011921
-      }
-     ]
-    },
-    "mood-15": {
-     "device": [
-      {
-       "text": "{\"label\": \"mixed\"}",
-       "seconds": 0.790699999988079
-      },
-      {
-       "text": "{\"label\": \"mixed\"}",
-       "seconds": 0.7726000000238419
-      },
-      {
-       "text": "{\"label\": \"mixed\"}",
-       "seconds": 0.7681999999880791
-      }
-     ]
-    },
-    "mood-16": {
-     "device": [
-      {
-       "text": "{\"label\":\"negative\"}",
-       "seconds": 0.7579000000357627
-      },
-      {
-       "text": "{\"label\": \"negative\"}",
-       "seconds": 0.774
-      },
-      {
-       "text": "{\"label\": \"negative\"}",
-       "seconds": 0.7620999999642372
-      }
-     ]
-    },
-    "mood-17": {
-     "device": [
-      {
-       "text": "{\"label\":\"negative\"}",
-       "seconds": 0.7546000000238419
-      },
-      {
-       "text": "{\"label\":\"negative\"}",
-       "seconds": 0.727199999988079
-      },
-      {
-       "text": "{\"label\":\"negative\"}",
-       "seconds": 0.7285
-      }
-     ]
-    },
-    "mood-18": {
-     "device": [
-      {
-       "text": "{\"label\":\"positive\"}",
-       "seconds": 0.743300000011921
-      },
-      {
-       "text": "{\"label\":\"positive\"}",
-       "seconds": 0.734
-      },
-      {
-       "text": "{\"label\":\"positive\"}",
-       "seconds": 0.7416999999880791
-      }
-     ]
-    },
-    "mood-19": {
-     "device": [
-      {
-       "text": "{\"label\":\"positive\"}",
-       "seconds": 0.7474000000357628
-      },
-      {
-       "text": "{\"label\": \"mixed\"}",
-       "seconds": 0.7658999999761581
-      },
-      {
-       "text": "{\"label\":\"mixed\"}",
-       "seconds": 0.7336999999880791
-      }
-     ]
-    },
-    "mood-20": {
-     "device": [
-      {
-       "text": "{\"label\": \"negative\"}",
-       "seconds": 0.772800000011921
-      },
-      {
-       "text": "{\"label\": \"negative\"}",
-       "seconds": 0.773
-      },
-      {
-       "text": "{\"label\": \"negative\"}",
-       "seconds": 0.7701000000238418
-      }
-     ]
-    },
-    "mood-21": {
-     "device": [
-      {
-       "text": "{\"label\": \"negative\"}",
-       "seconds": 0.7825999999642372
-      },
-      {
-       "text": "{\"label\": \"negative\"}",
-       "seconds": 0.7653000000119209
-      },
-      {
-       "text": "{\"label\": \"negative\"}",
-       "seconds": 0.7653999999761582
-      }
-     ]
-    },
-    "mood-22": {
-     "device": [
-      {
-       "text": "{\"label\":\"positive\"}",
-       "seconds": 0.7442000000476837
-      },
-      {
-       "text": "{\"label\": \"positive\"}",
-       "seconds": 0.7645999999642372
-      },
-      {
-       "text": "{\"label\": \"positive\"}",
-       "seconds": 0.774
-      }
-     ]
-    },
-    "mood-23": {
-     "device": [
-      {
-       "text": "{\"label\": \"positive\"}",
-       "seconds": 0.7853000000119209
-      },
-      {
-       "text": "{\"label\":\"positive\"}",
-       "seconds": 0.7346999999880791
-      },
-      {
-       "text": "{\"label\": \"positive\"}",
-       "seconds": 0.7683000000119209
-      }
-     ]
-    },
-    "mood-24": {
-     "device": [
-      {
-       "text": "{\"label\":\"positive\"}",
-       "seconds": 0.7621999999880791
-      },
-      {
-       "text": "{\"label\":\"positive\"}",
-       "seconds": 0.765800000011921
-      },
-      {
-       "text": "{\"label\":\"positive\"}",
-       "seconds": 0.7460999999642373
-      }
-     ]
-    },
-    "mood-25": {
-     "device": [
-      {
-       "text": "{\"label\": \"negative\"}",
-       "seconds": 0.754
-      },
-      {
-       "text": "{\"label\":\"negative\"}",
-       "seconds": 0.7066999999880791
-      },
-      {
-       "text": "{\"label\": \"negative\"}",
-       "seconds": 0.7376000000238419
-      }
-     ]
-    },
-    "mood-26": {
-     "device": [
-      {
-       "text": "{\"label\": \"positive\"}",
-       "seconds": 0.9988000000119209
-      },
-      {
-       "text": "{\"label\":\"positive\"}",
-       "seconds": 0.917800000011921
-      },
-      {
-       "text": "{\"label\": \"positive\"}",
-       "seconds": 1.004
-      }
-     ]
-    },
-    "mood-27": {
-     "device": [
-      {
-       "text": "{\"label\":\"positive\"}",
-       "seconds": 1.0043000000119209
-      },
-      {
-       "text": "{\"label\":\"positive\"}",
-       "seconds": 1.0325999999642372
-      },
-      {
-       "text": "{\"label\":\"positive\"}",
-       "seconds": 1.059600000023842
-      }
-     ]
-    },
-    "mood-28": {
-     "device": [
-      {
-       "text": "{\"label\": \"positive\"}",
-       "seconds": 1.006199999988079
-      },
-      {
-       "text": "{\"label\": \"positive\"}",
-       "seconds": 1.000699999988079
-      },
-      {
-       "text": "{\"label\": \"positive\"}",
-       "seconds": 1.000199999988079
-      }
-     ]
-    },
-    "mood-29": {
-     "device": [
-      {
-       "text": "{\"label\": \"positive\"}",
-       "seconds": 1.0127000000476838
-      },
-      {
-       "text": "{\"label\": \"positive\"}",
-       "seconds": 0.9782999999523163
-      },
-      {
-       "text": "{\"label\": \"positive\"}",
-       "seconds": 1.021
-      }
-     ]
-    },
-    "mood-30": {
-     "device": [
-      {
-       "text": "{\"label\": \"positive\"}",
-       "seconds": 0.9934000000357628
-      },
-      {
-       "text": "{\"label\": \"positive\"}",
-       "seconds": 0.9828999999761582
-      },
-      {
-       "text": "{\"label\": \"positive\"}",
-       "seconds": 1.106300000011921
-      }
-     ]
-    },
-    "mood-31": {
-     "device": [
-      {
-       "text": "{\"label\": \"negative\"}",
-       "seconds": 1.0128000000119208
-      },
-      {
-       "text": "{\"label\": \"negative\"}",
-       "seconds": 0.964
-      },
-      {
-       "text": "{\"label\":\"negative\"}",
-       "seconds": 0.927
-      }
-     ]
-    },
-    "mood-32": {
-     "device": [
-      {
-       "text": "{\"label\": \"negative\"}",
-       "seconds": 0.9685999999642372
-      },
-      {
-       "text": "{\"label\": \"negative\"}",
-       "seconds": 1.044
-      },
-      {
-       "text": "{\"label\":\"negative\"}",
-       "seconds": 0.9598000000119209
-      }
-     ]
-    },
-    "mood-33": {
-     "device": [
-      {
-       "text": "{\"label\": \"negative\"}",
-       "seconds": 0.9805999999642372
-      },
-      {
-       "text": "{\"label\": \"negative\"}",
-       "seconds": 0.994
-      },
-      {
-       "text": "{\"label\": \"negative\"}",
-       "seconds": 1.0181000000238418
-      }
-     ]
-    },
-    "mood-34": {
-     "device": [
-      {
-       "text": "{\"label\": \"negative\"}",
-       "seconds": 0.9757999999523163
-      },
-      {
-       "text": "{\"label\": \"negative\"}",
-       "seconds": 0.9839000000357628
-      },
-      {
-       "text": "{\"label\":\"negative\"}",
-       "seconds": 0.9395999999642373
-      }
-     ]
-    },
-    "mood-35": {
-     "device": [
-      {
-       "text": "{\"label\": \"negative\"}",
-       "seconds": 1.023300000011921
-      },
-      {
-       "text": "{\"label\": \"negative\"}",
-       "seconds": 1.2183000000119208
-      },
-      {
-       "text": "{\"label\":\"negative\"}",
-       "seconds": 0.9781000000238419
-      }
-     ]
-    },
-    "mood-36": {
-     "device": [
-      {
-       "text": "{\"label\":\"mixed\"}",
-       "seconds": 0.9715999999642372
-      },
-      {
-       "text": "{\"label\": \"mixed\"}",
-       "seconds": 1.011300000011921
-      },
-      {
-       "text": "{\"label\":\"mixed\"}",
-       "seconds": 0.9838999999761582
-      }
-     ]
-    },
-    "mood-37": {
-     "device": [
-      {
-       "text": "{\"label\":\"mixed\"}",
-       "seconds": 0.9508000000119209
-      },
-      {
-       "text": "{\"label\": \"mixed\"}",
-       "seconds": 1.013199999988079
-      },
-      {
-       "text": "{\"label\":\"negative\"}",
-       "seconds": 0.9934000000357628
-      }
-     ]
-    },
-    "mood-38": {
-     "device": [
-      {
-       "text": "{\"label\":\"mixed\"}",
-       "seconds": 0.936
-      },
-      {
-       "text": "{\"label\": \"mixed\"}",
-       "seconds": 1.0045999999642372
-      },
-      {
-       "text": "{\"label\": \"mixed\"}",
-       "seconds": 1.008
-      }
-     ]
-    },
-    "mood-39": {
-     "device": [
-      {
-       "text": "{\"label\": \"mixed\"}",
-       "seconds": 1.0066000000238418
-      },
-      {
-       "text": "{\"label\":\"mixed\"}",
-       "seconds": 0.9555
-      },
-      {
-       "text": "{\"label\":\"mixed\"}",
-       "seconds": 0.9676000000238418
-      }
-     ]
-    },
-    "mood-40": {
-     "device": [
-      {
-       "text": "{\"label\":\"mixed\"}",
-       "seconds": 0.9506999999880791
-      },
-      {
-       "text": "{\"label\": \"mixed\"}",
-       "seconds": 1.0148000000119208
-      },
-      {
-       "text": "{\"label\":\"mixed\"}",
-       "seconds": 0.957
-      }
-     ]
-    },
-    "mood-41": {
-     "device": [
-      {
-       "text": "{\"label\": \"negative\"}",
-       "seconds": 0.984
-      },
-      {
-       "text": "{\"label\": \"negative\"}",
-       "seconds": 1.016899999976158
-      },
-      {
-       "text": "{\"label\": \"negative\"}",
-       "seconds": 1.075699999988079
-      }
-     ]
-    },
-    "mood-42": {
-     "device": [
-      {
-       "text": "{\"label\":\"negative\"}",
-       "seconds": 1.0269000000357629
-      },
-      {
-       "text": "{\"label\": \"negative\"}",
-       "seconds": 1.106
-      },
-      {
-       "text": "{\"label\": \"negative\"}",
-       "seconds": 1.033199999988079
-      }
-     ]
-    },
-    "mood-43": {
-     "device": [
-      {
-       "text": "{\"label\": \"positive\"}",
-       "seconds": 1.0324000000357627
-      },
-      {
-       "text": "{\"label\":\"positive\"}",
-       "seconds": 0.9593999999761581
-      },
-      {
-       "text": "{\"label\": \"positive\"}",
-       "seconds": 1.0594000000357628
-      }
-     ]
-    },
-    "mood-44": {
-     "device": [
-      {
-       "text": "{\"label\": \"positive\"}",
-       "seconds": 1.0867999999523164
-      },
-      {
-       "text": "{\"label\": \"positive\"}",
-       "seconds": 1.1405
-      },
-      {
-       "text": "{\"label\": \"positive\"}",
-       "seconds": 1.0747000000476836
-      }
-     ]
-    },
-    "mood-45": {
-     "device": [
-      {
-       "text": "{\"label\": \"mixed\"}",
-       "seconds": 1.016
-      },
-      {
-       "text": "{\"label\":\"mixed\"}",
-       "seconds": 0.9498999999761581
-      },
-      {
-       "text": "{\"label\":\"mixed\"}",
-       "seconds": 0.9636000000238418
-      }
-     ]
-    },
-    "mood-46": {
-     "device": [
-      {
-       "text": "{\"label\": \"negative\"}",
-       "seconds": 1.0005999999642372
-      },
-      {
-       "text": "{\"label\":\"negative\"}",
-       "seconds": 0.9449000000357628
-      },
-      {
-       "text": "{\"label\": \"negative\"}",
-       "seconds": 1
-      }
-     ]
-    },
-    "mood-47": {
-     "device": [
-      {
-       "text": "{\"label\":\"positive\"}",
-       "seconds": 0.9783999999761581
-      },
-      {
-       "text": "{\"label\":\"positive\"}",
-       "seconds": 0.9816999999880791
-      },
-      {
-       "text": "{\"label\": \"positive\"}",
-       "seconds": 1.0434000000357628
-      }
-     ]
-    },
-    "mood-48": {
-     "device": [
-      {
-       "text": "{\"label\":\"positive\"}",
-       "seconds": 0.9635999999642372
-      },
-      {
-       "text": "{\"label\": \"positive\"}",
-       "seconds": 1.1605
-      },
-      {
-       "text": "{\"label\": \"positive\"}",
-       "seconds": 1.152
-      }
-     ]
-    },
-    "mood-49": {
-     "device": [
-      {
-       "text": "{\"label\": \"negative\"}",
-       "seconds": 1.1485
-      },
-      {
-       "text": "{\"label\": \"negative\"}",
-       "seconds": 1.129699999988079
-      },
-      {
-       "text": "{\"label\": \"negative\"}",
-       "seconds": 1.0295
-      }
-     ]
-    },
-    "mood-50": {
-     "device": [
-      {
-       "text": "{\"label\": \"positive\"}",
-       "seconds": 0.9613999999761581
-      },
-      {
-       "text": "{\"label\":\"positive\"}",
-       "seconds": 1.136100000023842
-      },
-      {
-       "text": "{\"label\":\"positive\"}",
-       "seconds": 0.9836999999880791
-      }
-     ]
-    }
-   }
-  }
- ]
+ "fixes": []
 }
